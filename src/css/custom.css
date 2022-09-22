@@ -8,12 +8,12 @@
 
 /* poppins */
 @font-face {
-  font-family: 'Poppins';
+  font-family: 'Work Sans';
   font-style: normal;
   font-weight: normal;
   src: local(''),
-       url('../fonts/poppins/poppins-regular.woff') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/poppins/poppins-regular.woff2') format('woff'), /* Modern Browsers */
+       url('../fonts/work-sans/work-sans-regular.woff') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/work-sans/work-sans-regular.woff2') format('woff'), /* Modern Browsers */
 }
 
 /* Roboto-Mono */
@@ -26,24 +26,15 @@
        url('../fonts/roboto-mono/roboto-mono-regular.woff2') format('woff'), /* Modern Browsers */
 }
 
-/* Lato */
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: normal;
-  src: local(''),
-       url('../fonts/lato/lato-regular.woff') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/lato/lato-regular.woff2') format('woff'), /* Modern Browsers */
-}
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary-lightest: #80bbe2;
-  --ifm-color-primary-lighter: #5eaadb;
-  --ifm-color-primary-light: #53a4d8;
-  --ifm-color-primary: #3d98d3;
-  --ifm-color-primary-dark: #2d8bc8;
-  --ifm-color-primary-darker: #2b83bc;
-  --ifm-color-primary-darkest: #236c9b;
+  --ifm-color-primary-lightest: #a4d6a7;
+  --ifm-color-primary-lighter: #86c989;
+  --ifm-color-primary-light: #7cc480;
+  --ifm-color-primary: #68bb6c;
+  --ifm-color-primary-dark: #54b258;
+  --ifm-color-primary-darker: #4dab51;
+  --ifm-color-primary-darkest: #3f8c43;
   --ifm-code-font-size: 95%;
 }
 @media (max-width: 768px) {
