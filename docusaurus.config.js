@@ -3,8 +3,8 @@
 module.exports = {
   title: 'Fleet',
   tagline: '',
-  url: 'https://rancher.github.io/',
-  baseUrl: '/fleet-docs/',
+  url: 'https://fleet.rancher.io/',
+  baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
