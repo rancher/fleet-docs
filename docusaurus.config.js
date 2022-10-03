@@ -3,7 +3,7 @@
 module.exports = {
   title: 'Fleet',
   tagline: '',
-  url: 'https://fleet.rancher.io/',
+  url: 'https://fleet.rancher.io',
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
