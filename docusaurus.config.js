@@ -21,7 +21,7 @@ module.exports = {
       disableSwitch: true,
     },
     navbar: {
-      title: "",
+      title: "Fleet",
       logo: {
         alt: 'logo',
         src: 'img/logo.svg',
