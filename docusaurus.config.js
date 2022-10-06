@@ -35,7 +35,7 @@ module.exports = {
           className: 'navbar__docs',
         },
         {
-          href: 'https://github.com/rancher/rke2',
+          href: 'https://github.com/rancher/fleet',
           label: 'GitHub',
           position: 'right',
           className: 'navbar__github btn btn-secondary icon-github',
