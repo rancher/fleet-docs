@@ -57,7 +57,7 @@ module.exports = {
           /* other docs plugin options */
           sidebarPath: require.resolve('./sidebars.js'),
           showLastUpdateTime: true,
-          editUrl: 'https://github.com/fleet-docs/docs/edit/main/',
+          editUrl: 'https://github.com/rancher/fleet-docs/edit/main/',
         },
         blog: false, // Optional: disable the blog plugin
         // ...
