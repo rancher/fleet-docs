@@ -85,6 +85,22 @@ spec:
   paths:
   - simple
 
+  # PollingInterval configures how often fleet checks the git repo. The default
+  # is 15 seconds.
+  # Setting this to zero does not disable polling. It results in a 15s
+  # interval, too.
+  #
+  # pollingInterval: 15
+
+  # Paused  causes changes in Git to not be propagated down to the clusters but
+  # instead mark resources as OutOfSync
+  #
+  # paused: false
+
+  # Increment this number to force a redeployment of contents from Git
+  #
+  # forceSyncGeneration: 0
+
   # The service account that will be used to perform this deployment.
   # This is the name of the service account that exists in the
   # downstream cluster in the cattle-fleet-system namespace. It is assumed
