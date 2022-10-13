@@ -7,7 +7,7 @@ module.exports = {
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/logo.svg',
   organizationName: 'rancher', // Usually your GitHub org/user name.
   projectName: 'fleet-docs', // Usually your repo name.
   trailingSlash: false,
@@ -66,5 +66,5 @@ module.exports = {
         },
       },
     ],
-  ], 
+  ],
 };
