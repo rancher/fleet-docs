@@ -45,13 +45,21 @@ by looking up the default ServiceAccount secret name (typically prefixed with `d
 under the `ca.crt` key.
 
 
-!!! hint "Use proper namespace and release name"
-    For the agent chart the namespace must be `cattle-fleet-system` and the release name `fleet-agent`
+:::caution
 
-!!! hint "Ensure you are installing to the right cluster"
-    Helm will use the default context in `${HOME}/.kube/config` to deploy the agent. Use `--kubeconfig` and `--kube-context`
-    to change which cluster Helm is installing to.
-    
+__Use proper namespace and release name__:
+For the agent chart the namespace must be `cattle-fleet-system` and the release name `fleet-agent`
+
+:::
+
+:::warning
+
+__Ensure you are installing to the right cluster__:
+Helm will use the default context in `${HOME}/.kube/config` to deploy the agent. Use `--kubeconfig` and `--kube-context`
+to change which cluster Helm is installing to.
+
+:::
+
 Finally, install the agent using Helm.
 
 ```shell
@@ -118,13 +126,21 @@ Third, setup your environment to use the client ID.
 CLUSTER_CLIENT_ID="really-random"
 ```
 
-!!! hint "Use proper namespace and release name"
-    For the agent chart the namespace must be `cattle-fleet-system` and the release name `fleet-agent`
+:::note
 
-!!! hint "Ensure you are installing to the right cluster"
-    Helm will use the default context in `${HOME}/.kube/config` to deploy the agent. Use `--kubeconfig` and `--kube-context`
-    to change which cluster Helm is installing to.
-    
+__Use proper namespace and release name__:
+For the agent chart the namespace must be `cattle-fleet-system` and the release name `fleet-agent`
+
+:::
+
+:::note
+
+__Ensure you are installing to the right cluster__:
+Helm will use the default context in `${HOME}/.kube/config` to deploy the agent. Use `--kubeconfig` and `--kube-context`
+to change which cluster Helm is installing to.
+
+:::
+
 Finally, install the agent using Helm.
 
 ```shell

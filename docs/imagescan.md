@@ -3,9 +3,12 @@
 Image scan in fleet allows you to scan your image repository, fetch the desired image and update your git repository, 
 without the need to manually update your manifests.
 
-!!! hint "Experimental"
-    This feature is considered as experimental feature.
-    
+:::caution
+
+This feature is considered as experimental feature.
+
+:::
+
 Go to `fleet.yaml` and add the following section.
 
 ```yaml
@@ -34,9 +37,12 @@ imageScans:
   interval: 5m 
 ```
 
-!!! note
-    You can create multiple image scans in fleet.yaml.
-    
+:::info
+
+You can create multiple image scans in fleet.yaml.
+
+:::
+
 Go to your manifest files and update the field that you want to replace. For example:
 
 ```yaml
@@ -69,17 +75,20 @@ spec:
         - containerPort: 6379
 ```
 
-!!! note
-    There are multiple form of tagName you can reference. For example
-    
-    `{"$imagescan": "test-scan"}`: Use full image name(foo/bar:tag)
-    
-    `{"$imagescan": "test-scan:name"}`: Only use image name without tag(foo/bar)
-    
-    `{"$imagescan": "test-scan:tag"}`: Only use image tag
-    
-    `{"$imagescan": "test-scan:digest"}`: Use full image name with digest(foo/bar:tag@sha256...) 
-    
+:::note
+
+There are multiple form of tagName you can reference. For example
+
+`{"$imagescan": "test-scan"}`: Use full image name(foo/bar:tag)
+
+`{"$imagescan": "test-scan:name"}`: Only use image name without tag(foo/bar)
+
+`{"$imagescan": "test-scan:tag"}`: Only use image tag
+
+`{"$imagescan": "test-scan:digest"}`: Use full image name with digest(foo/bar:tag@sha256...)
+
+:::
+
 Create a GitRepo that includes your fleet.yaml
 
 ```yaml

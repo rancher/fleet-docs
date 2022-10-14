@@ -1,17 +1,20 @@
 # Adding a GitRepo
 
 ## Proper namespace
-Git repos are added to the Fleet manager using the `GitRepo` custom resource type. The `GitRepo` type is namespaced. By default, Rancher will create two Fleet workspaces: **fleet-default** and **fleet-local**. 
+Git repos are added to the Fleet manager using the `GitRepo` custom resource type. The `GitRepo` type is namespaced. By default, Rancher will create two Fleet workspaces: **fleet-default** and **fleet-local**.
 
-- `Fleet-default` will contain all the downstream clusters that are already registered through Rancher. 
-- `Fleet-local` will contain the local cluster by default. 
+- `Fleet-default` will contain all the downstream clusters that are already registered through Rancher.
+- `Fleet-local` will contain the local cluster by default.
 
 Users can create new workspaces and move clusters across workspaces. An example of a special case might be including the local cluster in the `GitRepo` payload for config maps and secrets (no active deployments or payloads).
 
-!!! note "Note:"
-    While it's possible to move clusters out of either workspace, we recommend that you keep the local cluster in `fleet-local`.
+:::warning
 
-If you are using Fleet in a [single cluster](./concepts.md) style, the namespace will always be **fleet-local**. Check [here](https://fleet.rancher.io/namespaces/#fleet-local) for more on the `fleet-local` namespace. 
+While it's possible to move clusters out of either workspace, we recommend that you keep the local cluster in `fleet-local`.
+
+:::
+
+If you are using Fleet in a [single cluster](./concepts.md) style, the namespace will always be **fleet-local**. Check [here](https://fleet.rancher.io/namespaces/#fleet-local) for more on the `fleet-local` namespace.
 
 For a [multi-cluster](./concepts.md) style, please ensure you use the correct repo that will map to the right target clusters.
 
@@ -64,9 +67,9 @@ spec:
   #
   # helmSecretName: my-helm-secret
   #
-  # To add additional ca-bundle for self-signed certs, caBundle can be 
-  # filled with base64 encoded pem data. For example: 
-  # `cat /path/to/ca.pem | base64 -w 0` 
+  # To add additional ca-bundle for self-signed certs, caBundle can be
+  # filled with base64 encoded pem data. For example:
+  # `cat /path/to/ca.pem | base64 -w 0`
   #
   # caBundle: my-ca-bundle
   #
@@ -119,7 +122,7 @@ spec:
 
 ## Adding private repository
 
-Fleet supports both http and ssh auth key for private repository. To use this you have to create a secret in the same namespace. 
+Fleet supports both http and ssh auth key for private repository. To use this you have to create a secret in the same namespace.
 
 For example, to generate a private ssh key
 
@@ -127,19 +130,25 @@ For example, to generate a private ssh key
 ssh-keygen -t rsa -b 4096 -m pem -C "user@email.com"
 ```
 
-Note: The private key format has to be in `EC PRIVATE KEY`, `RSA PRIVATE KEY` or `PRIVATE KEY` and should not contain a passphase. 
+Note: The private key format has to be in `EC PRIVATE KEY`, `RSA PRIVATE KEY` or `PRIVATE KEY` and should not contain a passphase.
 
 Put your private key into secret:
 
 ```text
-kubectl create secret generic $name -n $namespace --from-file=ssh-privatekey=/file/to/private/key  --type=kubernetes.io/ssh-auth 
+kubectl create secret generic $name -n $namespace --from-file=ssh-privatekey=/file/to/private/key  --type=kubernetes.io/ssh-auth
 ```
 
-!!! note
-    Private key with passphrase is not supported.
+:::caution
 
-!!! note
-    The key has to be in PEM format.
+Private key with passphrase is not supported.
+
+:::
+
+:::caution
+
+The key has to be in PEM format.
+
+:::
 
 Fleet supports putting `known_hosts` into ssh secret. Here is an example of how to add it:
 
@@ -163,11 +172,17 @@ stringData:
     |1|YJr1VZoi6dM0oE+zkM0do3Z04TQ=|7MclCn1fLROZG+BgR4m1r8TLwWc= ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
 ```
 
-!!! note
-    If you don't add it any server's public key will be trusted and added. (`ssh -o stricthostkeychecking=accept-new` will be used)
+:::warning
 
-!!! note
-    If you are using openssh format for the private key and you are creating it in the UI, make sure a carriage return is appended in the end of the private key.
+If you don't add it any server's public key will be trusted and added. (`ssh -o stricthostkeychecking=accept-new` will be used)
+
+:::
+
+:::info
+
+If you are using openssh format for the private key and you are creating it in the UI, make sure a carriage return is appended in the end of the private key.
+
+:::
 
 # Troubleshooting
 

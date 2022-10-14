@@ -1,7 +1,11 @@
 # Mapping to Downstream Clusters
 
-!!! hint "Multi-cluster Only"
-    This approach only applies if you are running Fleet in a multi-cluster style
+:::info
+
+__Multi-cluster Only__:
+This approach only applies if you are running Fleet in a multi-cluster style
+
+:::
 
 When deploying `GitRepos` to downstream clusters the clusters must be mapped to a target.
 

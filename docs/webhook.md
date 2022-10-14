@@ -25,8 +25,11 @@ spec:
                 number: 80
 ```
 
-!!! note
-    You can configure [TLS](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls) on ingress. 
+:::info
+
+You can configure [TLS](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls) on ingress.
+
+:::
 
 ### 2. Go to your webhook provider and configure the webhook callback url. Here is a Github example.
 
@@ -36,12 +39,18 @@ Configuring a secret is optional. This is used to validate the webhook payload a
 If your webhook server is publicly accessible to the Internet, then it is recommended to configure the secret. If you do configure the
 secret, follow step 3.
 
-!!! note 
-    only application/json is supported due to the limitation of webhook library.
+:::note
 
-!!! note
-    If you configured the webhook the polling interval will be automatically adjusted to 1 hour.
-    
+only application/json is supported due to the limitation of webhook library.
+
+:::
+
+:::caution
+
+If you configured the webhook the polling interval will be automatically adjusted to 1 hour.
+
+:::
+
 ### 3. (Optional) Configure webhook secret. The secret is for validating webhook payload. Make sure to put it in a k8s secret called `gitjob-webhook` in `cattle-fleet-system`.
 
 | Provider        | K8s Secret Key                   |

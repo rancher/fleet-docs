@@ -29,16 +29,24 @@ the resources are deployed and customized.  The `fleet.yaml` is always at the ro
 and if a subdirectory is found with a `fleet.yaml` a new [bundle](./concepts.md) is defined that will then be
 configured differently from the parent bundle.
 
-!!! warning "Helm chart dependencies"
-    It is up to the user to fulfill the dependency list for the Helm charts. As such, you must manually run `helm dependencies update $chart` OR run `helm dependencies build $chart` prior to install. See the [Fleet docs](https://rancher.com/docs/rancher/v2.6/en/deploy-across-clusters/fleet/#helm-chart-dependencies) in Rancher for more information.
+:::caution
+
+__Helm chart dependencies__:
+It is up to the user to fulfill the dependency list for the Helm charts. As such, you must manually run `helm dependencies update $chart` OR run `helm dependencies build $chart` prior to install. See the [Fleet docs](https://rancher.com/docs/rancher/v2.6/en/deploy-across-clusters/fleet/#helm-chart-dependencies) in Rancher for more information.
+
+:::
 
 ### Reference
 
-!!! tip "How changes are applied to `values.yaml`"
+:::info
 
-    - Note that the most recently applied changes to the `values.yaml` will override any previously existing values.
+__How changes are applied to `values.yaml`__:
 
-    - When changes are applied to the `values.yaml` from multiple sources at the same time, the values will update in the following order: `helmValues` -> `helm.valuesFiles` -> `helm.valuesFrom`.
+- Note that the most recently applied changes to the `values.yaml` will override any previously existing values.
+
+- When changes are applied to the `values.yaml` from multiple sources at the same time, the values will update in the following order: `helmValues` -> `helm.valuesFiles` -> `helm.valuesFrom`.
+
+:::
 
 ```yaml
 # The default namespace to be applied to resources. This field is not used to
@@ -187,25 +195,28 @@ targetCustomizations:
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
 dependsOn:
-  # Format: <GITREPO-NAME>-<BUNDLE_PATH> with all path separators replaced by "-" 
+  # Format: <GITREPO-NAME>-<BUNDLE_PATH> with all path separators replaced by "-"
   # Example: GitRepo name "one", Bundle path "/multi-cluster/hello-world" => "one-multi-cluster-hello-world"
   - name: one-multi-cluster-hello-world
 ```
 
-!!! hint "Private Helm Repo"
-    For a private Helm repo, users can reference a secret with the following keys:
-    
-    1. `username` and `password` for basic http auth if the Helm HTTP repo is behind basic auth.
-    
-    2. `cacerts` for custom CA bundle if the Helm repo is using a custom CA.
-    
-    3. `ssh-privatekey` for ssh private key if repo is using ssh protocol. Private key with passphase is not supported currently.
-    
-    For example, to add a secret in kubectl, run 
-    
-    `kubectl create secret -n $namespace generic helm --from-literal=username=foo --from-literal=password=bar --from-file=cacerts=/path/to/cacerts --from-file=ssh-privatekey=/path/to/privatekey.pem`
-    
-    After secret is created, specify the secret to `gitRepo.spec.helmSecretName`. Make sure secret is created under the same namespace with gitrepo.
+:::info
+
+For a private Helm repo, users can reference a secret with the following keys:
+
+1. `username` and `password` for basic http auth if the Helm HTTP repo is behind basic auth.
+
+2. `cacerts` for custom CA bundle if the Helm repo is using a custom CA.
+
+3. `ssh-privatekey` for ssh private key if repo is using ssh protocol. Private key with passphase is not supported currently.
+
+For example, to add a secret in kubectl, run
+
+`kubectl create secret -n $namespace generic helm --from-literal=username=foo --from-literal=password=bar --from-file=cacerts=/path/to/cacerts --from-file=ssh-privatekey=/path/to/privatekey.pem`
+
+After secret is created, specify the secret to `gitRepo.spec.helmSecretName`. Make sure secret is created under the same namespace with gitrepo.
+
+:::
 
 ### Using ValuesFrom
 

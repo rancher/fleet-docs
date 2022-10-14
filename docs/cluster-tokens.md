@@ -1,8 +1,12 @@
 # Cluster Registration Tokens
 
-!!! hint "Not needed for Manager initiated registration"
-    For manager initiated registrations the token is managed by the Fleet manager and does
-    not need to be manually created and obtained.
+:::info
+
+__Not needed for Manager initiated registration__:
+For manager initiated registrations the token is managed by the Fleet manager and does
+not need to be manually created and obtained.
+
+:::
 
 For an agent initiated registration the downstream cluster must have a cluster registration token.
 Cluster registration tokens are used to establish a new identity for a cluster. Internally
