@@ -1,4 +1,4 @@
-## Generating Diffs for Modified GitRepos
+# Generating Diffs for Modified GitRepos
 
 
 Continuous Delivery in Rancher is powered by fleet. When a user adds a GitRepo CR, then Continuous Delivery creates the associated fleet bundles.

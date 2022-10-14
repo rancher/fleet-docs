@@ -1,4 +1,4 @@
-# Registering
+# Adding a GitRepo
 
 ## Proper namespace
 Git repos are added to the Fleet manager using the `GitRepo` custom resource type. The `GitRepo` type is namespaced. By default, Rancher will create two Fleet workspaces: **fleet-default** and **fleet-local**. 
