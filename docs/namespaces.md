@@ -84,3 +84,23 @@ If the `BundleNamespaceMappings` `bundleSelector` field matches a `Bundles` labe
 be evaluated against all clusters in all namespaces that match `namespaceSelector`. One can specify labels for the created
 bundles from git by putting labels in the `fleet.yaml` file or on the `metadata.labels` field on the `GitRepo`.
 
+## Restricting GitRepos
+
+A namespace can contain multiple `GitRepoRestriction` resources. All `GitRepos`
+created in that namespace will be checked against the list of restrictions.
+If a `GitRepo` violates one of the constraints its `BundleDeployment` will be
+in an error state and won't be deployed.
+
+```
+kind: GitRepoRestriction
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: restriction
+  namespace: typically-unique
+spec:
+  defaultServiceAccount: ""
+  allowedServiceAccounts: []
+  allowedRepoPatterns: []
+  defaultClientSecretName: ""
+  allowedClientSecretNames: []
+```
