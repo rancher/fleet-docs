@@ -138,6 +138,9 @@ kubectl create secret generic $name -n $namespace --from-file=ssh-privatekey=/fi
 !!! note
     Private key with passphrase is not supported.
 
+!!! note
+    The key has to be in PEM format.
+
 Fleet supports putting `known_hosts` into ssh secret. Here is an example of how to add it:
 
 Fetch the public key hash(take github as an example)
