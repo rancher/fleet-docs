@@ -91,6 +91,8 @@ created in that namespace will be checked against the list of restrictions.
 If a `GitRepo` violates one of the constraints its `BundleDeployment` will be
 in an error state and won't be deployed.
 
+This can also be used to set the defaults for GitRepo's `serviceAccount` and `clientSecretName` fields.
+
 ```
 kind: GitRepoRestriction
 apiVersion: fleet.cattle.io/v1alpha1
@@ -98,9 +100,9 @@ metadata:
   name: restriction
   namespace: typically-unique
 spec:
-  defaultServiceAccount: ""
-  allowedServiceAccounts: []
-  allowedRepoPatterns: []
-  defaultClientSecretName: ""
   allowedClientSecretNames: []
+  allowedRepoPatterns: []
+  allowedServiceAccounts: []
+  defaultClientSecretName: ""
+  defaultServiceAccount: ""
 ```
