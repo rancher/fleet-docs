@@ -93,7 +93,7 @@ Create a GitRepo that includes your fleet.yaml
 
 ```yaml
 kind: GitRepo
-apiVersion: {{fleet.apiVersion}}
+apiVersion: fleet.cattle.io/v1alpha1
 metadata:
   name: my-repo
   namespace: fleet-local

@@ -34,7 +34,7 @@ token with the below YAML.
 
 ```yaml
 kind: ClusterRegistrationToken
-apiVersion: "{{fleet.apiVersion}}"
+apiVersion: "fleet.cattle.io/v1alpha1"
 metadata:
     name: new-token
     namespace: clusters
