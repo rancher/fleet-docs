@@ -25,7 +25,7 @@ to the inline comments as the means of each field
 
 ```yaml
 kind: GitRepo
-apiVersion: {{fleet.apiVersion}}
+apiVersion: fleet.cattle.io/v1alpha1
 metadata:
   # Any name can be used here
   name: my-repo
