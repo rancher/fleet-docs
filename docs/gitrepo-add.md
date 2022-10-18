@@ -54,7 +54,7 @@ spec:
   # revision: v0.3.0
 
   # For a private registry you must supply a clientSecretName. A default
-  # secret can be set at the namespace level using the BundleRestriction
+  # secret can be set at the namespace level using the GitRepoRestriction
   # type. Secrets must be of the type "kubernetes.io/ssh-auth" or
   # "kubernetes.io/basic-auth". The secret is assumed to be in the
   # same namespace as the GitRepo
@@ -132,10 +132,10 @@ ssh-keygen -t rsa -b 4096 -m pem -C "user@email.com"
 
 Note: The private key format has to be in `EC PRIVATE KEY`, `RSA PRIVATE KEY` or `PRIVATE KEY` and should not contain a passphase.
 
-Put your private key into secret:
+Put your private key into secret, use the namespace the GitRepo is in:
 
 ```text
-kubectl create secret generic $name -n $namespace --from-file=ssh-privatekey=/file/to/private/key  --type=kubernetes.io/ssh-auth
+kubectl create secret generic ssh-key -n fleet-default --from-file=ssh-privatekey=/file/to/private/key  --type=kubernetes.io/ssh-auth
 ```
 
 :::caution
@@ -183,6 +183,19 @@ If you don't add it any server's public key will be trusted and added. (`ssh -o 
 If you are using openssh format for the private key and you are creating it in the UI, make sure a carriage return is appended in the end of the private key.
 
 :::
+
+### Using HTTP Auth
+
+Create a secret containing username and password. You can replace the password with a personal access token if necessary. Also see [HTTP secrets in Github](./troubleshooting#http-secrets-in-github).
+
+    kubectl create secret generic basic-auth-secret -n fleet-default --type=kubernetes.io/basic-auth --from-literal=username=$user --from-literal=password=$pat
+
+Just like with SSH, reference the secret in your GitRepo resource via `clientSecretName`.
+
+    spec:
+      repo: https://github.com/fleetrepoci/gitjob-private.git
+      branch: main
+      clientSecretName: basic-auth-secret
 
 # Troubleshooting
 
