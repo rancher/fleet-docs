@@ -10,7 +10,7 @@ A cluster group is created by creating a `ClusterGroup` resource like below
 
 ```yaml
 kind: ClusterGroup
-apiVersion: {{fleet.apiVersion}}
+apiVersion: fleet.cattle.io/v1alpha1
 metadata:
   name: production-group
   namespace: clusters

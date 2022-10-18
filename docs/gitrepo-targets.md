@@ -16,7 +16,7 @@ match clusters or cluster groups. The YAML specification is as below.
 
 ```yaml
 kind: GitRepo
-apiVersion: {{fleet.apiVersion}}
+apiVersion: fleet.cattle.io/v1alpha1
 metadata:
   name: myrepo
   namespace: clusters

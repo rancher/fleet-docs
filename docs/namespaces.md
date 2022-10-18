@@ -63,7 +63,7 @@ A `BundleNamespaceMapping` has only two fields.  Which are as below
 
 ```yaml
 kind: BundleNamespaceMapping
-apiVersion: {{fleet.apiVersion}}
+apiVersion: fleet.cattle.io/v1alpha1
 metadata:
   name: not-important
   namespace: typically-unique
