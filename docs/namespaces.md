@@ -103,6 +103,15 @@ spec:
   allowedClientSecretNames: []
   allowedRepoPatterns: []
   allowedServiceAccounts: []
+  allowedTargetNamespaces: []
   defaultClientSecretName: ""
   defaultServiceAccount: ""
 ```
+
+### AllowedTargetNamespaces
+
+This can be used to limit a deployment to a set of namespaces on a downstream cluster.
+If an allowedTargetNamespaces restriction is present, all `GitRepos` must
+specify a `targetNamespace` and the specified namespace must be in the allow
+list.
+This also prevents the creation of cluster wide resources.
