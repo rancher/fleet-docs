@@ -95,6 +95,16 @@ helm:
   # The variable's value will be an empty string if the referenced cluster label does not
   # exist on the targeted cluster
     variableName: global.fleet.clusterLabels.LABELNAME
+  # It is possible to specify the keys and values as gotpl strings for advanced templating needs.
+  # Most of the functions from sprig templating library is available.
+  # The template context has following keys.
+  # `.ClusterValues` are retrieved from target cluster's `spec.templateValues`
+  # `.ClusterLabels` and `.ClusterAnnotations` are the labels and annoations in the cluster resource.
+  # `.ClusterName` as the fleet's cluster resource name.
+  # `.ClusterNamespace` as the namespace which the cluster resource exists.
+    templatedLabel: "{{ .ClusterLabels.LABELNAME }}-foo"
+    valueFromEnv:
+      "{{ .ClusterLabels.ENV }}": "{{ .Values.someValue | upper }}"
   # Path to any values files that need to be passed to helm during install
   valuesFiles:
     - values1.yaml
@@ -114,6 +124,8 @@ helm:
   force: false
   # Set the Helm --atomic flag when upgrading
   atomic: false
+  # Disable go template pre-processing on the fleet values
+  disablePreProcess: false
 
 # A paused bundle will not update downstream clusters but instead mark the bundle
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
