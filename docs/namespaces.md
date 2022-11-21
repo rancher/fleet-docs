@@ -18,7 +18,7 @@ When deploying a Fleet bundle, the specified namespace will automatically be cre
 
 ## Special Namespaces
 
-### fleet-local
+### fleet-local (local workspace, cluster registration namespace)
 
 The **fleet-local** namespace is a special namespace used for the single cluster use case or to bootstrap
 the configuration of the Fleet manager.
@@ -31,12 +31,12 @@ on.
 
 **Note:** If you would like to migrate your cluster from `fleet-local` to `default`, please see this [documentation](./troubleshooting.md#migrate-the-local-cluster-to-the-fleet-default-cluster).
 
-### cattle-fleet-system
+### cattle-fleet-system (system namespace)
 
 The Fleet controller and Fleet agent run in this namespace. All service accounts referenced by `GitRepos` are expected
 to live in this namespace in the downstream cluster.
 
-### cattle-fleet-clusters-system
+### cattle-fleet-clusters-system (system registration namespace)
 
 This namespace holds secrets for the cluster registration process. It should contain no other resources in it,
 especially secrets.
@@ -44,7 +44,7 @@ especially secrets.
 ### Cluster namespaces
 
 For every cluster that is registered a namespace is created by the Fleet manager for that cluster.
-These namespaces have are named in the form `cluster-${namespace}-${cluster}-${random}`.  The purpose of this
+These namespaces are named in the form `cluster-${namespace}-${cluster}-${random}`.  The purpose of this
 namespace is that all `BundleDeployments` for that cluster are put into this namespace and
 then the downstream cluster is given access to watch and update `BundleDeployments` in that namespace only.
 
