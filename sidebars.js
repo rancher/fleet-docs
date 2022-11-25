@@ -36,22 +36,22 @@ module.exports = {
         {
           'Managing Git Repos':
           [
-          {type:'doc', id:'gitrepo-add'},
-          {type:'doc', id:'gitrepo-structure'},
-          {type:'doc', id:'gitrepo-targets'},
-          {type:'doc', id:'bundle-diffs'},
-          {type:'doc', id:'webhook'},
-          {type:'doc', id:'imagescan'},
-          {type:'doc', id:'cluster-bundles-state'},
+            {type:'doc', id:'gitrepo-add'},
+            {type:'doc', id:'gitrepo-structure'},
+            {type:'doc', id:'gitrepo-targets'},
+            {type:'doc', id:'bundle-diffs'},
+            {type:'doc', id:'webhook'},
+            {type:'doc', id:'imagescan'},
+            {type:'doc', id:'cluster-bundles-state'},
           ],
         },
       ],
     },
     'troubleshooting',
-  {
-    type: 'category',
-    label: 'Advanced Users',
-    items:[
+    {
+      type: 'category',
+      label: 'Advanced Users',
+      items:[
         'advanced-users',
         {
           'Installation':
@@ -62,7 +62,18 @@ module.exports = {
             {type:'doc', id:'uninstall'},
           ],
         },
-    ],
-  },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Reference',
+      items:[
+        'ref-components',
+        'ref-bundle-stages',
+        'ref-resources',
+        'ref-namespaces',
+        'ref-registration',
+      ],
+    },
   ],
 };
