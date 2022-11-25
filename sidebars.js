@@ -87,6 +87,7 @@ module.exports = {
             {type: 'doc', id: 'cli/fleet-controller/fleet-manager'},
           ],
         },
+        "ref-crds",
       ],
     },
   ],
