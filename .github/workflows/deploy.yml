@@ -18,7 +18,7 @@ jobs:
           cache: yarn
       - name: Build website
         run: |
-          yarn install
+          yarn install --frozen-lockfile
           yarn build
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
