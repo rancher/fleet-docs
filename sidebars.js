@@ -73,6 +73,20 @@ module.exports = {
         'ref-resources',
         'ref-namespaces',
         'ref-registration',
+        {
+          'CLI':
+          [
+            {type: 'doc', id: 'cli/fleet-agent/fleet-agent'},
+            {
+              'fleet-gitjob-cli': [
+                {type: 'doc', id: 'cli/fleet-cli/fleet'},
+                {type: 'doc', id: 'cli/fleet-cli/fleet_apply'},
+                {type: 'doc', id: 'cli/fleet-cli/fleet_test'},
+              ],
+            },
+            {type: 'doc', id: 'cli/fleet-controller/fleet-manager'},
+          ],
+        },
       ],
     },
   ],
