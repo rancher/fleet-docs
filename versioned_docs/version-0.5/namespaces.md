@@ -44,7 +44,7 @@ especially secrets.
 ### Cluster namespaces
 
 For every cluster that is registered a namespace is created by the Fleet manager for that cluster.
-These namespaces have are named in the form `cluster-${namespace}-${cluster}-${random}`.  The purpose of this
+These namespaces are named in the form `cluster-${namespace}-${cluster}-${random}`.  The purpose of this
 namespace is that all `BundleDeployments` for that cluster are put into this namespace and
 then the downstream cluster is given access to watch and update `BundleDeployments` in that namespace only.
 
