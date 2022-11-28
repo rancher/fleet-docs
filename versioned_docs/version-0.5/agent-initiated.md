@@ -147,7 +147,7 @@ Finally, install the agent using Helm.
 helm -n cattle-fleet-system install --create-namespace --wait \
     --set clientID="${CLUSTER_CLIENT_ID}" \
     --values values.yaml \
-    fleet-agent https://github.com/rancher/fleet/releases/download/v0.5.0/fleet-agent-v0.5.0.tgz
+    fleet-agent https://github.com/rancher/fleet/releases/download/v0.5.0/fleet-agent-0.5.0.tgz
 ```
 
 The agent should now be deployed.  You can check that status of the fleet pods by running the below commands.
