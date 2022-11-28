@@ -1,5 +1,7 @@
 # Expected Repo Structure
 
+Fleet will create bundles from a git repository. This happens either explicitly by specifying paths, or when a `fleet.yaml` is found.
+
 **The git repository has no explicitly required structure.** It is important
 to realize the scanned resources will be saved as a resource in Kubernetes so
 you want to make sure the directories you are scanning in git do not contain
