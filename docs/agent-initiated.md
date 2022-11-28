@@ -1,3 +1,6 @@
+import {versions} from '@site/src/fleetVersions';
+import CodeBlock from '@theme/CodeBlock';
+
 # Agent Initiated
 
 Refer to the [overview page](./cluster-overview.md#agent-initiated-registration) for a background information on the agent initiated registration style.
@@ -62,14 +65,14 @@ to change which cluster Helm is installing to.
 
 Finally, install the agent using Helm.
 
-```shell
-helm -n cattle-fleet-system install --create-namespace --wait \
-    ${CLUSTER_LABELS} \
-    --values values.yaml \
-    --set apiServerCA=${API_SERVER_CA} \
-    --set apiServerURL=${API_SERVER_URL} \
-    fleet-agent https://github.com/rancher/fleet/releases/download/v0.6.0-alpha2/fleet-agent-0.6.0-alpha2.tgz
-```
+<CodeBlock language="bash">
+{`helm -n cattle-fleet-system install --create-namespace --wait \\
+    $\{CLUSTER_LABELS} \\
+    --values values.yaml \\
+    --set apiServerCA=$\{API_SERVER_CA} \\
+    --set apiServerURL=$\{API_SERVER_URL} \\
+    fleet-agent`} {versions.next.fleetAgent}
+</CodeBlock>
 
 The agent should now be deployed.  You can check that status of the fleet pods by running the below commands.
 
@@ -143,12 +146,12 @@ to change which cluster Helm is installing to.
 
 Finally, install the agent using Helm.
 
-```shell
-helm -n cattle-fleet-system install --create-namespace --wait \
-    --set clientID="${CLUSTER_CLIENT_ID}" \
-    --values values.yaml \
-    fleet-agent https://github.com/rancher/fleet/releases/download/v0.6.0-alpha2/fleet-agent-0.6.0-alpha2.tgz
-```
+<CodeBlock language="bash">
+{`helm -n cattle-fleet-system install --create-namespace --wait \\
+    --set clientID="$\{CLUSTER_CLIENT_ID}" \\
+    --values values.yaml \\
+    fleet-agent`} {versions.next.fleetAgent}
+</CodeBlock>
 
 The agent should now be deployed.  You can check that status of the fleet pods by running the below commands.
 

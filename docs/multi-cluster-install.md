@@ -1,4 +1,7 @@
-# Multi-cluster Install
+import {versions} from '@site/src/fleetVersions';
+import CodeBlock from '@theme/CodeBlock';
+
+# Multi Cluster Install
 ![](/img/arch.png)
 
 **Note:** Downstream clusters in Rancher are automatically registered in Fleet. Users can access Fleet under `Continuous Delivery` on Rancher.
@@ -134,17 +137,18 @@ Once you have validated the API server URL and API server CA parameters, install
 Helm charts.
 
 First install the Fleet CustomResourcesDefintions.
-```shell
-helm -n cattle-fleet-system install --create-namespace --wait fleet-crd https://github.com/rancher/fleet/releases/download/v0.6.0-alpha2/fleet-crd-0.6.0-alpha2.tgz
-```
+<CodeBlock language="bash">
+{`helm -n cattle-fleet-system install --create-namespace --wait \\
+    fleet-crd`} {versions.next.fleetCRD}
+</CodeBlock>
 
 Second install the Fleet controllers.
-```shell
-helm -n cattle-fleet-system install --create-namespace --wait \
-    --set apiServerURL="${API_SERVER_URL}" \
-    --set-file apiServerCA="${API_SERVER_CA}" \
-    fleet https://github.com/rancher/fleet/releases/download/v0.6.0-alpha2/fleet-0.6.0-alpha2.tgz
-```
+<CodeBlock language="bash">
+{`helm -n cattle-fleet-system install --create-namespace --wait \\
+    --set apiServerURL="$\{API_SERVER_URL}" \\
+    --set-file apiServerCA="$\{API_SERVER_CA}" \\
+    fleet`} {versions.next.fleet}
+</CodeBlock>
 
 Fleet should be ready to use. You can check the status of the Fleet controller pods by running the below commands.
 
