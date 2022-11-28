@@ -1,3 +1,6 @@
+import {versions} from '@site/src/fleetVersions';
+import CodeBlock from '@theme/CodeBlock';
+
 # Single Cluster Install
 ![](/img/single-cluster.png)
 
@@ -35,16 +38,16 @@ Any Kubernetes community supported version of Kubernetes will work, in practice 
 Install the following two Helm charts.
 
 First install the Fleet CustomResourcesDefintions.
-```shell
-helm -n cattle-fleet-system install --create-namespace --wait \
-    fleet-crd https://github.com/rancher/fleet/releases/download/v0.5.0/fleet-crd-0.5.0.tgz
-```
+<CodeBlock language="bash">
+{`helm -n cattle-fleet-system install --create-namespace --wait \\
+    fleet-crd`} {versions["v0.5"].fleetCRD}
+</CodeBlock>
 
 Second install the Fleet controllers.
-```shell
-helm -n cattle-fleet-system install --create-namespace --wait \
-    fleet https://github.com/rancher/fleet/releases/download/v0.5.0/fleet-0.5.0.tgz
-```
+<CodeBlock language="bash">
+{`helm -n cattle-fleet-system install --create-namespace --wait \\
+    fleet`} {versions["v0.5"].fleet}
+</CodeBlock>
 
 Fleet should be ready to use now for single cluster. You can check the status of the Fleet controller pods by
 running the below commands.

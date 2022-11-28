@@ -1,3 +1,6 @@
+import {versions} from '@site/src/fleetVersions';
+import CodeBlock from '@theme/CodeBlock';
+
 # Quick Start
 
 Who needs documentation, lets just run this thing!
@@ -13,12 +16,13 @@ brew install helm
 
 Install the Fleet Helm charts (there's two because we separate out CRDs for ultimate flexibility.)
 
-```shell
-helm -n cattle-fleet-system install --create-namespace --wait \
-    fleet-crd https://github.com/rancher/fleet/releases/download/v0.5.0/fleet-crd-0.5.0.tgz
-helm -n cattle-fleet-system install --create-namespace --wait \
-    fleet https://github.com/rancher/fleet/releases/download/v0.5.0/fleet-0.5.0.tgz
-```
+<CodeBlock language="bash">
+{`helm -n cattle-fleet-system install --create-namespace --wait \\
+    fleet-crd`} {versions["v0.5"].fleetCRD}
+{`
+helm -n cattle-fleet-system install --create-namespace --wait \\
+    fleet`} {versions["v0.5"].fleet}
+</CodeBlock>
 
 ## Add a Git Repo to watch
 
