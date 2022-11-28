@@ -8,7 +8,7 @@ A multi-tenant fleet setup looks like this:
 
 * tenants don't share namespaces, each tenant has one or more namespaces on the
   upstream cluster, where they can create GitRepo resources
-* tenants can deploy cluster wide resources and are limited to a set of
+* tenants can't deploy cluster wide resources and are limited to a set of
   namespaces on downstream clusters
 * clusters are in a separate namespace
 
@@ -72,7 +72,7 @@ Admins can further restrict tenants by creating a `GitRepoRestriction` in each o
     allowedTargetNamespaces:
       - project1simpleapp
 
-This will deny the creation of cluster wide resources, which may interfere with other tenants and limit th deployment to the 'project1simpleapp' namespace.
+This will deny the creation of cluster wide resources, which may interfere with other tenants and limit the deployment to the 'project1simpleapp' namespace.
 
 ## An Example GitRepo Resource
 
