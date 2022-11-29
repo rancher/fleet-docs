@@ -16,7 +16,7 @@ The controllers can be started with these environment variables:
 
 * `CATTLE_DEV_MODE` - used to debug wrangler, not usable
 * `FLEET_CLUSTER_ENQUEUE_DELAY` - tune how often non-ready clusters are checked
-* `FLEET_CPU_PPROF_PERIOD` - used to turn on [performance profiling](https://github.com/rancher/fleet/blob/master/DEVELOPING.md#examining-performance-issues)
+* `FLEET_CPU_PPROF_PERIOD` - used to turn on [performance profiling](https://github.com/rancher/fleet/blob/master/docs/performance.md)
 
 ## Configuration
 

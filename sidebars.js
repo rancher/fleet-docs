@@ -68,12 +68,15 @@ module.exports = {
       type: 'category',
       label: 'Reference',
       items:[
-        'ref-configuration',
-        'ref-components',
+        'ref-crd-gitrepo',
+        'ref-fleet-yaml',
         'ref-bundle-stages',
-        'ref-resources',
+        'ref-components',
         'ref-namespaces',
+        'ref-resources',
+        'ref-configuration',
         'ref-registration',
+        "ref-crds",
         {
           'CLI':
           [
@@ -88,7 +91,6 @@ module.exports = {
             {type: 'doc', id: 'cli/fleet-controller/fleet-manager'},
           ],
         },
-        "ref-crds",
       ],
     },
   ],
