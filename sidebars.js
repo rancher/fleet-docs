@@ -68,6 +68,7 @@ module.exports = {
       type: 'category',
       label: 'Reference',
       items:[
+        'ref-configuration',
         'ref-components',
         'ref-bundle-stages',
         'ref-resources',
