@@ -44,6 +44,8 @@ spec:
         region: us-east
     # A specific clusterGroup by name that will be selected
     clusterGroup: group1
+    # A specific cluster by name that will be selected
+    clusterName: cluster1
 ```
 
 ## Target Matching
