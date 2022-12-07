@@ -104,7 +104,7 @@ helm:
   # `.ClusterNamespace` as the namespace which the cluster resource exists.
     templatedLabel: "{{ .ClusterLabels.LABELNAME }}-foo"
     valueFromEnv:
-      "{{ .ClusterLabels.ENV }}": "{{ .Values.someValue | upper }}"
+      "{{ .ClusterLabels.ENV }}": "{{ .ClusterValues.someValue | upper }}"
   # Path to any values files that need to be passed to helm during install
   valuesFiles:
     - values1.yaml
