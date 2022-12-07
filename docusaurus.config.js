@@ -20,6 +20,12 @@ module.exports = {
       // Useful if you want to support a single color mode
       disableSwitch: true,
     },
+    algolia: {
+      appId: '5YEVIM7OXD',
+      apiKey: '7b97c69c2984ccf1637bedb9b3c43628',
+      indexName: 'fleet-rancher',
+      contextualSearch: true,
+    },
     navbar: {
       title: "Fleet",
       logo: {
