@@ -102,6 +102,8 @@ helm:
   # `.ClusterLabels` and `.ClusterAnnotations` are the labels and annoations in the cluster resource.
   # `.ClusterName` as the fleet's cluster resource name.
   # `.ClusterNamespace` as the namespace which the cluster resource exists.
+  # Note: Template instructions need to be quoted, so fleet.yaml stays valid yaml.
+  # Note: Templating is done recursively per value, can only produce strings.
     templatedLabel: "{{ .ClusterLabels.LABELNAME }}-foo"
     valueFromEnv:
       "{{ .ClusterLabels.ENV }}": "{{ .ClusterValues.someValue | upper }}"
