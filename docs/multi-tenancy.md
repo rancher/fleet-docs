@@ -12,6 +12,8 @@ A multi-tenant fleet setup looks like this:
   namespaces on downstream clusters
 * clusters are in a separate namespace
 
+![Shared Clusters](/img/FleetSharedClusters.svg)
+
 ## Example Tenant
 
 This would create a user 'fleetuser', who can only manage GitRepo resources in the 'project1' namespace.
@@ -50,11 +52,11 @@ In each of the user's namespaces, as an admin create a [`BundleNamespaceMapping`
         # or target one repo
         #fleet.cattle.io/repo-name: simpleapp
 
-    # Namespaces containing clusters to match by label
+    # Namespaces, containing clusters, to match by label
     namespaceSelector:
       matchLabels:
         kubernetes.io/metadata.name: fleet-default
-        # or clusters in every namespace with a label
+        # the label is on the namespace
         #workspace: prod
 
 The [`target` section](./gitrepo-targets) in the GitRepo resource can be used to deploy only to a subset of the matched clusters.
