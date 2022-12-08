@@ -95,16 +95,19 @@ helm:
   # The variable's value will be an empty string if the referenced cluster label does not
   # exist on the targeted cluster
     variableName: global.fleet.clusterLabels.LABELNAME
-  # It is possible to specify the keys and values as gotpl strings for advanced templating needs.
-  # Most of the functions from sprig templating library is available.
+  # It is possible to specify the keys and values as go template strings for
+  # advanced templating needs. Most of the functions from the sprig templating
+  # library are available.
   # The template context has following keys.
   # `.ClusterValues` are retrieved from target cluster's `spec.templateValues`
   # `.ClusterLabels` and `.ClusterAnnotations` are the labels and annoations in the cluster resource.
   # `.ClusterName` as the fleet's cluster resource name.
-  # `.ClusterNamespace` as the namespace which the cluster resource exists.
-    templatedLabel: "{{ .ClusterLabels.LABELNAME }}-foo"
+  # `.ClusterNamespace` as the namespace in which the cluster resource exists.
+  # Note: The fleet.yaml must be valid yaml. Templating uses ${ } as delims,
+  #       unlike helm which uses {{ }}.
+    templatedLabel: "${ .ClusterLabels.LABELNAME }-foo"
     valueFromEnv:
-      "{{ .ClusterLabels.ENV }}": "{{ .ClusterValues.someValue | upper }}"
+      "${ .ClusterLabels.ENV }": ${ .ClusterValues.someValue | upper | quote }
   # Path to any values files that need to be passed to helm during install
   valuesFiles:
     - values1.yaml
