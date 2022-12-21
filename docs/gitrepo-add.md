@@ -121,7 +121,7 @@ spec:
   # targets: ...
 ```
 
-## Adding private git repository
+## Adding Private Git Repository
 
 Fleet supports both http and ssh auth key for private repository. To use this you have to create a secret in the same namespace.
 
