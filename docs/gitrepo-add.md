@@ -62,8 +62,9 @@ spec:
   # clientSecretName: my-ssh-key
   #
   # If fleet.yaml contains a private Helm repo that requires authentication,
-  # provide the credentials in a K8s secret and specify them here. Details are provided
-  # in the fleet.yaml documentation.
+  # provide the credentials in a K8s secret and specify them here.
+  # Danger: the credentials will be sent to all repositories referenced from
+  # this gitrepo. See section below for more information.
   #
   # helmSecretName: my-helm-secret
   #
@@ -120,7 +121,7 @@ spec:
   # targets: ...
 ```
 
-## Adding private repository
+## Adding private git repository
 
 Fleet supports both http and ssh auth key for private repository. To use this you have to create a secret in the same namespace.
 
@@ -196,6 +197,28 @@ Just like with SSH, reference the secret in your GitRepo resource via `clientSec
       repo: https://github.com/fleetrepoci/gitjob-private.git
       branch: main
       clientSecretName: basic-auth-secret
+
+## Using Private Helm Repositories
+
+:::warning
+The credentials will be used unconditionally for all Helm repositories referenced by the gitrepo resource.
+Make sure you don't leak credentials by mixing public and private repositories. As a workaround, split them into different gitrepos.
+:::
+
+For a private Helm repo, users can reference a secret with the following keys:
+
+1. `username` and `password` for basic http auth if the Helm HTTP repo is behind basic auth.
+
+2. `cacerts` for custom CA bundle if the Helm repo is using a custom CA.
+
+3. `ssh-privatekey` for ssh private key if repo is using ssh protocol. Private key with passphase is not supported currently.
+
+For example, to add a secret in kubectl, run
+
+`kubectl create secret -n $namespace generic helm --from-literal=username=foo --from-literal=password=bar --from-file=cacerts=/path/to/cacerts --from-file=ssh-privatekey=/path/to/privatekey.pem`
+
+After secret is created, specify the secret to `gitRepo.spec.helmSecretName`. Make sure secret is created under the same namespace with gitrepo.
+
 
 # Troubleshooting
 
