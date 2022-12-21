@@ -223,23 +223,10 @@ dependsOn:
   - name: one-multi-cluster-hello-world
 ```
 
-:::info
+### Private Helm Repositories
 
-For a private Helm repo, users can reference a secret with the following keys:
-
-1. `username` and `password` for basic http auth if the Helm HTTP repo is behind basic auth.
-
-2. `cacerts` for custom CA bundle if the Helm repo is using a custom CA.
-
-3. `ssh-privatekey` for ssh private key if repo is using ssh protocol. Private key with passphase is not supported currently.
-
-For example, to add a secret in kubectl, run
-
-`kubectl create secret -n $namespace generic helm --from-literal=username=foo --from-literal=password=bar --from-file=cacerts=/path/to/cacerts --from-file=ssh-privatekey=/path/to/privatekey.pem`
-
-After secret is created, specify the secret to `gitRepo.spec.helmSecretName`. Make sure secret is created under the same namespace with gitrepo.
-
-:::
+For a private Helm repo, users can reference a secret from the git repo resource.
+See [Using Private Helm Repositories](gitrepo-add#using-private-helm-repositories) for more information.
 
 ### Using ValuesFrom
 
