@@ -69,7 +69,7 @@ Finally, install the agent using Helm.
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
     $\{CLUSTER_LABELS} \\
     --values values.yaml \\
-    --set apiServerCA=$\{API_SERVER_CA} \\
+    --set-file apiServerCA=$\{API_SERVER_CA} \\
     --set apiServerURL=$\{API_SERVER_URL} \\
     fleet-agent`} {versions["v0.5"].fleetAgent}
 </CodeBlock>
