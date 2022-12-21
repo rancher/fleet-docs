@@ -10,21 +10,15 @@ module.exports = {
       label: 'Operator Guide',
       items:[
         {
-          'Managing Clusters':
-          {
-            'Registering':
-            [
-              {type:'doc', id:'cluster-overview'},
-              {type:'doc', id:'cluster-tokens'},
-              {type:'doc', id:'agent-initiated'},
-              {type:'doc', id:'manager-initiated'},
-            ],
-          },
-          'Cluster Groups':
+          'Registering Clusters':
           [
-            {type:'doc', id:'cluster-group'},
+            {type: 'doc', id: 'cluster-overview'},
+            {type: 'doc', id: 'cluster-tokens'},
+            {type: 'doc', id: 'agent-initiated'},
+            {type: 'doc', id: 'manager-initiated'},
           ],
         },
+        {type:'doc', id:'cluster-group'},
         'namespaces',
         'multi-tenancy',
       ],
@@ -33,19 +27,13 @@ module.exports = {
       type: 'category',
       label: 'User Guide',
       items:[
-        {
-          'Managing Git Repos':
-          [
             {type:'doc', id:'gitrepo-add'},
             {type:'doc', id:'gitrepo-structure'},
             {type:'doc', id:'gitrepo-targets'},
             {type:'doc', id:'bundle-diffs'},
             {type:'doc', id:'webhook'},
             {type:'doc', id:'imagescan'},
-            {type:'doc', id:'cluster-bundles-state'},
           ],
-        },
-      ],
     },
     'troubleshooting',
     {
@@ -68,6 +56,7 @@ module.exports = {
       type: 'category',
       label: 'Reference',
       items:[
+        {type:'doc', id:'cluster-bundles-state'},
         'ref-crd-gitrepo',
         'ref-fleet-yaml',
         'ref-bundle-stages',
