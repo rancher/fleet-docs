@@ -67,6 +67,11 @@ defaultNamespace: default
 # Default: ""
 namespace: default
 
+# Optional map of labels, that are set at the bundle and can be used in a 
+# dependsOn.bundleSelector
+labels:
+  key: value
+
 kustomize:
   # Use a custom folder for kustomize resources. This folder must contain
   # a kustomization.yaml file.
@@ -223,6 +228,10 @@ dependsOn:
   # Format: <GITREPO-NAME>-<BUNDLE_PATH> with all path separators replaced by "-"
   # Example: GitRepo name "one", Bundle path "/multi-cluster/hello-world" => "one-multi-cluster-hello-world"
   - name: one-multi-cluster-hello-world
+  # Select bundles to depend on based on their label.
+  - bundleSelector:
+      matchLabels:
+        app: weak-monkey
 ```
 
 ### Private Helm Repositories
