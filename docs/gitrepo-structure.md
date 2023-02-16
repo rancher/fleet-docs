@@ -140,7 +140,10 @@ helm:
   atomic: false
   # Disable go template pre-processing on the fleet values
   disablePreProcess: false
-
+  # if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready.
+  # It will wait for as long as timeoutSeconds
+  waitForJobs: true
+  
 # A paused bundle will not update downstream clusters but instead mark the bundle
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
