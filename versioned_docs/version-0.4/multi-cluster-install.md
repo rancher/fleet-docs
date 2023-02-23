@@ -135,7 +135,7 @@ Helm charts.
 
 First install the Fleet CustomResourcesDefintions.
 ```shell
-helm -n cattle-fleet-system install --create-namespace --wait fleet-crd https://github.com/rancher/fleet/releases/download/v0.4.0/fleet-crd-0.4.0.tgz
+helm -n cattle-fleet-system install --create-namespace --wait fleet-crd https://github.com/rancher/fleet/releases/download/v0.4.1/fleet-crd-0.4.1.tgz
 ```
 
 Second install the Fleet controllers.
@@ -143,7 +143,7 @@ Second install the Fleet controllers.
 helm -n cattle-fleet-system install --create-namespace --wait \
     --set apiServerURL="${API_SERVER_URL}" \
     --set-file apiServerCA="${API_SERVER_CA}" \
-    fleet https://github.com/rancher/fleet/releases/download/v0.4.0/fleet-0.4.0.tgz
+    fleet https://github.com/rancher/fleet/releases/download/v0.4.1/fleet-0.4.1.tgz
 ```
 
 Fleet should be ready to use. You can check the status of the Fleet controller pods by running the below commands.
