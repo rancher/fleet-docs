@@ -75,6 +75,7 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           showLastUpdateTime: true,
           editUrl: 'https://github.com/rancher/fleet-docs/edit/main/',
+          lastVersion: 'current',
           versions: {
             current: {
               label: 'Next 🚧',
