@@ -15,6 +15,7 @@ fleet-manager [flags]
 ```
       --debug               Turn on debug logging
       --debug-level int     If debugging is enabled, set klog -v=X
+      --disable-bootstrap   disable local cluster components
       --disable-gitops      disable gitops components
   -h, --help                help for fleet-manager
       --kubeconfig string   Kubeconfig file
