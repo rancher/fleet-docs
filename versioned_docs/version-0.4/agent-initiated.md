@@ -64,10 +64,10 @@ Finally, install the agent using Helm.
 
 ```shell
 helm -n cattle-fleet-system install --create-namespace --wait \
-    ${CLUSTER_LABELS} \
+    $CLUSTER_LABELS \
     --values values.yaml \
-    --set apiServerCA=${API_SERVER_CA_DATA} \
-    --set apiServerURL=${API_SERVER_URL} \
+    --set apiServerCA="$API_SERVER_CA_DATA" \
+    --set apiServerURL="$API_SERVER_URL" \
     fleet-agent https://github.com/rancher/fleet/releases/download/v0.4.0/fleet-agent-0.4.0.tgz
 ```
 
@@ -145,7 +145,7 @@ Finally, install the agent using Helm.
 
 ```shell
 helm -n cattle-fleet-system install --create-namespace --wait \
-    --set clientID="${CLUSTER_CLIENT_ID}" \
+    --set clientID="$CLUSTER_CLIENT_ID" \
     --values values.yaml \
     fleet-agent https://github.com/rancher/fleet/releases/download/v0.4.0/fleet-agent-v0.4.0.tgz
 ```

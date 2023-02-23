@@ -67,10 +67,10 @@ Finally, install the agent using Helm.
 
 <CodeBlock language="bash">
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
-    $\{CLUSTER_LABELS} \\
+    $CLUSTER_LABELS \\
     --values values.yaml \\
-    --set apiServerCA=$\{API_SERVER_CA_DATA} \\
-    --set apiServerURL=$\{API_SERVER_URL} \\
+    --set apiServerCA="$API_SERVER_CA_DATA" \\
+    --set apiServerURL="$API_SERVER_URL" \\
     fleet-agent`} {versions["v0.5"].fleetAgent}
 </CodeBlock>
 
@@ -148,7 +148,7 @@ Finally, install the agent using Helm.
 
 <CodeBlock language="bash">
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
-    --set clientID="$\{CLUSTER_CLIENT_ID}" \\
+    --set clientID="$CLUSTER_CLIENT_ID" \\
     --values values.yaml \\
     fleet-agent`} {versions["v0.5"].fleetAgent}
 </CodeBlock>
