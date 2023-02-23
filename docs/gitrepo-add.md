@@ -207,7 +207,8 @@ Just like with SSH, reference the secret in your GitRepo resource via `clientSec
 
 :::warning
 The credentials will be used unconditionally for all Helm repositories referenced by the gitrepo resource.
-Make sure you don't leak credentials by mixing public and private repositories. As a workaround, split them into different gitrepos.
+Make sure you don't leak credentials by mixing public and private repositories. Split them into different gitrepos, or use
+`helmRepoUrlRegex` to limit the scope of credentials to certain servers.
 :::
 
 For a private Helm repo, users can reference a secret with the following keys:
@@ -223,6 +224,9 @@ For example, to add a secret in kubectl, run
 `kubectl create secret -n $namespace generic helm --from-literal=username=foo --from-literal=password=bar --from-file=cacerts=/path/to/cacerts --from-file=ssh-privatekey=/path/to/privatekey.pem`
 
 After secret is created, specify the secret to `gitRepo.spec.helmSecretName`. Make sure secret is created under the same namespace with gitrepo.
+
+:::note
+If you are using ["rancher-backups"](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/backup-restore-and-disaster-recovery/back-up-rancher) and want this secret to be included the backup, please add the label `resources.cattle.io/backup: true` to the secret. In that case, make sure to encrypt the backup to protect sensitive credentials.
 
 
 # Troubleshooting

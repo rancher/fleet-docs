@@ -224,3 +224,11 @@ Error opening a gzip reader for /tmp/getter154967024/archive: gzip: invalid head
 ```
 
 ... the content of the helm chart is incorrect. Manually download the chart to your local machine and check the content.
+
+### Agent is no longer registered
+
+You can force a redeployment of an agent for a given cluster by setting `redeployAgentGeneration`.
+
+```sh
+kubectl patch clusters.fleet.cattle.io -n fleet-local local --type=json -p '[{"op": "add", "path": "/spec/redeployAgentGeneration", "value": -1}]'
+```

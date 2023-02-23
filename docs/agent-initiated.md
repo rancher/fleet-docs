@@ -39,10 +39,10 @@ Third, set variables with the Fleet cluster's API Server URL and CA, for the dow
 
 ```shell
 API_SERVER_URL=https://...
-API_SERVER_CA=...
+API_SERVER_CA_DATA=...
 ```
 
-Value in `API_SERVER_CA` can be obtained from a `.kube/config` file with valid data to connect to the upstream cluster
+Value in `API_SERVER_CA_DATA` can be obtained from a `.kube/config` file with valid data to connect to the upstream cluster
 (under the `certificate-authority-data` key). Alternatively it can be obtained from within the upstream cluster itself,
 by looking up the default ServiceAccount secret name (typically prefixed with `default-token-`, in the default namespace),
 under the `ca.crt` key.
@@ -67,10 +67,10 @@ Finally, install the agent using Helm.
 
 <CodeBlock language="bash">
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
-    $\{CLUSTER_LABELS} \\
+    $CLUSTER_LABELS \\
     --values values.yaml \\
-    --set apiServerCA=$\{API_SERVER_CA} \\
-    --set apiServerURL=$\{API_SERVER_URL} \\
+    --set apiServerCA="$API_SERVER_CA_DATA" \\
+    --set apiServerURL="$API_SERVER_URL" \\
     fleet-agent`} {versions.next.fleetAgent}
 </CodeBlock>
 
@@ -148,7 +148,7 @@ Finally, install the agent using Helm.
 
 <CodeBlock language="bash">
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
-    --set clientID="$\{CLUSTER_CLIENT_ID}" \\
+    --set clientID="$CLUSTER_CLIENT_ID" \\
     --values values.yaml \\
     fleet-agent`} {versions.next.fleetAgent}
 </CodeBlock>
