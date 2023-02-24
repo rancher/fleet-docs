@@ -1,4 +1,4 @@
-# Image scan
+# Using Image Scan to Update Container Image References
 
 Image scan in fleet allows you to scan your image repository, fetch the desired image and update your git repository, 
 without the need to manually update your manifests.

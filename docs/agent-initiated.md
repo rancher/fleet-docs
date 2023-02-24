@@ -1,24 +1,26 @@
 import {versions} from '@site/src/fleetVersions';
 import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Agent Initiated
+
+A downstream cluster is registered by installing an agent via helm and using the **cluster registration token** and optionally a **client ID** or **cluster labels**.
 
 Refer to the [overview page](./cluster-overview.md#agent-initiated-registration) for a background information on the agent initiated registration style.
 
 ## Cluster Registration Token and Client ID
 
-A downstream cluster is registered using the **cluster registration token** and optionally a **client ID** or **cluster labels**.
-
 The **cluster registration token** is a credential that will authorize the downstream cluster agent to be
-able to initiate the registration process. This is required. Refer to the [cluster registration token page](./cluster-tokens.md) for more information
-on how to create tokens and obtain the values. The cluster registration token is manifested as a `values.yaml` file that will
-be passed to the `helm install` process.
+able to initiate the registration process. This is required.
+The cluster registration token is manifested as a `values.yaml` file that will be passed to the `helm install` process.
+Alternatively one can pass the token directly to the helm install command via `--set token="$token"`.
 
 There are two styles of registering an agent. You can have the cluster for this agent dynamically created, in which
 case you will probably want to specify **cluster labels** upon registration.  Or you can have the agent register to a predefined
 cluster in the Fleet manager, in which case you will need a **client ID**.  The former approach is typically the easiest.
 
-## Install agent for a new Cluster
+## Install Agent For a New Cluster
 
 The Fleet agent is installed as a Helm chart. Following are explanations how to determine and set its parameters.
 
@@ -65,6 +67,8 @@ to change which cluster Helm is installing to.
 
 Finally, install the agent using Helm.
 
+<Tabs>
+  <TabItem value="helm" label="Install" default>
 <CodeBlock language="bash">
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
     $CLUSTER_LABELS \\
@@ -73,14 +77,18 @@ Finally, install the agent using Helm.
     --set apiServerURL="$API_SERVER_URL" \\
     fleet-agent`} {versions.next.fleetAgent}
 </CodeBlock>
-
-The agent should now be deployed.  You can check that status of the fleet pods by running the below commands.
+</TabItem>
+<TabItem value="validate" label="Validate">
+You can check that status of the fleet pods by running the below commands.
 
 ```shell
 # Ensure kubectl is pointing to the right cluster
 kubectl -n cattle-fleet-system logs -l app=fleet-agent
 kubectl -n cattle-fleet-system get pods -l app=fleet-agent
 ```
+</TabItem>
+</Tabs>
+The agent should now be deployed.
 
 Additionally you should see a new cluster registered in the Fleet manager.  Below is an example of checking that a new cluster
 was registered in the `clusters` [namespace](./namespaces.md).  Please ensure your `${HOME}/.kube/config` is pointed to the Fleet
@@ -94,7 +102,7 @@ NAME                   BUNDLES-READY   NODES-READY   SAMPLE-NODE             LAS
 cluster-ab13e54400f1   1/1             1/1           k3d-cluster2-server-0   2020-08-31T19:23:10Z   
 ```
 
-## Install agent for a predefined Cluster
+## Install Agent For a Predefined Cluster
 
 Client IDs are for the purpose of predefining clusters in the Fleet manager with existing labels and repos targeted to them.
 A client ID is not required and is just one approach to managing clusters.
@@ -146,6 +154,8 @@ to change which cluster Helm is installing to.
 
 Finally, install the agent using Helm.
 
+<Tabs>
+  <TabItem value="helm2" label="Install" default>
 <CodeBlock language="bash">
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
     --set clientID="$CLUSTER_CLIENT_ID" \\
@@ -153,13 +163,18 @@ Finally, install the agent using Helm.
     fleet-agent`} {versions.next.fleetAgent}
 </CodeBlock>
 
-The agent should now be deployed.  You can check that status of the fleet pods by running the below commands.
+</TabItem>
+<TabItem value="validate2" label="Validate">
+You can check that status of the fleet pods by running the below commands.
 
 ```shell
 # Ensure kubectl is pointing to the right cluster
 kubectl -n cattle-fleet-system logs -l app=fleet-agent
 kubectl -n cattle-fleet-system get pods -l app=fleet-agent
 ```
+</TabItem>
+</Tabs>
+The agent should now be deployed.
 
 Additionally you should see a new cluster registered in the Fleet manager.  Below is an example of checking that a new cluster
 was registered in the `clusters` [namespace](./namespaces.md).  Please ensure your `${HOME}/.kube/config` is pointed to the Fleet
@@ -172,3 +187,69 @@ kubectl -n clusters get clusters.fleet.cattle.io
 NAME                   BUNDLES-READY   NODES-READY   SAMPLE-NODE             LAST-SEEN              STATUS
 my-cluster             1/1             1/1           k3d-cluster2-server-0   2020-08-31T19:23:10Z   
 ```
+
+## Cluster Registration Tokens
+
+:::info
+
+__Not needed for Manager initiated registration__:
+For manager initiated registrations the token is managed by the Fleet manager and does
+not need to be manually created and obtained.
+
+:::
+
+For an agent initiated registration the downstream cluster must have a cluster registration token.
+Cluster registration tokens are used to establish a new identity for a cluster. Internally
+cluster registration tokens are managed by creating Kubernetes service accounts that have the
+permissions to create `ClusterRegistrationRequests` within a specific namespace.  Once the
+cluster is registered a new `ServiceAccount` is created for that cluster that is used as
+the unique identity of the cluster. The agent is designed to forget the cluster registration
+token after registration. While the agent will not maintain a reference to the cluster registration
+token after a successful registration please note that usually other system bootstrap scripts do.
+
+Since the cluster registration token is forgotten, if you need to re-register a cluster you must
+give the cluster a new registration token.
+
+### Token TTL
+
+Cluster registration tokens can be reused by any cluster in a namespace.  The tokens can be given a TTL
+such that it will expire after a specific time.
+
+### Create a new Token
+
+The `ClusterRegistationToken` is a namespaced type and should be created in the same namespace
+in which you will create `GitRepo` and `ClusterGroup` resources. For in depth details on how namespaces
+are used in Fleet refer to the documentation on [namespaces](./namespaces.md).  Create a new
+token with the below YAML.
+
+```yaml
+kind: ClusterRegistrationToken
+apiVersion: "fleet.cattle.io/v1alpha1"
+metadata:
+    name: new-token
+    namespace: clusters
+spec:
+    # A duration string for how long this token is valid for. A value <= 0 or null means infinite time.
+    ttl: 240h
+```
+
+After the `ClusterRegistrationToken` is created, Fleet will create a corresponding `Secret` with the same name.
+As the `Secret` creation is performed asynchronously, you will need to wait until it's available before using it.
+
+One way to do so is via the following one-liner:
+```shell
+while ! kubectl --namespace=clusters  get secret new-token; do sleep 5; done
+```
+
+### Obtaining Token Value (Agent values.yaml)
+
+The token value contains YAML content for a `values.yaml` file that is expected to be passed to `helm install`
+to install the Fleet agent on a downstream cluster.
+
+Such value is contained in the `values` field of the `Secret` mentioned above. To obtain the YAML content for the
+above example one can run the following one-liner:
+```shell
+kubectl --namespace clusters get secret new-token -o 'jsonpath={.data.values}' | base64 --decode > values.yaml
+```
+
+Once the `values.yaml` is ready it can be used repeatedly by clusters to register until the TTL expires.

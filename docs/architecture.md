@@ -1,7 +1,5 @@
 # Architecture
 
-![](/img/arch.png)
-
 Fleet has two primary components.  The Fleet manager and the cluster agents.  These
 components work in a two-stage pull model.  The Fleet manager will pull from git and the
 cluster agents will pull from the Fleet manager.

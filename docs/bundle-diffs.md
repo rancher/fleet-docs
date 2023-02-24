@@ -1,4 +1,4 @@
-# Generating Diffs for Modified GitRepos
+# Generating Diffs to Ignore Modified GitRepos
 
 
 Continuous Delivery in Rancher is powered by fleet. When a user adds a GitRepo CR, then Continuous Delivery creates the associated fleet bundles.
@@ -17,6 +17,13 @@ Associated Bundle
 Fleet bundles support the ability to specify a custom [jsonPointer patch](http://jsonpatch.com/).
 
 With the patch, users can instruct fleet to ignore object modifications.
+
+## Simple Example
+
+https://github.com/rancher/fleet-examples/tree/master/bundle-diffs
+
+
+## Gatekeeper Example
 
 In this example, we are trying to deploy opa-gatekeeper using Continuous Delivery to our clusters.
 

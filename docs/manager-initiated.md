@@ -1,6 +1,7 @@
 # Manager Initiated
 
 Refer to the [overview page](./cluster-overview.md#agent-initiated-registration) for a background information on the manager initiated registration style.
+If you are using Fleet standalone without Rancher, it must be installed as described in [installation details](installation.md).
 
 ## Kubeconfig Secret
 
@@ -17,6 +18,7 @@ registered with Fleet.
 ## Example
 
 ### Kubeconfig Secret
+
 ```yaml
 kind: Secret
 apiVersion: v1
@@ -26,6 +28,7 @@ metadata:
 data:
   value: YXBpVmVyc2lvbjogdjEKY2x1c3RlcnM6Ci0gY2x1c3RlcjoKICAgIHNlcnZlcjogaHR0cHM6Ly9leGFtcGxlLmNvbTo2NDQzCiAgbmFtZTogY2x1c3Rlcgpjb250ZXh0czoKLSBjb250ZXh0OgogICAgY2x1c3RlcjogY2x1c3RlcgogICAgdXNlcjogdXNlcgogIG5hbWU6IGRlZmF1bHQKY3VycmVudC1jb250ZXh0OiBkZWZhdWx0CmtpbmQ6IENvbmZpZwpwcmVmZXJlbmNlczoge30KdXNlcnM6Ci0gbmFtZTogdXNlcgogIHVzZXI6CiAgICB0b2tlbjogc29tZXRoaW5nCg==
 ```
+
 ### Cluster
 ```yaml
 apiVersion: fleet.cattle.io/v1alpha1

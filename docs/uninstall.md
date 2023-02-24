@@ -8,3 +8,7 @@ two commands:
 helm -n cattle-fleet-system uninstall fleet
 helm -n cattle-fleet-system uninstall fleet-crd
 ```
+
+:::caution
+Uninstalling the CRDs will remove all deployed workloads.
+:::
