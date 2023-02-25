@@ -99,7 +99,7 @@ spec:
   # Setting this to zero does not disable polling. It results in a 15s
   # interval, too.
   #
-  # pollingInterval: 15
+  # pollingInterval: 15s
 
   # Paused  causes changes in Git to not be propagated down to the clusters but
   # instead mark resources as OutOfSync
