@@ -98,8 +98,10 @@ spec:
   # is 15 seconds.
   # Setting this to zero does not disable polling. It results in a 15s
   # interval, too.
+  # As checking a git repo incurs a CPU cost, raising this value can help
+  # lowering fleetcontroller's CPU usage if tens of git repos are used or more
   #
-  # pollingInterval: 15
+  # pollingInterval: 15s
 
   # Paused  causes changes in Git to not be propagated down to the clusters but
   # instead mark resources as OutOfSync
