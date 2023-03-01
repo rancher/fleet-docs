@@ -8,7 +8,7 @@ important to understand the security model and how one can use Fleet in a multi-
 
 The primary types are all scoped to a namespace. All selectors for `GitRepo` targets will be evaluated against
 the `Clusters` and `ClusterGroups` in the same namespaces. This means that if you give `create` or `update` privileges
-to a the `GitRepo` type in a namespace, that end user can modify the selector to match any cluster in that namespace.
+to a `GitRepo` type in a namespace, that end user can modify the selector to match any cluster in that namespace.
 This means in practice if you want to have two teams self manage their own `GitRepo` registrations but they should
 not be able to target each others clusters, they should be in different namespaces.
 
@@ -17,6 +17,10 @@ not be able to target each others clusters, they should be in different namespac
 When deploying a Fleet bundle, the specified namespace will automatically be created if it does not already exist.
 
 ## Special Namespaces
+
+An overview of the [namespaces](namespaces.md) used by fleet and their resources.
+
+![Namespace](/img/FleetNamespaces.svg)
 
 ### fleet-local (local workspace, cluster registration namespace)
 
@@ -41,14 +45,14 @@ to live in this namespace in the downstream cluster.
 This namespace holds secrets for the cluster registration process. It should contain no other resources in it,
 especially secrets.
 
-### Cluster namespaces
+### Cluster Namespaces
 
 For every cluster that is registered a namespace is created by the Fleet manager for that cluster.
 These namespaces are named in the form `cluster-${namespace}-${cluster}-${random}`.  The purpose of this
 namespace is that all `BundleDeployments` for that cluster are put into this namespace and
 then the downstream cluster is given access to watch and update `BundleDeployments` in that namespace only.
 
-## Cross namespace deployments
+## Cross Namespace Deployments
 
 It is possible to create a GitRepo that will deploy across namespaces. The primary purpose of this is so that a
 central privileged team can manage common configuration for many clusters that are managed by different teams. The way
@@ -107,7 +111,7 @@ defaultClientSecretName: ""
 defaultServiceAccount: ""
 ```
 
-### AllowedTargetNamespaces
+### Allowed Target Namespaces
 
 This can be used to limit a deployment to a set of namespaces on a downstream cluster.
 If an allowedTargetNamespaces restriction is present, all `GitRepos` must

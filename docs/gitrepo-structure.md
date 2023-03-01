@@ -1,4 +1,4 @@
-# Expected Repo Structure
+# GitRepo Contents
 
 Fleet will create bundles from a git repository. This happens either explicitly by specifying paths, or when a `fleet.yaml` is found.
 
@@ -54,7 +54,7 @@ __How changes are applied to `values.yaml`__:
 
 :::
 
-```yaml
+```yaml title="fleet.yaml"
 # The default namespace to be applied to resources. This field is not used to
 # enforce or lock down the deployment to a specific namespace, but instead
 # provide the default value of the namespace field if one is not specified

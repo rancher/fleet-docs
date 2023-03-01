@@ -1,7 +1,11 @@
 import {versions} from '@site/src/fleetVersions';
 import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Quick Start
+
+![](/img/single-cluster.png)
 
 Who needs documentation, lets just run this thing!
 
@@ -10,9 +14,18 @@ Who needs documentation, lets just run this thing!
 Get helm if you don't have it.  Helm 3 is just a CLI and won't do bad insecure
 things to your cluster.
 
-```
-brew install helm
-```
+<Tabs>
+  <TabItem value="linux" label="Linux/Mac" default>
+    <CodeBlock language="bash">
+    brew install helm
+    </CodeBlock>
+  </TabItem>
+  <TabItem value="windows" label="Windows" default>
+    <CodeBlock language="bash">
+    choco install kubernetes-helm
+    </CodeBlock>
+  </TabItem>
+</Tabs>
 
 Install the Fleet Helm charts (there's two because we separate out CRDs for ultimate flexibility.)
 
@@ -24,7 +37,7 @@ helm -n cattle-fleet-system install --create-namespace --wait \\
     fleet`} {versions.next.fleet}
 </CodeBlock>
 
-## Add a Git Repo to watch
+## Add a Git Repo to Watch
 
 Change `spec.repo` to your git repo of choice.  Kubernetes manifest files that should
 be deployed should be in `/manifests` in your repo.

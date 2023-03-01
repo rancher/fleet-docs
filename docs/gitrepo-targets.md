@@ -1,5 +1,7 @@
 # Mapping to Downstream Clusters
 
+[Fleet in Rancher](https://rancher.com/docs/rancher/v2.6/en/deploy-across-clusters/fleet/) allows users to manage clusters easily as if they were one cluster. Users can deploy bundles, which can be comprised of deployment manifests or any other Kubernetes resource, across clusters using grouping configuration.
+
 :::info
 
 __Multi-cluster Only__:
@@ -9,7 +11,7 @@ This approach only applies if you are running Fleet in a multi-cluster style
 
 When deploying `GitRepos` to downstream clusters the clusters must be mapped to a target.
 
-## Defining targets
+## Defining Targets
 
 The deployment targets of `GitRepo` is done using the `spec.targets` field to
 match clusters or cluster groups. The YAML specification is as below.
@@ -67,7 +69,7 @@ clusterSelector: {}
 clusterSelector: null
 ```
 
-## Default target
+## Default Target
 
 If no target is set for the `GitRepo` then the default targets value is applied.  The default targets value is as below.
 
@@ -79,3 +81,62 @@ targets:
 
 This means if you wish to setup a default location non-configured GitRepos will go to, then just create a cluster group called default
 and add clusters to it.
+
+## Customization per Cluster
+
+To demonstrate how to deploy Kubernetes manifests across different clusters with customization using Fleet, we will use [multi-cluster/helm/fleet.yaml](https://github.com/rancher/fleet-examples/blob/master/multi-cluster/helm/fleet.yaml).
+
+**Situation:** User has three clusters with three different labels: `env=dev`, `env=test`, and `env=prod`. User wants to deploy a frontend application with a backend database across these clusters. 
+
+**Expected behavior:** 
+
+- After deploying to the `dev` cluster, database replication is not enabled.
+- After deploying to the `test` cluster, database replication is enabled.
+- After deploying to the `prod` cluster, database replication is enabled and Load balancer services are exposed.
+
+**Advantage of Fleet:**
+
+Instead of deploying the app on each cluster, Fleet allows you to deploy across all clusters following these steps:
+
+1. Deploy gitRepo `https://github.com/rancher/fleet-examples.git` and specify the path `multi-cluster/helm`.
+2. Under `multi-cluster/helm`, a Helm chart will deploy the frontend app service and backend database service.
+3. The following rule will be defined in `fleet.yaml`: 
+
+```
+targetCustomizations:
+- name: dev
+  helm:
+    values:
+      replication: false
+  clusterSelector:
+    matchLabels:
+      env: dev
+
+- name: test
+  helm:
+    values:
+      replicas: 3
+  clusterSelector:
+    matchLabels:
+      env: test
+
+- name: prod
+  helm:
+    values:
+      serviceType: LoadBalancer
+      replicas: 3
+  clusterSelector:
+    matchLabels:
+      env: prod
+```
+
+**Result:**
+
+Fleet will deploy the Helm chart with your customized `values.yaml` to the different clusters.
+
+>**Note:** Configuration management is not limited to deployments but can be expanded to general configuration management. Fleet is able to apply configuration management through customization among any set of clusters automatically.
+
+## Additional Examples
+
+Examples using raw Kubernetes YAML, Helm charts, Kustomize, and combinations
+of the three are in the [Fleet Examples repo](https://github.com/rancher/fleet-examples/).
