@@ -1,4 +1,4 @@
-# Custom Resources
+# Custom Resources Spec
 
 * [GitRepo](#gitrepo)
 * [GitRepoRestriction](#gitreporestriction)

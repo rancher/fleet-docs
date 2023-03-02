@@ -36,3 +36,9 @@ to that cluster. After the cluster credential is established the cluster "forget
 The service accounts given to the clusters only have privileges to list `BundleDeployment` in the namespace created
 specifically for that cluster. It can also update the `status` subresource of `BundleDeployment` and the `status`
 subresource of it's `Cluster` resource.
+
+## Component Overview
+
+An overview of the components and how they interact on a high level.
+
+![Components](/img/FleetComponents.svg)

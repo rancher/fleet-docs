@@ -9,8 +9,8 @@ To deploy workloads onto downstream clusters, first create a Git repo, then crea
 This tutorial uses the [fleet-examples](https://github.com/rancher/fleet-examples) repository.
 
 :::note
-For more details on how to structure the repository and configure the deployment of each bundle see [GitRepo Contents](./gitrepo-structure).
-For more details on the options that are available per Git repository see [Adding a GitRepo](./gitrepo-add).
+For more details on how to structure the repository and configure the deployment of each bundle see [GitRepo Contents](./gitrepo-content.md).
+For more details on the options that are available per Git repository see [Adding a GitRepo](./gitrepo-add.md).
 :::
 
 ## Single-Cluster Examples

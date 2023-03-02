@@ -1,4 +1,4 @@
-# Multi Tenancy
+# Setup Multi Tenancy
 
 Fleet uses Kubernetes RBAC where possible.
 
