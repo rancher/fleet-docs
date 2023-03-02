@@ -32,7 +32,7 @@ defaultNamespace: default
 namespace: default
 
 # Optional map of labels, that are set at the bundle and can be used in a 
-# dependsOn.bundleSelector
+# dependsOn.selector
 labels:
   key: value
 
@@ -199,8 +199,7 @@ dependsOn:
   # Example: GitRepo name "one", Bundle path "/multi-cluster/hello-world" => "one-multi-cluster-hello-world"
   - name: one-multi-cluster-hello-world
   # Select bundles to depend on based on their label.
-  - bundleSelector:
+  - selector:
       matchLabels:
         app: weak-monkey
 ```
-
