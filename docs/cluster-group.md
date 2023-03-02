@@ -1,4 +1,4 @@
-# Cluster Groups
+# Create Cluster Groups
 
 Clusters in a namespace can be put into a cluster group. A cluster group is essentially a named selector.
 The only parameter for a cluster group is essentially the selector.

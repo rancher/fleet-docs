@@ -18,7 +18,7 @@ When deploying a Fleet bundle, the specified namespace will automatically be cre
 
 ## Special Namespaces
 
-An overview of the [namespaces](namespaces.md) used by fleet and their resources.
+An overview of the [namespaces](./namespaces.md) used by fleet and their resources.
 
 ![Namespace](/img/FleetNamespaces.svg)
 

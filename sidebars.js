@@ -19,7 +19,7 @@ module.exports = {
         'architecture',
         'concepts',
         'ref-bundle-stages',
-        'ref-components',
+        'gitrepo-content',
         'namespaces',
         'ref-resources',
       ],
@@ -30,14 +30,7 @@ module.exports = {
       collapsed: false,
       items:[
         {type: 'doc', id: 'installation'},
-        {
-          'Registering Clusters':
-          [
-            {type: 'doc', id: 'cluster-overview'},
-            {type: 'doc', id: 'agent-initiated'},
-            {type: 'doc', id: 'manager-initiated'},
-          ],
-        },
+        {type: 'doc', id: 'cluster-registration'},
         {type:'doc', id:'cluster-group'},
         'multi-tenancy',
       ],
@@ -48,7 +41,6 @@ module.exports = {
       collapsed: false,
       items:[
         {type:'doc', id:'gitrepo-add'},
-        {type:'doc', id:'gitrepo-structure'},
         {type:'doc', id:'gitrepo-targets'},
         {type:'doc', id:'bundle-diffs'},
         {type:'doc', id:'webhook'},
@@ -79,7 +71,7 @@ module.exports = {
         'ref-configuration',
         "ref-crds",
         'ref-fleet-yaml',
-        'ref-crd-gitrepo',
+        'ref-gitrepo',
       ],
     },
     'troubleshooting',

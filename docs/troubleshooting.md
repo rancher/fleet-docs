@@ -106,7 +106,7 @@ When testing Fleet with private git repositories, you will notice that HTTP secr
 
 ### Fleet fails with bad response code: 403
 
-If your GitJob returns the error below, the problem may be that Fleet cannot access the Helm repo you specified in your [`fleet.yaml`](./gitrepo-structure.md):
+If your GitJob returns the error below, the problem may be that Fleet cannot access the Helm repo you specified in your [`fleet.yaml`](./ref-fleet-yaml.md):
 
 ```
 time="2021-11-04T09:21:24Z" level=fatal msg="bad response code: 403"
