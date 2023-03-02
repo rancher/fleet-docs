@@ -18,7 +18,7 @@ goes from the managed cluster to the Fleet manager. The fleet manager does not i
 connections to downstream clusters. This means managed clusters can run in private networks and behind
 NATs. The only requirement is the cluster agent needs to be able to communicate with the
 Kubernetes API of the cluster running the Fleet manager. The one exception to this is if you use
-the [manager initiated](./manager-initiated.md) cluster registration flow.  This is not required, but
+the [manager initiated](./cluster-registration.md#manager-initiated) cluster registration flow.  This is not required, but
 an optional pattern.
 
 The cluster agents are not assumed to have an "always on" connection.  They will resume operation as

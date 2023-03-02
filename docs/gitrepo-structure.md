@@ -1,4 +1,4 @@
-# GitRepo Contents
+# Git Repository Contents
 
 Fleet will create bundles from a git repository. This happens either explicitly by specifying paths, or when a `fleet.yaml` is found.
 
@@ -243,7 +243,7 @@ dependsOn:
 ### Private Helm Repositories
 
 For a private Helm repo, users can reference a secret from the git repo resource.
-See [Using Private Helm Repositories](gitrepo-add#using-private-helm-repositories) for more information.
+See [Using Private Helm Repositories](./gitrepo-add.md#using-private-helm-repositories) for more information.
 
 ### Using ValuesFrom
 
@@ -336,6 +336,6 @@ will target `deployment.yaml`.  The patch will be applied using JSON Merge, Stra
 Which strategy is used is based on the file content. Even though JSON strategies are used, the files can be written
 using YAML syntax.
 
-## Cluster and Bundle state
+## Cluster and Bundle State
 
 See [Cluster and Bundle state](./cluster-bundles-state.md).

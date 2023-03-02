@@ -1,6 +1,6 @@
-# Adding a GitRepo
+# Create a GitRepo Resource
 
-## Proper namespace
+## Proper Namespace
 Git repos are added to the Fleet manager using the `GitRepo` custom resource type. The `GitRepo` type is namespaced. By default, Rancher will create two Fleet workspaces: **fleet-default** and **fleet-local**.
 
 - `Fleet-default` will contain all the downstream clusters that are already registered through Rancher.
@@ -18,9 +18,9 @@ If you are using Fleet in a [single cluster](./concepts.md) style, the namespace
 
 For a [multi-cluster](./concepts.md) style, please ensure you use the correct repo that will map to the right target clusters.
 
-## Create GitRepo instance
+## Create GitRepo Instance
 
-Git repositories are register by creating a `GitRepo` following the below YAML sample.  Refer
+Git repositories are registered by creating a `GitRepo` following the below YAML sample.  Refer
 to the inline comments as the means of each field
 
 ```yaml

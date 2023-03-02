@@ -19,7 +19,6 @@ module.exports = {
         'architecture',
         'concepts',
         'ref-bundle-stages',
-        'ref-components',
         'namespaces',
         'ref-resources',
       ],
@@ -30,14 +29,7 @@ module.exports = {
       collapsed: false,
       items:[
         {type: 'doc', id: 'installation'},
-        {
-          'Registering Clusters':
-          [
-            {type: 'doc', id: 'cluster-overview'},
-            {type: 'doc', id: 'agent-initiated'},
-            {type: 'doc', id: 'manager-initiated'},
-          ],
-        },
+        {type: 'doc', id: 'cluster-registration'},
         {type:'doc', id:'cluster-group'},
         'multi-tenancy',
       ],
@@ -77,6 +69,7 @@ module.exports = {
         {type:'doc', id:'cluster-bundles-state'},
         'ref-registration',
         'ref-configuration',
+        'ref-components',
         "ref-crds",
         'ref-fleet-yaml',
         'ref-crd-gitrepo',

@@ -3,13 +3,46 @@ import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Agent Initiated
+# Register Downstream Clusters
+
+## Overview
+
+There are two specific styles to registering clusters. These styles will be referred
+to as **agent initiated** and **manager initiated** registration. Typically one would
+go with the agent initiated registration but there are specific use cases in which
+manager initiated is a better workflow.
+
+### Agent Initiated Registration
+
+Agent initiated refers to a pattern in which the downstream cluster installs an agent with a 
+[cluster registration token](#create-cluster-registration-tokens) and optionally a client ID. The cluster
+agent will then make a API request to the Fleet manager and initiate the registration process. Using
+this process the Manager will never make an outbound API request to the downstream clusters and will thus
+never need to have direct network access. The downstream cluster only needs to make outbound HTTPS
+calls to the manager.
+
+### Manager Initiated Registration
+
+Manager initiated registration is a process in which you register an existing Kubernetes cluster
+with the Fleet manager and the Fleet manager will make an API call to the downstream cluster to
+deploy the agent. This style can place additional network access requirements because the Fleet
+manager must be able to communicate with the downstream cluster API server for the registration process.
+After the cluster is registered there is no further need for the manager to contact the downstream
+cluster API.  This style is more compatible if you wish to manage the creation of all your Kubernetes
+clusters through GitOps using something like [cluster-api](https://github.com/kubernetes-sigs/cluster-api)
+or [Rancher](https://github.com/rancher/rancher).
+
+## Agent Initiated
 
 A downstream cluster is registered by installing an agent via helm and using the **cluster registration token** and optionally a **client ID** or **cluster labels**.
 
-Refer to the [overview page](./cluster-overview.md#agent-initiated-registration) for a background information on the agent initiated registration style.
+:::info
+It's not necessary to configure the fleet manager for [multi cluster](./installation.md#configuration-for-multi-cluster), as the downstream agent we install via Helm will connect to the Kubernetes API of the upstream cluster directly.
 
-## Cluster Registration Token and Client ID
+Agent-initiated registration is normally not used with Rancher.
+:::
+
+### Cluster Registration Token and Client ID
 
 The **cluster registration token** is a credential that will authorize the downstream cluster agent to be
 able to initiate the registration process. This is required.
@@ -20,11 +53,11 @@ There are two styles of registering an agent. You can have the cluster for this 
 case you will probably want to specify **cluster labels** upon registration.  Or you can have the agent register to a predefined
 cluster in the Fleet manager, in which case you will need a **client ID**.  The former approach is typically the easiest.
 
-## Install Agent For a New Cluster
+### Install Agent For a New Cluster
 
 The Fleet agent is installed as a Helm chart. Following are explanations how to determine and set its parameters.
 
-First, follow the [cluster registration token page](./cluster-tokens.md) to obtain the `values.yaml` which contains
+First, follow the [cluster registration token instructions](#create-cluster-registration-tokens) to obtain the `values.yaml` which contains
 the registration token to authenticate against the Fleet cluster.
 
 Second, optionally you can define labels that will assigned to the newly created cluster upon registration. After
@@ -102,7 +135,7 @@ NAME                   BUNDLES-READY   NODES-READY   SAMPLE-NODE             LAS
 cluster-ab13e54400f1   1/1             1/1           k3d-cluster2-server-0   2020-08-31T19:23:10Z   
 ```
 
-## Install Agent For a Predefined Cluster
+### Install Agent For a Predefined Cluster
 
 Client IDs are for the purpose of predefining clusters in the Fleet manager with existing labels and repos targeted to them.
 A client ID is not required and is just one approach to managing clusters.
@@ -129,7 +162,7 @@ spec:
   clientID: "really-random"
 ```
 
-Second, follow the [cluster registration token page](./cluster-tokens.md) to obtain the `values.yaml` file to be used.
+Second, follow the [cluster registration token instructions]((#create-cluster-registration-tokens) to obtain the `values.yaml` file to be used.
 
 Third, setup your environment to use the client ID.
 
@@ -188,7 +221,7 @@ NAME                   BUNDLES-READY   NODES-READY   SAMPLE-NODE             LAS
 my-cluster             1/1             1/1           k3d-cluster2-server-0   2020-08-31T19:23:10Z   
 ```
 
-## Cluster Registration Tokens
+### Create Cluster Registration Tokens
 
 :::info
 
@@ -210,12 +243,12 @@ token after a successful registration please note that usually other system boot
 Since the cluster registration token is forgotten, if you need to re-register a cluster you must
 give the cluster a new registration token.
 
-### Token TTL
+#### Token TTL
 
 Cluster registration tokens can be reused by any cluster in a namespace.  The tokens can be given a TTL
 such that it will expire after a specific time.
 
-### Create a new Token
+#### Create a new Token
 
 The `ClusterRegistationToken` is a namespaced type and should be created in the same namespace
 in which you will create `GitRepo` and `ClusterGroup` resources. For in depth details on how namespaces
@@ -241,7 +274,7 @@ One way to do so is via the following one-liner:
 while ! kubectl --namespace=clusters  get secret new-token; do sleep 5; done
 ```
 
-### Obtaining Token Value (Agent values.yaml)
+#### Obtaining Token Value (Agent values.yaml)
 
 The token value contains YAML content for a `values.yaml` file that is expected to be passed to `helm install`
 to install the Fleet agent on a downstream cluster.
@@ -253,3 +286,49 @@ kubectl --namespace clusters get secret new-token -o 'jsonpath={.data.values}' |
 ```
 
 Once the `values.yaml` is ready it can be used repeatedly by clusters to register until the TTL expires.
+
+## Manager Initiated
+
+The manager initiated registration flow is accomplished by creating a
+`Cluster` resource in the Fleet Manager that refers to a Kubernetes
+`Secret` containing a valid kubeconfig file in the data field called `value`.
+
+
+:::info
+If you are using Fleet standalone *without Rancher*, it must be installed as described in [installation details](./installation.md#configuration-for-multi-cluster).
+
+The manager-initiated registration is used when you add a cluster from the Rancher dashboard.
+:::
+
+### Create Kubeconfig Secret
+
+The format of this secret is intended to match the [format](https://cluster-api.sigs.k8s.io/developer/architecture/controllers/cluster.html#secrets) of the kubeconfig
+secret used in [cluster-api](https://github.com/kubernetes-sigs/cluster-api).
+This means you can use `cluster-api` to create a cluster that is dynamically registered with Fleet.
+
+```yaml title="Kubeconfig Secret Example"
+kind: Secret
+apiVersion: v1
+metadata:
+  name: my-cluster-kubeconfig
+  namespace: clusters
+data:
+  value: YXBpVmVyc2lvbjogdjEKY2x1c3RlcnM6Ci0gY2x1c3RlcjoKICAgIHNlcnZlcjogaHR0cHM6Ly9leGFtcGxlLmNvbTo2NDQzCiAgbmFtZTogY2x1c3Rlcgpjb250ZXh0czoKLSBjb250ZXh0OgogICAgY2x1c3RlcjogY2x1c3RlcgogICAgdXNlcjogdXNlcgogIG5hbWU6IGRlZmF1bHQKY3VycmVudC1jb250ZXh0OiBkZWZhdWx0CmtpbmQ6IENvbmZpZwpwcmVmZXJlbmNlczoge30KdXNlcnM6Ci0gbmFtZTogdXNlcgogIHVzZXI6CiAgICB0b2tlbjogc29tZXRoaW5nCg==
+```
+
+### Create Cluster Resource
+
+The cluster resource needs to reference the kubeconfig secret.
+
+```yaml title="Cluster Resource Example"
+apiVersion: fleet.cattle.io/v1alpha1
+kind: Cluster
+metadata:
+  name: my-cluster
+  namespace: clusters
+  labels:
+    demo: "true"
+    env: dev
+spec:
+  kubeConfigSecret: my-cluster-kubeconfig
+```

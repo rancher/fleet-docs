@@ -35,7 +35,7 @@ use case for production.
   </TabItem>
 </Tabs>
 
-## Install
+## Default Install
 
 Install the following two Helm charts.
 
@@ -85,7 +85,7 @@ The multi-cluster install described below is **only** covered in standalone Flee
 The setup is the same as for a single cluster.
 After installing the Fleet manager, you will then need to register remote downstream clusters with the Fleet manager.
 
-However, to allow for [manager-initiated registration](./manager-initiated) of downstream clusters, a few extra settings are required. Without the API server URL and the CA, only [agent-initiated registration](./agent-initiated) of downstream clusters is possible.
+However, to allow for [manager-initiated registration](./cluster-registration.md#manager-initiated) of downstream clusters, a few extra settings are required. Without the API server URL and the CA, only [agent-initiated registration](./cluster-registration.md#agent-initiated) of downstream clusters is possible.
 :::
 
 ### API Server URL and CA certificate
@@ -186,7 +186,7 @@ KDs/pb3fnMTtpA==
 -----END CERTIFICATE-----
 ```
 
-### Install
+### Install for Multi-Cluster
 
 In the following example it will be assumed the API server URL from the `KUBECONFIG` which is `https://example.com:6443`
 and the CA certificate is in the file `ca.pem`. If your API server URL is signed by a well-known CA you can
@@ -234,5 +234,5 @@ fleet-controller-64f49d756b-n57wq   1/1     Running   0          3m21s
 </TabItem>
 </Tabs>
 
-At this point the Fleet manager should be ready. You can now [register clusters](./cluster-overview.md) and [git repos](./gitrepo-add.md) with 
+At this point the Fleet manager should be ready. You can now [register clusters](./cluster-registration.md) and [git repos](./gitrepo-add.md#create-gitrepo-instance) with 
 the Fleet manager.

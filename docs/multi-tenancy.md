@@ -2,7 +2,7 @@
 
 Fleet uses Kubernetes RBAC where possible.
 
-One addition on top of RBAC is the [`GitRepoRestriction`](namespaces#restricting-gitrepos) resource, which can be used to control GitRepo resources in a namespace.
+One addition on top of RBAC is the [`GitRepoRestriction`](./namespaces.md#restricting-gitrepos) resource, which can be used to control GitRepo resources in a namespace.
 
 A multi-tenant fleet setup looks like this:
 
@@ -35,7 +35,7 @@ This makes sure, tenants can't interfere with GitRepo resources from other tenan
 
 This assumes all GitRepos created by 'fleetuser' have the `team: one` label. Different labels could be used, to select different cluster namespaces.
 
-In each of the user's namespaces, as an admin create a [`BundleNamespaceMapping`](./namespaces#cross-namespace-deployments).
+In each of the user's namespaces, as an admin create a [`BundleNamespaceMapping`](./namespaces.md#cross-namespace-deployments).
 
     kind: BundleNamespaceMapping
     apiVersion: fleet.cattle.io/v1alpha1
@@ -59,7 +59,7 @@ In each of the user's namespaces, as an admin create a [`BundleNamespaceMapping`
         # the label is on the namespace
         #workspace: prod
 
-The [`target` section](./gitrepo-targets) in the GitRepo resource can be used to deploy only to a subset of the matched clusters.
+The [`target` section](./gitrepo-targets.md) in the GitRepo resource can be used to deploy only to a subset of the matched clusters.
 
 ## Restricting Access to Downstream Clusters
 

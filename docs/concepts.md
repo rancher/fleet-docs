@@ -38,14 +38,14 @@ Below are some of the concepts of Fleet that will be useful throughout this docu
     Regardless of the source the contents are dynamically rendered into a Helm chart by the agent
     and installed into the downstream cluster as a helm release.
 
-    - To see the **lifecycle of a bundle**, click [here](./examples.md#lifecycle-of-a-fleet-bundle).
+    - To see the **life cycle of a bundle**, click [here](./ref-bundle-stages.md).
 
 * **BundleDeployment**: When a `Bundle` is deployed to a cluster an instance of a `Bundle` is called a `BundleDeployment`.
     A `BundleDeployment` represents the state of that `Bundle` on a specific cluster with its cluster specific
     customizations. The Fleet agent is only aware of `BundleDeployment` resources that are created for 
     the cluster the agent is managing.
 
-    - For an example of how to deploy Kubernetes manifests across clusters using Fleet customization, click [here](./examples.md#deploy-kubernetes-manifests-across-clusters-with-customization).
+    - For an example of how to deploy Kubernetes manifests across clusters using Fleet customization, click [here](./gitrepo-targets.md#customization-per-cluster).
 
 * **Downstream Cluster**: Clusters to which Fleet deploys manifests are referred to as downstream clusters. In the single cluster use case, the Fleet manager Kubernetes cluster is both the manager and downstream cluster at the same time.
 * **Cluster Registration Token**: Tokens used by agents to register a new cluster.
