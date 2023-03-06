@@ -159,6 +159,7 @@
 | targetNamespace | Ensure that all resources are created in this namespace Any cluster scoped resource will be rejected if this is set Additionally this namespace will be created on demand | string | false |
 | clientSecretName | ClientSecretName is the client secret to be used to connect to the repo It is expected the secret be of type \"kubernetes.io/basic-auth\" or \"kubernetes.io/ssh-auth\". | string | false |
 | helmSecretName | HelmSecretName contains the auth secret for private helm repository | string | false |
+| helmRepoURLRegex | HelmRepoURLRegex Helm credentials will be used if the helm repo matches this regex Credentials will always be used if this is empty or not provided | string | false |
 | caBundle | CABundle is a PEM encoded CA bundle which will be used to validate the repo's certificate. | []byte | false |
 | insecureSkipTLSVerify | InsecureSkipTLSverify will use insecure HTTPS to clone the repo. | bool | false |
 | paths | Paths is the directories relative to the git repo root that contain resources to be applied. Path globbing is support, for example [\"charts/*\"] will match all folders as a subdirectory of charts/ If empty, \"/\" is the default | []string | false |
@@ -501,7 +502,9 @@
 | takeOwnership |  | bool | false |
 | maxHistory |  | int | false |
 | valuesFiles |  | []string | false |
+| waitForJobs |  | bool | false |
 | atomic | Atomic sets the --atomic flag when Helm is performing an upgrade | bool | false |
+| disablePreProcess | DisablePreProcess disables template processing in values | bool | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -671,7 +674,7 @@ Define helm values that can come from configmap, secret or external. Credit: htt
 
 #### AlphabeticalPolicy
 
-AlphabeticalPolicy specifices a alphabetical ordering policy.
+AlphabeticalPolicy specifies a alphabetical ordering policy.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
@@ -742,13 +745,13 @@ API is taken from https://github.com/fluxcd/image-reflector-controller
 | latestTag | Latest tag is the latest tag filtered by the policy | string | false |
 | latestDigest | LatestDigest is the digest of latest tag | string | false |
 | observedGeneration |  | int64 | false |
-| canonicalImageName | CannonicalName is the name of the image repository with all the implied bits made explicit; e.g., `docker.io/library/alpine` rather than `alpine`. | string | false |
+| canonicalImageName | CanonicalName is the name of the image repository with all the implied bits made explicit; e.g., `docker.io/library/alpine` rather than `alpine`. | string | false |
 
 [Back to Custom Resources](#custom-resources)
 
 #### SemVerPolicy
 
-SemVerPolicy specifices a semantic version policy.
+SemVerPolicy specifies a semantic version policy.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
@@ -927,6 +930,8 @@ SemVerPolicy specifices a semantic version policy.
 | agentEnvVars |  | []v1.EnvVar | false |
 | agentNamespace | AgentNamespace defaults to the system namespace, e.g. cattle-fleet-system | string | false |
 | privateRepoURL |  | string | false |
+| templateValues | TemplateValues defines a cluster specific mapping of values to be sent to fleet.yaml values templating | *GenericMap | false |
+| agentTolerations | AgentTolerations defines an extra set of Tolerations to be added to the Agent deployment | []v1.Toleration | false |
 
 [Back to Custom Resources](#custom-resources)
 
