@@ -927,9 +927,9 @@ SemVerPolicy specifies a semantic version policy.
 | clientID |  | string | false |
 | kubeConfigSecret |  | string | false |
 | redeployAgentGeneration |  | int64 | false |
-| agentEnvVars |  | []v1.EnvVar | false |
+| agentEnvVars | AgentEnvVars are extra environment variables to be added to the agent deployment | []v1.EnvVar | false |
 | agentNamespace | AgentNamespace defaults to the system namespace, e.g. cattle-fleet-system | string | false |
-| privateRepoURL |  | string | false |
+| privateRepoURL | PrivateRepoURL prefixes the image name and overrides a global repo URL from the agents config | string | false |
 | templateValues | TemplateValues defines a cluster specific mapping of values to be sent to fleet.yaml values templating | *GenericMap | false |
 | agentTolerations | AgentTolerations defines an extra set of Tolerations to be added to the Agent deployment | []v1.Toleration | false |
 
