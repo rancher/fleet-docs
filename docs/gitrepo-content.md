@@ -44,10 +44,13 @@ It is up to the user to fulfill the dependency list for the Helm charts. As such
 
 The available fields are documented in the [fleet.yaml reference](./ref-fleet-yaml.md)
 
-### Private Helm Repositories
+### Helm Values
 
-For a private Helm repo, users can reference a secret from the git repo resource.
-See [Using Private Helm Repositories](./gitrepo-add.md#using-private-helm-repositories) for more information.
+__How changes are applied to `values.yaml`__:
+
+- Note that the most recently applied changes to the `values.yaml` will override any previously existing values.
+
+- When changes are applied to the `values.yaml` from multiple sources at the same time, the values will update in the following order: `helmValues` -> `helm.valuesFiles` -> `helm.valuesFrom`.
 
 ### Using ValuesFrom
 
@@ -82,6 +85,12 @@ stringData:
     replicas: 2
     serviceType: NodePort
 ```
+
+### Private Helm Repositories
+
+For a private Helm repo, users can reference a secret from the git repo resource.
+See [Using Private Helm Repositories](./gitrepo-add.md#using-private-helm-repositories) for more information.
+
 
 ## Per Cluster Customization
 

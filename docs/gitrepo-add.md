@@ -1,6 +1,14 @@
 # Create a GitRepo Resource
 
+## Create GitRepo Instance
+
+Git repositories are registered by creating a `GitRepo` resource in Kubernetes. Refer
+to the [creating a deployment tutorial](./tut-deployment.md) for examples.
+
+The available fields are documented in the [GitRepo resource reference](./ref-gitrepo.md)
+
 ## Proper Namespace
+
 Git repos are added to the Fleet manager using the `GitRepo` custom resource type. The `GitRepo` type is namespaced. By default, Rancher will create two Fleet workspaces: **fleet-default** and **fleet-local**.
 
 - `Fleet-default` will contain all the downstream clusters that are already registered through Rancher.
@@ -17,13 +25,6 @@ While it's possible to move clusters out of either workspace, we recommend that 
 If you are using Fleet in a [single cluster](./concepts.md) style, the namespace will always be **fleet-local**. Check [here](https://fleet.rancher.io/namespaces/#fleet-local) for more on the `fleet-local` namespace.
 
 For a [multi-cluster](./concepts.md) style, please ensure you use the correct repo that will map to the right target clusters.
-
-## Create GitRepo Instance
-
-Git repositories are registered by creating a `GitRepo` resource in Kubernetes. Refer
-to the [creating a deployment tutorial](./tut-deployment.md) for examples.
-
-The available fields are documented in the [GitRepo resource reference](./ref-gitrepo.md)
 
 ## Adding Private Git Repository
 
