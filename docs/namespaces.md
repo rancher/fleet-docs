@@ -12,6 +12,26 @@ to a `GitRepo` type in a namespace, that end user can modify the selector to mat
 This means in practice if you want to have two teams self manage their own `GitRepo` registrations but they should
 not be able to target each others clusters, they should be in different namespaces.
 
+### GitRepo Namespace
+
+Git repos are added to the Fleet manager using the `GitRepo` custom resource type. The `GitRepo` type is namespaced. By default, Rancher will create two Fleet workspaces: **fleet-default** and **fleet-local**.
+
+- `Fleet-default` will contain all the downstream clusters that are already registered through Rancher.
+- `Fleet-local` will contain the local cluster by default.
+
+Users can create new workspaces and move clusters across workspaces. An example of a special case might be including the local cluster in the `GitRepo` payload for config maps and secrets (no active deployments or payloads).
+
+:::warning
+
+While it's possible to move clusters out of either workspace, we recommend that you keep the local cluster in `fleet-local`.
+
+:::
+
+If you are using Fleet in a [single cluster](./concepts.md) style, the namespace will always be **fleet-local**. Check [here](https://fleet.rancher.io/namespaces/#fleet-local) for more on the `fleet-local` namespace.
+
+For a [multi-cluster](./concepts.md) style, please ensure you use the correct repo that will map to the right target clusters.
+
+
 ## Namespace Creation Behavior in Bundles
 
 When deploying a Fleet bundle, the specified namespace will automatically be created if it does not already exist.

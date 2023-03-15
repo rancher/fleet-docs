@@ -7,24 +7,67 @@ to the [creating a deployment tutorial](./tut-deployment.md) for examples.
 
 The available fields are documented in the [GitRepo resource reference](./ref-gitrepo.md)
 
-## Proper Namespace
+## Using Helm Values
 
-Git repos are added to the Fleet manager using the `GitRepo` custom resource type. The `GitRepo` type is namespaced. By default, Rancher will create two Fleet workspaces: **fleet-default** and **fleet-local**.
+__How changes are applied to `values.yaml`__:
 
-- `Fleet-default` will contain all the downstream clusters that are already registered through Rancher.
-- `Fleet-local` will contain the local cluster by default.
+- Note that the most recently applied changes to the `values.yaml` will override any previously existing values.
 
-Users can create new workspaces and move clusters across workspaces. An example of a special case might be including the local cluster in the `GitRepo` payload for config maps and secrets (no active deployments or payloads).
+- When changes are applied to the `values.yaml` from multiple sources at the same time, the values will update in the following order: `helm.values` -> `helm.valuesFiles` -> `helm.valuesFrom`. That means `valuesFrom` will take precedence over both, `valuesFiles` and `values`.
 
-:::warning
+### Using ValuesFrom
 
-While it's possible to move clusters out of either workspace, we recommend that you keep the local cluster in `fleet-local`.
+These examples showcase the style and format for using `valuesFrom`. ConfigMaps and Secrets should be created in *downstream clusters*.
 
-:::
+Example [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/):
 
-If you are using Fleet in a [single cluster](./concepts.md) style, the namespace will always be **fleet-local**. Check [here](https://fleet.rancher.io/namespaces/#fleet-local) for more on the `fleet-local` namespace.
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-values
+  namespace: default
+data:  
+  values.yaml: |-
+    replication: true
+    replicas: 2
+    serviceType: NodePort
+```
 
-For a [multi-cluster](./concepts.md) style, please ensure you use the correct repo that will map to the right target clusters.
+Example [Secret](https://kubernetes.io/docs/concepts/configuration/secret/):
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret-values
+  namespace: default
+stringData:
+  values.yaml: |-
+    replication: true
+    replicas: 3
+    serviceType: NodePort
+```
+
+A secret like that, can be created from a YAML file `secretdata.yaml` by running the following kubectl command: `kubectl create secret generic secret-values --from-file=values.yaml=secretdata.yaml`
+
+The resources can then be referenced from a `fleet.yaml`:
+
+```yaml
+helm:
+  chart: simple-chart
+  valuesFrom:
+    - secretKeyRef:
+        name: secret-values
+        namespace: default
+        key: values.yaml
+    - configMapKeyRef:
+        name: configmap-values
+        namespace: default
+        key: values.yaml
+  values:
+    replicas: "4"
+```
 
 ## Adding Private Git Repository
 

@@ -84,7 +84,7 @@ helm:
       # default to namespace of bundle
       namespace: default 
       key: values.yaml
-    secretKeyRef:
+  - secretKeyRef:
       name: secret-values
       namespace: default
       key: values.yaml

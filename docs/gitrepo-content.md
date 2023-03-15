@@ -12,6 +12,26 @@ you want to make sure the directories you are scanning in git do not contain
 arbitrarily large resources. Right now there is a limitation that the resources
 deployed must **gzip to less than 1MB**.
 
+## Proper Namespace
+
+Git repos are added to the Fleet manager using the `GitRepo` custom resource type. The `GitRepo` type is namespaced. By default, Rancher will create two Fleet workspaces: **fleet-default** and **fleet-local**.
+
+- `Fleet-default` will contain all the downstream clusters that are already registered through Rancher.
+- `Fleet-local` will contain the local cluster by default.
+
+Users can create new workspaces and move clusters across workspaces. An example of a special case might be including the local cluster in the `GitRepo` payload for config maps and secrets (no active deployments or payloads).
+
+:::warning
+
+While it's possible to move clusters out of either workspace, we recommend that you keep the local cluster in `fleet-local`.
+
+:::
+
+If you are using Fleet in a [single cluster](./concepts.md) style, the namespace will always be **fleet-local**. Check [here](https://fleet.rancher.io/namespaces/#fleet-local) for more on the `fleet-local` namespace.
+
+For a [multi-cluster](./concepts.md) style, please ensure you use the correct repo that will map to the right target clusters.
+
+
 ## How repos are scanned
 
 Multiple paths can be defined for a `GitRepo` and each path is scanned independently.
@@ -43,50 +63,6 @@ It is up to the user to fulfill the dependency list for the Helm charts. As such
 :::
 
 The available fields are documented in the [fleet.yaml reference](./ref-fleet-yaml.md)
-
-### Helm Values
-
-__How changes are applied to `values.yaml`__:
-
-- Note that the most recently applied changes to the `values.yaml` will override any previously existing values.
-
-- When changes are applied to the `values.yaml` from multiple sources at the same time, the values will update in the following order: `helmValues` -> `helm.valuesFiles` -> `helm.valuesFrom`.
-
-### Using ValuesFrom
-
-These examples showcase the style and format for using `valuesFrom`. ConfigMaps and Secrets should be created in downstream clusters.
-
-Example [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/):
-
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: configmap-values
-  namespace: default
-data:  
-  values.yaml: |-
-    replication: true
-    replicas: 2
-    serviceType: NodePort
-```
-
-Example [Secret](https://kubernetes.io/docs/concepts/configuration/secret/):
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: secret-values
-  namespace: default
-stringData:
-  values.yaml: |-
-    replication: true
-    replicas: 2
-    serviceType: NodePort
-```
-
-### Private Helm Repositories
 
 For a private Helm repo, users can reference a secret from the git repo resource.
 See [Using Private Helm Repositories](./gitrepo-add.md#using-private-helm-repositories) for more information.
