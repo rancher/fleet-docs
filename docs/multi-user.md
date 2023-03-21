@@ -14,7 +14,7 @@ A multi-user fleet setup looks like this:
 
 ![Shared Clusters](/img/FleetSharedClusters.svg)
 
-:::warning
+:::warning important information
 
 The isolation of tenants is not complete and relies on Kubernetes RBAC to be
 set up correctly. Without manual setup from an operator tenants can still

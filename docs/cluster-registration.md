@@ -90,7 +90,7 @@ For the agent chart the namespace must be `cattle-fleet-system` and the release 
 
 :::
 
-:::warning
+:::warning Kubectl Context
 
 __Ensure you are installing to the right cluster__:
 Helm will use the default context in `${HOME}/.kube/config` to deploy the agent. Use `--kubeconfig` and `--kube-context`

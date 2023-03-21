@@ -21,7 +21,7 @@ Git repos are added to the Fleet manager using the `GitRepo` custom resource typ
 
 Users can create new workspaces and move clusters across workspaces. An example of a special case might be including the local cluster in the `GitRepo` payload for config maps and secrets (no active deployments or payloads).
 
-:::warning
+:::warning Local Cluster
 
 While it's possible to move clusters out of either workspace, we recommend that you keep the local cluster in `fleet-local`.
 
