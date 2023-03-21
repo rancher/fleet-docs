@@ -32,7 +32,7 @@ module.exports = {
         {type: 'doc', id: 'installation'},
         {type: 'doc', id: 'cluster-registration'},
         {type:'doc', id:'cluster-group'},
-        'multi-tenancy',
+        'multi-user',
       ],
     },
     {

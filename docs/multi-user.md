@@ -1,10 +1,10 @@
-# Setup Multi Tenancy
+# Setup Multi User
 
 Fleet uses Kubernetes RBAC where possible.
 
 One addition on top of RBAC is the [`GitRepoRestriction`](./namespaces.md#restricting-gitrepos) resource, which can be used to control GitRepo resources in a namespace.
 
-A multi-tenant fleet setup looks like this:
+A multi-user fleet setup looks like this:
 
 * tenants don't share namespaces, each tenant has one or more namespaces on the
   upstream cluster, where they can create GitRepo resources
@@ -14,7 +14,21 @@ A multi-tenant fleet setup looks like this:
 
 ![Shared Clusters](/img/FleetSharedClusters.svg)
 
-## Example Tenant
+:::warning
+
+The isolation of tenants is not complete and relies on Kubernetes RBAC to be
+set up correctly. Without manual setup from an operator tenants can still
+deploy cluster wide resources. Even with the available Fleet restrictions,
+users are only restricted to namespaces, but namespaces don't provide much
+isolation on their own. E.g. they can still consume as many resources as they
+like.
+
+However, the existing Fleet restrictions allow users to share clusters, and
+deploy resources without conflicts.
+
+:::
+
+## Example User
 
 This would create a user 'fleetuser', who can only manage GitRepo resources in the 'project1' namespace.
 
@@ -78,7 +92,7 @@ This will deny the creation of cluster wide resources, which may interfere with 
 
 ## An Example GitRepo Resource
 
-A GitRepo resource create by a tenant, without admin access could look like this:
+A GitRepo resource created by a tenant, without admin access could look like this:
 
     kind: GitRepo
     apiVersion: fleet.cattle.io/v1alpha1
