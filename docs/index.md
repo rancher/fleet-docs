@@ -1,6 +1,6 @@
 # Overview
 
-![](/img/arch.png)
+![](/img/fleet-architecture.svg)
 
 ### What is Fleet?
 
