@@ -110,7 +110,7 @@ svc.yaml
 
 # Overlay files
 
-# The following file we be added
+# The following file will be added
 overlays/custom/configmap.yaml
 # The following file will replace svc.yaml
 overlays/custom/svc.yaml
@@ -119,7 +119,7 @@ overlays/custom/deployment_patch.yaml
 ```
 
 A file named `foo` will replace a file called `foo` from the base resources or a previous overlay.  In order to patch
-the contents a file the convention of adding `_patch.` (notice the trailing period) to the filename is used. The string `_patch.`
+the contents of a file the convention of adding `_patch.` (notice the trailing period) to the filename is used. The string `_patch.`
 will be replaced with `.` from the file name and that will be used as the target.  For example `deployment_patch.yaml`
 will target `deployment.yaml`.  The patch will be applied using JSON Merge, Strategic Merge Patch, or JSON Patch.
 Which strategy is used is based on the file content. Even though JSON strategies are used, the files can be written
