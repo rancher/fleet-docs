@@ -934,6 +934,8 @@ SemVerPolicy specifies a semantic version policy.
 | privateRepoURL | PrivateRepoURL prefixes the image name and overrides a global repo URL from the agents config. | string | false |
 | templateValues | TemplateValues defines a cluster specific mapping of values to be sent to fleet.yaml values templating. | *GenericMap | false |
 | agentTolerations | AgentTolerations defines an extra set of Tolerations to be added to the Agent deployment. | []v1.Toleration | false |
+| agentAffinity | AgentAffinity overrides the default affinity for the cluster's agent deployment. If this value is nil the default affinity is used. | *v1.Affinity | false |
+| agentResources | AgentResources sets the resources for the cluster's agent deployment. | *v1.ResourceRequirements | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -955,6 +957,9 @@ SemVerPolicy specifies a semantic version policy.
 | agentMigrated |  | bool | false |
 | agentNamespaceMigrated |  | bool | false |
 | cattleNamespaceMigrated |  | bool | false |
+| agentAffinityHash |  | string | false |
+| agentResourcesHash |  | string | false |
+| agentTolerationsHash |  | string | false |
 | display |  | [ClusterDisplay](#clusterdisplay) | false |
 | agent |  | [AgentStatus](#agentstatus) | false |
 
