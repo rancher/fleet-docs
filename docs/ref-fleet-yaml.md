@@ -62,7 +62,8 @@ helm:
     variableName: global.fleet.clusterLabels.LABELNAME
   # It is possible to specify the keys and values as go template strings for
   # advanced templating needs. Most of the functions from the sprig templating
-  # library are available. However, the `uuidv4` function is not supported.
+  # library are available. Note, if the functions output changes with every
+  # call, e.g. `uuidv4`, the bundle will get redeployed.
   # The template context has following keys.
   # `.ClusterValues` are retrieved from target cluster's `spec.templateValues`
   # `.ClusterLabels` and `.ClusterAnnotations` are the labels and annoations in the cluster resource.
