@@ -67,6 +67,7 @@
 * [ClusterRegistrationTokenStatus](#clusterregistrationtokenstatus)
 * [ClusterSpec](#clusterspec)
 * [ClusterStatus](#clusterstatus)
+* [IgnoreOptions](#ignoreoptions)
 
 #### GitRepo
 
@@ -360,15 +361,16 @@
 
 
 
-| Field | Description | Scheme | Required |
-| ----- | ----------- | ------ | -------- |
-| BundleDeploymentOptions |  | [BundleDeploymentOptions](#bundledeploymentoptions) | false |
-| paused | Paused if set to true, will stop any BundleDeployments from being updated. It will be marked as out of sync. | bool | false |
-| rolloutStrategy | RolloutStrategy controls the rollout of bundles, by defining partitions, canaries and percentages for cluster availability. | *[RolloutStrategy](#rolloutstrategy) | false |
-| resources | Resources contain the actual resources from the git repo which will be deployed. | [][BundleResource](#bundleresource) | false |
-| targets | Targets refer to the clusters which will be deployed to. | [][BundleTarget](#bundletarget) | false |
-| targetRestrictions | TargetRestrictions restrict which clusters the bundle will be deployed to. | [][BundleTargetRestriction](#bundletargetrestriction) | false |
-| dependsOn | DependsOn refers to the bundles which must be ready before this bundle can be deployed. | [][BundleRef](#bundleref) | false |
+| Field                   | Description                                                                                                                 | Scheme                                              | Required |
+|-------------------------|-----------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------| -------- |
+| BundleDeploymentOptions |                                                                                                                             | [BundleDeploymentOptions](#bundledeploymentoptions) | false |
+| paused                  | Paused if set to true, will stop any BundleDeployments from being updated. It will be marked as out of sync.                | bool                                                | false |
+| rolloutStrategy         | RolloutStrategy controls the rollout of bundles, by defining partitions, canaries and percentages for cluster availability. | *[RolloutStrategy](#rolloutstrategy)                | false |
+| resources               | Resources contain the actual resources from the git repo which will be deployed.                                            | [][BundleResource](#bundleresource)                 | false |
+| targets                 | Targets refer to the clusters which will be deployed to.                                                                    | [][BundleTarget](#bundletarget)                     | false |
+| targetRestrictions      | TargetRestrictions restrict which clusters the bundle will be deployed to.                                                  | [][BundleTargetRestriction](#bundletargetrestriction) | false |
+| dependsOn               | DependsOn refers to the bundles which must be ready before this bundle can be deployed.                                     | [][BundleRef](#bundleref)                           | false |
+| ignore                  | Ignore refers to the fields that will not be considered when monitoring the status.                                         | [IgnoreOptions](#ignoreoptions)                     | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -775,6 +777,12 @@ SemVerPolicy specifies a semantic version policy.
 | readyNodeNames | At most 3 nodes | []string | true |
 
 [Back to Custom Resources](#custom-resources)
+
+#### IgnoreOptions
+
+| Field        | Description              | Scheme | Required |
+|--------------|--------------------------| ------ |----------|
+| conditions   | conditions to be ignored | []map[string]string | false    |
 
 #### Cluster
 
