@@ -45,6 +45,7 @@ module.exports = {
         {type:'doc', id:'bundle-diffs'},
         {type:'doc', id:'webhook'},
         {type:'doc', id:'imagescan'},
+        {type:'doc', id:'bundle-add'},
       ],
     },
     {
@@ -72,6 +73,7 @@ module.exports = {
         "ref-crds",
         'ref-fleet-yaml',
         'ref-gitrepo',
+        'ref-bundle',
       ],
     },
     'troubleshooting',
