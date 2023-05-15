@@ -193,4 +193,13 @@ dependsOn:
   - selector:
       matchLabels:
         app: weak-monkey
+
+# Ignore fields when monitoring a Bundle. This can be used when Fleet thinks some conditions in Custom Resources
+# makes the Bundle to be in an error state when it shouldn't.
+ignore:
+  # Conditions to be ignored
+  conditions:
+  # In this example a condition will be ignored if it contains {"type": "Active", "status", "False"}
+  - type: Active
+    status: "False"
 ```
