@@ -111,7 +111,7 @@
 | error |  | bool | false |
 | transitioning |  | bool | false |
 | message |  | string | false |
-| perClusterState |  | [][ResourcePerClusterState](#resourceperclusterstate) | false |
+| perClusterState |  | \[\][ResourcePerClusterState](#resourceperclusterstate) | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -166,7 +166,7 @@
 | paths | Paths is the directories relative to the git repo root that contain resources to be applied. Path globbing is support, for example [\"charts/*\"] will match all folders as a subdirectory of charts/ If empty, \"/\" is the default | []string | false |
 | paused | Paused this cause changes in Git to not be propagated down to the clusters but instead mark resources as OutOfSync | bool | false |
 | serviceAccount | ServiceAccount used in the downstream cluster for deployment | string | false |
-| targets | Targets is a list of target this repo will deploy to | [][GitTarget](#gittarget) | false |
+| targets | Targets is a list of target this repo will deploy to | \[\][GitTarget](#gittarget) | false |
 | pollingInterval | PollingInterval is how often to check git for new updates | *metav1.Duration | false |
 | forceSyncGeneration | Increment this number to force a redeployment of contents from Git | int64 | false |
 | imageScanInterval | ImageScanInterval is the interval of syncing scanned images and writing back to git repo | *metav1.Duration | false |
@@ -189,7 +189,7 @@
 | summary |  | [BundleSummary](#bundlesummary) | false |
 | display |  | [GitRepoDisplay](#gitrepodisplay) | false |
 | conditions |  | []genericcondition.GenericCondition | false |
-| resources |  | [][GitRepoResource](#gitreporesource) | false |
+| resources |  | \[\][GitRepoResource](#gitreporesource) | false |
 | resourceCounts |  | [GitRepoResourceCounts](#gitreporesourcecounts) | false |
 | resourceErrors |  | []string | false |
 | lastSyncedImageScanTime |  | metav1.Time | false |
@@ -289,7 +289,7 @@
 | stagedDeploymentID |  | string | false |
 | options |  | [BundleDeploymentOptions](#bundledeploymentoptions) | false |
 | deploymentID |  | string | false |
-| dependsOn |  | [][BundleRef](#bundleref) | false |
+| dependsOn |  | \[\][BundleRef](#bundleref) | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -304,8 +304,8 @@
 | release |  | string | false |
 | ready |  | bool | false |
 | nonModified |  | bool | false |
-| nonReadyStatus |  | [][NonReadyStatus](#nonreadystatus) | false |
-| modifiedStatus |  | [][ModifiedStatus](#modifiedstatus) | false |
+| nonReadyStatus |  | \[\][NonReadyStatus](#nonreadystatus) | false |
+| modifiedStatus |  | \[\][ModifiedStatus](#modifiedstatus) | false |
 | display |  | [BundleDeploymentDisplay](#bundledeploymentdisplay) | false |
 | syncGeneration |  | *int64 | false |
 
@@ -366,10 +366,10 @@
 | BundleDeploymentOptions |                                                                                                                             | [BundleDeploymentOptions](#bundledeploymentoptions) | false |
 | paused                  | Paused if set to true, will stop any BundleDeployments from being updated. It will be marked as out of sync.                | bool                                                | false |
 | rolloutStrategy         | RolloutStrategy controls the rollout of bundles, by defining partitions, canaries and percentages for cluster availability. | *[RolloutStrategy](#rolloutstrategy)                | false |
-| resources               | Resources contain the actual resources from the git repo which will be deployed.                                            | [][BundleResource](#bundleresource)                 | false |
-| targets                 | Targets refer to the clusters which will be deployed to.                                                                    | [][BundleTarget](#bundletarget)                     | false |
-| targetRestrictions      | TargetRestrictions restrict which clusters the bundle will be deployed to.                                                  | [][BundleTargetRestriction](#bundletargetrestriction) | false |
-| dependsOn               | DependsOn refers to the bundles which must be ready before this bundle can be deployed.                                     | [][BundleRef](#bundleref)                           | false |
+| resources               | Resources contain the actual resources from the git repo which will be deployed.                                            | \[\][BundleResource](#bundleresource)                 | false |
+| targets                 | Targets refer to the clusters which will be deployed to.                                                                    | \[\][BundleTarget](#bundletarget)                     | false |
+| targetRestrictions      | TargetRestrictions restrict which clusters the bundle will be deployed to.                                                  | \[\][BundleTargetRestriction](#bundletargetrestriction) | false |
+| dependsOn               | DependsOn refers to the bundles which must be ready before this bundle can be deployed.                                     | \[\][BundleRef](#bundleref)                           | false |
 | ignore                  | Ignore refers to the fields that will not be considered when monitoring the status.                                         | [IgnoreOptions](#ignoreoptions)                     | false |
 
 [Back to Custom Resources](#custom-resources)
@@ -388,9 +388,9 @@
 | maxUnavailable |  | int | true |
 | maxUnavailablePartitions |  | int | true |
 | maxNew |  | int | false |
-| partitions |  | [][PartitionStatus](#partitionstatus) | false |
+| partitions |  | \[\][PartitionStatus](#partitionstatus) | false |
 | display |  | [BundleDisplay](#bundledisplay) | false |
-| resourceKey |  | [][ResourceKey](#resourcekey) | false |
+| resourceKey |  | \[\][ResourceKey](#resourcekey) | false |
 | observedGeneration |  | int64 | true |
 
 [Back to Custom Resources](#custom-resources)
@@ -409,7 +409,7 @@
 | ready |  | int | true |
 | pending |  | int | false |
 | desiredReady |  | int | true |
-| nonReadyResources |  | [][NonReadyResource](#nonreadyresource) | false |
+| nonReadyResources |  | \[\][NonReadyResource](#nonreadyresource) | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -452,7 +452,7 @@
 | apiVersion |  | string | false |
 | namespace |  | string | false |
 | name |  | string | false |
-| operations |  | [][Operation](#operation) | false |
+| operations |  | \[\][Operation](#operation) | false |
 | jsonPointers |  | []string | false |
 
 [Back to Custom Resources](#custom-resources)
@@ -485,7 +485,7 @@
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
-| comparePatches |  | [][ComparePatch](#comparepatch) | false |
+| comparePatches |  | \[\][ComparePatch](#comparepatch) | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -501,7 +501,7 @@
 | version | Version of the chart to download | string | false |
 | timeoutSeconds | TimeoutSeconds is the time to wait for Helm operations. | int | false |
 | values | Values passed to Helm. It is possible to specify the keys and values as go template strings. | *GenericMap | false |
-| valuesFrom | ValuesFrom loads the values from configmaps and secrets. | [][ValuesFrom](#valuesfrom) | false |
+| valuesFrom | ValuesFrom loads the values from configmaps and secrets. | \[\][ValuesFrom](#valuesfrom) | false |
 | force | Force allows to override immutable resources. This could be dangerous. | bool | false |
 | takeOwnership | TakeOwnership makes helm skip the check for its own annotations | bool | false |
 | maxHistory | MaxHistory limits the maximum number of revisions saved per release by Helm. | int | false |
@@ -557,8 +557,8 @@
 | name |  | string | false |
 | bundleState |  | BundleState | false |
 | message |  | string | false |
-| modifiedStatus |  | [][ModifiedStatus](#modifiedstatus) | false |
-| nonReadyStatus |  | [][NonReadyStatus](#nonreadystatus) | false |
+| modifiedStatus |  | \[\][ModifiedStatus](#modifiedstatus) | false |
+| nonReadyStatus |  | \[\][NonReadyStatus](#nonreadystatus) | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -640,7 +640,7 @@
 | maxUnavailable |  | *intstr.IntOrString | false |
 | maxUnavailablePartitions |  | *intstr.IntOrString | false |
 | autoPartitionSize |  | *intstr.IntOrString | false |
-| partitions |  | [][Partition](#partition) | false |
+| partitions |  | \[\][Partition](#partition) | false |
 
 [Back to Custom Resources](#custom-resources)
 
