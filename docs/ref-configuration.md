@@ -55,3 +55,13 @@ Annotations used by fleet:
 * `fleet.cattle.io/managed` - appears unused
 * `fleet.cattle.io/service-account`
 
+## Fleet agent configuration
+
+Tolerations, affinity and resources can be customized for the Fleet agent. These fields can be provided when creating a
+[Cluster](https://fleet.rancher.io/ref-crds#clusterspec), see [Registering Downstream Cluster](https://fleet.rancher.io/cluster-registration) for more info on how to create
+Clusters. Default configuration will be used if these fields are not provided.
+
+If you change the resources limits, make sure the limits allow the fleet-agent to work normally.
+
+Keep in mind that if you downgrade Fleet to a previous version than v0.7.0 Fleet will fallback to the built-in defaults. 
+Agents will redeploy if they had custom affinity. If Fleet version number does not change, redeployment might not be immediate.
