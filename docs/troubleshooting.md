@@ -33,6 +33,16 @@ Normally, errors should appear in the Rancher UI. However, if there is not enoug
 - Check the `fleet-controller` for synching errors.
 - Check the `fleet-agent` log in the downstream cluster if you encounter issues when deploying the bundle.
 
+### Fetch detailed status from `GitRepos` and `Bundles`?
+
+For debugging and bug reports the raw JSON of the resources status fields is most useful.
+This can be accessed in the Rancher UI, or through `kubectl`:
+
+```
+kubectl get bundle -n fleet-local fleet-agent-local -o=jsonpath={.status}
+kubectl get gitrepo -n fleet-default gitrepo-name -o=jsonpath={.status}
+```
+
 ### Check a chart rendering error in `Kustomize`?
 
 Check the [`fleet-controller` logs](./troubleshooting.md#fetch-the-log-from-fleet-controller) and the [`fleet-agent` logs](./troubleshooting.md#fetch-the-log-from-the-fleet-agent).
