@@ -6,6 +6,7 @@
 
 __Multi-cluster Only__:
 This approach only applies if you are running Fleet in a multi-cluster style
+If no targets are specified, i.e. when using a single-cluster, the bundles target the default cluster group.
 
 :::
 
@@ -84,6 +85,12 @@ and add clusters to it.
 
 ## Customization per Cluster
 
+:::info
+
+The `targets:` in the `GitRepo` resource select clusters to deploy on. The `targetCustomizations:` in `fleet.yaml` override Helm values only and do not change targeting.
+
+:::
+
 To demonstrate how to deploy Kubernetes manifests across different clusters with customization using Fleet, we will use [multi-cluster/helm/fleet.yaml](https://github.com/rancher/fleet-examples/blob/master/multi-cluster/helm/fleet.yaml).
 
 **Situation:** User has three clusters with three different labels: `env=dev`, `env=test`, and `env=prod`. User wants to deploy a frontend application with a backend database across these clusters. 
@@ -135,6 +142,30 @@ targetCustomizations:
 Fleet will deploy the Helm chart with your customized `values.yaml` to the different clusters.
 
 >**Note:** Configuration management is not limited to deployments but can be expanded to general configuration management. Fleet is able to apply configuration management through customization among any set of clusters automatically.
+
+### Supported Customizations
+
+* [DefaultNamespace](/ref-crds#bundledeploymentoptions)
+* [ForceSyncGeneration](/ref-crds#bundledeploymentoptions)
+* [KeepResources](/ref-crds#bundledeploymentoptions)
+* [ServiceAccount](/ref-crds#bundledeploymentoptions)
+* [TargetNamespace](/ref-crds#bundledeploymentoptions)
+* [Helm.Atomic](/ref-crds#helmoptions)
+* [Helm.Chart](/ref-crds#helmoptions)
+* [Helm.DisablePreProcess](/ref-crds#helmoptions)
+* [Helm.Force](/ref-crds#helmoptions)
+* [Helm.ReleaseName](/ref-crds#helmoptions)
+* [Helm.Repo](/ref-crds#helmoptions)
+* [Helm.TakeOwnership](/ref-crds#helmoptions)
+* [Helm.TimeoutSeconds](/ref-crds#helmoptions)
+* [Helm.ValuesFrom](/ref-crds#helmoptions)
+* [Helm.Values](/ref-crds#helmoptions)
+* [Helm.Version](/ref-crds#helmoptions)
+* [Helm.WaitForJobs](/ref-crds#helmoptions)
+* [Kustomize.Dir](/ref-crds#kustomizeoptions)
+* [YAML.Overlays](/ref-crds#yamloptions)
+* [Diff.ComparePatches](/ref-crds#diffoptions)
+
 
 ## Additional Examples
 
