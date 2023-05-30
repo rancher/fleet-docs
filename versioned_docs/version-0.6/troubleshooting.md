@@ -67,23 +67,12 @@ NAME                                READY   STATUS    RESTARTS   AGE
 fleet-controller-64f49d756b-n57wq   1/1     Running   0          3m21s
 ```
 
-### Migrate the local cluster to the Fleet default cluster?
-
-For users who want to deploy to the local cluster as well, they may move the cluster from `fleet-local` to `fleet-default` in the Rancher UI as follows:
-
-- To get to Fleet in Rancher, click ☰ > Continuous Delivery.
-- Under the **Clusters** menu, select the **local** cluster by checking the box to the left.
-- Select **Assign to** from the tabs above the cluster.
-- Select **`fleet-default`** from the **Assign Cluster To** dropdown.
-
-**Result**: The cluster will be migrated to `fleet-default`.
-
 ### Enable debug logging for `fleet-controller` and `fleet-agent`?
 
 Available in Rancher v2.6.3 (Fleet v0.3.8), the ability to enable debug logging has been added.
 
-- Go to the **Dashboard**, then click on the **local cluster** in the left navigation menu 
-- Select **Apps & Marketplace**, then **Installed Apps** from the dropdown 
+- Go to the **Dashboard**, then click on the **local cluster** in the left navigation menu
+- Select **Apps & Marketplace**, then **Installed Apps** from the dropdown
 - From there, you will upgrade the Fleet chart with the value `debug=true`. You can also set `debugLevel=5` if desired.
 
 ## **Additional Solutions for Other Fleet Issues**
@@ -233,7 +222,11 @@ You can force a redeployment of an agent for a given cluster by setting `redeplo
 kubectl patch clusters.fleet.cattle.io -n fleet-local local --type=json -p '[{"op": "add", "path": "/spec/redeployAgentGeneration", "value": -1}]'
 ```
 
-
 ### Nested GitRepo CRs
 
 Managing Fleet within Fleet (nested `GitRepo` usage) is not currently supported. We will update the documentation if support becomes available.
+
+### Migrate the local cluster to the Fleet default cluster workspace?
+
+Users can create new workspaces and move clusters across workspaces.
+It's currently not possible to move the local cluster from `fleet-local` to another workspace.

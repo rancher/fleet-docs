@@ -232,7 +232,11 @@ You can force a redeployment of an agent for a given cluster by setting `redeplo
 kubectl patch clusters.fleet.cattle.io -n fleet-local local --type=json -p '[{"op": "add", "path": "/spec/redeployAgentGeneration", "value": -1}]'
 ```
 
-
 ### Nested GitRepo CRs
 
 Managing Fleet within Fleet (nested `GitRepo` usage) is not currently supported. We will update the documentation if support becomes available.
+
+### Migrate the local cluster to the Fleet default cluster workspace?
+
+Users can create new workspaces and move clusters across workspaces.
+It's currently not possible to move the local cluster from `fleet-local` to another workspace.
