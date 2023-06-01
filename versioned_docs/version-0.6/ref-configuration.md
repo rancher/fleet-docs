@@ -46,8 +46,7 @@ Annotations used by fleet:
 
 * `fleet.cattle.io/agent-namespace`
 * `fleet.cattle.io/bundle-id`
-* `fleet.cattle.io/cluster`, `fleet.cattle.io/cluster-namespace` - if present on a Cluster, the namespace won't be cleaned up
-* `fleet.cattle.io/cluster`, `fleet.cattle.io/cluster-namespace` - used on a cluster namespace to reference the cluster registration namespace
+* `fleet.cattle.io/cluster`, `fleet.cattle.io/cluster-namespace` - used on a cluster namespace to reference the cluster registration namespace and cluster name
 * `fleet.cattle.io/cluster-group`
 * `fleet.cattle.io/cluster-registration-namespace`
 * `fleet.cattle.io/cluster-registration`
