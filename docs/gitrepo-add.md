@@ -176,7 +176,7 @@ After secret is created, specify the secret to `gitRepo.spec.helmSecretName`. Ma
 
 Create a file `secrets-path.yaml` that contains credentials for each path defined in a `GitRepo`. Credentials will not be used
 for paths that are not present in this file.
-The path is the actual path to the bundle within the git repository, which might have more segments than the entry under `paths:`. 
+The path is the actual path to the bundle (ie to a folder containing a `fleet.yaml` file) within the git repository, which might have more segments than the entry under `paths:`. 
 
 Example:
 
