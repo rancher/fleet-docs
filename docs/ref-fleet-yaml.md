@@ -182,6 +182,8 @@ targetCustomizations:
       region: us-east
   # A specific clusterGroup by name that will be selected
   clusterGroup: group1
+  # Resources will not be deployed in the matched clusters if doNotDeploy is true.
+  doNotDeploy: false
 
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
@@ -202,4 +204,10 @@ ignore:
   # In this example a condition will be ignored if it contains {"type": "Active", "status", "False"}
   - type: Active
     status: "False"
+
+# Override targets defined in the GitRepo. The Bundle will not have any targets from the GitRepo if overrideTargets is provided. 
+overrideTargets:
+  - clusterSelector:
+      matchLabels:
+        env: dev
 ```
