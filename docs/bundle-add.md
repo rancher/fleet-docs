@@ -50,8 +50,19 @@ spec:
                 image: nginx:1.14.2
                 ports:
                   - containerPort: 80
-    name: nginx.yaml 
+    name: nginx.yaml
   targets:
   - clusterName: local
 
 ```
+
+## Limitations
+
+Helm options related to downloading the helm chart will be ignored. The helm chart is downloaded by the fleet-cli, which creates the bundles. The bundle has to contain all the resources from the chart. Therefore the bundle will ignore:
+
+* `spec.helm.repo`
+* `spec.helm.charts`
+
+You can't use a `fleet.yaml` in resources, it is only used by the fleet-cli to create bundles.
+
+The `spec.targetRestrictions` field is not useful, as it is an allow list for targets specified in `spec.targets`. It is not needed, since `targets` are explicitly given in a bundle and an empty `targetRestrictions` defaults to allow.
