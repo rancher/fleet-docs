@@ -106,6 +106,7 @@ spec:
   # Target clusters to deploy to if running Fleet in a multi-cluster
   # style. Refer to the "Mapping to Downstream Clusters" docs for
   # more information.
+  # If empty, the "default" cluster group is used.
   #
   # targets: ...
 ```
