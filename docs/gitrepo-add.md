@@ -5,69 +5,9 @@
 Git repositories are registered by creating a `GitRepo` resource in Kubernetes. Refer
 to the [creating a deployment tutorial](./tut-deployment.md) for examples.
 
-The available fields are documented in the [GitRepo resource reference](./ref-gitrepo.md)
+[Git Repository Contents](./gitrepo-content.md) has detail about the content of the Git repository.
 
-## Using Helm Values
-
-__How changes are applied to `values.yaml`__:
-
-- Note that the most recently applied changes to the `values.yaml` will override any previously existing values.
-
-- When changes are applied to the `values.yaml` from multiple sources at the same time, the values will update in the following order: `helm.values` -> `helm.valuesFiles` -> `helm.valuesFrom`. That means `valuesFrom` will take precedence over both, `valuesFiles` and `values`.
-
-### Using ValuesFrom
-
-These examples showcase the style and format for using `valuesFrom`. ConfigMaps and Secrets should be created in *downstream clusters*.
-
-Example [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/):
-
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: configmap-values
-  namespace: default
-data:  
-  values.yaml: |-
-    replication: true
-    replicas: 2
-    serviceType: NodePort
-```
-
-Example [Secret](https://kubernetes.io/docs/concepts/configuration/secret/):
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: secret-values
-  namespace: default
-stringData:
-  values.yaml: |-
-    replication: true
-    replicas: 3
-    serviceType: NodePort
-```
-
-A secret like that, can be created from a YAML file `secretdata.yaml` by running the following kubectl command: `kubectl create secret generic secret-values --from-file=values.yaml=secretdata.yaml`
-
-The resources can then be referenced from a `fleet.yaml`:
-
-```yaml
-helm:
-  chart: simple-chart
-  valuesFrom:
-    - secretKeyRef:
-        name: secret-values
-        namespace: default
-        key: values.yaml
-    - configMapKeyRef:
-        name: configmap-values
-        namespace: default
-        key: values.yaml
-  values:
-    replicas: "4"
-```
+The available fields of the GitRepo custom resource are documented in the [GitRepo resource reference](./ref-gitrepo.md)
 
 ## Adding Private Git Repository
 

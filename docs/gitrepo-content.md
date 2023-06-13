@@ -67,6 +67,67 @@ The available fields are documented in the [fleet.yaml reference](./ref-fleet-ya
 For a private Helm repo, users can reference a secret from the git repo resource.
 See [Using Private Helm Repositories](./gitrepo-add.md#using-private-helm-repositories) for more information.
 
+## Using Helm Values
+
+__How changes are applied to `values.yaml`__:
+
+- Note that the most recently applied changes to the `values.yaml` will override any previously existing values.
+
+- When changes are applied to the `values.yaml` from multiple sources at the same time, the values will update in the following order: `helm.values` -> `helm.valuesFiles` -> `helm.valuesFrom`. That means `valuesFrom` will take precedence over both, `valuesFiles` and `values`.
+
+### Using ValuesFrom
+
+These examples showcase the style and format for using `valuesFrom`. ConfigMaps and Secrets should be created in *downstream clusters*.
+
+Example [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/):
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-values
+  namespace: default
+data:
+  values.yaml: |-
+    replication: true
+    replicas: 2
+    serviceType: NodePort
+```
+
+Example [Secret](https://kubernetes.io/docs/concepts/configuration/secret/):
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret-values
+  namespace: default
+stringData:
+  values.yaml: |-
+    replication: true
+    replicas: 3
+    serviceType: NodePort
+```
+
+A secret like that, can be created from a YAML file `secretdata.yaml` by running the following kubectl command: `kubectl create secret generic secret-values --from-file=values.yaml=secretdata.yaml`
+
+The resources can then be referenced from a `fleet.yaml`:
+
+```yaml
+helm:
+  chart: simple-chart
+  valuesFrom:
+    - secretKeyRef:
+        name: secret-values
+        namespace: default
+        key: values.yaml
+    - configMapKeyRef:
+        name: configmap-values
+        namespace: default
+        key: values.yaml
+  values:
+    replicas: "4"
+```
 
 ## Per Cluster Customization
 
@@ -92,6 +153,8 @@ clusterSelector: {}
 # Selector ignored
 clusterSelector: null
 ```
+
+See [Mapping to Downstream Clusters](gitrepo-targets#customization-per-cluster) for more information and a list of supported customizations.
 
 ## Raw YAML Resource Customization
 
