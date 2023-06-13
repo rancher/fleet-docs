@@ -12,26 +12,6 @@ you want to make sure the directories you are scanning in git do not contain
 arbitrarily large resources. Right now there is a limitation that the resources
 deployed must **gzip to less than 1MB**.
 
-## Proper Namespace
-
-Git repos are added to the Fleet manager using the `GitRepo` custom resource type. The `GitRepo` type is namespaced. By default, Rancher will create two Fleet workspaces: **fleet-default** and **fleet-local**.
-
-- `Fleet-default` will contain all the downstream clusters that are already registered through Rancher.
-- `Fleet-local` will contain the local cluster by default.
-
-Users can create new workspaces and move clusters across workspaces. An example of a special case might be including the local cluster in the `GitRepo` payload for config maps and secrets (no active deployments or payloads).
-
-:::warning Local Cluster
-
-While it's possible to move clusters out of either workspace, we recommend that you keep the local cluster in `fleet-local`.
-
-:::
-
-If you are using Fleet in a [single cluster](./concepts.md) style, the namespace will always be **fleet-local**. Check [here](https://fleet.rancher.io/namespaces/#fleet-local) for more on the `fleet-local` namespace.
-
-For a [multi-cluster](./concepts.md) style, please ensure you use the correct repo that will map to the right target clusters.
-
-
 ## How repos are scanned
 
 Multiple paths can be defined for a `GitRepo` and each path is scanned independently.
