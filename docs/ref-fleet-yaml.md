@@ -4,7 +4,7 @@ The `fleet.yaml` file adds options to a bundle. Any directory with a `fleet.yaml
 
 For more information on how to use the `fleet.yaml` to customize bundles see [Git Repository Contents](./gitrepo-content.md).
 
-The content of the fleet.yaml corresponds to https://github.com/rancher/fleet/blob/master/pkg/bundlereader/read.go#L129-L135, which contains the [BundleSpec](./ref-crds#bundlespec).
+The content of the fleet.yaml corresponds to the struct at [pkg/bundlereader/read.go](https://github.com/rancher/fleet/blob/b501b7e7864d37e310dfcdb109c73e5aec4240bb/pkg/bundlereader/read.go#L132-L139), which contains the [BundleSpec](./ref-crds#bundlespec).
 
 ### Reference
 
