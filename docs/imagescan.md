@@ -1,6 +1,6 @@
 # Using Image Scan to Update Container Image References
 
-Image scan in fleet allows you to scan your image repository, fetch the desired image and update your git repository, 
+Image scan in fleet allows you to scan your image repository, fetch the desired image and update your git repository,
 without the need to manually update your manifests.
 
 :::caution
@@ -13,28 +13,28 @@ Go to `fleet.yaml` and add the following section.
 
 ```yaml
 imageScans:
-# specify the policy to retrieve images, can be semver or alphabetical order 
-- policy: 
+# specify the policy to retrieve images, can be semver or alphabetical order
+- policy:
     # if range is specified, it will take the latest image according to semver order in the range
     # for more details on how to use semver, see https://github.com/Masterminds/semver
-    semver: 
-      range: "*" 
+    semver:
+      range: "*"
     # can use ascending or descending order
     alphabetical:
-      order: asc 
+      order: asc
 
   # specify images to scan
-  image: "your.registry.com/repo/image" 
+  image: "your.registry.com/repo/image"
 
   # Specify the tag name, it has to be unique in the same bundle
   tagName: test-scan
 
   # specify secret to pull image if in private registry
   secretRef:
-    name: dockerhub-secret 
+    name: dockerhub-secret
 
   # Specify the scan interval
-  interval: 5m 
+  interval: 5m
 ```
 
 :::info
@@ -99,11 +99,11 @@ metadata:
   namespace: fleet-local
 spec:
   # change this to be your own repo
-  repo: https://github.com/rancher/fleet-examples 
+  repo: https://github.com/rancher/fleet-examples
   # define how long it will sync all the images and decide to apply change
-  imageScanInterval: 5m 
+  imageScanInterval: 5m
   # user must properly provide a secret that have write access to git repository
-  clientSecretName: secret 
+  clientSecretName: secret
   # specify the commit pattern
   imageScanCommit:
     authorName: foo

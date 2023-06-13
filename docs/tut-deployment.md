@@ -67,7 +67,7 @@ spec:
   repo: https://github.com/rancher/fleet-examples
   paths:
   - single-cluster/helm
-EOF  
+EOF
 ```
 
 </TabItem>
@@ -85,7 +85,7 @@ spec:
   repo: https://github.com/rancher/fleet-examples
   paths:
   - single-cluster/helm-multi-chart
-EOF  
+EOF
 ```
 
 </TabItem>
@@ -104,7 +104,7 @@ spec:
   repo: https://github.com/rancher/fleet-examples
   paths:
   - single-cluster/helm-kustomize
-EOF  
+EOF
 ```
 
 </TabItem>
@@ -118,7 +118,7 @@ Note that the `fleet.yaml` has a `kustomize:` key to specify the path to the req
 kustomize:
   # To use a kustomization.yaml different from the one in the root folder
   dir: ""
-```  
+```
 
 ```bash
 kubectl apply -n fleet-local -f - <<EOF
@@ -130,7 +130,7 @@ spec:
   repo: https://github.com/rancher/fleet-examples
   paths:
   - single-cluster/kustomize
-EOF  
+EOF
 ```
 
 </TabItem>
@@ -148,7 +148,7 @@ spec:
   repo: https://github.com/rancher/fleet-examples
   paths:
   - single-cluster/manifests
-EOF  
+EOF
 ```
 
 </TabItem>
@@ -221,7 +221,7 @@ spec:
   - name: prod
     clusterSelector:
       matchLabels:
-        env: prod  
+        env: prod
 ```
 
 By applying the gitrepo resource to the upstream cluster, fleet will start to monitor the repository and create deployments:
@@ -379,7 +379,7 @@ spec:
     clusterSelector:
       matchLabels:
         env: prod
-EOF  
+EOF
 ```
 
 By applying the gitrepo resource to the upstream cluster, fleet will start to monitor the repository and create deployments:
@@ -457,7 +457,7 @@ spec:
     clusterSelector:
       matchLabels:
         env: prod
-```        
+```
 
 <CodeBlock language="bash">
 {`kubectl apply -n fleet-default -f gitrepo.yaml`}

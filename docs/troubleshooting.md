@@ -28,7 +28,7 @@ $ kubectl logs -l app=fleet-agent -n cattle-local-fleet-system
 
 Normally, errors should appear in the Rancher UI. However, if there is not enough information displayed about the error there, you can research further by trying one or more of the following as needed:
 
-- For more information about the bundle, click on `bundle`, and the YAML mode will be enabled. 
+- For more information about the bundle, click on `bundle`, and the YAML mode will be enabled.
 - For more information about the GitRepo, click on `GitRepo`, then click on `View Yaml` in the upper right of the screen. After viewing the YAML, check `status.conditions`; a detailed error message should be displayed here.
 - Check the `fleet-controller` for synching errors.
 - Check the `fleet-agent` log in the downstream cluster if you encounter issues when deploying the bundle.
@@ -55,7 +55,7 @@ Check the `gitjob-controller` logs using the following command with your specifi
 $ kubectl logs -f $gitjob-pod-name -n cattle-fleet-system
 ```
 
-Note that there are two containers inside the pod: the `step-git-source` container that clones the git repo, and the `fleet` container that applies bundles based on the git repo. 
+Note that there are two containers inside the pod: the `step-git-source` container that clones the git repo, and the `fleet` container that applies bundles based on the git repo.
 
 The pods will usually have images named `rancher/tekton-utils` with the `gitRepo` name as a prefix. Check the logs for these Kubernetes job pods in the local management cluster as follows, filling in your specific `gitRepoName` pod name and namespace:
 
@@ -81,8 +81,8 @@ fleet-controller-64f49d756b-n57wq   1/1     Running   0          3m21s
 
 Available in Rancher v2.6.3 (Fleet v0.3.8), the ability to enable debug logging has been added.
 
-- Go to the **Dashboard**, then click on the **local cluster** in the left navigation menu 
-- Select **Apps & Marketplace**, then **Installed Apps** from the dropdown 
+- Go to the **Dashboard**, then click on the **local cluster** in the left navigation menu
+- Select **Apps & Marketplace**, then **Installed Apps** from the dropdown
 - From there, you will upgrade the Fleet chart with the value `debug=true`. You can also set `debugLevel=5` if desired.
 
 ## **Additional Solutions for Other Fleet Issues**
@@ -121,7 +121,7 @@ Perform the following steps to assess:
 If your GitJob returns the error below, you may have added the wrong certificate chain:
 
 ```
-time="2021-11-11T05:55:08Z" level=fatal msg="Get \"https://helm.intra/virtual-helm/index.yaml\": x509: certificate signed by unknown authority" 
+time="2021-11-11T05:55:08Z" level=fatal msg="Get \"https://helm.intra/virtual-helm/index.yaml\": x509: certificate signed by unknown authority"
 ```
 
 Please verify your certificate with the following command:
@@ -147,13 +147,13 @@ To ignore the modified flag for the differences between the Helm install generat
 
 
 ```yaml
-defaultNamespace: <namespace name> 
-helm:  
-  releaseName: <release name>  
-  repo: <repo name> 
+defaultNamespace: <namespace name>
+helm:
+  releaseName: <release name>
+  repo: <repo name>
   chart: <chart name>
-diff:  
-  comparePatches:  
+diff:
+  comparePatches:
   - apiVersion: apps/v1
     kind: Deployment
     operations:
@@ -161,7 +161,7 @@ diff:
     - {"op":"remove", "path":"/spec/template/spec/nodeSelector"}
     jsonPointers: # jsonPointers allows to ignore diffs at certain json path
     - "/spec/template/spec/priorityClassName"
-    - "/spec/template/spec/tolerations" 
+    - "/spec/template/spec/tolerations"
 ```
 
 To determine which operations should be removed, observe the logs from `fleet-agent` on the target cluster. You should see entries similar to the following:
@@ -180,7 +180,7 @@ Based on the above log, you can add the following entry to remove the operation:
 
 **Modified** means that there is a mismatch between the actual state and the desired state, the source of truth, which lives in the git repository.
 
-1. Check the [bundle diffs documentation](./bundle-diffs.md) for more information. 
+1. Check the [bundle diffs documentation](./bundle-diffs.md) for more information.
 
 1. You can also force update the `gitrepo` to perform a manual resync. Select **GitRepo** on the left navigation bar, then select **Force Update**.
 

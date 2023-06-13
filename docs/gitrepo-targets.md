@@ -93,9 +93,9 @@ The `targets:` in the `GitRepo` resource select clusters to deploy on. The `targ
 
 To demonstrate how to deploy Kubernetes manifests across different clusters with customization using Fleet, we will use [multi-cluster/helm/fleet.yaml](https://github.com/rancher/fleet-examples/blob/master/multi-cluster/helm/fleet.yaml).
 
-**Situation:** User has three clusters with three different labels: `env=dev`, `env=test`, and `env=prod`. User wants to deploy a frontend application with a backend database across these clusters. 
+**Situation:** User has three clusters with three different labels: `env=dev`, `env=test`, and `env=prod`. User wants to deploy a frontend application with a backend database across these clusters.
 
-**Expected behavior:** 
+**Expected behavior:**
 
 - After deploying to the `dev` cluster, database replication is not enabled.
 - After deploying to the `test` cluster, database replication is enabled.
@@ -107,7 +107,7 @@ Instead of deploying the app on each cluster, Fleet allows you to deploy across 
 
 1. Deploy gitRepo `https://github.com/rancher/fleet-examples.git` and specify the path `multi-cluster/helm`.
 2. Under `multi-cluster/helm`, a Helm chart will deploy the frontend app service and backend database service.
-3. The following rule will be defined in `fleet.yaml`: 
+3. The following rule will be defined in `fleet.yaml`:
 
 ```
 targetCustomizations:

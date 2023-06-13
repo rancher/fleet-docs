@@ -22,7 +22,7 @@ Clusters and Bundles have different states in each phase of applying Bundles.
 
 **WaitCheckIn**: Waiting for agent to report registration information and cluster status back.
 
-**NotReady**: There are bundles in this cluster that are in NotReady state. 
+**NotReady**: There are bundles in this cluster that are in NotReady state.
 
 **WaitApplied**: There are bundles in this cluster that are in WaitApplied state.
 

@@ -14,7 +14,7 @@ manager initiated is a better workflow.
 
 ### Agent Initiated Registration
 
-Agent initiated refers to a pattern in which the downstream cluster installs an agent with a 
+Agent initiated refers to a pattern in which the downstream cluster installs an agent with a
 [cluster registration token](#create-cluster-registration-tokens) and optionally a client ID. The cluster
 agent will then make a API request to the Fleet manager and initiate the registration process. Using
 this process the Manager will never make an outbound API request to the downstream clusters and will thus
@@ -132,7 +132,7 @@ kubectl -n clusters get clusters.fleet.cattle.io
 ```
 ```
 NAME                   BUNDLES-READY   NODES-READY   SAMPLE-NODE             LAST-SEEN              STATUS
-cluster-ab13e54400f1   1/1             1/1           k3d-cluster2-server-0   2020-08-31T19:23:10Z   
+cluster-ab13e54400f1   1/1             1/1           k3d-cluster2-server-0   2020-08-31T19:23:10Z
 ```
 
 ### Install Agent For a Predefined Cluster
@@ -218,7 +218,7 @@ kubectl -n clusters get clusters.fleet.cattle.io
 ```
 ```
 NAME                   BUNDLES-READY   NODES-READY   SAMPLE-NODE             LAST-SEEN              STATUS
-my-cluster             1/1             1/1           k3d-cluster2-server-0   2020-08-31T19:23:10Z   
+my-cluster             1/1             1/1           k3d-cluster2-server-0   2020-08-31T19:23:10Z
 ```
 
 ### Create Cluster Registration Tokens

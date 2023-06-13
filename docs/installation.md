@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 The installation is broken up into two different use cases: single and multi-cluster.
 The single cluster install is for if you wish to use GitOps to manage a single cluster,
-in which case you do not need a centralized manager cluster. In the multi-cluster use case 
+in which case you do not need a centralized manager cluster. In the multi-cluster use case
 you will setup a centralized manager cluster to which you can register clusters.
 
 If you are just learning Fleet the single cluster install is the recommended starting
@@ -16,7 +16,7 @@ point. After which you can move from single cluster to multi-cluster setup down 
 ![](/img/single-cluster.png)
 
 Single-cluster is the default installation. The same cluster will run both the Fleet
-manager and the Fleet agent. The cluster will communicate with Git server to 
+manager and the Fleet agent. The cluster will communicate with Git server to
 deploy resources to this local cluster. This is the simplest setup and very
 useful for dev/test and small scale setups.  This use case is supported as a valid
 use case for production.
@@ -77,7 +77,7 @@ You can now [register some git repos](./gitrepo-add.md) in the `fleet-local` nam
 :::caution
 Downstream clusters in Rancher are automatically registered in Fleet. Users can access Fleet under `Continuous Delivery` on Rancher.
 
-The multi-cluster install described below is **only** covered in standalone Fleet, which is untested by Rancher QA. 
+The multi-cluster install described below is **only** covered in standalone Fleet, which is untested by Rancher QA.
 :::
 
 
@@ -234,5 +234,5 @@ fleet-controller-64f49d756b-n57wq   1/1     Running   0          3m21s
 </TabItem>
 </Tabs>
 
-At this point the Fleet manager should be ready. You can now [register clusters](./cluster-registration.md) and [git repos](./gitrepo-add.md#create-gitrepo-instance) with 
+At this point the Fleet manager should be ready. You can now [register clusters](./cluster-registration.md) and [git repos](./gitrepo-add.md#create-gitrepo-instance) with
 the Fleet manager.

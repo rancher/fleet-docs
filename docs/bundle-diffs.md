@@ -54,16 +54,16 @@ In our case the differences detected are as follows:
         name: gatekeeper-controller-manager
         namespace: cattle-gatekeeper-system
         patch: '{"spec":{"template":{"spec":{"$setElementOrder/containers":[{"name":"manager"}],"containers":[{"name":"manager","resources":{"limits":{"cpu":"1000m"}}}],"tolerations":[]}}}}'
-```        
+```
 
 Based on this summary, there are three objects which need to be patched.
 
 We will look at these one at a time.
 
-### 1. ValidatingWebhookConfiguration: 
-The gatekeeper-validating-webhook-configuration validating webhook has two ValidatingWebhooks in its spec. 
+### 1. ValidatingWebhookConfiguration:
+The gatekeeper-validating-webhook-configuration validating webhook has two ValidatingWebhooks in its spec.
 
-In cases where more than one element in the field requires a patch, that patch will refer these to as `$setElementOrder/ELEMENTNAME` 
+In cases where more than one element in the field requires a patch, that patch will refer these to as `$setElementOrder/ELEMENTNAME`
 
 From this information, we can see the two ValidatingWebhooks in question are:
 
@@ -106,7 +106,7 @@ Within each ValidatingWebhook, the fields that need to be ignore are as follows:
     },
  ```
 
- and 
+ and
 
  ```
      {
@@ -151,9 +151,9 @@ Based on this information, our diff patch would look as follows:
     - {"op": "remove", "path":"/webhooks/0/rules"}
     - {"op": "remove", "path":"/webhooks/1/clientConfig/caBundle"}
     - {"op": "remove", "path":"/webhooks/1/rules"}
-```    
+```
 
-### 2. Deployment gatekeeper-controller-manager: 
+### 2. Deployment gatekeeper-controller-manager:
 The gatekeeper-controller-manager deployment is modified since there are cpu limits and tolerations applied (which are not in the actual bundle).
 
 ```

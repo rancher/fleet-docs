@@ -24,8 +24,8 @@ In cluster configuration for the agent and fleet manager. Changing these can lea
 
 The config [struct](https://github.com/rancher/fleet/blob/master/pkg/config/config.go#L40-L52) is used in both config maps:
 
-* cattle-fleet-system/fleet-agent 
-* cattle-fleet-system/fleet-controller 
+* cattle-fleet-system/fleet-agent
+* cattle-fleet-system/fleet-controller
 
 ## Labels
 
@@ -62,5 +62,5 @@ Clusters. Default configuration will be used if these fields are not provided.
 
 If you change the resources limits, make sure the limits allow the fleet-agent to work normally.
 
-Keep in mind that if you downgrade Fleet to a previous version than v0.7.0 Fleet will fallback to the built-in defaults. 
+Keep in mind that if you downgrade Fleet to a previous version than v0.7.0 Fleet will fallback to the built-in defaults.
 Agents will redeploy if they had custom affinity. If Fleet version number does not change, redeployment might not be immediate.

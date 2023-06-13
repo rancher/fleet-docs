@@ -15,7 +15,7 @@ metadata:
   # your choosing
   namespace: fleet-local
 spec:
-  # Namespace used for resources that do not specify a namespace. 
+  # Namespace used for resources that do not specify a namespace.
   # This field is not used to enforce or lock down the deployment to a specific namespace.
   # defaultNamespace: test
 
@@ -25,30 +25,30 @@ spec:
 
   # Kustomize options for the deployment, like the dir containing the kustomization.yaml file.
   # kustomize: ...
-  
+
   # Helm options for the deployment, like the chart name, repo and values.
   # helm: ...
-  
+
   # ServiceAccount which will be used to perform this deployment.
   # serviceAccount: sa
 
   # ForceSyncGeneration is used to force a redeployment.
   # forceSyncGeneration: 0
-  
+
   # YAML options, if using raw YAML these are names that map to overlays/{name} that will be used to replace or patch a resource.
   # yaml: ...
-  
+
   # Diff can be used to ignore the modified state of objects which are amended at runtime.
   # A specific commit or tag can also be watched.
   #
   # diff: ...
-  
+
   # KeepResources can be used to keep the deployed resources when removing the bundle.
   # keepResources: false
-  
+
   # If set to true, will stop any BundleDeployments from being updated. It will be marked as out of sync.
   # paused: false
-  
+
   # Controls the rollout of bundles, by defining partitions, canaries and percentages for cluster availability.
   # rolloutStrategy: ...
 
@@ -62,7 +62,7 @@ spec:
         labels:
           app: nginx
       spec:
-        replicas: 3 
+        replicas: 3
         selector:
           matchLabels:
             app: nginx

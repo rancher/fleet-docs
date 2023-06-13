@@ -49,10 +49,10 @@ spec:
   # this gitrepo. See section below for more information.
   #
   # helmSecretName: my-helm-secret
-  # 
-  # Helm credentials from helmSecretName will be used if the helm repository url matches this regular expression. 
+  #
+  # Helm credentials from helmSecretName will be used if the helm repository url matches this regular expression.
   # Credentials will always be used if it is empty or not provided
-  # 
+  #
   # helmRepoUrlRegex: https://charts.rancher.io/*
   #
   # To add additional ca-bundle for self-signed certs, caBundle can be

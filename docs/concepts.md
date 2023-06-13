@@ -42,7 +42,7 @@ Below are some of the concepts of Fleet that will be useful throughout this docu
 
 * **BundleDeployment**: When a `Bundle` is deployed to a cluster an instance of a `Bundle` is called a `BundleDeployment`.
     A `BundleDeployment` represents the state of that `Bundle` on a specific cluster with its cluster specific
-    customizations. The Fleet agent is only aware of `BundleDeployment` resources that are created for 
+    customizations. The Fleet agent is only aware of `BundleDeployment` resources that are created for
     the cluster the agent is managing.
 
     - For an example of how to deploy Kubernetes manifests across clusters using Fleet customization, click [here](./gitrepo-targets.md#customization-per-cluster).

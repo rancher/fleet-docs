@@ -21,7 +21,7 @@ defaultNamespace: default
 # Default: ""
 namespace: default
 
-# Optional map of labels, that are set at the bundle and can be used in a 
+# Optional map of labels, that are set at the bundle and can be used in a
 # dependsOn.selector
 labels:
   key: value
@@ -83,7 +83,7 @@ helm:
   - configMapKeyRef:
       name: configmap-values
       # default to namespace of bundle
-      namespace: default 
+      namespace: default
       key: values.yaml
   - secretKeyRef:
       name: secret-values
@@ -98,7 +98,7 @@ helm:
   # if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready.
   # It will wait for as long as timeoutSeconds
   waitForJobs: true
-  
+
 # A paused bundle will not update downstream clusters but instead mark the bundle
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
@@ -138,7 +138,7 @@ rolloutStrategy:
       # A cluster group name to include in this partition
       clusterGroup: agroup
       # Selector matching cluster group labels to include in this partition
-      clusterGroupSelector: 
+      clusterGroupSelector:
         clusterSelector:
           matchLabels:
             env: prod
@@ -174,8 +174,8 @@ targetCustomizations:
   clusterSelector:
     matchLabels:
       env: prod
-  # A selector used to match a specific cluster by name.    
-  clusterName: dev-cluster    
+  # A selector used to match a specific cluster by name.
+  clusterName: dev-cluster
   # A selector used to match cluster groups.
   clusterGroupSelector:
     matchLabels:
@@ -205,7 +205,7 @@ ignore:
   - type: Active
     status: "False"
 
-# Override targets defined in the GitRepo. The Bundle will not have any targets from the GitRepo if overrideTargets is provided. 
+# Override targets defined in the GitRepo. The Bundle will not have any targets from the GitRepo if overrideTargets is provided.
 overrideTargets:
   - clusterSelector:
       matchLabels:
