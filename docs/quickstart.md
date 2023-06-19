@@ -11,8 +11,8 @@ Who needs documentation, lets just run this thing!
 
 ## Install
 
- Fleet is distributed as a Helm chart. Helm 3 is a CLI, has no server side component, and is
-  fairly straight forward. To install the Helm 3 CLI follow the <a href="https://helm.sh/docs/intro/install">official install instructions</a>.
+ Fleet is distributed as a Helm chart. Helm 3 is a CLI, has no server side component, and its use is
+  fairly straightforward. To install the Helm 3 CLI follow the <a href="https://helm.sh/docs/intro/install">official install instructions</a>.
 
 <Tabs>
   <TabItem value="linux" label="Linux/Mac" default>
