@@ -8,22 +8,22 @@ import TabItem from '@theme/TabItem';
 ## Overview
 
 There are two specific styles to registering clusters. These styles will be referred
-to as **agent initiated** and **manager initiated** registration. Typically one would
-go with the agent initiated registration but there are specific use cases in which
-manager initiated is a better workflow.
+to as **agent-initiated** and **manager-initiated** registration. Typically one would
+go with the agent-initiated registration but there are specific use cases in which
+manager-initiated is a better workflow.
 
-### Agent Initiated Registration
+### Agent-Initiated Registration
 
-Agent initiated refers to a pattern in which the downstream cluster installs an agent with a
+Agent-initiated refers to a pattern in which the downstream cluster installs an agent with a
 [cluster registration token](#create-cluster-registration-tokens) and optionally a client ID. The cluster
 agent will then make a API request to the Fleet manager and initiate the registration process. Using
 this process the Manager will never make an outbound API request to the downstream clusters and will thus
 never need to have direct network access. The downstream cluster only needs to make outbound HTTPS
 calls to the manager.
 
-### Manager Initiated Registration
+### Manager-Initiated Registration
 
-Manager initiated registration is a process in which you register an existing Kubernetes cluster
+Manager-initiated registration is a process in which you register an existing Kubernetes cluster
 with the Fleet manager and the Fleet manager will make an API call to the downstream cluster to
 deploy the agent. This style can place additional network access requirements because the Fleet
 manager must be able to communicate with the downstream cluster API server for the registration process.
@@ -225,13 +225,13 @@ my-cluster             1/1             1/1           k3d-cluster2-server-0   202
 
 :::info
 
-__Not needed for Manager initiated registration__:
-For manager initiated registrations the token is managed by the Fleet manager and does
+__Not needed for Manager-initiated registration__:
+For manager-initiated registrations the token is managed by the Fleet manager and does
 not need to be manually created and obtained.
 
 :::
 
-For an agent initiated registration the downstream cluster must have a cluster registration token.
+For an agent-initiated registration the downstream cluster must have a cluster registration token.
 Cluster registration tokens are used to establish a new identity for a cluster. Internally
 cluster registration tokens are managed by creating Kubernetes service accounts that have the
 permissions to create `ClusterRegistrationRequests` within a specific namespace.  Once the
@@ -289,7 +289,7 @@ Once the `values.yaml` is ready it can be used repeatedly by clusters to registe
 
 ## Manager Initiated
 
-The manager initiated registration flow is accomplished by creating a
+The manager-initiated registration flow is accomplished by creating a
 `Cluster` resource in the Fleet Manager that refers to a Kubernetes
 `Secret` containing a valid kubeconfig file in the data field called `value`.
 
