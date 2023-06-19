@@ -11,8 +11,8 @@ Who needs documentation, lets just run this thing!
 
 ## Install
 
-Get helm if you don't have it.  Helm 3 is just a CLI and won't do bad insecure
-things to your cluster.
+ Fleet is distributed as a Helm chart. Helm 3 is a CLI, has no server side component, and is
+  fairly straight forward. To install the Helm 3 CLI follow the <a href="https://helm.sh/docs/intro/install">official install instructions</a>.
 
 <Tabs>
   <TabItem value="linux" label="Linux/Mac" default>
