@@ -80,7 +80,7 @@ module.exports = {
             current: {
               label: 'Next 🚧',
             },
-            '0.6': {
+            '0.7': {
               banner: 'none',
             },
           },
