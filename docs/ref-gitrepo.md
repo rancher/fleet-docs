@@ -111,7 +111,10 @@ spec:
   # targets: ...
   #
   # Drift correction removes any external change made to resources managed by Fleet. It performs a helm rollback, which uses
-  # a three-way merge strategy by default. It will try to update all resources by doing a PUT request if force is enabled.
+  # a three-way merge strategy by default. 
+  # It will try to update all resources by doing a PUT request if force is enabled. Three-way strategic merge might fail when updating 
+  # an item inside of an array as it will try to add a new item instead of replacing the existing one. This can be fixed by using force.
+  # Keep in mind that resources might be recreated if force is enabled.
   # Failed rollback will be removed from the helm history unless keepFailHistory is set to true.
   #
   #  correctDrift:
