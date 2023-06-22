@@ -98,6 +98,10 @@ to change which cluster Helm is installing to.
 
 :::
 
+:::caution Fleet in Rancher
+Rancher has separate helm charts for Fleet and uses a different repository.
+:::
+
 Add Fleet's Helm repo.
 <CodeBlock language="bash">
 {`helm repo add fleet https://rancher.github.io/fleet-helm-charts/`}

@@ -14,6 +14,11 @@ Who needs documentation, lets just run this thing!
  Fleet is distributed as a Helm chart. Helm 3 is a CLI, has no server side component, and its use is
   fairly straightforward. To install the Helm 3 CLI follow the <a href="https://helm.sh/docs/intro/install">official install instructions</a>.
 
+
+:::caution Fleet in Rancher
+Rancher has separate helm charts for Fleet and uses a different repository.
+:::
+
 <Tabs>
   <TabItem value="linux" label="Linux/Mac" default>
     <CodeBlock language="bash">

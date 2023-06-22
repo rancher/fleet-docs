@@ -41,6 +41,11 @@ Install the following two Helm charts.
 
 <Tabs>
 <TabItem value="install" label="Install" default>
+
+:::caution Fleet in Rancher
+Rancher has separate helm charts for Fleet and uses a different repository.
+:::
+
 First add Fleet's Helm repository.
 <CodeBlock language="bash">
 {`helm repo add fleet https://rancher.github.io/fleet-helm-charts/`}
