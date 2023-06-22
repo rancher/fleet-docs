@@ -98,7 +98,7 @@ to change which cluster Helm is installing to.
 
 :::
 
-Add Fleet helm repo.
+Add Fleet's Helm repo.
 <CodeBlock language="bash">
 {`helm repo add fleet https://rancher.github.io/fleet-helm-charts/`}
 </CodeBlock>
@@ -189,7 +189,7 @@ to change which cluster Helm is installing to.
 
 :::
 
-Add Fleet helm repo.
+Add Fleet's Helm repo.
 <CodeBlock language="bash">
 {`helm repo add fleet https://rancher.github.io/fleet-helm-charts/`}
 </CodeBlock>
