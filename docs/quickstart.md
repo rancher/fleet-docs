@@ -17,12 +17,14 @@ Who needs documentation, lets just run this thing!
 <Tabs>
   <TabItem value="linux" label="Linux/Mac" default>
     <CodeBlock language="bash">
-    brew install helm
+    {`brew install helm`}
+    {`helm repo add fleet https://rancher.github.io/fleet-helm-charts/`}
     </CodeBlock>
   </TabItem>
   <TabItem value="windows" label="Windows" default>
     <CodeBlock language="bash">
-    choco install kubernetes-helm
+    {`choco install kubernetes-helm`}
+    {`helm repo add fleet https://rancher.github.io/fleet-helm-charts/`}
     </CodeBlock>
   </TabItem>
 </Tabs>
@@ -30,11 +32,11 @@ Who needs documentation, lets just run this thing!
 Install the Fleet Helm charts (there's two because we separate out CRDs for ultimate flexibility.)
 
 <CodeBlock language="bash">
-{`helm -n cattle-fleet-system install --create-namespace --wait \\
-    fleet-crd`} {versions.next.fleetCRD}
+{`helm -n cattle-fleet-system install --create-namespace --wait fleet-crd \\
+    fleet/fleet-crd`}
 {`
-helm -n cattle-fleet-system install --create-namespace --wait \\
-    fleet`} {versions.next.fleet}
+helm -n cattle-fleet-system install --create-namespace --wait fleet \\
+    fleet/fleet`}
 </CodeBlock>
 
 ## Add a Git Repo to Watch
