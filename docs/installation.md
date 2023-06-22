@@ -41,7 +41,7 @@ Install the following two Helm charts.
 
 <Tabs>
 <TabItem value="install" label="Install" default>
-First add Fleet helm repo.
+First add Fleet's Helm repository.
 <CodeBlock language="bash">
 {`helm repo add fleet https://rancher.github.io/fleet-helm-charts/`}
 </CodeBlock>
@@ -209,7 +209,7 @@ Helm charts.
 
 <Tabs>
 <TabItem value="install2" label="Install" default>
-First add Fleet helm repo.
+First add Fleet's Helm repository.
 <CodeBlock language="bash">
 {`helm repo add fleet https://rancher.github.io/fleet-helm-charts/`}
 </CodeBlock>
