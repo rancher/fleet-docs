@@ -41,16 +41,26 @@ Install the following two Helm charts.
 
 <Tabs>
 <TabItem value="install" label="Install" default>
-First install the Fleet CustomResourcesDefintions.
+
+:::caution Fleet in Rancher
+Rancher has separate helm charts for Fleet and uses a different repository.
+:::
+
+First add Fleet's Helm repository.
 <CodeBlock language="bash">
-{`helm -n cattle-fleet-system install --create-namespace --wait \\
-    fleet-crd`} {versions.next.fleetCRD}
+{`helm repo add fleet https://rancher.github.io/fleet-helm-charts/`}
 </CodeBlock>
 
-Second install the Fleet controllers.
+Second install the Fleet CustomResourcesDefintions.
 <CodeBlock language="bash">
-{`helm -n cattle-fleet-system install --create-namespace --wait \\
-    fleet`} {versions.next.fleet}
+{`helm -n cattle-fleet-system install --create-namespace --wait fleet-crd \\
+    fleet/fleet-crd`}
+</CodeBlock>
+
+Third install the Fleet controllers.
+<CodeBlock language="bash">
+{`helm -n cattle-fleet-system install --create-namespace --wait fleet \\
+    fleet/fleet`}
 </CodeBlock>
 </TabItem>
 <TabItem value="verify" label="Verify">
@@ -204,13 +214,18 @@ Helm charts.
 
 <Tabs>
 <TabItem value="install2" label="Install" default>
-First install the Fleet CustomResourcesDefintions.
+First add Fleet's Helm repository.
+<CodeBlock language="bash">
+{`helm repo add fleet https://rancher.github.io/fleet-helm-charts/`}
+</CodeBlock>
+
+Second install the Fleet CustomResourcesDefintions.
 <CodeBlock language="bash">
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
     fleet-crd`} {versions.next.fleetCRD}
 </CodeBlock>
 
-Second install the Fleet controllers.
+Third install the Fleet controllers.
 <CodeBlock language="bash">
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
     --set apiServerURL="$API_SERVER_URL" \\

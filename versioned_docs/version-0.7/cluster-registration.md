@@ -98,8 +98,16 @@ to change which cluster Helm is installing to.
 
 :::
 
-Finally, install the agent using Helm.
+:::caution Fleet in Rancher
+Rancher has separate helm charts for Fleet and uses a different repository.
+:::
 
+Add Fleet's Helm repo.
+<CodeBlock language="bash">
+{`helm repo add fleet https://rancher.github.io/fleet-helm-charts/`}
+</CodeBlock>
+
+Finally, install the agent using Helm.
 <Tabs>
   <TabItem value="helm" label="Install" default>
 <CodeBlock language="bash">
@@ -108,7 +116,7 @@ Finally, install the agent using Helm.
     --values values.yaml \\
     --set apiServerCA="$API_SERVER_CA_DATA" \\
     --set apiServerURL="$API_SERVER_URL" \\
-    fleet-agent`} {versions.next.fleetAgent}
+    fleet-agent fleet/fleet-agent`}
 </CodeBlock>
 </TabItem>
 <TabItem value="validate" label="Validate">
@@ -185,6 +193,11 @@ to change which cluster Helm is installing to.
 
 :::
 
+Add Fleet's Helm repo.
+<CodeBlock language="bash">
+{`helm repo add fleet https://rancher.github.io/fleet-helm-charts/`}
+</CodeBlock>
+
 Finally, install the agent using Helm.
 
 <Tabs>
@@ -193,7 +206,7 @@ Finally, install the agent using Helm.
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
     --set clientID="$CLUSTER_CLIENT_ID" \\
     --values values.yaml \\
-    fleet-agent`} {versions.next.fleetAgent}
+    fleet-agent fleet/fleet-agent`}
 </CodeBlock>
 
 </TabItem>

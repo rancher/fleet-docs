@@ -31,7 +31,7 @@ use case for production.
   <TabItem value="kubernetes" label="Kubernetes" default>
   Fleet is a controller running on a Kubernetes cluster so an existing cluster is required. For the
   single cluster use case you will install Fleet to the cluster which you intend to manage with GitOps.
-  Any Kubernetes community supported version of Kubernetes will work, in practice this means {versions.next.kubernetes} or greater.
+  Any Kubernetes community supported version of Kubernetes will work, in practice this means {versions["v0.6"].kubernetes} or greater.
   </TabItem>
 </Tabs>
 
@@ -44,13 +44,13 @@ Install the following two Helm charts.
 First install the Fleet CustomResourcesDefintions.
 <CodeBlock language="bash">
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
-    fleet-crd`} {versions.next.fleetCRD}
+    fleet-crd`} {versions["v0.6"].fleetCRD}
 </CodeBlock>
 
 Second install the Fleet controllers.
 <CodeBlock language="bash">
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
-    fleet`} {versions.next.fleet}
+    fleet`} {versions["v0.6"].fleet}
 </CodeBlock>
 </TabItem>
 <TabItem value="verify" label="Verify">
@@ -207,7 +207,7 @@ Helm charts.
 First install the Fleet CustomResourcesDefintions.
 <CodeBlock language="bash">
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
-    fleet-crd`} {versions.next.fleetCRD}
+    fleet-crd`} {versions["v0.6"].fleetCRD}
 </CodeBlock>
 
 Second install the Fleet controllers.
@@ -215,7 +215,7 @@ Second install the Fleet controllers.
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
     --set apiServerURL="$API_SERVER_URL" \\
     --set-file apiServerCA="$API_SERVER_CA" \\
-    fleet`} {versions.next.fleet}
+    fleet`} {versions["v0.6"].fleet}
 </CodeBlock>
 </TabItem>
 

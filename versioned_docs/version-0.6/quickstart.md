@@ -31,10 +31,10 @@ Install the Fleet Helm charts (there's two because we separate out CRDs for ulti
 
 <CodeBlock language="bash">
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
-    fleet-crd`} {versions.next.fleetCRD}
+    fleet-crd`} {versions["v0.6"].fleetCRD}
 {`
 helm -n cattle-fleet-system install --create-namespace --wait \\
-    fleet`} {versions.next.fleet}
+    fleet`} {versions["v0.6"].fleet}
 </CodeBlock>
 
 ## Add a Git Repo to Watch

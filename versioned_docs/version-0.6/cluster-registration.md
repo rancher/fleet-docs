@@ -108,7 +108,7 @@ Finally, install the agent using Helm.
     --values values.yaml \\
     --set apiServerCA="$API_SERVER_CA_DATA" \\
     --set apiServerURL="$API_SERVER_URL" \\
-    fleet-agent`} {versions.next.fleetAgent}
+    fleet-agent`} {versions["v0.6"].fleetAgent}
 </CodeBlock>
 </TabItem>
 <TabItem value="validate" label="Validate">
@@ -193,7 +193,7 @@ Finally, install the agent using Helm.
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
     --set clientID="$CLUSTER_CLIENT_ID" \\
     --values values.yaml \\
-    fleet-agent`} {versions.next.fleetAgent}
+    fleet-agent`} {versions["v0.6"].fleetAgent}
 </CodeBlock>
 
 </TabItem>
