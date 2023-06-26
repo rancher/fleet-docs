@@ -190,6 +190,8 @@ targetCustomizations:
 dependsOn:
   # Format: <GITREPO-NAME>-<BUNDLE_PATH> with all path separators replaced by "-"
   # Example: GitRepo name "one", Bundle path "/multi-cluster/hello-world" => "one-multi-cluster-hello-world"
+  # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
+  # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: one-multi-cluster-hello-world
   # Select bundles to depend on based on their label.
   - selector:
