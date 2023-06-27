@@ -20,7 +20,9 @@ With the patch, users can instruct fleet to ignore object modifications.
 
 ## Simple Example
 
-https://github.com/rancher/fleet-examples/tree/master/bundle-diffs
+In this simple example, we create a Service and ConfigMap that we apply a bundle diff onto.
+
+https://github.com/rancher/fleet-test-data/tree/master/bundle-diffs
 
 
 ## Gatekeeper Example
