@@ -21,6 +21,13 @@ defaultNamespace: default
 # Default: ""
 namespace: default
 
+# namespaceLabels are labels that will be appended to the namespace created by Fleet.
+namespaceLabels:
+  key: value
+# namespaceAnnotations are annotations that will be appended to the namespace created by Fleet.
+namespaceAnnotations:
+  key: value
+
 # Optional map of labels, that are set at the bundle and can be used in a
 # dependsOn.selector
 labels:
@@ -212,4 +219,5 @@ overrideTargets:
   - clusterSelector:
       matchLabels:
         env: dev
+
 ```
