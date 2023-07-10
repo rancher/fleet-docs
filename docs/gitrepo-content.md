@@ -28,6 +28,40 @@ The following files are looked for to determine the how the resources will be de
 | ** *.yaml ** | Any subpath | If a `Chart.yaml` or `kustomization.yaml` is not found then any `.yaml` or `.yml` file will be assumed to be a Kubernetes resource and will be deployed. |
 | **overlays/{name}** | / relative to `path` | When deploying using raw YAML (not Kustomize or Helm) `overlays` is a special directory for customizations. |
 
+### Excluding files and directories from bundles
+
+Fleet supports file and directory exclusion by means of `.fleetignore` files, in a similar fashion to how `.gitignore`
+files behave in git repositories:
+* Glob syntax is used to match files or directories, using Golang's
+  [`filepath.Match`](https://pkg.go.dev/path/filepath#Match)
+* Empty lines are skipped, and can therefore be used to improve readability
+* Characters like white spaces and `#` can be escaped with a backslash
+* Trailing spaces are ignored, unless escaped
+* Comments, ie lines starting with unescaped `#`, are skipped
+* A given line can match a file or a directory, even if no separator is provided: eg. `subdir/*` and `subdir` are both
+  valid `.fleetignore` lines, and `subdir` matches both files and directories called `subdir`
+* A match may be found for a file or directory at any level below the directory where a `.fleetignore` lives, ie
+  `foo.yaml` will match `./foo.yaml` as well as `./path/to/foo.yaml`
+* Multiple `.fleetignore` files are supported. For instance, in the following directory structure, only
+  `root/something.yaml`, `bar/something2.yaml` and `foo/something.yaml` will end up in a bundle:
+```
+root/
+├── .fleetignore            # contains `ignore-always.yaml'
+├── something.yaml
+├── bar
+│   ├── .fleetignore        # contains `something.yaml`
+│   ├── ignore-always.yaml
+│   ├── something2.yaml
+│   └── something.yaml
+└── foo
+    ├── ignore-always.yaml
+    └── something.yaml
+```
+
+This currently comes with a few limitations, the following not being supported:
+* Double asterisks (`**`)
+* Explicit inclusions with `!`
+
 ## `fleet.yaml`
 
 The `fleet.yaml` is an optional file that can be included in the git repository to change the behavior of how
