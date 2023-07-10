@@ -67,17 +67,6 @@ NAME                                READY   STATUS    RESTARTS   AGE
 fleet-controller-64f49d756b-n57wq   1/1     Running   0          3m21s
 ```
 
-### Migrate the local cluster to the Fleet default cluster?
-
-For users who want to deploy to the local cluster as well, they may move the cluster from `fleet-local` to `fleet-default` in the Rancher UI as follows:
-
-- To get to Fleet in Rancher, click ☰ > Continuous Delivery.
-- Under the **Clusters** menu, select the **local** cluster by checking the box to the left.
-- Select **Assign to** from the tabs above the cluster.
-- Select **`fleet-default`** from the **Assign Cluster To** dropdown.
-
-**Result**: The cluster will be migrated to `fleet-default`.
-
 ### Enable debug logging for `fleet-controller` and `fleet-agent`?
 
 Available in Rancher v2.6.3 (Fleet v0.3.8), the ability to enable debug logging has been added.
@@ -224,3 +213,8 @@ Error opening a gzip reader for /tmp/getter154967024/archive: gzip: invalid head
 ```
 
 ... the content of the helm chart is incorrect. Manually download the chart to your local machine and check the content.
+
+### Migrate the local cluster to the Fleet default cluster workspace?
+
+Users can create new workspaces and move clusters across workspaces.
+It's currently not possible to move the local cluster from `fleet-local` to another workspace.
