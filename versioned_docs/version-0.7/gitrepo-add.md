@@ -105,7 +105,7 @@ Just like with SSH, reference the secret in your GitRepo resource via `clientSec
 :::warning
 The credentials will be used unconditionally for all Helm repositories referenced by the gitrepo resource.
 Make sure you don't leak credentials by mixing public and private repositories. Use [different helm credentials for each path](#use-different-helm-credentials-for-each-path),
-or split them into different gitrepos, or use `helmRepoUrlRegex` to limit the scope of credentials to certain servers.
+or split them into different gitrepos, or use `helmRepoURLRegex` to limit the scope of credentials to certain servers.
 :::
 
 For a private Helm repo, users can reference a secret with the following keys:

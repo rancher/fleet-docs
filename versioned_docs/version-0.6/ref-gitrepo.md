@@ -53,7 +53,7 @@ spec:
   # Helm credentials from helmSecretName will be used if the helm repository url matches this regular expression. 
   # Credentials will always be used if it is empty or not provided
   # 
-  # helmRepoUrlRegex: https://charts.rancher.io/*
+  # helmRepoURLRegex: https://charts.rancher.io/*
   #
   # To add additional ca-bundle for self-signed certs, caBundle can be
   # filled with base64 encoded pem data. For example:
