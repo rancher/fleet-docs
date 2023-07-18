@@ -64,11 +64,20 @@ default value it is dropped from the criteria.  The default value is either null
 that the value `{}` for a selector means "match everything."
 
 ```yaml
-# Match everything
-clusterSelector: {}
-# Selector ignored
-clusterSelector: null
+targets:
+  # Match everything
+  - clusterSelector: {}
+  # Selector ignored
+  - clusterSelector: null
 ```
+
+You can also match clusters by name:
+
+```yaml
+targets:
+  - clusterName: fleetname
+```
+When using Fleet in Rancher, make sure to put the name of the `clusters.fleet.cattle.io` resource.
 
 ## Default Target
 

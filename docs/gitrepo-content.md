@@ -162,10 +162,24 @@ default value it is dropped from the criteria.  The default value is either null
 that the value `{}` for a selector means "match everything."
 
 ```yaml
-# Match everything
-clusterSelector: {}
-# Selector ignored
-clusterSelector: null
+targetCustomizations:
+- name: all
+  # Match everything
+  clusterSelector: {}
+- name: none
+  # Selector ignored
+  clusterSelector: null
+```
+
+When matching a cluster by name, make sure to use the name of the
+`clusters.fleet.cattle.io` resource. The Rancher UI also has a provisioning and
+a management cluster resource. Since the management cluster resource is not
+namespaced, it's name is different and contains a random suffix.
+
+```yaml
+targetCustomizations:
+- name: prod
+  clusterName: fleetname
 ```
 
 See [Mapping to Downstream Clusters](gitrepo-targets#customization-per-cluster) for more information and a list of supported customizations.

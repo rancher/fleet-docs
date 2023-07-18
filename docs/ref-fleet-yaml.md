@@ -181,7 +181,8 @@ targetCustomizations:
   clusterSelector:
     matchLabels:
       env: prod
-  # A selector used to match a specific cluster by name.
+  # A selector used to match a specific cluster by name. When using Fleet in
+  # Rancher, make sure to put the name of the clusters.fleet.cattle.io resource.
   clusterName: dev-cluster
   # A selector used to match cluster groups.
   clusterGroupSelector:
