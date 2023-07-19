@@ -174,7 +174,7 @@ targetCustomizations:
 When matching a cluster by name, make sure to use the name of the
 `clusters.fleet.cattle.io` resource. The Rancher UI also has a provisioning and
 a management cluster resource. Since the management cluster resource is not
-namespaced, it's name is different and contains a random suffix.
+namespaced, its name is different and contains a random suffix.
 
 ```yaml
 targetCustomizations:
