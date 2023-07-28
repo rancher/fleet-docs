@@ -21,7 +21,7 @@ module.exports = {
         'ref-bundle-stages',
         'gitrepo-content',
         'namespaces',
-        'ref-resources',
+        'resources-during-deployment',
       ],
     },
     {
@@ -70,6 +70,7 @@ module.exports = {
         {type:'doc', id:'cluster-bundles-state'},
         'ref-registration',
         'ref-configuration',
+        'ref-resources',
         "ref-crds",
         'ref-fleet-yaml',
         'ref-gitrepo',
