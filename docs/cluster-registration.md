@@ -46,7 +46,7 @@ Agent-initiated registration is normally not used with Rancher.
 
 The **cluster registration token** is a credential that will authorize the downstream cluster agent to be
 able to initiate the registration process. This is required.
-The cluster registration token is manifested as a `values.yaml` file that will be passed to the `helm install` process.
+The [cluster registration token](./architecture.md#security) is manifested as a `values.yaml` file that will be passed to the `helm install` process.
 Alternatively one can pass the token directly to the helm install command via `--set token="$token"`.
 
 There are two styles of registering an agent. You can have the cluster for this agent dynamically created, in which
@@ -244,7 +244,7 @@ not need to be manually created and obtained.
 
 :::
 
-For an agent-initiated registration the downstream cluster must have a cluster registration token.
+For an agent-initiated registration the downstream cluster must have a [cluster registration token](./architecture.md#security).
 Cluster registration tokens are used to establish a new identity for a cluster. Internally
 cluster registration tokens are managed by creating Kubernetes service accounts that have the
 permissions to create `ClusterRegistrationRequests` within a specific namespace.  Once the
