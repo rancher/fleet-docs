@@ -1,7 +1,10 @@
 # Using Webhooks Instead of Polling
 
-By default, Fleet utilizes polling (default: 15 seconds) to pull from a Git repo.However, this can be configured to utilize a webhook instead.Fleet currently supports Github,
-GitLab, Bitbucket, Bitbucket Server and Gogs.
+By default, Fleet utilizes polling (default: every 15 seconds) to pull from a Git repo. This is a convenient default that works reasonably well for a small number of repos (up to a few tens).
+
+For installations with multiple tens up to hundreds of Git repos, and in general to reduce latency (the time between a push to Git and fleet reacting to it), configuring webhooks is recommended instead of polling.
+
+Fleet currently supports Github, GitLab, Bitbucket, Bitbucket Server and Gogs.
 
 ### 1. Configure the webhook service. Fleet uses a gitjob service to handle webhook requests. Create an ingress that points to the gitjob service.
 
