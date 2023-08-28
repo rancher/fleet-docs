@@ -161,6 +161,13 @@ Fleet will deploy the Helm chart with your customized `values.yaml` to the diffe
 * [Helm.ValuesFrom](/ref-crds#helmoptions)
 * [Helm.Values](/ref-crds#helmoptions)
 * [Helm.Version](/ref-crds#helmoptions)
+:::warning important information
+Overriding the version of a Helm chart via target customizations will lead to bundles containing _all_ versions, ie the
+default one and the custom one(s), of the chart, to accommodate all clusters. This in turn means that Fleet will deploy larger bundles.
+
+As Fleet stores bundles via etcd, this may cause issues on some clusters where resultant bundle sizes may exceed etcd's
+configured maximum blob size. See [this issue](https://github.com/rancher/fleet/issues/1650) for more details.
+:::
 * [Helm.WaitForJobs](/ref-crds#helmoptions)
 * [Kustomize.Dir](/ref-crds#kustomizeoptions)
 * [YAML.Overlays](/ref-crds#yamloptions)

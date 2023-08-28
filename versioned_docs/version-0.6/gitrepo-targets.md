@@ -136,6 +136,14 @@ Fleet will deploy the Helm chart with your customized `values.yaml` to the diffe
 
 >**Note:** Configuration management is not limited to deployments but can be expanded to general configuration management. Fleet is able to apply configuration management through customization among any set of clusters automatically.
 
+:::warning important information
+Overriding the version of a Helm chart via target customizations will lead to bundles containing _all_ versions, ie the
+default one and the custom one(s), of the chart, to accommodate all clusters. This in turn means that Fleet will deploy larger bundles.
+
+As Fleet stores bundles via etcd, this may cause issues on some clusters where resultant bundle sizes may exceed etcd's
+configured maximum blob size. See [this issue](https://github.com/rancher/fleet/issues/1650) for more details.
+:::
+
 ## Additional Examples
 
 Examples using raw Kubernetes YAML, Helm charts, Kustomize, and combinations
