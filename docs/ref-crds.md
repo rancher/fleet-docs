@@ -85,7 +85,7 @@
 
 #### GitRepo
 
-GitRepo describes a git repository that is wachted by Fleet. The resource contains the necessary information to deploy the repo, or parts of it, to target clusters.
+GitRepo describes a git repository that is watched by Fleet. The resource contains the necessary information to deploy the repo, or parts of it, to target clusters.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
@@ -101,9 +101,9 @@ GitRepo describes a git repository that is wachted by Fleet. The resource contai
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
-| readyBundleDeployments | ReadyBundleDeployments is a string in the form \"%d/%d\", that described the number of ready bundledeployments over the total number of bundledeployments. | string | false |
+| readyBundleDeployments | ReadyBundleDeployments is a string in the form \"%d/%d\", that describes the number of ready bundledeployments over the total number of bundledeployments. | string | false |
 | state | State is the state of the GitRepo, e.g. \"GitUpdating\" or the maximal BundleState according to StateRank. | string | false |
-| message | Message  contains the relevant message from the deployment conditions. | string | false |
+| message | Message contains the relevant message from the deployment conditions. | string | false |
 | error | Error is true if a message is present. | bool | false |
 
 [Back to Custom Resources](#custom-resources)
@@ -172,20 +172,20 @@ GitRepoRestriction is a resource that can optionally be used to restrict the opt
 | branch | Branch The git branch to follow. | string | false |
 | revision | Revision A specific commit or tag to operate on. | string | false |
 | targetNamespace | Ensure that all resources are created in this namespace Any cluster scoped resource will be rejected if this is set Additionally this namespace will be created on demand. | string | false |
-| clientSecretName | ClientSecretName is the name of the client secret to be used to connect to the repo. It is expected the secret be of type \"kubernetes.io/basic-auth\" or \"kubernetes.io/ssh-auth\". | string | false |
-| helmSecretName | HelmSecretName contains the auth secret for private helm repository. | string | false |
-| helmSecretNameForPaths | HelmSecretNameForPaths contains the auth secret for private helm repository for each path. | string | false |
+| clientSecretName | ClientSecretName is the name of the client secret to be used to connect to the repo It is expected the secret be of type \"kubernetes.io/basic-auth\" or \"kubernetes.io/ssh-auth\". | string | false |
+| helmSecretName | HelmSecretName contains the auth secret for a private Helm repository. | string | false |
+| helmSecretNameForPaths | HelmSecretNameForPaths contains the auth secret for private Helm repository for each path. | string | false |
 | helmRepoURLRegex | HelmRepoURLRegex Helm credentials will be used if the helm repo matches this regex Credentials will always be used if this is empty or not provided. | string | false |
 | caBundle | CABundle is a PEM encoded CA bundle which will be used to validate the repo's certificate. | []byte | false |
 | insecureSkipTLSVerify | InsecureSkipTLSverify will use insecure HTTPS to clone the repo. | bool | false |
-| paths | Paths is the directories relative to the git repo root that contain resources to be applied. Path globbing is support, for example [\"charts/*\"] will match all folders as a subdirectory of charts/ If empty, \"/\" is the default. | []string | false |
-| paused | Paused this cause changes in Git to not be propagated down to the clusters but instead mark resources as OutOfSync. | bool | false |
+| paths | Paths is the directories relative to the git repo root that contain resources to be applied. Path globbing is supported, for example [\"charts/*\"] will match all folders as a subdirectory of charts/ If empty, \"/\" is the default. | []string | false |
+| paused | Paused, when true, causes changes in Git not to be propagated down to the clusters but instead to mark resources as OutOfSync. | bool | false |
 | serviceAccount | ServiceAccount used in the downstream cluster for deployment. | string | false |
 | targets | Targets is a list of targets this repo will deploy to. | \[\][GitTarget](#gittarget) | false |
 | pollingInterval | PollingInterval is how often to check git for new updates. | *metav1.Duration | false |
 | forceSyncGeneration | Increment this number to force a redeployment of contents from Git. | int64 | false |
 | imageScanInterval | ImageScanInterval is the interval of syncing scanned images and writing back to git repo. | *metav1.Duration | false |
-| imageScanCommit | Commit specifies how to commit to the git repo when new image is scanned and write back to git repo. | [CommitSpec](#commitspec) | false |
+| imageScanCommit | Commit specifies how to commit to the git repo when a new image is scanned and written back to git repo. | [CommitSpec](#commitspec) | false |
 | keepResources | KeepResources specifies if the resources created must be kept after deleting the GitRepo. | bool | false |
 | correctDrift | CorrectDrift specifies how drift correction should work. | [CorrectDrift](#correctdrift) | false |
 
@@ -197,14 +197,14 @@ GitRepoRestriction is a resource that can optionally be used to restrict the opt
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
-| observedGeneration | ObservedGeneration is the current generation of the resource in the cluster. | int64 | true |
+| observedGeneration | ObservedGeneration is the current generation of the resource in the cluster. It is copied from k8s metadata.Generation. The value is incremented for all changes, except for changes to .metadata or .status. | int64 | true |
 | commit | Commit is the Git commit hash from the last gitjob run. | string | false |
 | readyClusters | ReadyClusters is the lowest number of clusters that are ready over all the bundles of this GitRepo. | int | true |
 | desiredReadyClusters | DesiredReadyClusters\tis the number of clusters that should be ready for bundles of this GitRepo. | int | true |
 | gitJobStatus | GitJobStatus is the status of the last GitJob run, e.g. \"Current\" if there was no error. | string | false |
 | summary | Summary contains the number of bundle deployments in each state and a list of non-ready resources. | [BundleSummary](#bundlesummary) | false |
 | display | Display contains a human readable summary of the status. | [GitRepoDisplay](#gitrepodisplay) | false |
-| conditions | Conditions is a list of wrangler conditions that describe the state of the GitRepo. | []genericcondition.GenericCondition | false |
+| conditions | Conditions is a list of Wrangler conditions that describe the state of the GitRepo. | []genericcondition.GenericCondition | false |
 | resources | Resources contains metadata about the resources of each bundle. | \[\][GitRepoResource](#gitreporesource) | false |
 | resourceCounts | ResourceCounts contains the number of resources in each state over all bundles. | [GitRepoResourceCounts](#gitreporesourcecounts) | false |
 | resourceErrors | ResourceErrors is a sorted list of errors from the resources. | []string | false |
@@ -220,7 +220,7 @@ GitTarget is a cluster or cluster group to deploy to.
 | ----- | ----------- | ------ | -------- |
 | name | Name is the name of this target. | string | false |
 | clusterName | ClusterName is the name of a cluster. | string | false |
-| clusterSelector | ClusterSelector is a label selector to select  clusters. | *metav1.LabelSelector | false |
+| clusterSelector | ClusterSelector is a label selector to select clusters. | *metav1.LabelSelector | false |
 | clusterGroup | ClusterGroup is the name of a cluster group in the same namespace as the clusters. | string | false |
 | clusterGroupSelector | ClusterGroupSelector is a label selector to select cluster groups. | *metav1.LabelSelector | false |
 
@@ -243,7 +243,7 @@ ResourcePerClusterState is generated for each non-ready resource of the bundles.
 
 #### Bundle
 
-Bundle contains the resources of an application and its deployment options. It will be deployed as a Helm chart to target clusters.\n\nWhen a GitRepo is scanned it will produce one or more bundles. Bundles are a collection of resources that get deployed to a cluster. Bundle is the fundamental deployment unit used in Fleet. The contents of a Bundle may be Kubernetes manifests, Kustomize configuration, or Helm charts. Regardless of the source the contents are dynamically rendered into a Helm chart by the agent and installed into the downstream cluster as a helm release.
+Bundle contains the resources of an application and its deployment options. It will be deployed as a Helm chart to target clusters.\n\nWhen a GitRepo is scanned it will produce one or more bundles. Bundles are a collection of resources that get deployed to one or more cluster(s). Bundle is the fundamental deployment unit used in Fleet. The contents of a Bundle may be Kubernetes manifests, Kustomize configuration, or Helm charts. Regardless of the source the contents are dynamically rendered into a Helm chart by the agent and installed into the downstream cluster as a Helm release.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
@@ -255,7 +255,7 @@ Bundle contains the resources of an application and its deployment options. It w
 
 #### BundleDeployment
 
-BundleDeployment is used internally by Fleet and should not be used directly. When a Bundle is deployed to a cluster an instance of a Bundle is called a BundleDeployment. A BundleDeployment represents the state of that Bundle on a specific cluster with its cluster specific customizations. The Fleet agent is only aware of BundleDeployment resources that are created for the cluster the agent is managing.
+BundleDeployment is used internally by Fleet and should not be used directly. When a Bundle is deployed to a cluster an instance of a Bundle is called a BundleDeployment. A BundleDeployment represents the state of that Bundle on a specific cluster with its cluster-specific customizations. The Fleet agent is only aware of BundleDeployment resources that are created for the cluster the agent is managing.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
@@ -319,8 +319,8 @@ BundleDeploymentResource contains the metadata of a deployed resource.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
-| paused | Paused if set to true, will stop any BundleDeployments from being updated. It will be marked as out of sync. | bool | false |
-| stagedOptions | They are the deployment options, that are staged for the next deployment. | [BundleDeploymentOptions](#bundledeploymentoptions) | false |
+| paused | Paused if set to true, will stop any BundleDeployments from being updated. If true, BundleDeployments will be marked as out of sync when changes are detected. | bool | false |
+| stagedOptions | StagedOptions are the deployment options, that are staged for the next deployment. | [BundleDeploymentOptions](#bundledeploymentoptions) | false |
 | stagedDeploymentID | StagedDeploymentID is the ID of the staged deployment. | string | false |
 | options | Options are the deployment options, that are currently applied. | [BundleDeploymentOptions](#bundledeploymentoptions) | false |
 | deploymentID | DeploymentID is the ID of the currently applied deployment. | string | false |
@@ -354,7 +354,7 @@ BundleDisplay contains the number of ready, desiredready clusters and a summary 
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
-| readyClusters | ReadyClusters is a string in the form \"%d/%d\", that described the number of clusters that are ready vs. the number of clusters desired to be ready. | string | false |
+| readyClusters | ReadyClusters is a string in the form \"%d/%d\", that describes the number of clusters that are ready vs. the number of clusters desired to be ready. | string | false |
 | state | State is a summary state for the bundle, calculated over the non-ready resources. | string | false |
 
 [Back to Custom Resources](#custom-resources)
@@ -384,7 +384,7 @@ BundleNamespaceMapping maps bundles to clusters in other namespaces.
 
 #### BundleResource
 
-BundleResource contains the content of a single resource from the bundle, like a YAML manifest.
+BundleResource represents the content of a single resource from the bundle, like a YAML manifest.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
@@ -416,10 +416,10 @@ BundleResource contains the content of a single resource from the bundle, like a
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
-| conditions | Conditions is a list of wrangler conditions that describe the state of the bundle. | []genericcondition.GenericCondition | false |
+| conditions | Conditions is a list of Wrangler conditions that describe the state of the bundle. | []genericcondition.GenericCondition | false |
 | summary | Summary contains the number of bundle deployments in each state and a list of non-ready resources. | [BundleSummary](#bundlesummary) | false |
-| newlyCreated | NewlyCreated is the number of bundles that have been created, not updated. | int | false |
-| unavailable | Unavailable is the number of bundles that are not ready or where the AppliedDeploymentID in the status does not match the DeploymentID from the spec. | int | true |
+| newlyCreated | NewlyCreated is the number of bundle deployments that have been created, not updated. | int | false |
+| unavailable | Unavailable is the number of bundle deployments that are not ready or where the AppliedDeploymentID in the status does not match the DeploymentID from the spec. | int | true |
 | unavailablePartitions | UnavailablePartitions is the number of unavailable partitions. | int | true |
 | maxUnavailable | MaxUnavailable is the maximum number of unavailable deployments. See rollout configuration. | int | true |
 | maxUnavailablePartitions | MaxUnavailablePartitions is the maximum number of unavailable partitions. The rollout configuration defines a maximum number or percentage of unavailable partitions. | int | true |
@@ -439,9 +439,9 @@ BundleSummary contains the number of bundle deployments in each state and a list
 | ----- | ----------- | ------ | -------- |
 | notReady | NotReady is the number of bundle deployments that have been deployed where some resources are not ready. | int | false |
 | waitApplied | WaitApplied is the number of bundle deployments that have been synced from Fleet controller and downstream cluster, but are waiting to be deployed. | int | false |
-| errApplied | ErrApplied is the number of bundle deployments that have been synced from the Fleet controller and the downstream cluster, but there were some errors when deploying the bundle. | int | false |
-| outOfSync | OutOfSync is the number of bundle deployments that have been synced from Fleet controller, but downstream agent hasn't synced the change yet. | int | false |
-| modified | Modified is the number of bundle deployments that have been deployed and all resources are ready, but there are some changes that were not made from the Git repository. | int | false |
+| errApplied | ErrApplied is the number of bundle deployments that have been synced from the Fleet controller and the downstream cluster, but with some errors when deploying the bundle. | int | false |
+| outOfSync | OutOfSync is the number of bundle deployments that have been synced from Fleet controller, but not yet by the downstream agent. | int | false |
+| modified | Modified is the number of bundle deployments that have been deployed and for which all resources are ready, but where some changes from the Git repository have not yet been synced. | int | false |
 | ready | Ready is the number of bundle deployments that have been deployed where all resources are ready. | int | true |
 | pending | Pending is the number of bundle deployments that are being processed by Fleet controller. | int | false |
 | desiredReady | DesiredReady is the number of bundle deployments that should be ready. | int | true |
@@ -490,7 +490,7 @@ ComparePatch matches a resource and removes fields from the check for modificati
 | namespace | Namespace is the namespace of the resource to match. | string | false |
 | name | Name is the name of the resource to match. | string | false |
 | operations | Operations remove a JSON path from the resource. | \[\][Operation](#operation) | false |
-| jsonPointers | JSONPointers is normally empty. | []string | false |
+| jsonPointers | JSONPointers ignore diffs at a certain JSON path. | []string | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -528,7 +528,7 @@ Content is used internally by Fleet and should not be used directly. It contains
 
 #### HelmOptions
 
-HelmOptions for the deployment. For helm based bundles, all options can be, otherwise some options are ignored. For example ReleaseName works with all bundle types.
+HelmOptions for the deployment. For Helm-based bundles, all options can be used, otherwise some options are ignored. For example ReleaseName works with all bundle types.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
@@ -561,7 +561,7 @@ IgnoreOptions defines conditions to be ignored when monitoring the Bundle.
 
 #### KustomizeOptions
 
-KustomizeOptions for the deployment.
+KustomizeOptions for a deployment.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
@@ -597,7 +597,7 @@ ModifiedStatus is used to report the status of a resource that is modified. It i
 
 #### NonReadyResource
 
-NonReadyResource contains information about a bundle that is not ready for a given state like \"ErrApplied\". It contains a list of non-ready or modified resources and their state.
+NonReadyResource contains information about a bundle that is not ready for a given state like \"ErrApplied\". It contains a list of non-ready or modified resources and their states.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
@@ -642,7 +642,7 @@ Partition defines a separate rollout strategy for a set of clusters.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
-| name | A user friend name given to the partition used for Display (optional). | string | false |
+| name | A user-friendly name given to the partition used for Display (optional). | string | false |
 | maxUnavailable | A number or percentage of clusters that can be unavailable in this partition before this partition is treated as done. default: 10% | *intstr.IntOrString | false |
 | clusterName | ClusterName is the name of a cluster to include in this partition | string | false |
 | clusterSelector | Selector matching cluster labels to include in this partition | *metav1.LabelSelector | false |
@@ -686,7 +686,7 @@ RolloverStrategy controls the rollout of the bundle across clusters.
 | ----- | ----------- | ------ | -------- |
 | maxUnavailable | A number or percentage of clusters that can be unavailable during an update of a bundle. This follows the same basic approach as a deployment rollout strategy. Once the number of clusters meets unavailable state update will be paused. Default value is 100% which doesn't take effect on update. default: 100% | *intstr.IntOrString | false |
 | maxUnavailablePartitions | A number or percentage of cluster partitions that can be unavailable during an update of a bundle. default: 0 | *intstr.IntOrString | false |
-| autoPartitionSize | A number of percentage of how to automatically partition clusters if not specific partitioning strategy is configured. default: 25% | *intstr.IntOrString | false |
+| autoPartitionSize | A number or percentage of how to automatically partition clusters if no specific partitioning strategy is configured. default: 25% | *intstr.IntOrString | false |
 | partitions | A list of definitions of partitions.  If any target clusters do not match the configuration they are added to partitions at the end following the autoPartitionSize. | \[\][Partition](#partition) | false |
 
 [Back to Custom Resources](#custom-resources)
@@ -827,7 +827,7 @@ SemVerPolicy specifies a semantic version policy.
 
 #### Cluster
 
-Cluster corresponds to a kubernetes cluster. Fleet deploys bundles to targeted clusters. Clusters to which Fleet deploys manifests are referred to as downstream clusters. In the single cluster use case, the Fleet manager Kubernetes cluster is both the manager and downstream cluster at the same time.
+Cluster corresponds to a Kubernetes cluster. Fleet deploys bundles to targeted clusters. Clusters to which Fleet deploys manifests are referred to as downstream clusters. In the single cluster use case, the Fleet manager Kubernetes cluster is both the manager and downstream cluster at the same time.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
@@ -843,8 +843,8 @@ Cluster corresponds to a kubernetes cluster. Fleet deploys bundles to targeted c
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
-| readyBundles | ReadyBundles is a string in the form \"%d/%d\", that described the number of bundles that are ready vs. the number of bundles desired to be ready. | string | false |
-| readyNodes | ReadyNodes is a string in the form \"%d/%d\", that described the number of nodes that are ready vs. the number of expected nodes. | string | false |
+| readyBundles | ReadyBundles is a string in the form \"%d/%d\", that describes the number of bundles that are ready vs. the number of bundles desired to be ready. | string | false |
+| readyNodes | ReadyNodes is a string in the form \"%d/%d\", that describes the number of nodes that are ready vs. the number of expected nodes. | string | false |
 | sampleNode | SampleNode is the name of one of the nodes that are ready. If no node is ready, it's the name of a node that is not ready. | string | false |
 | state | State of the cluster, either one of the bundle states, or \"WaitCheckIn\". | string | false |
 
@@ -852,7 +852,7 @@ Cluster corresponds to a kubernetes cluster. Fleet deploys bundles to targeted c
 
 #### ClusterGroup
 
-ClusterGroup is stored selector to target a group of clusters.
+ClusterGroup is a re-usable selector to target a group of clusters.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
@@ -868,9 +868,9 @@ ClusterGroup is stored selector to target a group of clusters.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
-| readyClusters | ReadyClusters is a string in the form \"%d/%d\", that described the number of clusters that are ready vs. the number of clusters desired to be ready. | string | false |
-| readyBundles | ReadyBundles is a string in the form \"%d/%d\", that described the number of bundles that are ready vs. the number of bundles desired to be ready. | string | false |
-| state | State is a summary state for the cluster group, calculated over the non-ready resources. | string | false |
+| readyClusters | ReadyClusters is a string in the form \"%d/%d\", that describes the number of clusters that are ready vs. the number of clusters desired to be ready. | string | false |
+| readyBundles | ReadyBundles is a string in the form \"%d/%d\", that describes the number of bundles that are ready vs. the number of bundles desired to be ready. | string | false |
+| state | State is a summary state for the cluster group, showing \"NotReady\" if there are non-ready resources. | string | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -893,7 +893,7 @@ ClusterGroup is stored selector to target a group of clusters.
 | clusterCount | ClusterCount is the number of clusters in the cluster group. | int | true |
 | nonReadyClusterCount | NonReadyClusterCount is the number of clusters that are not ready. | int | true |
 | nonReadyClusters | NonReadyClusters is a list of cluster names that are not ready. | []string | false |
-| conditions | Conditions is a list of conditions and their status for the cluster group. | []genericcondition.GenericCondition | false |
+| conditions | Conditions is a list of conditions and their statuses for the cluster group. | []genericcondition.GenericCondition | false |
 | summary | Summary is a summary of the bundle deployments and their resources in the cluster group. | [BundleSummary](#bundlesummary) | false |
 | display | Display contains the number of ready, desiredready clusters and a summary state for the bundle's resources. | [ClusterGroupDisplay](#clustergroupdisplay) | false |
 | resourceCounts | ResourceCounts contains the number of resources in each state over all bundles in the cluster group. | [GitRepoResourceCounts](#gitreporesourcecounts) | false |
@@ -902,7 +902,7 @@ ClusterGroup is stored selector to target a group of clusters.
 
 #### ClusterRegistration
 
-ClusterRegistration is used internally by fleet and should not be used directly.
+ClusterRegistration is used internally by Fleet and should not be used directly.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
@@ -1003,8 +1003,8 @@ ClusterRegistrationToken is used by agents to register a new cluster.
 | agentEnvVarsHash | AgentEnvVarsHash is a hash of the agent's env vars, used to detect changes. | string | false |
 | agentPrivateRepoURL | AgentPrivateRepoURL is the private repo URL for the agent that is currently used. | string | false |
 | agentDeployedGeneration | AgentDeployedGeneration is the generation of the agent that is currently deployed. | *int64 | false |
-| agentMigrated | AgentMigrated is always set to true after importing a cluster. If false, it will trigger a migration. Old Fleet agents, don't have this in their status. | bool | false |
-| agentNamespaceMigrated | AgentNamespaceMigrated is always set to true after importing a cluster. If false, it will trigger a migration. Old Fleet agents, don't have this in their status. | bool | false |
+| agentMigrated | AgentMigrated is always set to true after importing a cluster. If false, it will trigger a migration. Old agents don't have this in their status. | bool | false |
+| agentNamespaceMigrated | AgentNamespaceMigrated is always set to true after importing a cluster. If false, it will trigger a migration. Old Fleet agents don't have this in their status. | bool | false |
 | cattleNamespaceMigrated | CattleNamespaceMigrated is always set to true after importing a cluster. If false, it will trigger a migration. Old Fleet agents, don't have this in their status. | bool | false |
 | agentAffinityHash | AgentAffinityHash is a hash of the agent's affinity configuration, used to detect changes. | string | false |
 | agentResourcesHash | AgentResourcesHash is a hash of the agent's resources configuration, used to detect changes. | string | false |

@@ -1,5 +1,7 @@
 # List of Deployed Resources
 
+After installing Fleet in Rancher these resources are created in the upstream cluster.
+
 | Type  | Name        | Namespace |
 | ----- | ----------- | --------- |
 | From Helm, intial setup: | | |
@@ -28,3 +30,7 @@
 | clusters.management.cattle.io | generated |		- |
 | clusters.fleet.cattle.io | fleet-default |  |
 | Bundle | fleet-default |  |
+| BundleDeployment | cluster-fleet-local-local-ID | fleet-agent-local
+
+
+Also see [namespaces]
