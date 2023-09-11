@@ -110,6 +110,10 @@ helm:
   atomic: false
   # Disable go template pre-processing on the fleet values
   disablePreProcess: false
+  # Disable DNS resolution in Helm's template functions
+  disableDNS: false
+  # Skip evaluation of the values.schema.json file
+  skipSchemaValidation: false
   # if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready.
   # It will wait for as long as timeoutSeconds
   waitForJobs: true
