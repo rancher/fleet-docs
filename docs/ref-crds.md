@@ -540,7 +540,7 @@ HelmOptions for the deployment. For Helm-based bundles, all options can be used,
 | values | Values passed to Helm. It is possible to specify the keys and values as go template strings. | *GenericMap | false |
 | valuesFrom | ValuesFrom loads the values from configmaps and secrets. | \[\][ValuesFrom](#valuesfrom) | false |
 | force | Force allows to override immutable resources. This could be dangerous. | bool | false |
-| takeOwnership | TakeOwnership makes helm skip the check for its own annotations | bool | false |
+| takeOwnership | TakeOwnership makes Fleet skip the check for its own annotations | bool | false |
 | maxHistory | MaxHistory limits the maximum number of revisions saved per release by Helm. | int | false |
 | valuesFiles | ValuesFiles is a list of files to load values from. | []string | false |
 | waitForJobs | WaitForJobs if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready. It will wait for as long as timeoutSeconds | bool | false |
