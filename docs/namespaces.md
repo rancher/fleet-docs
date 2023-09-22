@@ -45,6 +45,8 @@ When fleet is installed the `fleet-local` namespace is created along with one `C
 automatically target the `local` `Cluster`.  The `local` `Cluster` refers to the cluster the Fleet manager is running
 on.
 
+The cluster registration namespace contains the cluster and the clusterregistration resources, as well as any gitrepos and bundles.
+
 ### cattle-fleet-system (system namespace)
 
 The Fleet controller and Fleet agent run in this namespace. All service accounts referenced by `GitRepos` are expected
