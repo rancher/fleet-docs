@@ -37,6 +37,8 @@ The registration secret name is `hash("clientID-clientRandom")`. The new kubecon
 
 ## Diagram
 
+### Process
+
 Detailed analysis of the registration process for clusters. This shows the interaction of controllers, resources and service accounts during the registration of a new downstream cluster or the local cluster.
 It's important to note that there are multiple ways to start this:
 
@@ -45,3 +47,9 @@ It's important to note that there are multiple ways to start this:
 * Create a `ClusterRegistrationToken` resource, optionally create a `Cluster` resource for a pre-defined (`clientID`) cluster. See [agent-initiated registration](./cluster-registration.md#agent-initiated).
 
 ![Registration](/img/FleetRegistration.svg)
+
+### Secrets
+
+This diagram shows the resources created during registration and focuses on the k8s API server configuration.
+
+![Registration Secrets](/img/FleetRegistrationSecrets.svg)
