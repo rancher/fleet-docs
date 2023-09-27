@@ -66,3 +66,31 @@ Helm options related to downloading the helm chart will be ignored. The helm cha
 You can't use a `fleet.yaml` in resources, it is only used by the fleet-cli to create bundles.
 
 The `spec.targetRestrictions` field is not useful, as it is an allow list for targets specified in `spec.targets`. It is not needed, since `targets` are explicitly given in a bundle and an empty `targetRestrictions` defaults to allow.
+
+## Convert a Helm Chart into a Bundle
+
+You can use the Fleet CLI to convert a Helm chart into a bundle.
+
+For example, you can download and convert the "external secrets" operator chart like this:
+```
+cat > targets.yaml <<EOF
+targets:
+- clusterSelector: {}
+EOF
+
+mkdir app
+cat > app/fleet.yaml <<EOF
+defaultNamespace: external-secrets
+helm:
+  repo: https://charts.external-secrets.io
+  chart: external-secrets
+EOF
+
+fleet apply --compress --targets-file=targets.yaml -n fleet-default -o - external-secrets app > eso-bundle.yaml
+
+kubectl apply -f eso-bundle.yaml
+```
+
+Make sure you use a cluster selector in `targets.yaml`, that matches all clusters you want to deploy to.
+
+The blog post on [Fleet: Multi-Cluster Deployment with the Help of External Secrets](https://www.suse.com/c/rancher_blog/fleet-multi-cluster-deployment-with-the-help-of-external-secrets/) has more information.
