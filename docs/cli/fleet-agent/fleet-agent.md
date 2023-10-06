@@ -20,6 +20,5 @@ fleet-agent [flags]
   -h, --help                      help for fleet-agent
       --kubeconfig string         kubeconfig file
       --namespace string          namespace to watch
-      --simulators int            Numbers of simulators to run
 ```
 
