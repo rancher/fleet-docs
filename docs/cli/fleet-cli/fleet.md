@@ -25,5 +25,6 @@ fleet [flags]
 ### SEE ALSO
 
 * [fleet apply](./fleet_apply)	 - Render a bundle into a Kubernetes resource and apply it in the Fleet Manager
+* [fleet cleanup](./fleet_cleanup)	 - Clean up outdated cluster registrations
 * [fleet test](./fleet_test)	 - Match a bundle to a target and render the output
 
