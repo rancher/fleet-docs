@@ -6,6 +6,9 @@
  */
 /* Import fonts. */
 
+/* CSS for SUSE projects icons */
+@import "icon_dropdown.css";
+
 /* poppins */
 @font-face {
   font-family: 'Work Sans';

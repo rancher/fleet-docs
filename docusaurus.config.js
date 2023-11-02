@@ -57,6 +57,51 @@ module.exports = {
           className: 'header-slack-link',
           'aria-label': 'Slack Channel',
         },
+        {
+          type: 'dropdown',
+          label: 'More from SUSE',
+          position: 'right',
+          items: [
+            {
+              href: 'https://www.rancher.com',
+              label: 'Rancher',
+              className: 'navbar__icon navbar__rancher',
+            },
+            {
+              type: 'html',
+              value: '<hr style="margin: 0.3rem 0;">',
+            },
+            {
+              href: 'https://epinio.io/',
+              label: 'Epinio',
+              className: 'navbar__icon navbar__epinio',
+            },
+            {
+              href: 'https://harvesterhci.io',
+              label: 'Harvester',
+              className: 'navbar__icon navbar__harvester',
+            },
+            {
+              href: 'https://opni.io',
+              label: 'Opni',
+              className: 'navbar__icon navbar__opni',
+            },
+            {
+              href: 'https://rancherdesktop.io',
+              label: 'Rancher Desktop',
+              className: 'navbar__icon navbar__rd',
+            },
+            {
+              type: 'html',
+              value: '<hr style="margin: 0.3rem 0;">',
+            },
+            {
+              href: 'https://opensource.suse.com',
+              label: 'More Projects...',
+              className: 'navbar__icon navbar__suse',
+            },
+          ]
+        }
       ],
     },
     footer: {
