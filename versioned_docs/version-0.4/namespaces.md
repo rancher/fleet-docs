@@ -1,7 +1,7 @@
 # Namespaces
 
 All types in the Fleet manager are namespaced.  The namespaces of the manager types do not correspond to the namespaces
-of the deployed resources in the downstream cluster. Understanding how namespaces are use in the Fleet manager is
+of the deployed resources in the downstream cluster. Understanding how namespaces are used in the Fleet manager is
 important to understand the security model and how one can use Fleet in a multi-tenant fashion.
 
 ## GitRepos, Bundles, Clusters, ClusterGroups
