@@ -76,7 +76,7 @@ stringData:
 
 :::warning
 
-If you don't add it any server's public key will be trusted and added. (`ssh -o stricthostkeychecking=accept-new` will be used)
+If you don't add one or more public keys into the secret, any server's public key will be trusted and added. (`ssh -o stricthostkeychecking=accept-new` will be used)
 
 :::
 
