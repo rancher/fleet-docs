@@ -52,6 +52,14 @@ The key has to be in PEM format.
 
 :::
 
+### Known hosts
+
+:::warning
+
+If you don't add one or more public keys into the secret, any server's public key will be trusted and added. (`ssh -o stricthostkeychecking=accept-new` will be used)
+
+:::
+
 Fleet supports putting `known_hosts` into ssh secret. Here is an example of how to add it:
 
 Fetch the public key hash(take github as an example)
@@ -73,12 +81,6 @@ stringData:
   known_hosts: |-
     |1|YJr1VZoi6dM0oE+zkM0do3Z04TQ=|7MclCn1fLROZG+BgR4m1r8TLwWc= ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
 ```
-
-:::warning
-
-If you don't add one or more public keys into the secret, any server's public key will be trusted and added. (`ssh -o stricthostkeychecking=accept-new` will be used)
-
-:::
 
 :::info
 
