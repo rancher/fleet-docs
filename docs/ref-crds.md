@@ -73,7 +73,9 @@
 
 #### Bundle
 
-Bundle contains the resources of an application and its deployment options. It will be deployed as a Helm chart to target clusters.\n\nWhen a GitRepo is scanned it will produce one or more bundles. Bundles are a collection of resources that get deployed to one or more cluster(s). Bundle is the fundamental deployment unit used in Fleet. The contents of a Bundle may be Kubernetes manifests, Kustomize configuration, or Helm charts. Regardless of the source the contents are dynamically rendered into a Helm chart by the agent and installed into the downstream cluster as a Helm release.
+Bundle contains the resources of an application and its deployment options. It will be deployed as a Helm chart to target clusters.
+
+When a GitRepo is scanned it will produce one or more bundles. Bundles are a collection of resources that get deployed to one or more cluster(s). Bundle is the fundamental deployment unit used in Fleet. The contents of a Bundle may be Kubernetes manifests, Kustomize configuration, or Helm charts. Regardless of the source the contents are dynamically rendered into a Helm chart by the agent and installed into the downstream cluster as a Helm release.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
