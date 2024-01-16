@@ -56,18 +56,27 @@ If you configured the webhook the polling interval will be automatically adjuste
 
 ### 3. (Optional) Configure webhook secret. The secret is for validating webhook payload. Make sure to put it in a k8s secret called `gitjob-webhook` in `cattle-fleet-system`.
 
-| Provider        | K8s Secret Key                   |
-|-----------------| ---------------------------------|
-| GitHub          | `github`                         |
-| GitLab          | `gitlab`                         |
-| BitBucket       | `bitbucket`                      |
-| BitBucketServer | `bitbucket-server`               |
-| Gogs            | `gogs`                           |
+| Provider        | K8s Secret Key     |
+|-----------------|--------------------|
+| GitHub          | `github`           |
+| GitLab          | `gitlab`           |
+| BitBucket       | `bitbucket`        |
+| BitBucketServer | `bitbucket-server` |
+| Gogs            | `gogs`             |
+| Azure Devops    | `azure-username`   |
+| Azure Devops    | `azure-password`   |
 
 For example, to create a secret containing a GitHub secret to validate the webhook payload, run:
 
 ```shell
 kubectl create secret generic gitjob-webhook -n cattle-fleet-system --from-literal=github=webhooksecretvalue
+```
+
+For Azure Devops:
+- Enable basic authentication in Azure
+- Create a secret containing the credentials for the basic authentication
+```shell
+kubectl create secret generic gitjob-webhook -n cattle-fleet-system --from-literal=azure-username=user --from-literal=azure-password=pass123
 ```
 
 ### 4. Go to your git provider and test the connection. You should get a HTTP response code.
