@@ -45,7 +45,11 @@ helm:
   # OCI registry based helm chart URL e.g. "oci://ghcr.io/fleetrepoci/guestbook".
   # This allows one to download charts from most any location.  Also know that
   # go-getter URL supports adding a digest to validate the download. If repo
-  # is set below this field is the name of the chart to lookup
+  # is set below this field is the name of the chart to lookup.
+  # It is possible to download the chart from a Git repository, e.g.
+  # by using `git@github.com:rancher/fleet-examples//single-cluster/helm`. If a
+  # secret for the SSH key was defined in the GitRepo via `helmSecretName`, it
+  # will be injected into the chart URL.
   chart: ./chart
   # A https URL to a Helm repo to download the chart from. It's typically easier
   # to just use `chart` field and refer to a tgz file.  If repo is used the
