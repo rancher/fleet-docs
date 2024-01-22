@@ -50,6 +50,8 @@ helm:
   # by using `git@github.com:rancher/fleet-examples//single-cluster/helm`. If a
   # secret for the SSH key was defined in the GitRepo via `helmSecretName`, it
   # will be injected into the chart URL.
+  # Git repositories can be downloaded via unauthenticated http, by using for example:
+  # `git::http://github.com/rancher/fleet-examples//single-cluster/helm`.
   chart: ./chart
   # A https URL to a Helm repo to download the chart from. It's typically easier
   # to just use `chart` field and refer to a tgz file.  If repo is used the
