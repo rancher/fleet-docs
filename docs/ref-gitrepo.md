@@ -35,36 +35,41 @@ spec:
   #
   # revision: v0.3.0
 
-  # For a private registry you must supply a clientSecretName. A default
+  # For a private git repository you must supply a clientSecretName. A default
   # secret can be set at the namespace level using the GitRepoRestriction
   # type. Secrets must be of the type "kubernetes.io/ssh-auth" or
   # "kubernetes.io/basic-auth". The secret is assumed to be in the
   # same namespace as the GitRepo
   #
   # clientSecretName: my-ssh-key
-  #
+
   # If fleet.yaml contains a private Helm repo that requires authentication,
   # provide the credentials in a K8s secret and specify them here.
   # Danger: the credentials will be sent to all repositories referenced from
   # this gitrepo. See section below for more information.
   #
   # helmSecretName: my-helm-secret
-  #
+
   # Helm credentials from helmSecretName will be used if the helm repository url matches this regular expression.
   # Credentials will always be used if it is empty or not provided
   #
   # helmRepoURLRegex: https://charts.rancher.io/*
+
+  # Contains the auth secret for private Helm repository for each path.
+  # See [Create a GitRepo Resource](.gitrepo-add#use-different-helm-credentials-for-each-path)
   #
+  # helmSecretNameForPaths: multi-helm-secret
+
   # To add additional ca-bundle for self-signed certs, caBundle can be
   # filled with base64 encoded pem data. For example:
   # `cat /path/to/ca.pem | base64 -w 0`
   #
   # caBundle: my-ca-bundle
-  #
+
   # Disable SSL verification for git repo
   #
   # insecureSkipTLSVerify: true
-  #
+
   # A git repo can read multiple paths in a repo at once.
   # The below field is expected to be an array of paths and
   # supports path globbing (ex: some/*/path)
@@ -109,10 +114,10 @@ spec:
   # If empty, the "default" cluster group is used.
   #
   # targets: ...
-  #
+
   # Drift correction removes any external change made to resources managed by Fleet. It performs a helm rollback, which uses
-  # a three-way merge strategy by default. 
-  # It will try to update all resources by doing a PUT request if force is enabled. Three-way strategic merge might fail when updating 
+  # a three-way merge strategy by default.
+  # It will try to update all resources by doing a PUT request if force is enabled. Three-way strategic merge might fail when updating
   # an item inside of an array as it will try to add a new item instead of replacing the existing one. This can be fixed by using force.
   # Keep in mind that resources might be recreated if force is enabled.
   # Failed rollback will be removed from the helm history unless keepFailHistory is set to true.

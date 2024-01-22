@@ -15,6 +15,7 @@
 # Sub Resources
 
 * [BundleDisplay](#bundledisplay)
+* [BundleList](#bundlelist)
 * [BundleRef](#bundleref)
 * [BundleResource](#bundleresource)
 * [BundleSpec](#bundlespec)
@@ -28,6 +29,7 @@
 * [ResourceKey](#resourcekey)
 * [RolloutStrategy](#rolloutstrategy)
 * [BundleDeploymentDisplay](#bundledeploymentdisplay)
+* [BundleDeploymentList](#bundledeploymentlist)
 * [BundleDeploymentOptions](#bundledeploymentoptions)
 * [BundleDeploymentResource](#bundledeploymentresource)
 * [BundleDeploymentSpec](#bundledeploymentspec)
@@ -45,28 +47,37 @@
 * [SecretKeySelector](#secretkeyselector)
 * [ValuesFrom](#valuesfrom)
 * [YAMLOptions](#yamloptions)
+* [BundleNamespaceMappingList](#bundlenamespacemappinglist)
 * [AgentStatus](#agentstatus)
 * [ClusterDisplay](#clusterdisplay)
+* [ClusterList](#clusterlist)
 * [ClusterSpec](#clusterspec)
 * [ClusterStatus](#clusterstatus)
 * [ClusterGroupDisplay](#clustergroupdisplay)
+* [ClusterGroupList](#clustergrouplist)
 * [ClusterGroupSpec](#clustergroupspec)
 * [ClusterGroupStatus](#clustergroupstatus)
+* [ClusterRegistrationList](#clusterregistrationlist)
 * [ClusterRegistrationSpec](#clusterregistrationspec)
 * [ClusterRegistrationStatus](#clusterregistrationstatus)
+* [ClusterRegistrationTokenList](#clusterregistrationtokenlist)
 * [ClusterRegistrationTokenSpec](#clusterregistrationtokenspec)
 * [ClusterRegistrationTokenStatus](#clusterregistrationtokenstatus)
+* [ContentList](#contentlist)
 * [CommitSpec](#commitspec)
 * [CorrectDrift](#correctdrift)
 * [GitRepoDisplay](#gitrepodisplay)
+* [GitRepoList](#gitrepolist)
 * [GitRepoResource](#gitreporesource)
 * [GitRepoResourceCounts](#gitreporesourcecounts)
 * [GitRepoSpec](#gitrepospec)
 * [GitRepoStatus](#gitrepostatus)
 * [GitTarget](#gittarget)
 * [ResourcePerClusterState](#resourceperclusterstate)
+* [GitRepoRestrictionList](#gitreporestrictionlist)
 * [AlphabeticalPolicy](#alphabeticalpolicy)
 * [ImagePolicyChoice](#imagepolicychoice)
+* [ImageScanList](#imagescanlist)
 * [ImageScanSpec](#imagescanspec)
 * [ImageScanStatus](#imagescanstatus)
 * [SemVerPolicy](#semverpolicy)
@@ -93,6 +104,17 @@ BundleDisplay contains the number of ready, desiredready clusters and a summary 
 | ----- | ----------- | ------ | -------- |
 | readyClusters | ReadyClusters is a string in the form \"%d/%d\", that describes the number of clusters that are ready vs. the number of clusters desired to be ready. | string | false |
 | state | State is a summary state for the bundle, calculated over the non-ready resources. | string | false |
+
+[Back to Custom Resources](#custom-resources)
+
+#### BundleList
+
+BundleList contains a list of Bundle
+
+| Field | Description | Scheme | Required |
+| ----- | ----------- | ------ | -------- |
+| metadata |  | metav1.ListMeta | false |
+| items |  | \[\][Bundle](#bundle) | true |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -152,6 +174,7 @@ BundleResource represents the content of a single resource from the bundle, like
 | display | Display contains the number of ready, desiredready clusters and a summary state for the bundle's resources. | [BundleDisplay](#bundledisplay) | false |
 | resourceKey | ResourceKey lists resources, which will likely be deployed. The actual list of resources on a cluster might differ, depending on the helm chart, value templating, etc.. | \[\][ResourceKey](#resourcekey) | false |
 | observedGeneration | ObservedGeneration is the current generation of the bundle. | int64 | true |
+| resourcesSha256Sum | ResourcesSHA256Sum corresponds to the JSON serialization of the .Spec.Resources field | string | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -295,6 +318,17 @@ BundleDeployment is used internally by Fleet and should not be used directly. Wh
 
 [Back to Custom Resources](#custom-resources)
 
+#### BundleDeploymentList
+
+BundleDeploymentList contains a list of BundleDeployment
+
+| Field | Description | Scheme | Required |
+| ----- | ----------- | ------ | -------- |
+| metadata |  | metav1.ListMeta | false |
+| items |  | \[\][BundleDeployment](#bundledeployment) | true |
+
+[Back to Custom Resources](#custom-resources)
+
 #### BundleDeploymentOptions
 
 
@@ -311,9 +345,10 @@ BundleDeployment is used internally by Fleet and should not be used directly. Wh
 | diff | Diff can be used to ignore the modified state of objects which are amended at runtime. | *[DiffOptions](#diffoptions) | false |
 | keepResources | KeepResources can be used to keep the deployed resources when removing the bundle | bool | false |
 | ignore | IgnoreOptions can be used to ignore fields when monitoring the bundle. | [IgnoreOptions](#ignoreoptions) | false |
-| correctDrift | CorrectDrift specifies how drift correction should work. | [CorrectDrift](#correctdrift) | false |
+| correctDrift | CorrectDrift specifies how drift correction should work. | *[CorrectDrift](#correctdrift) | false |
 | namespaceLabels | NamespaceLabels are labels that will be appended to the namespace created by Fleet. | *map[string]string | false |
 | namespaceAnnotations | NamespaceAnnotations are annotations that will be appended to the namespace created by Fleet. | *map[string]string | false |
+| deleteCRDResources | DeleteCRDResources deletes CRDs. Warning! this will also delete all your Custom Resources. | bool | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -343,7 +378,7 @@ BundleDeploymentResource contains the metadata of a deployed resource.
 | options | Options are the deployment options, that are currently applied. | [BundleDeploymentOptions](#bundledeploymentoptions) | false |
 | deploymentID | DeploymentID is the ID of the currently applied deployment. | string | false |
 | dependsOn | DependsOn refers to the bundles which must be ready before this bundle can be deployed. | \[\][BundleRef](#bundleref) | false |
-| correctDrift | CorrectDrift specifies how drift correction should work. | [CorrectDrift](#correctdrift) | false |
+| correctDrift | CorrectDrift specifies how drift correction should work. | *[CorrectDrift](#correctdrift) | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -544,6 +579,17 @@ BundleNamespaceMapping maps bundles to clusters in other namespaces.
 
 [Back to Custom Resources](#custom-resources)
 
+#### BundleNamespaceMappingList
+
+BundleNamespaceMappingList contains a list of BundleNamespaceMapping
+
+| Field | Description | Scheme | Required |
+| ----- | ----------- | ------ | -------- |
+| metadata |  | metav1.ListMeta | false |
+| items |  | \[\][BundleNamespaceMapping](#bundlenamespacemapping) | true |
+
+[Back to Custom Resources](#custom-resources)
+
 #### AgentStatus
 
 
@@ -581,6 +627,17 @@ Cluster corresponds to a Kubernetes cluster. Fleet deploys bundles to targeted c
 | readyNodes | ReadyNodes is a string in the form \"%d/%d\", that describes the number of nodes that are ready vs. the number of expected nodes. | string | false |
 | sampleNode | SampleNode is the name of one of the nodes that are ready. If no node is ready, it's the name of a node that is not ready. | string | false |
 | state | State of the cluster, either one of the bundle states, or \"WaitCheckIn\". | string | false |
+
+[Back to Custom Resources](#custom-resources)
+
+#### ClusterList
+
+ClusterList contains a list of Cluster
+
+| Field | Description | Scheme | Required |
+| ----- | ----------- | ------ | -------- |
+| metadata |  | metav1.ListMeta | false |
+| items |  | \[\][Cluster](#cluster) | true |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -658,6 +715,17 @@ ClusterGroup is a re-usable selector to target a group of clusters.
 
 [Back to Custom Resources](#custom-resources)
 
+#### ClusterGroupList
+
+ClusterGroupList contains a list of ClusterGroup
+
+| Field | Description | Scheme | Required |
+| ----- | ----------- | ------ | -------- |
+| metadata |  | metav1.ListMeta | false |
+| items |  | \[\][ClusterGroup](#clustergroup) | true |
+
+[Back to Custom Resources](#custom-resources)
+
 #### ClusterGroupSpec
 
 
@@ -696,6 +764,17 @@ ClusterRegistration is used internally by Fleet and should not be used directly.
 
 [Back to Custom Resources](#custom-resources)
 
+#### ClusterRegistrationList
+
+ClusterRegistrationList contains a list of ClusterRegistration
+
+| Field | Description | Scheme | Required |
+| ----- | ----------- | ------ | -------- |
+| metadata |  | metav1.ListMeta | false |
+| items |  | \[\][ClusterRegistration](#clusterregistration) | true |
+
+[Back to Custom Resources](#custom-resources)
+
 #### ClusterRegistrationSpec
 
 
@@ -731,6 +810,17 @@ ClusterRegistrationToken is used by agents to register a new cluster.
 
 [Back to Custom Resources](#custom-resources)
 
+#### ClusterRegistrationTokenList
+
+ClusterRegistrationTokenList contains a list of ClusterRegistrationToken
+
+| Field | Description | Scheme | Required |
+| ----- | ----------- | ------ | -------- |
+| metadata |  | metav1.ListMeta | false |
+| items |  | \[\][ClusterRegistrationToken](#clusterregistrationtoken) | true |
+
+[Back to Custom Resources](#custom-resources)
+
 #### ClusterRegistrationTokenSpec
 
 
@@ -760,6 +850,18 @@ Content is used internally by Fleet and should not be used directly. It contains
 | ----- | ----------- | ------ | -------- |
 | metadata |  | metav1.ObjectMeta | false |
 | content | Content is a byte array, which contains the manifests of a bundle. The bundle resources are copied into the bundledeployment's content resource, so the downstream agent can deploy them. | []byte | false |
+| sha256sum | SHA256Sum of the Content field | string | false |
+
+[Back to Custom Resources](#custom-resources)
+
+#### ContentList
+
+ContentList contains a list of Content
+
+| Field | Description | Scheme | Required |
+| ----- | ----------- | ------ | -------- |
+| metadata |  | metav1.ListMeta | false |
+| items |  | \[\][Content](#content) | true |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -809,6 +911,17 @@ GitRepo describes a git repository that is watched by Fleet. The resource contai
 | state | State is the state of the GitRepo, e.g. \"GitUpdating\" or the maximal BundleState according to StateRank. | string | false |
 | message | Message contains the relevant message from the deployment conditions. | string | false |
 | error | Error is true if a message is present. | bool | false |
+
+[Back to Custom Resources](#custom-resources)
+
+#### GitRepoList
+
+GitRepoList contains a list of GitRepo
+
+| Field | Description | Scheme | Required |
+| ----- | ----------- | ------ | -------- |
+| metadata |  | metav1.ListMeta | false |
+| items |  | \[\][GitRepo](#gitrepo) | true |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -875,7 +988,7 @@ GitRepoResourceCounts contains the number of resources in each state.
 | imageScanInterval | ImageScanInterval is the interval of syncing scanned images and writing back to git repo. | *metav1.Duration | false |
 | imageScanCommit | Commit specifies how to commit to the git repo when a new image is scanned and written back to git repo. | [CommitSpec](#commitspec) | false |
 | keepResources | KeepResources specifies if the resources created must be kept after deleting the GitRepo. | bool | false |
-| correctDrift | CorrectDrift specifies how drift correction should work. | [CorrectDrift](#correctdrift) | false |
+| correctDrift | CorrectDrift specifies how drift correction should work. | *[CorrectDrift](#correctdrift) | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -945,6 +1058,17 @@ GitRepoRestriction is a resource that can optionally be used to restrict the opt
 
 [Back to Custom Resources](#custom-resources)
 
+#### GitRepoRestrictionList
+
+GitRepoRestrictionList contains a list of GitRepoRestriction
+
+| Field | Description | Scheme | Required |
+| ----- | ----------- | ------ | -------- |
+| metadata |  | metav1.ListMeta | false |
+| items |  | \[\][GitRepoRestriction](#gitreporestriction) | true |
+
+[Back to Custom Resources](#custom-resources)
+
 #### AlphabeticalPolicy
 
 AlphabeticalPolicy specifies a alphabetical ordering policy.
@@ -975,6 +1099,17 @@ ImagePolicyChoice is a union of all the types of policy that can be supplied.
 | metadata |  | metav1.ObjectMeta | false |
 | spec |  | [ImageScanSpec](#imagescanspec) | false |
 | status |  | [ImageScanStatus](#imagescanstatus) | false |
+
+[Back to Custom Resources](#custom-resources)
+
+#### ImageScanList
+
+ImageScanList contains a list of ImageScan
+
+| Field | Description | Scheme | Required |
+| ----- | ----------- | ------ | -------- |
+| metadata |  | metav1.ListMeta | false |
+| items |  | \[\][ImageScan](#imagescan) | true |
 
 [Back to Custom Resources](#custom-resources)
 
