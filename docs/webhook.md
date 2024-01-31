@@ -28,7 +28,7 @@ spec:
                 number: 80
 ```
 
-If want to have the webhook available using the same host name as your Rancher or another service, you can use the following YAML with the URL http://your.domain.com/gitjob. The below YAML is specifc for the Nginx Ingress Controller:
+If you want to have the webhook available using the same host name as your Rancher or another service, you can use the following YAML with the URL http://your.domain.com/gitjob. The below YAML is specific for the Nginx Ingress Controller:
 
 ```yaml
 apiVersion: networking.k8s.io/v1
