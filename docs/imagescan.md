@@ -43,6 +43,13 @@ You can create multiple image scans in fleet.yaml.
 
 :::
 
+:::note
+
+Semver will ignore pre-release versions (for example, 0.0.1-10) unless a pre-release version is explicitly used in the range definition.
+For example, the "*" range will ignore pre-releases while ">= 0.0.1-10" will take them into account.
+
+:::
+
 Go to your manifest files and update the field that you want to replace. For example:
 
 ```yaml
