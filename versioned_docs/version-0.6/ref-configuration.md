@@ -6,9 +6,9 @@ A reference list of, mostly internal, configuration options.
 
 The Helm charts accept, at least, the options as shown with their default in `values.yaml`:
 
-* https://github.com/rancher/fleet/blob/master/charts/fleet/values.yaml
-* https://github.com/rancher/fleet/blob/master/charts/fleet-crds/values.yaml
-* https://github.com/rancher/fleet/blob/master/charts/fleet-agent/values.yaml
+* https://github.com/rancher/fleet/blob/main/charts/fleet/values.yaml
+* https://github.com/rancher/fleet/blob/main/charts/fleet-crds/values.yaml
+* https://github.com/rancher/fleet/blob/main/charts/fleet-agent/values.yaml
 
 ## Environment Variables
 
@@ -16,13 +16,13 @@ The controllers can be started with these environment variables:
 
 * `CATTLE_DEV_MODE` - used to debug wrangler, not usable
 * `FLEET_CLUSTER_ENQUEUE_DELAY` - tune how often non-ready clusters are checked
-* `FLEET_CPU_PPROF_PERIOD` - used to turn on [performance profiling](https://github.com/rancher/fleet/blob/master/docs/performance.md)
+* `FLEET_CPU_PPROF_PERIOD` - used to turn on [performance profiling](https://github.com/rancher/fleet/blob/main/docs/performance.md)
 
 ## Configuration
 
 In cluster configuration for the agent and fleet manager. Changing these can lead to full re-deployments.
 
-The config [struct](https://github.com/rancher/fleet/blob/master/pkg/config/config.go#L40-L52) is used in both config maps:
+The config [struct](https://github.com/rancher/fleet/blob/main/pkg/config/config.go#L40-L52) is used in both config maps:
 
 * cattle-fleet-system/fleet-agent 
 * cattle-fleet-system/fleet-controller 
