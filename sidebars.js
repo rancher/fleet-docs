@@ -54,17 +54,19 @@ module.exports = {
       collapsed: false,
       items:[
         {
-          'CLI':
-          [
-            {type: 'doc', id: 'cli/fleet-agent/fleet-agent'},
-            {
-              'fleet-gitjob-cli': [
-                {type: 'doc', id: 'cli/fleet-cli/fleet'},
-                {type: 'doc', id: 'cli/fleet-cli/fleet_apply'},
-                {type: 'doc', id: 'cli/fleet-cli/fleet_test'},
-              ],
-            },
+          'CLI': [
+            'cli/fleet-agent/fleet-agent',
+            'cli/fleet-agent/fleet-agent_clusterstatus',
+            'cli/fleet-agent/fleet-agent_register',
+            {type: 'doc', id: 'cli/fleet-cli/fleet'},
+            {type: 'doc', id: 'cli/fleet-cli/fleet_apply'},
+            {type: 'doc', id: 'cli/fleet-cli/fleet_cleanup'},
+            {type: 'doc', id: 'cli/fleet-cli/fleet_deploy'},
+            {type: 'doc', id: 'cli/fleet-cli/fleet_target'},
+            {type: 'doc', id: 'cli/fleet-cli/fleet_test'},
             {type: 'doc', id: 'cli/fleet-controller/fleet-manager'},
+            {type: 'doc', id: 'cli/fleet-controller/fleet-manager_agentmanagement'},
+            {type: 'doc', id: 'cli/fleet-controller/fleet-manager_cleanup'},
           ],
         },
         {type:'doc', id:'cluster-bundles-state'},

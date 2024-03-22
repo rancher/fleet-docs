@@ -17,6 +17,7 @@ fleet apply [flags] BUNDLE_NAME PATH...
       --cacerts-file string                    Path of custom cacerts for helm repo
       --commit string                          Commit to assign to the bundle
   -c, --compress                               Force all resources to be compress
+      --context string                         kubeconfig context for authentication
       --correct-drift                          Rollback any change made from outside of Fleet
       --correct-drift-force                    Use --force when correcting drift. Resources can be deleted and recreated
       --correct-drift-keep-fail-history        Keep helm history for failed rollbacks
@@ -27,7 +28,9 @@ fleet apply [flags] BUNDLE_NAME PATH...
       --helm-repo-url-regex string             Helm credentials will be used if the helm repo matches this regex. Credentials will always be used if this is empty or not provided
   -h, --help                                   help for apply
       --keep-resources                         Keep resources created after the GitRepo or Bundle is deleted
+  -k, --kubeconfig string                      kubeconfig for authentication
   -l, --label strings                          Labels to apply to created bundles
+  -n, --namespace string                       namespace (default "fleet-local")
   -o, --output string                          Output contents to file or - for stdout
       --password-file string                   Path of file containing basic auth password for helm repo
       --paused                                 Create bundles in a paused state
@@ -37,15 +40,6 @@ fleet apply [flags] BUNDLE_NAME PATH...
       --target-namespace string                Ensure this bundle goes to this target namespace
       --targets-file string                    Addition source of targets and restrictions to be append
       --username string                        Basic auth username for helm repo
-```
-
-### Options inherited from parent commands
-
-```
-      --context string            kubeconfig context for authentication
-  -k, --kubeconfig string         kubeconfig for authentication
-  -n, --namespace string          namespace (default "fleet-local")
-      --system-namespace string   System namespace of the controller (default "cattle-fleet-system")
 ```
 
 ### SEE ALSO
