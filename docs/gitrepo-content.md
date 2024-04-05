@@ -219,3 +219,11 @@ using YAML syntax.
 ## Cluster and Bundle State
 
 See [Cluster and Bundle state](./cluster-bundles-state.md).
+
+## Nested GitRepo CRs
+
+Nested `GitRepo CRs` (defining a `GitRepo` that points to a repository containing one or more `GitRepo` resources) is supported.
+You can use this feature to take advantage of `GitOps` in your `GitRepo` resources or, for example, to split complex scenarios into more than one `GitRepo` resource.
+When finding a `GitRepo` in a `Bundle` Fleet will simply deploy it as any other resource.
+
+See [this example](https://github.com/rancher/fleet-examples/multi-gitrepo).
