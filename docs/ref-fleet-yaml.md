@@ -211,8 +211,8 @@ targetCustomizations:
   # Resources will not be deployed in the matched clusters if doNotDeploy is true.
   doNotDeploy: false
   # Drift correction removes any external change made to resources managed by Fleet. It performs a helm rollback, which uses
-  # a three-way merge strategy by default. 
-  # It will try to update all resources by doing a PUT request if force is enabled. Three-way strategic merge might fail when updating 
+  # a three-way merge strategy by default.
+  # It will try to update all resources by doing a PUT request if force is enabled. Three-way strategic merge might fail when updating
   # an item inside of an array as it will try to add a new item instead of replacing the existing one. This can be fixed by using force.
   # Keep in mind that resources might be recreated if force is enabled.
   # Failed rollback will be removed from the helm history unless keepFailHistory is set to true.
@@ -250,3 +250,43 @@ overrideTargets:
         env: dev
 
 ```
+
+### Helm Options
+
+#### How fleet-agent deploys the bundle
+
+These options also apply to kustomize- and manifest-style bundles.
+They control how the fleet-agent deploys the bundle. All bundles are converted into Helm charts and deployed with the Helm SDK.
+These options are often similar to the Helm CLI options for install and update.
+
+* releaseName
+* takeOwnership
+* force
+* atomic
+* disablePreProcess
+* disableDNS
+* skipSchemaValidation
+* waitForJobs
+
+#### Helm Chart Download Options
+
+These options are for Helm style bundles, they specify how to download the chart.
+
+* chart
+* repo
+* version
+
+The reference to the chart can be either:
+* a local path in the cloned Git repository, specified by `chart`.
+* a go-getter URL, specified by `chart`. This can be used to download a tarball
+  of the chart. go-getter also allows to download a chart from a Git repo.
+* a Helm repository, specified by `repo` and optionally `version`.
+* a OCI Helm repository, specified by `repo` and optionally `version`.
+
+#### Helm Chart Value Options
+
+Options for the downloaded Helm chart.
+
+* values
+* valuesFiles
+* valueFrom
