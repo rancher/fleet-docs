@@ -270,7 +270,7 @@ These options are often similar to the Helm CLI options for install and update.
 
 #### Helm Chart Download Options
 
-These options are for Helm style bundles, they specify how to download the chart.
+These options are for Helm-style bundles, they specify how to download the chart.
 
 * chart
 * repo
@@ -278,10 +278,10 @@ These options are for Helm style bundles, they specify how to download the chart
 
 The reference to the chart can be either:
 * a local path in the cloned Git repository, specified by `chart`.
-* a go-getter URL, specified by `chart`. This can be used to download a tarball
+* a [go-getter URL](https://github.com/hashicorp/go-getter?tab=readme-ov-file#url-format), specified by `chart`. This can be used to download a tarball
   of the chart. go-getter also allows to download a chart from a Git repo.
 * a Helm repository, specified by `repo` and optionally `version`.
-* a OCI Helm repository, specified by `repo` and optionally `version`.
+* an OCI Helm repository, specified by `repo` and optionally `version`.
 
 #### Helm Chart Value Options
 
