@@ -73,17 +73,7 @@ helm:
   # The variable's value will be an empty string if the referenced cluster label does not
   # exist on the targeted cluster
     variableName: global.fleet.clusterLabels.LABELNAME
-  # It is possible to specify the keys and values as go template strings for
-  # advanced templating needs. Most of the functions from the sprig templating
-  # library are available. Note, if the functions output changes with every
-  # call, e.g. `uuidv4`, the bundle will get redeployed.
-  # The template context has following keys.
-  # `.ClusterValues` are retrieved from target cluster's `spec.templateValues`
-  # `.ClusterLabels` and `.ClusterAnnotations` are the labels and annoations in the cluster resource.
-  # `.ClusterName` as the fleet's cluster resource name.
-  # `.ClusterNamespace` as the namespace in which the cluster resource exists.
-  # Note: The fleet.yaml must be valid yaml. Templating uses ${ } as delims,
-  #       unlike helm which uses {{ }}.
+  # See Templating notes below for more information on templating.
     templatedLabel: "${ .ClusterLabels.LABELNAME }-foo"
     valueFromEnv:
       "${ .ClusterLabels.ENV }": ${ .ClusterValues.someValue | upper | quote }
@@ -290,3 +280,27 @@ Options for the downloaded Helm chart.
 * values
 * valuesFiles
 * valueFrom
+
+### Templating
+
+It is possible to specify the keys and values as go template strings for
+advanced templating needs.
+Most of the functions from the sprig templating library are available.
+
+Note that if the functions output changes with every call, e.g. `uuidv4`, the bundle will get redeployed.
+
+The template context has the following keys:
+* `.ClusterValues` are retrieved from target cluster's `spec.templateValues`
+* `.ClusterLabels` and `.ClusterAnnotations` are the labels and annoations in the cluster resource.
+* `.ClusterName` as the fleet's cluster resource name.
+* `.ClusterNamespace` as the namespace in which the cluster resource exists.
+
+Note: The fleet.yaml must be valid yaml. Templating uses `${ }` as delims, unlike Helm which uses `{{ }}`.
+These fleet.yaml template delimiters can be escaped using backticks, eg.:
+```
+foo-bar-${`${PWD}`}
+```
+will result in the following text:
+```
+foo-bar-${PWD}
+```
