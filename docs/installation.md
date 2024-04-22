@@ -82,6 +82,67 @@ fleet-controller-64f49d756b-n57wq   1/1     Running   0          3m21s
 
 You can now [register some git repos](./gitrepo-add.md) in the `fleet-local` namespace to start deploying Kubernetes resources.
 
+## Multi-controller install: sharding
+
+### Deployment
+
+From 0.10 onwards, Fleet supports static sharding. The Fleet controller chart can be installed with `--set
+shards={<comma-separated shard IDs>}`, which will result in:
+* as many Fleet controller deployments as specified unique shard IDs,
+* plus the usual unsharded Fleet controller pod. That latter pod will be the only one containing agent management and
+cleanup containers.
+
+For instance:
+```bash
+$ helm -n cattle-fleet-system install --create-namespace --wait --set shards="{foo,bar,baz}" \
+fleet fleet/fleet
+
+$ kubectl -n cattle-fleet-system get pods -l app=fleet-controller
+NAME                                          READY   STATUS    RESTARTS      AGE
+fleet-controller-78c74fdb85-b6q64             3/3     Running   0             77s
+fleet-controller-shard-bar-777d888865-w2dks   1/1     Running   0             77s
+fleet-controller-shard-baz-6595bd9cb9-27whg   1/1     Running   0             77s
+fleet-controller-shard-foo-85d49b446f-pzxkw   1/1     Running   0             77s
+
+$ kubectl -n cattle-fleet-system get pods -l app=fleet-controller \
+-o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata.labels.shard}{"\n"}{end}'
+fleet-controller-78c74fdb85-b6q64
+fleet-controller-shard-bar-777d888865-w2dks     bar
+fleet-controller-shard-baz-6595bd9cb9-27whg     baz
+fleet-controller-shard-foo-85d49b446f-pzxkw     foo
+```
+
+### How it works
+
+With sharding in place, each Fleet controller will process resources bearing its own shard ID. This also holds for the
+unsharded controller, which has no set shard ID and will therefore process all unsharded resources.
+
+To deploy a GitRepo for a specific shard, simply add label `fleet.cattle.io/shard` with your desired shard ID as a
+value.
+Here is an example:
+```bash
+$ kubectl apply -n fleet-local -f - <<EOF
+kind: GitRepo
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: sharding-test
+  labels:
+    fleet.cattle.io/shard: foo
+spec:
+  repo: https://github.com/rancher/fleet-examples
+  paths:
+  - single-cluster/helm
+EOF
+```
+
+A GitRepo with a label ID for which a Fleet controller is deployed (eg. `foo` in the above example) will then be
+processed by that controller.
+
+On the other hand, a GitRepo with an unknown label ID (eg. `boo` in the above example) will _not_ be processed by any
+Fleet controller, hence no resources other than the GitRepo itself will be created.
+
+Removing or adding supported shard IDs currently requires redeploying Fleet with a new set of shard IDs.
+
 ## Configuration for Multi-Cluster
 
 :::caution
