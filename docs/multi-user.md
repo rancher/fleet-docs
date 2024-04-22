@@ -28,7 +28,7 @@ deploy resources without conflicts.
 
 :::
 
-## Example User
+## Example Fleet standalone 
 
 This would create a user 'fleetuser', who can only manage GitRepo resources in the 'project1' namespace.
 
@@ -44,6 +44,79 @@ If we want to give access to multiple namespaces, we can use a single cluster ro
     kubectl create -n project2 rolebinding fleetuser --serviceaccount=default:fleetuser --clusterrole=fleetuser
 
 This makes sure, tenants can't interfere with GitRepo resources from other tenants, since they don't have access to their namespaces.
+
+## Example Fleet in Rancher
+ 
+When a new fleet workspace is created, a corresponding namespace with an identical name is automatically generated within the Rancher local cluster.
+For a user to see and deploy fleet resources in a specific workspace needs at least the following permissions:
+- list/get the `fleetworkspace` cluster-wide resource in the local cluster
+- Permissions to create fleet resources (such as `bundles`, `gitrepos`, ...) in the backing namespace for the workspace in the local cluster. 
+
+Let's grants permissions to deploy fleet resources in the `project1` and `project2` fleet workspaces:
+
+- To create the `project1` and `project2` fleet workspaces, you can either do it in the  [Rancher UI](https://ranchermanager.docs.rancher.com/integrations-in-rancher/fleet/overview#accessing-fleet-in-the-rancher-ui) or use the following YAML resources:
+
+```
+apiVersion: management.cattle.io/v3
+kind: FleetWorkspace
+metadata:
+  name: project1
+```
+
+```
+apiVersion: management.cattle.io/v3
+kind: FleetWorkspace
+metadata:
+  name: project2
+```
+
+- Create a `GlobalRole` that grants permission to deploy fleet resources in the `project1` and `project2` fleet workspaces:
+
+```
+apiVersion: management.cattle.io/v3
+kind: GlobalRole
+metadata:
+  name: fleet-projects1and2
+namespacedRules:
+  project1:
+    - apiGroups:
+        - fleet.cattle.io
+      resources:
+        - gitrepos
+        - bundles
+        - clusterregistrationtokens
+        - gitreporestrictions
+        - clusters
+        - clustergroups
+      verbs:
+        - '*'
+  project2:
+    - apiGroups:
+        - fleet.cattle.io
+      resources:
+        - gitrepos
+        - bundles
+        - clusterregistrationtokens
+        - gitreporestrictions
+        - clusters
+        - clustergroups
+      verbs:
+        - '*'
+rules:
+  - apiGroups:
+      - management.cattle.io
+    resourceNames:
+      - project1
+      - project2
+    resources:
+      - fleetworkspaces
+    verbs:
+      - '*'
+```
+
+Assign the `GlobalRole` to users or groups, more info can be found in the [Rancher docs](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/manage-role-based-access-control-rbac/global-permissions#configuring-global-permissions-for-individual-users)
+
+The user now has access to the `Continuous Delivery` tab in Rancher and can deploy resources to both the `project1` and `project2` workspaces.
 
 ## Allow Access to Clusters
 
