@@ -28,7 +28,7 @@ deploy resources without conflicts.
 
 :::
 
-## Example Fleet standalone 
+## Example Fleet Standalone 
 
 This would create a user 'fleetuser', who can only manage GitRepo resources in the 'project1' namespace.
 
