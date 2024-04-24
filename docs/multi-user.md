@@ -48,13 +48,13 @@ This makes sure, tenants can't interfere with GitRepo resources from other tenan
 ## Example Fleet in Rancher
  
 When a new fleet workspace is created, a corresponding namespace with an identical name is automatically generated within the Rancher local cluster.
-For a user to see and deploy fleet resources in a specific workspace needs at least the following permissions:
+For a user to see and deploy fleet resources in a specific workspace, they need at least the following permissions:
 - list/get the `fleetworkspace` cluster-wide resource in the local cluster
 - Permissions to create fleet resources (such as `bundles`, `gitrepos`, ...) in the backing namespace for the workspace in the local cluster. 
 
-Let's grants permissions to deploy fleet resources in the `project1` and `project2` fleet workspaces:
+Let's grant permissions to deploy fleet resources in the `project1` and `project2` fleet workspaces:
 
-- To create the `project1` and `project2` fleet workspaces, you can either do it in the  [Rancher UI](https://ranchermanager.docs.rancher.com/integrations-in-rancher/fleet/overview#accessing-fleet-in-the-rancher-ui) or use the following YAML resources:
+- To create the `project1` and `project2` fleet workspaces, you can either do it in the [Rancher UI](https://ranchermanager.docs.rancher.com/integrations-in-rancher/fleet/overview#accessing-fleet-in-the-rancher-ui) or use the following YAML resources:
 
 ```
 apiVersion: management.cattle.io/v3
