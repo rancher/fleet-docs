@@ -21,13 +21,7 @@ fleet-agent clusterstatus [flags]
       --namespace string          system namespace is the namespace, the agent runs in, e.g. cattle-fleet-system
 ```
 
-### Options inherited from parent commands
-
-```
-      --agent-scope string   An identifier used to scope the agent bundleID names, typically the same as namespace
-```
-
 ### SEE ALSO
 
-* [fleet-agent](./fleet-agent)	 - 
+* [fleet-agent](./fleet-agent)	 -
 
