@@ -24,12 +24,9 @@ fleet-manager agentmanagement [flags]
 ```
       --debug             Turn on debug logging
       --debug-level int   If debugging is enabled, set klog -v=X
-      --disable-gitops    disable gitops components
-      --disable-metrics   disable metrics
-      --shard-id string   only manage resources labeled with a specific shard ID
 ```
 
 ### SEE ALSO
 
-* [fleet-manager](./fleet-manager)	 - 
+* [fleet-manager](./fleet-manager)	 -
 
