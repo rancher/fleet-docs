@@ -90,6 +90,11 @@ spec:
   #
   # pollingInterval: 15s
 
+  # When disablePolling is set to true the git repo won't be checked periodically.
+  # It will rely on webhooks only.
+  # See [Using Webhooks Instead of Polling](https://fleet.rancher.io/webhook)
+  # disablePolling: false
+
   # Paused  causes changes in Git to not be propagated down to the clusters but
   # instead mark resources as OutOfSync
   #
