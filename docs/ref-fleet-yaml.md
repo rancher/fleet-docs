@@ -61,6 +61,9 @@ helm:
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
   version: 0.1.0
+  # By default fleet downloads any dependency found in a helm chart. 
+  # Use disableDependencyUpdate: true to disable this feature.
+  disableDependencyUpdate: false
 
   ### These options only work for helm-type bundles
   #
