@@ -1,0 +1,10 @@
+# scm configuration for the following policies
+# * ghcr.io/updatecli/policies/autodiscovery/updatecli
+scm:
+  enabled: true
+  user: "updatecli-bot"
+  email: "bot@rancher.io"
+  #owner: rancher
+  owner: olblak
+  repository: fleet-docs
+  branch: main
