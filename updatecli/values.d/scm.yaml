@@ -5,8 +5,7 @@ scm:
   default:
     user: "updatecli-bot"
     email: "bot@rancher.io"
-    #owner: rancher
-    owner: olblak
+    owner: rancher
     repository: fleet-docs
     branch: main
 
