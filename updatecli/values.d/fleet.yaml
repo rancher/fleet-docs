@@ -1,2 +1,4 @@
+# Settings used by the docusaurus/versioning and docusaurus/releasepost Updatecli policy
+# to identify which GitHub repository to monitor for information releases and changelog information
 project: "Fleet"
 repository: "rancher/fleet"
