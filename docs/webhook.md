@@ -4,7 +4,7 @@ By default, Fleet utilizes polling (default: every 15 seconds) to pull from a Gi
 
 For installations with multiple tens up to hundreds of Git repos, and in general to reduce latency (the time between a push to Git and fleet reacting to it), configuring webhooks is recommended instead of polling.
 
-Fleet currently supports Github, GitLab, Bitbucket, Bitbucket Server and Gogs.
+Fleet currently supports Azure DevOps, GitHub, GitLab, Bitbucket, Bitbucket Server, and Gogs.
 
 ### 1. Configure the webhook service. Fleet uses a gitjob service to handle webhook requests. Create an ingress that points to the gitjob service.
 
@@ -88,8 +88,8 @@ If you configured the webhook the polling interval will be automatically adjuste
 | BitBucket       | `bitbucket`        |
 | BitBucketServer | `bitbucket-server` |
 | Gogs            | `gogs`             |
-| Azure Devops    | `azure-username`   |
-| Azure Devops    | `azure-password`   |
+| Azure DevOps    | `azure-username`   |
+| Azure DevOps    | `azure-password`   |
 
 For example, to create a secret containing a GitHub secret to validate the webhook payload, run:
 
@@ -97,7 +97,7 @@ For example, to create a secret containing a GitHub secret to validate the webho
 kubectl create secret generic gitjob-webhook -n cattle-fleet-system --from-literal=github=webhooksecretvalue
 ```
 
-For Azure Devops:
+For Azure DevOps:
 - Enable basic authentication in Azure
 - Create a secret containing the credentials for the basic authentication
 ```shell
