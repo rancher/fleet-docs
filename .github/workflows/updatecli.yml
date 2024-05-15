@@ -35,6 +35,9 @@ jobs:
       - name: Install Updatecli Binary
         uses: updatecli/updatecli-action@v2
 
+      - name: "Install Releasepost"
+        uses: "updatecli/releasepost-action@v0.3.0"
+
       - name: Run Updatecli in enforce mode
         run: "updatecli compose apply --file update-compose.yaml"
         env:
