@@ -1,0 +1,127 @@
+changelogs:
+  - kind: github
+    dir: versioned_docs/version-0.9/changelogs
+    formats:
+      - extension: markdown
+        frontmatters: |
+          ---
+          title: "{{ .Changelog.Name }}"
+          date: "{{ .Changelog.PublishedAt }}"
+          ---
+        indexfilename: index
+        indexfrontmatters: |
+          ---
+          title: "0.9 Changelogs"
+          ---
+    spec:
+      owner: rancher
+      repository: fleet
+      versionfilter:
+        kind: semver
+        pattern: "~0.9"
+
+  - kind: github
+    dir: versioned_docs/version-0.8/changelogs
+    formats:
+      - extension: markdown
+        frontmatters: |
+          ---
+          title: "{{ .Changelog.Name }}"
+          date: "{{ .Changelog.PublishedAt }}"
+          ---
+        indexfilename: index
+        indexfrontmatters: |
+          ---
+          title: "0.8 Changelogs"
+          ---
+    spec:
+      owner: rancher
+      repository: fleet
+      versionfilter:
+        kind: semver
+        pattern: "~0.8"
+
+  - kind: github
+    dir: versioned_docs/version-0.7/changelogs
+    formats:
+      - extension: markdown
+        frontmatters: |
+          ---
+          title: "{{ .Changelog.Name }}"
+          date: "{{ .Changelog.PublishedAt }}"
+          ---
+        indexfilename: index
+        indexfrontmatters: |
+          ---
+          title: "0.7 Changelogs"
+          ---
+    spec:
+      owner: rancher
+      repository: fleet
+      versionfilter:
+        kind: semver
+        pattern: "~0.7"
+
+  - kind: github
+    dir: versioned_docs/version-0.6/changelogs
+    formats:
+      - extension: markdown
+        frontmatters: |
+          ---
+          title: "{{ .Changelog.Name }}"
+          date: "{{ .Changelog.PublishedAt }}"
+          ---
+        indexfilename: index
+        indexfrontmatters: |
+          ---
+          title: "0.6 Changelogs"
+          ---
+    spec:
+      owner: rancher
+      repository: fleet
+      versionfilter:
+        kind: semver
+        pattern: "~0.6"
+
+  - kind: github
+    dir: versioned_docs/version-0.5/changelogs
+    formats:
+      - extension: markdown
+        frontmatters: |
+          ---
+          title: "{{ .Changelog.Name }}"
+          date: "{{ .Changelog.PublishedAt }}"
+          ---
+        indexfilename: index
+        indexfrontmatters: |
+          ---
+          title: "0.5 Changelogs"
+          ---
+    spec:
+      owner: rancher
+      repository: fleet
+      versionfilter:
+        kind: semver
+        pattern: "~0.5"
+
+  - kind: github
+    dir: versioned_docs/version-0.4/changelogs
+    formats:
+      - extension: markdown
+        frontmatters: |
+          ---
+          title: "{{ .Changelog.Name }}"
+          date: "{{ .Changelog.PublishedAt }}"
+          ---
+        indexfilename: index
+        indexfrontmatters: |
+          ---
+          title: "0.4 Changelogs"
+          ---
+    spec:
+      owner: rancher
+      repository: fleet
+      versionfilter:
+        kind: semver
+        pattern: "~0.4"
+
