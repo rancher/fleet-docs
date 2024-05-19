@@ -13,6 +13,11 @@ changelogs:
           ---
           title: "0.9 Changelogs"
           ---
+        indexfiletemplate: |
+          {{ .FrontMatters }}
+          {{ range $pos, $release := .Changelogs }}
+          * [{{ $release.Name}}](changelogs/changelogs/{{ $release.Tag }}) {{ if (eq $pos 0) }}(latest){{ end}}
+          {{ end }}
     spec:
       owner: rancher
       repository: fleet
@@ -34,6 +39,11 @@ changelogs:
           ---
           title: "0.8 Changelogs"
           ---
+        indexfiletemplate: |
+          {{ .FrontMatters }}
+          {{ range $pos, $release := .Changelogs }}
+          * [{{ $release.Name}}](changelogs/changelogs/{{ $release.Tag }}) {{ if (eq $pos 0) }}(latest){{ end}}
+          {{ end }}
     spec:
       owner: rancher
       repository: fleet
@@ -55,6 +65,11 @@ changelogs:
           ---
           title: "0.7 Changelogs"
           ---
+        indexfiletemplate: |
+          {{ .FrontMatters }}
+          {{ range $pos, $release := .Changelogs }}
+          * [{{ $release.Name}}](changelogs/changelogs/{{ $release.Tag }}) {{ if (eq $pos 0) }}(latest){{ end}}
+          {{ end }}
     spec:
       owner: rancher
       repository: fleet
@@ -76,6 +91,11 @@ changelogs:
           ---
           title: "0.6 Changelogs"
           ---
+        indexfiletemplate: |
+          {{ .FrontMatters }}
+          {{ range $pos, $release := .Changelogs }}
+          * [{{ $release.Name}}](changelogs/changelogs/{{ $release.Tag }}) {{ if (eq $pos 0) }}(latest){{ end}}
+          {{ end }}
     spec:
       owner: rancher
       repository: fleet
@@ -97,6 +117,11 @@ changelogs:
           ---
           title: "0.5 Changelogs"
           ---
+        indexfiletemplate: |
+          {{ .FrontMatters }}
+          {{ range $pos, $release := .Changelogs }}
+          * [{{ $release.Name}}](changelogs/changelogs/{{ $release.Tag }}) {{ if (eq $pos 0) }}(latest){{ end}}
+          {{ end }}
     spec:
       owner: rancher
       repository: fleet
@@ -118,6 +143,11 @@ changelogs:
           ---
           title: "0.4 Changelogs"
           ---
+        indexfiletemplate: |
+          {{ .FrontMatters }}
+          {{ range $pos, $release := .Changelogs }}
+          * [{{ $release.Name}}](changelogs/changelogs/{{ $release.Tag }}) {{ if (eq $pos 0) }}(latest){{ end}}
+          {{ end }}
     spec:
       owner: rancher
       repository: fleet
