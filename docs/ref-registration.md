@@ -9,7 +9,7 @@ See "[Register Downstream Clusters](./cluster-registration.md)" to learn how to 
 
 ### Cluster first
 
-`fleet-controller` starts up and may "bootstrap" the local cluster resource. In Rancher creating the local cluster resource is handlded by the fleetcluster controller instead, but otherwise the process is identical.
+`fleet-controller` starts up and may "bootstrap" the local cluster resource. In Rancher creating the local cluster resource is handled by the fleetcluster controller instead, but otherwise the process is identical.
 
 The process is identical for the local cluster or any downstream cluster. It starts by  creating a cluster resource, which refers to a kubeconfig secret.
 
@@ -17,10 +17,10 @@ The process is identical for the local cluster or any downstream cluster. It sta
 
 In this step a `ClusterRegistationToken` and an "import" service account are created based on a `Cluster` resource.
 
-The Fleet controller creates a [ClusterRegistrationToken](https://fleet.rancher.io/architecture#security)
-and waits for it to be complete. The `ClusterRegistationToken` triggers the creation of the import service account, which can create
-`ClusterRegistrations` and read any secret in the system registration namespace (eg "cattle-fleet-clusters-system"). The import.go will
-enqueue itself until the import service account exists, because that account is needed to create the `fleet-agent-bootstrap` secret.
+The Fleet controller creates a [`ClusterRegistrationToken`](https://fleet.rancher.io/architecture#security)
+and waits for it to be complete. The `ClusterRegistationToken` triggers the creation of the "import" service account, which can create
+`ClusterRegistrations` and read any secret in the system registration namespace (eg "cattle-fleet-clusters-system"). The `import.go` controller will
+enqueue itself until the "import" service account exists, because that account is needed to create the `fleet-agent-bootstrap` secret.
 
 
 ### Creating the Fleet Agent Deployment
@@ -32,9 +32,9 @@ The bootstrap secret contains the API server URL of the upstream cluster and is 
 
 ### Fleet Agent Starts Registration, Upgrades to Request Account
 
-The agent uses the import account to upgrade to a request account.
+The agent uses the "import" account to upgrade to a request account.
 
-Immediately the Fleet agent checks for a `fleet-agent-bootstrap` secret. If the bootstrap secret, which contains the import kubeconfig, is present the agent starts registering.
+Immediately the Fleet agent checks for a `fleet-agent-bootstrap` secret. If the bootstrap secret, which contains the "import" kubeconfig, is present the agent starts registering.
 
 Then agent creates the final `ClusterRegistration` resource in fleet-default on the management cluster, with a random number. The random number will be used for the registration secret's name.
 
@@ -42,21 +42,20 @@ The Fleet controller triggers and tries to grant the `ClusterRegistration` reque
 
 The new kubeconfig uses the "request" account. The "request" account can access the cluster status, `BundleDeployments` and `Contents`.
 
-### Fleet Agent is Registered, Watches for BundleDeployments
+### Fleet Agent is Registered, Watches for `BundleDeployments`
 
 At this point the agent is fully registered and will persist the "request" account into a `fleet-agent` secret.
 The API server URL and CA are copied from the bootstrap secret, which inherited these values from the Fleet controller's helm chart values.
 
 The bootstrap secret is deleted. When the agent restarts, it will not re-register, since the bootstrap secret is missing.
 
-The agent starts watching its "[Cluster
-Namespace](https://fleet.rancher.io/namespaces#cluster-namespaces)" for `BundleDeployments`.
+The agent starts watching its "[Cluster Namespace](https://fleet.rancher.io/namespaces#cluster-namespaces)" for `BundleDeployments`. At this point the agent is ready to deploy workloads.
 
 ### Notes
 
 * The registration starts with the "import" account and pivots to the "request" account.
-* The fleet-default namespace has all the cluster registrations, the import account uses a separate namespace.
-* Once the agent is registered, `fleet-controller` will trigger on a cluster/namespace change and call manageagent to create a bundle. The agent will update itself to the bundle and since the generation env var changes it will restart.
+* The fleet-default namespace has all the cluster registrations, the "import" account uses a separate namespace.
+* Once the agent is registered, `fleet-controller` will trigger on a cluster or namespace change. The `manageagent` controller will then create a bundle to adopt the existing agent deployment. The agent will update itself to the bundle and since the "generation" environment variable changes, it will restart.
 * If no bootstrap secret exists, the agent will not re-register.
 
 
@@ -78,10 +77,9 @@ It is important to note that there are multiple ways to start this:
 
 This diagram shows the resources created during registration and focuses on the k8s API server configuration.
 
-Fleet triggers on Cluster creation/update events and runs import.go to
-deploy the agent. **This image** **shows how the API server URL and CA
-propagates through the secrets during registration:**
-[[https://fleet.rancher.io/ref-registration#secrets]{.underline}](https://fleet.rancher.io/ref-registration#secrets)
+The `import.go` controller triggers on Cluster creation/update events and deploys the agent.
+
+**This image shows how the API server URL and CA propagates through the secrets during registration:**
 
 The arrows in the diagram show how the API server values are copied from
 the Helm values to the cluster registration secret on the upstream
@@ -104,13 +102,12 @@ Fleet will pass these values to a Fleet agent, so it can connect back to the Fle
 
 ### Import Cluster into Rancher
 
-User runs `curl | kubectl apply`, the manifest includes the rancher agent deployment.
+When the user runs `curl | kubectl apply`, the applied manifest includes the rancher agent deployment.
 
 The deployment contains a secret `cattle-credentials-` which contains the API URL and a token.
 
 The Rancher agent starts up and reports downstream's kubeconfig to upstream.
 
-Rancher creates the fleet Cluster resource, which references a
-[kubeconfig secret](https://github.com/rancher/rancher/blob/871b6d9137246bd93733f01184ea435f40c5d56c/pkg/provisioningv2/kubeconfig/manager.go#L69).
+Rancher then creates the fleet Cluster resource, which references a [kubeconfig secret](https://github.com/rancher/rancher/blob/871b6d9137246bd93733f01184ea435f40c5d56c/pkg/provisioningv2/kubeconfig/manager.go#L69).
 
 👉Fleet will use this kubeconfig to deploy the agent on the downstream cluster.
