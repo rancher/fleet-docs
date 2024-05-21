@@ -1,5 +1,5 @@
 policies:
-  # The following policy is designed to work from GitHub action workflows.
+  # The following policies are designed to work from GitHub action workflows.
   # This means that before running any Updatecli command, we need the two following environment variables set:
   # 
   #   GITHUB_TOKEN: Set to a personal access token
