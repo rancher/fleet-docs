@@ -105,7 +105,7 @@ fleet-controller-shard-baz-6595bd9cb9-27whg   1/1     Running   0             77
 fleet-controller-shard-foo-85d49b446f-pzxkw   1/1     Running   0             77s
 
 $ kubectl -n cattle-fleet-system get pods -l app=fleet-controller \
--o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata.labels.shard}{"\n"}{end}'
+-o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata.labels.fleet\.cattle\.io/shard-id}{"\n"}{end}'
 fleet-controller-78c74fdb85-b6q64
 fleet-controller-shard-bar-777d888865-w2dks     bar
 fleet-controller-shard-baz-6595bd9cb9-27whg     baz
@@ -117,7 +117,7 @@ fleet-controller-shard-foo-85d49b446f-pzxkw     foo
 With sharding in place, each Fleet controller will process resources bearing its own shard ID. This also holds for the
 unsharded controller, which has no set shard ID and will therefore process all unsharded resources.
 
-To deploy a GitRepo for a specific shard, simply add label `fleet.cattle.io/shard` with your desired shard ID as a
+To deploy a GitRepo for a specific shard, simply add label `fleet.cattle.io/shard-ref` with your desired shard ID as a
 value.
 Here is an example:
 ```bash
@@ -127,7 +127,7 @@ apiVersion: fleet.cattle.io/v1alpha1
 metadata:
   name: sharding-test
   labels:
-    fleet.cattle.io/shard: foo
+    fleet.cattle.io/shard-ref: foo
 spec:
   repo: https://github.com/rancher/fleet-examples
   paths:
