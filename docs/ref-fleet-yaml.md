@@ -288,15 +288,20 @@ Options for the downloaded Helm chart.
 
 It is possible to specify the keys and values as go template strings for
 advanced templating needs.
-Most of the functions from the sprig templating library are available.
+Most of the functions from the [sprig templating library](https://masterminds.github.io/sprig/) are available.
 
 Note that if the functions output changes with every call, e.g. `uuidv4`, the bundle will get redeployed.
 
 The template context has the following keys:
 * `.ClusterValues` are retrieved from target cluster's `spec.templateValues`
-* `.ClusterLabels` and `.ClusterAnnotations` are the labels and annoations in the cluster resource.
+* `.ClusterLabels` and `.ClusterAnnotations` are the labels and annotations in the cluster resource.
 * `.ClusterName` as the fleet's cluster resource name.
 * `.ClusterNamespace` as the namespace in which the cluster resource exists.
+
+To access Labels or Annotations by their key name :
+```
+${ get .ClusterLabels "management.cattle.io/cluster-display-name" }
+```
 
 Note: The fleet.yaml must be valid yaml. Templating uses `${ }` as delims, unlike Helm which uses `{{ }}`.
 These fleet.yaml template delimiters can be escaped using backticks, eg.:
