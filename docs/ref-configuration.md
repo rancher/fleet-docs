@@ -38,8 +38,10 @@ Labels used by fleet:
 * `fleet.cattle.io/bundle-name` - used on BundleDeployment to reference the Bundle resource
 * `fleet.cattle.io/managed=true` - cluster namespaces with this label will be cleaned up. Other resources will be cleaned up if it is in a label. Used in Rancher to identify fleet namespaces.
 * `fleet.cattle.io/bootstrap-token` - unused
-* `fleet.cattle.io/shard=<shard-id>` - Shard ID assigned by Fleet to resources, inherited from a `GitRepo`, which
-  determines which Fleet controller deployment will reconcile them.
+* `fleet.cattle.io/shard-id=<shard-id>` - The shard ID of a fleet controller pod.
+* `fleet.cattle.io/shard-default=true` - true if this is the controller managing resources without a shard reference label.
+* `fleet.cattle.io/shard-ref=<shard-id>` - references the Shard ID assigned by
+  Fleet to resources, inherited from a `GitRepo`, which determines which Fleet controller deployment will reconcile them.
     * If this label is not provided or has an empty value, then the unsharded Fleet controller will process the resource.
     * If this label has a value which does not match any shard ID for which a Fleet controller is deployed, then the
       resource will not be processed.
