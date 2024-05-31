@@ -4,7 +4,7 @@ sidebar_label: "fleet apply"
 ---
 ## fleet apply
 
-Render a bundle into a Kubernetes resource and apply it in the Fleet Manager
+Create bundles from directories, and output them or apply them on a cluster
 
 ```
 fleet apply [flags] BUNDLE_NAME PATH...
