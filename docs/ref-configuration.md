@@ -7,7 +7,7 @@ A reference list of, mostly internal, configuration options.
 The Helm charts accept, at least, the options as shown with their default in `values.yaml`:
 
 * https://github.com/rancher/fleet/blob/main/charts/fleet/values.yaml
-* https://github.com/rancher/fleet/blob/main/charts/fleet-crds/values.yaml
+* https://github.com/rancher/fleet/blob/main/charts/fleet-crd/values.yaml
 * https://github.com/rancher/fleet/blob/main/charts/fleet-agent/values.yaml
 
 ## Environment Variables
@@ -22,7 +22,7 @@ The controllers can be started with these environment variables:
 
 In cluster configuration for the agent and fleet manager. Changing these can lead to full re-deployments.
 
-The config [struct](https://github.com/rancher/fleet/blob/main/pkg/config/config.go#L40-L52) is used in both config maps:
+The config [struct](https://github.com/rancher/fleet/blob/main/internal/config/config.go#L57) is used in both config maps:
 
 * cattle-fleet-system/fleet-agent
 * cattle-fleet-system/fleet-controller
