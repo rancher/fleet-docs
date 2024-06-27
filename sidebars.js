@@ -70,6 +70,7 @@ module.exports = {
           ],
         },
         {type:'doc', id:'cluster-bundles-state'},
+        {type:'doc', id:'resource-counts-and-resources-list'},
         'ref-registration',
         'ref-configuration',
         'ref-resources',
