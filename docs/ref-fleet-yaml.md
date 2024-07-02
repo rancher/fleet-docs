@@ -60,6 +60,11 @@ helm:
   # The version of the chart or semver constraint of the chart to find. If a constraint
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
+  # Note: OCI registries don't support the '+' character, which is supported by semver.
+  # When pushing a helm chart with a tag containing the '+' character helm automatically
+  # replaces '+' to '_' before uploading it.
+  # You should use the version with the '+' in this file, as the '_' character is not 
+  # supported by semver and Fleet also replaces '+' to '_' when accessing the OCI registry.
   version: 0.1.0
   # By default fleet downloads any dependency found in a helm chart. 
   # Use disableDependencyUpdate: true to disable this feature.
