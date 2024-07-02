@@ -236,3 +236,17 @@ kubectl patch clusters.fleet.cattle.io -n fleet-local local --type=json -p '[{"o
 
 Users can create new workspaces and move clusters across workspaces.
 It's currently not possible to move the local cluster from `fleet-local` to another workspace.
+
+### Bundle failed to deploy: "resource already exists" Error
+
+If your bundle encounters the following error message during deployment:
+
+```sh
+not installed: rendered manifests contain a resource that already
+exists. Unable to continue with install: ClusterRole "grafana-clusterrole"
+in namespace "" exists and cannot be imported into the current release: invalid
+ownership metadata; annotation validation error: key "meta.helm.sh/release-namespace"
+must equal "ns-2": current value is "ns-1"
+```
+
+This error occurs because a Helm resource with the same `releaseName` already exists in the cluster. To resolve this issue, you need to change the `releaseName` of the resource you want to create to avoid the conflict.
