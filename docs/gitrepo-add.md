@@ -9,18 +9,27 @@ to the [creating a deployment tutorial](./tut-deployment.md) for examples.
 
 The available fields of the GitRepo custom resource are documented in the [GitRepo resource reference](./ref-gitrepo.md)
 
-## Proper Namespace
+### Proper Namespace
 
 Git repos are added to the Fleet manager using the `GitRepo` custom resource type. The `GitRepo` type is namespaced. By default, Rancher will create two Fleet workspaces: **fleet-default** and **fleet-local**.
 
-- `Fleet-default` will contain all the downstream clusters that are already registered through Rancher.
-- `Fleet-local` will contain the local cluster by default.
+- `fleet-default` will contain all the downstream clusters that are already registered through Rancher.
+- `fleet-local` will contain the local cluster by default.
 
 If you are using Fleet in a [single cluster](./concepts.md) style, the namespace will always be **fleet-local**. Check [here](https://fleet.rancher.io/namespaces/#fleet-local) for more on the `fleet-local` namespace.
 
 For a [multi-cluster](./concepts.md) style, please ensure you use the correct repo that will map to the right target clusters.
 
+## Override Workload's Namespace
 
+The `targetNamespace` field will override any namespace in the bundle. If the deployment contains cluster scoped resources, it will fail.
+
+It takes precendence over all other namespace definitions:
+
+`gitRepo.targetNamespace > fleet.yaml namespace > namespace in workload's manifest > fleet.yaml defaultNamespace`
+
+
+Workload namespace definitions can be restricted with `allowedTargetNamespaces` in the `GitRepoRestriction` resource.
 
 ## Adding Private Git Repository
 
