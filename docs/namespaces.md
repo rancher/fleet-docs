@@ -16,8 +16,8 @@ not be able to target each others clusters, they should be in different namespac
 
 Git repos are added to the Fleet manager using the `GitRepo` custom resource type. The `GitRepo` type is namespaced. By default, Rancher will create two Fleet workspaces: **fleet-default** and **fleet-local**.
 
-- `Fleet-default` will contain all the downstream clusters that are already registered through Rancher.
-- `Fleet-local` will contain the local cluster by default.
+- `fleet-default` will contain all the downstream clusters that are already registered through Rancher.
+- `fleet-local` will contain the local cluster by default.
 
 If you are using Fleet in a [single cluster](./concepts.md) style, the namespace will always be **fleet-local**. Check [here](https://fleet.rancher.io/namespaces/#fleet-local) for more on the `fleet-local` namespace.
 
