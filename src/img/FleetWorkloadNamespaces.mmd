@@ -1,0 +1,31 @@
+graph TD
+  start([Start]) --> gitRepoNS
+
+  failsForClusterScopedResources("`Fails if a cluster scoped resource is used in the workload manifests.`")
+  style failsForClusterScopedResources stroke:#f66,stroke-dasharray: 5, 5
+
+  gitRepoNS["`In any **GitRepo** resource, field **targetNamespace**
+
+  Overrides everything.`"]
+
+
+  fleetYamlNS["`In file **fleet.yaml**, field **namespace**
+
+  Overrides namespaces defined in workload manifests.`"]
+
+  workloadNS["`In **any workload's manifest**, field **metadata.namespace**`"]
+
+  fleetYamlDefaultNS["`In file **fleet.yaml**, field **defaultNamespace**
+
+  This is what manifests get if they don't have a namespace defined.`"]
+
+  failsForClusterScopedResources .-> gitRepoNS
+  failsForClusterScopedResources .-> fleetYamlNS
+
+  gitRepoNS -->|if not exist| fleetYamlNS
+  fleetYamlNS -->|if not exist| workloadNS
+  workloadNS -->|if not exist| fleetYamlDefaultNS
+
+  ende(["`Errors out if no namespace was defined up to this point.`"])
+
+  fleetYamlDefaultNS -->|if not exist| ende
