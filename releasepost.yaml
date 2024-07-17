@@ -1,5 +1,31 @@
 changelogs:
   - kind: github
+    dir: versioned_docs/version-0.10/changelogs
+    formats:
+      - extension: markdown
+        frontmatters: |
+          ---
+          title: "{{ .Changelog.Name }}"
+          date: "{{ .Changelog.PublishedAt }}"
+          ---
+        indexfilename: index
+        indexfrontmatters: |
+          ---
+          title: "0.10 Changelogs"
+          ---
+        indexfiletemplate: |
+          {{ .FrontMatters }}
+          {{ range $pos, $release := .Changelogs }}
+          * [{{ $release.Name}}](changelogs/{{ $release.Tag }}.md) {{ if (eq $pos 0) }}(latest){{ end}}
+          {{ end }}
+    spec:
+      owner: rancher
+      repository: fleet
+      versionfilter:
+        kind: semver
+        pattern: "~0.10"
+
+  - kind: github
     dir: versioned_docs/version-0.9/changelogs
     formats:
       - extension: markdown
