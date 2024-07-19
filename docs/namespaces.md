@@ -99,31 +99,35 @@ allow list. This also prevents the creation of cluster wide resources.
 
 ## Fleet Namespaces
 
-All types in the Fleet manager are namespaced. The namespaces of the manager
-types do not correspond to the namespaces of the deployed resources in the
-downstream cluster. Understanding how namespaces are used in the Fleet manager
+All types in the Fleet manager are namespaced. The namespaces of a custom
+resource, e.g. GitRepo, does not influence the namespace of deployed resources.
+
+Understanding how namespaces are used in the Fleet manager
 is important to understand the security model and how one can use Fleet in a
 multi-tenant fashion.
 
+![Namespace](/img/FleetNamespaces.svg)
+
 ### GitRepos, Bundles, Clusters, ClusterGroups
 
-The primary types are all scoped to a namespace. All selectors for `GitRepo`
-targets will be evaluated against the `Clusters` and `ClusterGroups` in the same
-namespaces. This means that if you give `create` or `update` privileges to a
-`GitRepo` type in a namespace, that end user can modify the selector to match
-any cluster in that namespace. This means in practice if you want to have two
-teams self manage their own `GitRepo` registrations but they should not be able
-to target each others clusters, they should be in different namespaces.
+All selectors for `GitRepo` targets will be evaluated against the `Clusters`
+and `ClusterGroups` in the same namespaces. This means that if you give
+`create` or `update` privileges to a `GitRepo` type in a namespace, that end
+user can modify the selector to match any cluster in that namespace. This means
+in practice if you want to have two teams self manage their own `GitRepo`
+registrations but they should not be able to target each others clusters, they
+should be in different namespaces.
 
-#### GitRepo Namespace
+The cluster registration namespace, called 'workspace' in Rancher, contains the `Cluster` and the
+`ClusterRegistration` resources, as well as any `GitRepos` and `Bundles`.
 
-Git repos are added to the Fleet manager using the `GitRepo` custom resource
-type. The `GitRepo` type is namespaced. By default, Rancher will create two
-Fleet workspaces: **fleet-default** and **fleet-local**.
+Rancher will create two Fleet workspaces: **fleet-default** and
+**fleet-local**.
 
 - `fleet-default` will contain all the downstream clusters that are already
   registered through Rancher.
-- `fleet-local` will contain the local cluster by default.
+- `fleet-local` will contain the local cluster by default. Access to
+  `fleet-local` is limited.
 
 If you are using Fleet in a [single cluster](./concepts.md) style, the namespace
 will always be **fleet-local**. Check
@@ -133,17 +137,13 @@ will always be **fleet-local**. Check
 For a [multi-cluster](./concepts.md) style, please ensure you use the correct
 repo that will map to the right target clusters.
 
-### Special Namespaces
+### Internal Namespaces
 
-An overview of the [namespaces](./namespaces.md) used by fleet and their
-resources.
-
-![Namespace](/img/FleetNamespaces.svg)
-
-#### fleet-local (local workspace, cluster registration namespace)
+#### Cluster Registration Namespace: fleet-local
 
 The **fleet-local** namespace is a special namespace used for the single cluster
 use case or to bootstrap the configuration of the Fleet manager.
+Access to the local cluster should be limited to operators.
 
 When fleet is installed the `fleet-local` namespace is created along with one
 `Cluster` called `local` and one `ClusterGroup` called `default`. If no targets
@@ -152,16 +152,13 @@ named `default`. This means that all `GitRepos` created in `fleet-local` will
 automatically target the `local` `Cluster`. The `local` `Cluster` refers to the
 cluster the Fleet manager is running on.
 
-The cluster registration namespace contains the cluster and the
-clusterregistration resources, as well as any gitrepos and bundles.
-
-#### cattle-fleet-system (system namespace)
+#### System Namespace: cattle-fleet-system
 
 The Fleet controller and Fleet agent run in this namespace. All service accounts
 referenced by `GitRepos` are expected to live in this namespace in the
 downstream cluster.
 
-#### cattle-fleet-clusters-system (system registration namespace)
+#### System Registration Namespace: cattle-fleet-clusters-system
 
 This namespace holds secrets for the cluster registration process. It should
 contain no other resources in it, especially secrets.
