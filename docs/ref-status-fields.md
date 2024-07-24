@@ -1,9 +1,6 @@
 # Status Fields
 
-This shows how status fields are propagated from one resource to another:
-![Status Propagation](/img/FleetStatusSource.png)
-
-## Cluster and Bundle States
+## Cluster and Bundle Display States
 
 Clusters and Bundles have different states in each phase of applying Bundles.
 
@@ -41,6 +38,16 @@ Clusters and Bundles have different states in each phase of applying Bundles.
 
 **Ready**: Bundles in this cluster have been deployed and all resources are ready.
 
+## GitRepo Conditions
+
+**Ready**:
+
+**Active**:
+
+**Reconciling**:
+
+**Stalled**: for errors
+
 ## Resources List
 
 The resources lists contain the deployed resources, categorized under `Bundles` and `GitRepos`.
@@ -54,6 +61,9 @@ The deployed resources within bundles can be found in `status.ResourceKey`. This
 Similar to bundles, the deployed resources in `GitRepos` are listed in `status.Resources`. This list is also derived from `bundleDeployments`.
 
 ## Resource Counts
+
+This shows how resource counts are propagated from one resource to another:
+![Status Propagation](/img/FleetStatusSource.png)
 
 ### GitRepos
 
