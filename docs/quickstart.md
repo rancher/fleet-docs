@@ -84,4 +84,4 @@ NAME       READY   UP-TO-DATE   AVAILABLE   AGE
 frontend   3/3     3            3           116m
 ```
 
-Enjoy and read the [docs](https://rancher.github.io/fleet).
+Enjoy and read the [docs](https://fleet.rancher.io/).
