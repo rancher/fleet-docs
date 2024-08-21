@@ -67,6 +67,7 @@ module.exports = {
             {type: 'doc', id: 'cli/fleet-controller/fleetcontroller'},
             {type: 'doc', id: 'cli/fleet-controller/fleetcontroller_agentmanagement'},
             {type: 'doc', id: 'cli/fleet-controller/fleetcontroller_cleanup'},
+            {type: 'doc', id: 'cli/fleet-controller/fleetcontroller_gitjob'},
           ],
         },
         {type:'doc', id:'ref-status-fields'},
