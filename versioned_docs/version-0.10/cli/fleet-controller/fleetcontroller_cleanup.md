@@ -1,13 +1,13 @@
 ---
 title: ""
-sidebar_label: "fleet-manager cleanup"
+sidebar_label: "fleetcontroller cleanup"
 ---
-## fleet-manager cleanup
+## fleetcontroller cleanup
 
 
 
 ```
-fleet-manager cleanup [flags]
+fleetcontroller cleanup [flags]
 ```
 
 ### Options
@@ -27,5 +27,5 @@ fleet-manager cleanup [flags]
 
 ### SEE ALSO
 
-* [fleet-manager](./fleet-manager)	 -
+* [fleetcontroller](./fleetcontroller)	 -
 

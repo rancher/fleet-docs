@@ -1,13 +1,13 @@
 ---
 title: ""
-sidebar_label: "fleet-manager gitjob"
+sidebar_label: "fleetcontroller gitjob"
 ---
-## fleet-manager gitjob
+## fleetcontroller gitjob
 
 
 
 ```
-fleet-manager gitjob [flags]
+fleetcontroller gitjob [flags]
 ```
 
 ### Options
@@ -34,5 +34,5 @@ fleet-manager gitjob [flags]
 
 ### SEE ALSO
 
-* [fleet-manager](./fleet-manager)	 - 
+* [fleetcontroller](./fleetcontroller)	 - 
 

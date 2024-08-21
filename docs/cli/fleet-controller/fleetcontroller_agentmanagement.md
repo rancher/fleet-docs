@@ -1,13 +1,13 @@
 ---
 title: ""
-sidebar_label: "fleet-manager agentmanagement"
+sidebar_label: "fleetcontroller agentmanagement"
 ---
-## fleet-manager agentmanagement
+## fleetcontroller agentmanagement
 
 
 
 ```
-fleet-manager agentmanagement [flags]
+fleetcontroller agentmanagement [flags]
 ```
 
 ### Options
@@ -28,5 +28,5 @@ fleet-manager agentmanagement [flags]
 
 ### SEE ALSO
 
-* [fleet-manager](./fleet-manager)	 -
+* [fleetcontroller](./fleetcontroller)	 -
 
