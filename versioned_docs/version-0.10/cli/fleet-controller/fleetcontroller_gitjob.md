@@ -30,6 +30,7 @@ fleetcontroller gitjob [flags]
       --disable-gitops    disable gitops components
       --disable-metrics   disable metrics
       --shard-id string   only manage resources labeled with a specific shard ID
+      --shard-node-selector string    node selector to apply to jobs based on the shard ID, if any
 ```
 
 ### SEE ALSO

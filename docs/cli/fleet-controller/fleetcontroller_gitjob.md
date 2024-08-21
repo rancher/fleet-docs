@@ -22,6 +22,7 @@ fleetcontroller gitjob [flags]
       --listen string                 The port the webhook listens. (default ":8080")
       --metrics-bind-address string   The address the metric endpoint binds to. (default ":8081")
       --namespace string              namespace to watch (default "cattle-fleet-system")
+      --shard-node-selector string    node selector to apply to jobs based on the shard ID, if any
 ```
 
 ### Options inherited from parent commands
