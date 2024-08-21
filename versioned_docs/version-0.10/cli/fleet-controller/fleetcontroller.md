@@ -1,13 +1,13 @@
 ---
 title: ""
-sidebar_label: "fleet-manager"
+sidebar_label: "fleetcontroller"
 ---
-## fleet-manager
+## fleetcontroller
 
 
 
 ```
-fleet-manager [flags]
+fleetcontroller [flags]
 ```
 
 ### Options
@@ -17,7 +17,7 @@ fleet-manager [flags]
       --debug-level int                   If debugging is enabled, set klog -v=X
       --disable-gitops                    disable gitops components
       --disable-metrics                   disable metrics
-  -h, --help                              help for fleet-manager
+  -h, --help                              help for fleetcontroller
       --kubeconfig string                 Paths to a kubeconfig. Only required if out-of-cluster.
       --namespace string                  namespace to watch (default "cattle-fleet-system")
       --shard-id string                   only manage resources labeled with a specific shard ID
@@ -30,7 +30,7 @@ fleet-manager [flags]
 
 ### SEE ALSO
 
-* [fleet-manager agentmanagement](./fleet-manager_agentmanagement)	 - 
-* [fleet-manager cleanup](./fleet-manager_cleanup)	 - 
-* [fleet-manager gitjob](./fleet-manager_gitjob)	 - 
+* [fleetcontroller agentmanagement](./fleetcontroller_agentmanagement)	 - 
+* [fleetcontroller cleanup](./fleetcontroller_cleanup)	 - 
+* [fleetcontroller gitjob](./fleetcontroller_gitjob)	 - 
 

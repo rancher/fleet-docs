@@ -114,15 +114,15 @@
             },
             {
               "type": "doc",
-              "id": "cli/fleet-controller/fleet-manager"
+              "id": "cli/fleet-controller/fleetcontroller"
             },
             {
               "type": "doc",
-              "id": "cli/fleet-controller/fleet-manager_agentmanagement"
+              "id": "cli/fleet-controller/fleetcontroller_agentmanagement"
             },
             {
               "type": "doc",
-              "id": "cli/fleet-controller/fleet-manager_cleanup"
+              "id": "cli/fleet-controller/fleetcontroller_cleanup"
             }
           ]
         },
