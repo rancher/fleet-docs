@@ -42,6 +42,8 @@ The Fleet controller triggers and tries to grant the `ClusterRegistration` reque
 
 The new kubeconfig uses the "request" account. The "request" account can access the cluster status, `BundleDeployments` and `Contents`.
 
+![ClusterRegistationToken to ClusterRegistration](/img/FleetRegistrationToken.svg)
+
 ### Fleet Agent is Registered, Watches for `BundleDeployments`
 
 At this point the agent is fully registered and will persist the "request" account into a `fleet-agent` secret.
