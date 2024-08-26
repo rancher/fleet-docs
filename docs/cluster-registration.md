@@ -77,7 +77,7 @@ API_SERVER_URL=https://<API_URL>:6443
 API_SERVER_CA_DATA=...
 ```
 
-`API_SERVER_URL` should be in format of `https://<API_URL>:6443` that can be referenced from `.kube/config` file. Do not use apiServerURL of `https://<FQDN>` from previously generated `values.yaml` file.
+If the API server is not listening on the https port (443), the `API_SERVER_URL` should include the port, e.g. `https://<API_URL>:6443`. The URL can be found in the `.kube/config` file.
 Value in `API_SERVER_CA_DATA` can be obtained from a `.kube/config` file with valid data to connect to the upstream cluster
 (under the `certificate-authority-data` key). Alternatively it can be obtained from within the upstream cluster itself,
 by looking up the default ServiceAccount secret name (typically prefixed with `default-token-`, in the default namespace),
