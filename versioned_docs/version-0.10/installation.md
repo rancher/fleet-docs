@@ -86,30 +86,46 @@ You can now [register some git repos](./gitrepo-add.md) in the `fleet-local` nam
 
 ### Deployment
 
-From 0.10 onwards, Fleet supports static sharding. The Fleet controller chart can be installed with `--set
-shards={<comma-separated shard IDs>}`, which will result in:
-* as many Fleet controller deployments as specified unique shard IDs,
+From 0.10 onwards, Fleet supports static sharding.
+Each shard is defined by its shard ID.
+Optionally, a shard can have a [node
+selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector), instructing Fleet to
+create all controller pods and jobs for that shard on nodes matching that selector.
+
+The Fleet controller chart can be installed with the following arguments:
+* `--set shards[$index].id=$shard_id`
+* `--set shards[$index].nodeSelector.$key=$value`
+
+This will result in:
+* as many Fleet controller and gitjob deployments as specified unique shard IDs,
 * plus the usual unsharded Fleet controller pod. That latter pod will be the only one containing agent management and
 cleanup containers.
 
 For instance:
 ```bash
-$ helm -n cattle-fleet-system install --create-namespace --wait --set shards="{foo,bar,baz}" \
-fleet fleet/fleet
-
-$ kubectl -n cattle-fleet-system get pods -l app=fleet-controller
-NAME                                          READY   STATUS    RESTARTS      AGE
-fleet-controller-78c74fdb85-b6q64             3/3     Running   0             77s
-fleet-controller-shard-bar-777d888865-w2dks   1/1     Running   0             77s
-fleet-controller-shard-baz-6595bd9cb9-27whg   1/1     Running   0             77s
-fleet-controller-shard-foo-85d49b446f-pzxkw   1/1     Running   0             77s
+$ helm -n cattle-fleet-system install --create-namespace --wait fleet fleet/fleet \
+  --set shards[0].id=foo \
+  --set shards[0].nodeSelector."kubernetes\.io/hostname"=k3d-upstream-server-0 \
+  --set shards[1].id=bar \
+  --set shards[1].nodeSelector."kubernetes\.io/hostname"=k3d-upstream-server-1 \
+  --set shards[2].id=baz \
+  --set shards[2].nodeSelector."kubernetes\.io/hostname"=k3d-upstream-server-2 \
 
 $ kubectl -n cattle-fleet-system get pods -l app=fleet-controller \
--o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata.labels.fleet\.cattle\.io/shard-id}{"\n"}{end}'
-fleet-controller-78c74fdb85-b6q64
-fleet-controller-shard-bar-777d888865-w2dks     bar
-fleet-controller-shard-baz-6595bd9cb9-27whg     baz
-fleet-controller-shard-foo-85d49b446f-pzxkw     foo
+    -o=custom-columns='Name:.metadata.name,Shard-ID:.metadata.labels.fleet\.cattle\.io/shard-id,Node:spec.nodeName'
+Name                                          Shard-ID   Node
+fleet-controller-b4c469c85-rj2q8                         k3d-upstream-server-2
+fleet-controller-shard-bar-5f5999958f-nt4bm   bar        k3d-upstream-server-1
+fleet-controller-shard-baz-75c8587898-2wkk9   baz        k3d-upstream-server-2
+fleet-controller-shard-foo-55478fb9d8-42q2f   foo        k3d-upstream-server-0
+
+$ kubectl -n cattle-fleet-system get pods -l app=gitjob \
+    -o=custom-columns='Name:.metadata.name,Shard-ID:.metadata.labels.fleet\.cattle\.io/shard-id,Node:spec.nodeName'
+Name                                Shard-ID   Node
+gitjob-8498c6d78b-mdhgh                        k3d-upstream-server-1
+gitjob-shard-bar-8659ffc945-9vtlx   bar        k3d-upstream-server-1
+gitjob-shard-baz-6d67f596dc-fsz9m   baz        k3d-upstream-server-2
+gitjob-shard-foo-8697bb7f67-wzsfj   foo        k3d-upstream-server-0
 ```
 
 ### How it works
