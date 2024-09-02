@@ -90,6 +90,15 @@ module.exports = {
           "dirName": "changelogs/changelogs"
         }
       ]
-    }
+    },
+    {
+      type: 'category',
+      label: 'Experimental Features',
+      collapsed: false,
+      items:[
+        'enableexperimental',
+        'oci-storage',
+      ],
+    },
   ],
 };
