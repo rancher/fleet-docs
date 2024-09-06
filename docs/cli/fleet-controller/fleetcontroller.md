@@ -15,7 +15,6 @@ fleetcontroller [flags]
 ```
       --debug                             Turn on debug logging
       --debug-level int                   If debugging is enabled, set klog -v=X
-      --disable-gitops                    disable gitops components
       --disable-metrics                   disable metrics
   -h, --help                              help for fleetcontroller
       --kubeconfig string                 Paths to a kubeconfig. Only required if out-of-cluster.

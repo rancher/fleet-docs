@@ -28,7 +28,6 @@ fleetcontroller gitjob [flags]
 ### Options inherited from parent commands
 
 ```
-      --disable-gitops    disable gitops components
       --disable-metrics   disable metrics
       --shard-id string   only manage resources labeled with a specific shard ID
 ```
