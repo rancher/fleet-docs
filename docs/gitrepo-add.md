@@ -181,6 +181,25 @@ In the previous example credentials for username `user` will be used for the pat
 
 :::note
 If you are using ["rancher-backups"](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/backup-restore-and-disaster-recovery/back-up-rancher) and want this secret to be included the backup, please add the label `resources.cattle.io/backup: true` to the secret. In that case, make sure to encrypt the backup to protect sensitive credentials.
+:::
+
+### Storing Credentials in Git
+
+It's recommended not to store credentials in Git. Even if the repository is properly protected, the secrets are at risk when cloning, etc.
+As a workaround tools like SOPS can be used to encrypt the credentials.
+
+Instead it is recommended to reference secrets in the downstream cluster. For manifest-style and kustomize-style bundles this must be done in the manifests, e.g. by [mounting the secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume) or [referencing them as environment variables](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-environment-variables).
+Helm-style bundles can use [valuesFrom](gitrepo-content#using-valuesfrom) to read values from a secret in the downstream cluster.
+
+When using Kubernetes [encryption at rest](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/) and storing credentials in Git, it is recommended to configure the upstream cluster to include several Fleet CRDs in encryption resource list:
+
+```
+- secrets
+- bundles.fleet.cattle.io
+- bundledeployments.fleet.cattle.io
+- contents.fleet.cattle.io
+```
+
 
 # Troubleshooting
 
