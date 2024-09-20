@@ -7,7 +7,7 @@ For more information on how to use the `fleet.yaml` to customize bundles see
 [Git Repository Contents](./gitrepo-content.md).
 
 The content of the fleet.yaml corresponds to the struct at
-[pkg/bundlereader/read.go](https://github.com/rancher/fleet/blob/b501b7e7864d37e310dfcdb109c73e5aec4240bb/pkg/bundlereader/read.go#L132-L139),
+[pkg/apis/fleet.cattle.io/v1alpha1/fleetyaml.go](https://github.com/rancher/fleet/blob/main/pkg/apis/fleet.cattle.io/v1alpha1/fleetyaml.go),
 which contains the [BundleSpec](./ref-crds#bundlespec).
 
 ### Reference
