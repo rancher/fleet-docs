@@ -73,7 +73,9 @@
 
 #### Bundle
 
-Bundle contains the resources of an application and its deployment options. It will be deployed as a Helm chart to target clusters.\n\nWhen a GitRepo is scanned it will produce one or more bundles. Bundles are a collection of resources that get deployed to one or more cluster(s). Bundle is the fundamental deployment unit used in Fleet. The contents of a Bundle may be Kubernetes manifests, Kustomize configuration, or Helm charts. Regardless of the source the contents are dynamically rendered into a Helm chart by the agent and installed into the downstream cluster as a Helm release.
+Bundle contains the resources of an application and its deployment options. It will be deployed as a Helm chart to target clusters.
+
+When a GitRepo is scanned it will produce one or more bundles. Bundles are a collection of resources that get deployed to one or more cluster(s). Bundle is the fundamental deployment unit used in Fleet. The contents of a Bundle may be Kubernetes manifests, Kustomize configuration, or Helm charts. Regardless of the source the contents are dynamically rendered into a Helm chart by the agent and installed into the downstream cluster as a Helm release.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
@@ -309,9 +311,10 @@ BundleDeployment is used internally by Fleet and should not be used directly. Wh
 | diff | Diff can be used to ignore the modified state of objects which are amended at runtime. | *[DiffOptions](#diffoptions) | false |
 | keepResources | KeepResources can be used to keep the deployed resources when removing the bundle | bool | false |
 | ignore | IgnoreOptions can be used to ignore fields when monitoring the bundle. | [IgnoreOptions](#ignoreoptions) | false |
-| correctDrift | CorrectDrift specifies how drift correction should work. | [CorrectDrift](#correctdrift) | false |
+| correctDrift | CorrectDrift specifies how drift correction should work. | *[CorrectDrift](#correctdrift) | false |
 | namespaceLabels | NamespaceLabels are labels that will be appended to the namespace created by Fleet. | *map[string]string | false |
 | namespaceAnnotations | NamespaceAnnotations are annotations that will be appended to the namespace created by Fleet. | *map[string]string | false |
+| deleteCRDResources | DeleteCRDResources deletes CRDs. Warning! this will also delete all your Custom Resources. | bool | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -341,7 +344,7 @@ BundleDeploymentResource contains the metadata of a deployed resource.
 | options | Options are the deployment options, that are currently applied. | [BundleDeploymentOptions](#bundledeploymentoptions) | false |
 | deploymentID | DeploymentID is the ID of the currently applied deployment. | string | false |
 | dependsOn | DependsOn refers to the bundles which must be ready before this bundle can be deployed. | \[\][BundleRef](#bundleref) | false |
-| correctDrift | CorrectDrift specifies how drift correction should work. | [CorrectDrift](#correctdrift) | false |
+| correctDrift | CorrectDrift specifies how drift correction should work. | *[CorrectDrift](#correctdrift) | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -627,6 +630,7 @@ Cluster corresponds to a Kubernetes cluster. Fleet deploys bundles to targeted c
 | agentConfigChanged | AgentConfigChanged is set to true if any of the agent configuration changed, like the API server URL or CA. Setting it to true will trigger a re-import of the cluster. | bool | false |
 | apiServerURL | APIServerURL is the currently used URL of the API server that the cluster uses to connect to upstream. | string | false |
 | apiServerCAHash | APIServerCAHash is a hash of the upstream API server CA, used to detect changes. | string | false |
+| agentTLSMode | AgentTLSMode supports two values: `system-store` and `strict`. If set to `system-store`, instructs the agent to trust CA bundles from the operating system's store. If set to `strict`, then the agent shall only connect to a server which uses the exact CA configured when creating/updating the agent. | string | false |
 | display | Display contains the number of ready bundles, nodes and a summary state. | [ClusterDisplay](#clusterdisplay) | false |
 | agent | AgentStatus contains information about the agent. | [AgentStatus](#agentstatus) | false |
 
@@ -873,7 +877,7 @@ GitRepoResourceCounts contains the number of resources in each state.
 | imageScanInterval | ImageScanInterval is the interval of syncing scanned images and writing back to git repo. | *metav1.Duration | false |
 | imageScanCommit | Commit specifies how to commit to the git repo when a new image is scanned and written back to git repo. | [CommitSpec](#commitspec) | false |
 | keepResources | KeepResources specifies if the resources created must be kept after deleting the GitRepo. | bool | false |
-| correctDrift | CorrectDrift specifies how drift correction should work. | [CorrectDrift](#correctdrift) | false |
+| correctDrift | CorrectDrift specifies how drift correction should work. | *[CorrectDrift](#correctdrift) | false |
 
 [Back to Custom Resources](#custom-resources)
 
