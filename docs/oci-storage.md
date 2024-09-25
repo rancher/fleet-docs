@@ -21,8 +21,8 @@ There are the fields involved:
 ```
 // when ociRegistry is defined Fleet will use oci registry as storage
 ociRegistry:
-    // url is the OCI registry url.
-    url: "docker.io/your-user-here"
+    // reference is the OCI registry url.
+    reference: "docker.io/your-user-here"
     // secret name where the credentials for the OCI registry are.
     // expects a generic secret with username and password keys set.
     authSecretName: oci-secret
