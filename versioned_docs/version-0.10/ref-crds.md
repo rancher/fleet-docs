@@ -73,6 +73,7 @@
 * [GitRepoSpec](#gitrepospec)
 * [GitRepoStatus](#gitrepostatus)
 * [GitTarget](#gittarget)
+* [OCIRegistrySpec](#ociregistryspec)
 * [ResourcePerClusterState](#resourceperclusterstate)
 * [GitRepoRestrictionList](#gitreporestrictionlist)
 * [AlphabeticalPolicy](#alphabeticalpolicy)
@@ -153,6 +154,7 @@ BundleResource represents the content of a single resource from the bundle, like
 | targets | Targets refer to the clusters which will be deployed to. Targets are evaluated in order and the first one to match is used. | \[\][BundleTarget](#bundletarget) | false |
 | targetRestrictions | TargetRestrictions is an allow list, which controls if a bundledeployment is created for a target. | \[\][BundleTargetRestriction](#bundletargetrestriction) | false |
 | dependsOn | DependsOn refers to the bundles which must be ready before this bundle can be deployed. | \[\][BundleRef](#bundleref) | false |
+| contentsId | ContentsID stores the contents id when deploying contents using an OCI registry. | string | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -173,6 +175,7 @@ BundleResource represents the content of a single resource from the bundle, like
 | partitions | PartitionStatus lists the status of each partition. | \[\][PartitionStatus](#partitionstatus) | false |
 | display | Display contains the number of ready, desiredready clusters and a summary state for the bundle's resources. | [BundleDisplay](#bundledisplay) | false |
 | resourceKey | ResourceKey lists resources, which will likely be deployed. The actual list of resources on a cluster might differ, depending on the helm chart, value templating, etc.. | \[\][ResourceKey](#resourcekey) | false |
+| ociReference | OCIReference is the OCI reference used to store contents, this is only for informational purposes. | string | false |
 | observedGeneration | ObservedGeneration is the current generation of the bundle. | int64 | true |
 | resourcesSha256Sum | ResourcesSHA256Sum corresponds to the JSON serialization of the .Spec.Resources field | string | false |
 
@@ -208,6 +211,8 @@ BundleTarget declares clusters to deploy to. Fleet will merge the BundleDeployme
 | clusterGroup | ClusterGroup to match a specific cluster group by name. | string | false |
 | clusterGroupSelector | ClusterGroupSelector is a selector to match cluster groups. | *metav1.LabelSelector | false |
 | doNotDeploy | DoNotDeploy if set to true, will not deploy to this target. | bool | false |
+| namespaceLabels | NamespaceLabels are labels that will be appended to the namespace created by Fleet. | *map[string]string | false |
+| namespaceAnnotations | NamespaceAnnotations are annotations that will be appended to the namespace created by Fleet. | *map[string]string | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -344,6 +349,7 @@ BundleDeploymentList contains a list of BundleDeployment
 | yaml | YAML options, if using raw YAML these are names that map to overlays/{name} files that will be used to replace or patch a resource. | *[YAMLOptions](#yamloptions) | false |
 | diff | Diff can be used to ignore the modified state of objects which are amended at runtime. | *[DiffOptions](#diffoptions) | false |
 | keepResources | KeepResources can be used to keep the deployed resources when removing the bundle | bool | false |
+| deleteNamespace | DeleteNamespace can be used to delete the deployed namespace when removing the bundle | bool | false |
 | ignore | IgnoreOptions can be used to ignore fields when monitoring the bundle. | [IgnoreOptions](#ignoreoptions) | false |
 | correctDrift | CorrectDrift specifies how drift correction should work. | *[CorrectDrift](#correctdrift) | false |
 | namespaceLabels | NamespaceLabels are labels that will be appended to the namespace created by Fleet. | *map[string]string | false |
@@ -379,6 +385,7 @@ BundleDeploymentResource contains the metadata of a deployed resource.
 | deploymentID | DeploymentID is the ID of the currently applied deployment. | string | false |
 | dependsOn | DependsOn refers to the bundles which must be ready before this bundle can be deployed. | \[\][BundleRef](#bundleref) | false |
 | correctDrift | CorrectDrift specifies how drift correction should work. | *[CorrectDrift](#correctdrift) | false |
+| ociContents | OCIContents is true when this deployment's contents is stored in an oci registry | bool | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -459,6 +466,7 @@ HelmOptions for the deployment. For Helm-based bundles, all options can be used,
 | disablePreProcess | DisablePreProcess disables template processing in values | bool | false |
 | disableDNS | DisableDNS can be used to customize Helm's EnableDNS option, which Fleet sets to `true` by default. | bool | false |
 | skipSchemaValidation | SkipSchemaValidation allows skipping schema validation against the chart values | bool | false |
+| disableDependencyUpdate | DisableDependencyUpdate allows skipping chart dependencies update | bool | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -598,10 +606,6 @@ BundleNamespaceMappingList contains a list of BundleNamespaceMapping
 | ----- | ----------- | ------ | -------- |
 | lastSeen | LastSeen is the last time the agent checked in to update the status of the cluster resource. | metav1.Time | true |
 | namespace | Namespace is the namespace of the agent deployment, e.g. \"cattle-fleet-system\". | string | true |
-| nonReadyNodes | NonReadyNodes is the number of nodes that are not ready. | int | true |
-| readyNodes | ReadyNodes is the number of nodes that are ready. | int | true |
-| nonReadyNodeNames | NonReadyNode contains the names of non-ready nodes. The list is limited to at most 3 names. | []string | true |
-| readyNodeNames | ReadyNodes contains the names of ready nodes. The list is limited to at most 3 names. | []string | true |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -624,8 +628,6 @@ Cluster corresponds to a Kubernetes cluster. Fleet deploys bundles to targeted c
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
 | readyBundles | ReadyBundles is a string in the form \"%d/%d\", that describes the number of bundles that are ready vs. the number of bundles desired to be ready. | string | false |
-| readyNodes | ReadyNodes is a string in the form \"%d/%d\", that describes the number of nodes that are ready vs. the number of expected nodes. | string | false |
-| sampleNode | SampleNode is the name of one of the nodes that are ready. If no node is ready, it's the name of a node that is not ready. | string | false |
 | state | State of the cluster, either one of the bundle states, or \"WaitCheckIn\". | string | false |
 
 [Back to Custom Resources](#custom-resources)
@@ -659,6 +661,7 @@ ClusterList contains a list of Cluster
 | agentTolerations | AgentTolerations defines an extra set of Tolerations to be added to the Agent deployment. | []corev1.Toleration | false |
 | agentAffinity | AgentAffinity overrides the default affinity for the cluster's agent deployment. If this value is nil the default affinity is used. | *corev1.Affinity | false |
 | agentResources | AgentResources sets the resources for the cluster's agent deployment. | *corev1.ResourceRequirements | false |
+| hostNetwork | HostNetwork sets the agent StatefulSet to use hostNetwork: true setting. Allows for provisioning of network related bundles (CNI configuration). | *bool | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -676,6 +679,7 @@ ClusterList contains a list of Cluster
 | desiredReadyGitRepos | DesiredReadyGitRepos is the number of gitrepos for this cluster that are desired to be ready. | int | true |
 | agentEnvVarsHash | AgentEnvVarsHash is a hash of the agent's env vars, used to detect changes. | string | false |
 | agentPrivateRepoURL | AgentPrivateRepoURL is the private repo URL for the agent that is currently used. | string | false |
+| agentHostNetwork | AgentHostNetwork defines observed state of spec.hostNetwork setting that is currently used. | bool | false |
 | agentDeployedGeneration | AgentDeployedGeneration is the generation of the agent that is currently deployed. | *int64 | false |
 | agentMigrated | AgentMigrated is always set to true after importing a cluster. If false, it will trigger a migration. Old agents don't have this in their status. | bool | false |
 | agentNamespaceMigrated | AgentNamespaceMigrated is always set to true after importing a cluster. If false, it will trigger a migration. Old Fleet agents don't have this in their status. | bool | false |
@@ -686,8 +690,10 @@ ClusterList contains a list of Cluster
 | agentConfigChanged | AgentConfigChanged is set to true if any of the agent configuration changed, like the API server URL or CA. Setting it to true will trigger a re-import of the cluster. | bool | false |
 | apiServerURL | APIServerURL is the currently used URL of the API server that the cluster uses to connect to upstream. | string | false |
 | apiServerCAHash | APIServerCAHash is a hash of the upstream API server CA, used to detect changes. | string | false |
+| agentTLSMode | AgentTLSMode supports two values: `system-store` and `strict`. If set to `system-store`, instructs the agent to trust CA bundles from the operating system's store. If set to `strict`, then the agent shall only connect to a server which uses the exact CA configured when creating/updating the agent. | string | false |
 | display | Display contains the number of ready bundles, nodes and a summary state. | [ClusterDisplay](#clusterdisplay) | false |
 | agent | AgentStatus contains information about the agent. | [AgentStatus](#agentstatus) | false |
+| garbageCollectionInterval | GarbageCollectionInterval determines how often agents clean up obsolete Helm releases. | *metav1.Duration | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -988,7 +994,10 @@ GitRepoResourceCounts contains the number of resources in each state.
 | imageScanInterval | ImageScanInterval is the interval of syncing scanned images and writing back to git repo. | *metav1.Duration | false |
 | imageScanCommit | Commit specifies how to commit to the git repo when a new image is scanned and written back to git repo. | [CommitSpec](#commitspec) | false |
 | keepResources | KeepResources specifies if the resources created must be kept after deleting the GitRepo. | bool | false |
+| deleteNamespace | DeleteNamespace specifies if the namespace created must be deleted after deleting the GitRepo. | bool | false |
 | correctDrift | CorrectDrift specifies how drift correction should work. | *[CorrectDrift](#correctdrift) | false |
+| disablePolling | Disables git polling. When enabled only webhooks will be used. | bool | false |
+| ociRegistry | OCIRegistry specifies the OCI registry related parameters | *[OCIRegistrySpec](#ociregistryspec) | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -999,10 +1008,11 @@ GitRepoResourceCounts contains the number of resources in each state.
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
 | observedGeneration | ObservedGeneration is the current generation of the resource in the cluster. It is copied from k8s metadata.Generation. The value is incremented for all changes, except for changes to .metadata or .status. | int64 | true |
-| commit | Commit is the Git commit hash from the last gitjob run. | string | false |
+| updateGeneration | Update generation is the force update generation if spec.forceSyncGeneration is set | int64 | false |
+| commit | Commit is the Git commit hash from the last git job run. | string | false |
 | readyClusters | ReadyClusters is the lowest number of clusters that are ready over all the bundles of this GitRepo. | int | true |
 | desiredReadyClusters | DesiredReadyClusters\tis the number of clusters that should be ready for bundles of this GitRepo. | int | true |
-| gitJobStatus | GitJobStatus is the status of the last GitJob run, e.g. \"Current\" if there was no error. | string | false |
+| gitJobStatus | GitJobStatus is the status of the last Git job run, e.g. \"Current\" if there was no error. | string | false |
 | summary | Summary contains the number of bundle deployments in each state and a list of non-ready resources. | [BundleSummary](#bundlesummary) | false |
 | display | Display contains a human readable summary of the status. | [GitRepoDisplay](#gitrepodisplay) | false |
 | conditions | Conditions is a list of Wrangler conditions that describe the state of the GitRepo. | []genericcondition.GenericCondition | false |
@@ -1010,6 +1020,7 @@ GitRepoResourceCounts contains the number of resources in each state.
 | resourceCounts | ResourceCounts contains the number of resources in each state over all bundles. | [GitRepoResourceCounts](#gitreporesourcecounts) | false |
 | resourceErrors | ResourceErrors is a sorted list of errors from the resources. | []string | false |
 | lastSyncedImageScanTime | LastSyncedImageScanTime is the time of the last image scan. | metav1.Time | false |
+| lastPollingTriggered | LastPollingTime is the last time the polling check was triggered | metav1.Time | false |
 
 [Back to Custom Resources](#custom-resources)
 
@@ -1024,6 +1035,19 @@ GitTarget is a cluster or cluster group to deploy to.
 | clusterSelector | ClusterSelector is a label selector to select clusters. | *metav1.LabelSelector | false |
 | clusterGroup | ClusterGroup is the name of a cluster group in the same namespace as the clusters. | string | false |
 | clusterGroupSelector | ClusterGroupSelector is a label selector to select cluster groups. | *metav1.LabelSelector | false |
+
+[Back to Custom Resources](#custom-resources)
+
+#### OCIRegistrySpec
+
+
+
+| Field | Description | Scheme | Required |
+| ----- | ----------- | ------ | -------- |
+| reference | Reference of the OCI Registry | string | false |
+| authSecretName | AuthSecretName contains the auth secret where the OCI regristry credentials are stored. | string | false |
+| basicHTTP | BasicHTTP uses HTTP connections to the OCI registry when enabled. | bool | false |
+| insecureSkipTLS | InsecureSkipTLS allows connections to OCI registry without certs when enabled. | bool | false |
 
 [Back to Custom Resources](#custom-resources)
 
