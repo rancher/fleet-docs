@@ -16,6 +16,7 @@ RELEVANT_CRD_FILES=(
     "pkg/apis/fleet.cattle.io/v1alpha1/gitrepo_types.go"
     "pkg/apis/fleet.cattle.io/v1alpha1/gitreporestriction_types.go"
     "pkg/apis/fleet.cattle.io/v1alpha1/imagescan_types.go"
+    "pkg/apis/fleet.cattle.io/v1alpha1/fleetyaml.go"
     # pre v0.9 api files
     "pkg/apis/fleet.cattle.io/v1alpha1/git.go"
     "pkg/apis/fleet.cattle.io/v1alpha1/bundle.go"
