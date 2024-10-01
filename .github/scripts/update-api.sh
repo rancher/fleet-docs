@@ -45,6 +45,7 @@ create_markdown() {
         | sed -e 's/\[\]\[/\\[\\]\[/' \
         | sed -e '1 s/### Custom Resources/# Custom Resources Spec/; t' -e '1,// s//# Custom Resources Spec/' \
         | sed -e '1 s/### Sub Resources/# Sub Resources/; t' -e '1,// s//# Sub Resources/' \
+        | sed -e 's/(#custom-resources)/(#custom-resources-spec)/g' \
         | sed 's/\\n/\
 /g' \
         | tail -n +2 \
