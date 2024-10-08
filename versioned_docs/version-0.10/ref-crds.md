@@ -1012,6 +1012,7 @@ GitRepoResourceCounts contains the number of resources in each state.
 | observedGeneration | ObservedGeneration is the current generation of the resource in the cluster. It is copied from k8s metadata.Generation. The value is incremented for all changes, except for changes to .metadata or .status. | int64 | true |
 | updateGeneration | Update generation is the force update generation if spec.forceSyncGeneration is set | int64 | false |
 | commit | Commit is the Git commit hash from the last git job run. | string | false |
+| webhookCommit | WebhookCommit is the latest Git commit hash received from a webhook | string | false |
 | readyClusters | ReadyClusters is the lowest number of clusters that are ready over all the bundles of this GitRepo. | int | true |
 | desiredReadyClusters | DesiredReadyClusters\tis the number of clusters that should be ready for bundles of this GitRepo. | int | true |
 | gitJobStatus | GitJobStatus is the status of the last Git job run, e.g. \"Current\" if there was no error. | string | false |
