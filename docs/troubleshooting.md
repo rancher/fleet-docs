@@ -2,6 +2,27 @@
 
 This section contains commands and tips to troubleshoot Fleet.
 
+## Where to look for root causes of issues
+
+The first things to check when Fleet behaves unexpectedly would be:
+    * `fleet-controller` logs on the management cluster: has Fleet failed to reconcile any resource's (bundle, bundle
+deployment) current state with its expected state?
+    * `gitjob` pod logs on the management cluster: has Fleet encountered any issue while creating jobs to generate new
+bundles for new commits found in monitored git repositories?
+    * status of the `GitRepo` for which resources are not properly deployed:
+        * How many `Ready Bundle Deployments` does it list?
+        * How many bundle deployments are listed as expected? How many do you expect to see?
+            * Keep in mind that a `GitRepo` creates a bundle per path; each bundle leads to as many bundle deployments
+as there are target clusters. A mismatch between `Desired Ready Clusters` and your own expectation could point to a
+targeting issue.
+        * Which resources are listed in the `GitRepo`'s status?
+        * Which commit appears in the `GitRepo`'s status?
+
+If the issue is specific to a target cluster, one might want to check Fleet agent logs on that cluster: has Fleet failed
+to deploy a bundle deployment on that cluster?
+
+The next section explains how to run all these checks.
+
 ## **How Do I...**
 
 
