@@ -382,6 +382,14 @@ Options for the downloaded Helm chart.
 - valuesFiles
 - valueFrom
 
+### Values
+
+Values are processed in different stages of the lifecycle: https://fleet.rancher.io/ref-bundle-stages
+
+* fleet.yaml `values:` and `valuesFile:` are added to the bundle's values when it is created.
+* helm values templating, e.g. with `${ }` happens when the bundle is targeted at a cluster, cluster labels filled in, etc.
+* When the agent installs the chart, values from `valuesFrom` are read. Then Helm templating `{{ }}` is processed.
+
 ### Templating
 
 It is possible to specify the keys and values as go template strings for
