@@ -299,7 +299,7 @@ First add Fleet's Helm repository.
 Second install the Fleet CustomResourcesDefintions.
 <CodeBlock language="bash">
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
-    fleet-crd`} {versions.next.fleetCRD}
+    fleet-crd fleet/fleet-crd`}
 </CodeBlock>
 
 Third install the Fleet controllers.
@@ -307,7 +307,7 @@ Third install the Fleet controllers.
 {`helm -n cattle-fleet-system install --create-namespace --wait \\
     --set apiServerURL="$API_SERVER_URL" \\
     --set-file apiServerCA="$API_SERVER_CA" \\
-    fleet`} {versions.next.fleet}
+    fleet fleet/fleet`}
 </CodeBlock>
 </TabItem>
 
