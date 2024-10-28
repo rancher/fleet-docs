@@ -6,13 +6,11 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main docs repo
-        uses: actions/checkout@v4
-      - name: Setup Docusaurus
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
         with:
           node-version: 20.x
           cache: yarn
@@ -20,8 +18,26 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           yarn build
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload artifacts
+        if: ${{ github.event_name == 'push' && github.repository_owner == 'rancher' }}
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          path: ./build
+          retention-days: 10
+          compression-level: 9
+  deploy:
+    name: Publish
+    if: ${{ github.event_name == 'push' && github.repository_owner == 'rancher' }}
+    runs-on: ubuntu-latest
+    needs: build
+
+    environment:
+      name: github-pages
+
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Deploy to GH Pages
+        uses: actions/deploy-pages@v4
