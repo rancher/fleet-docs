@@ -1,5 +1,9 @@
 # OCI Storage
 
+OCI storage is an experimental feature to store a bundle's resources in an OCI registry, instead of k8s resources.
+Fleet won't be limited by [`etcd` size limitations](https://etcd.io/docs/v3.4/dev-guide/limit/). However,
+Fleet needs write access to a registry and that registry needs to be accessible by the agents in downstream clusters.
+
 ## Summary
 
 Fleet stores by default the bundle resources in etcd twice. This is done via the k8s API and there is a size limit, depending on the etcd configuration.
@@ -10,7 +14,7 @@ When using this feature the bundle resources are stored once, in the configured 
 
 This may me interesting for users who need to store big `Bundles`, and could also be seen as the first step for an `OCIOps` feature in the future.
 
-Once the OCI registry is enabled, Fleet will use it as the source for storing `Bundle` resources. 
+Once the OCI registry is enabled, Fleet will use it as the source for storing `Bundle` resources.
 When Fleet can't access the OCI registry, it won't fall back to default `etcd` storage. Instead, it will log errors so they can be fixed.
 
 ## Configuring the OCI registry
