@@ -89,6 +89,11 @@ __How changes are applied to `values.yaml`__:
 
 - When changes are applied to the `values.yaml` from multiple sources at the same time, the values will update in the following order: `helm.values` -> `helm.valuesFiles` -> `helm.valuesFrom`. That means `valuesFrom` will take precedence over both, `valuesFiles` and `values`.
 
+![](/img/FleetValuesStages.svg)
+
+The targeting step can treat the values as a template and fill in information from the `clusters.fleet.cattle.io` resource. More information can be found in [Helm values templating](./ref-fleet-yaml#templating).
+This can be turned off in `fleet.yaml`, by setting `disablePreProcess`, e.g. to avoid conflicts with other templating languages.
+
 :::note Credentials in Values
 
 If the chart generates certificates or passwords in its templates, these values must be overriden. Otherwise the chart could be continuously deployed as these values change.

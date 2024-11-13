@@ -395,9 +395,13 @@ Values are processed in different stages of the lifecycle: https://fleet.rancher
 It is possible to specify the keys and values as go template strings for
 advanced templating needs.  Most of the functions from the [sprig templating
 library](https://masterminds.github.io/sprig/) are available.
+This can be turned off in `fleet.yaml`, by setting `disablePreProcess`, e.g. to
+avoid conflicts with other templating languages.
 
 Note that if the functions output changes with every call, e.g. `uuidv4`, the
 bundle will get redeployed.
+
+You can [test values templating with the CLI](./ref-bundle-stages#fleet-target) against existing clusters.
 
 The template context has the following keys:
 
@@ -426,3 +430,13 @@ will result in the following text:
 ```
 foo-bar-${PWD}
 ```
+
+:::warning empty values
+It is easier to use `global.fleet.clusterLabels.LABELNAME` instead of templating. When using templating, make sure to protect against null values.
+
+Example:
+```
+${ if hasKey .ClusterLabels "LABELNAME" }${ .ClusterLabels.LABELNAME }${ else }missing${ end}
+```
+:::
+
