@@ -3,6 +3,7 @@
 ## Status Fields
 
 Fleet reports most information via status fields on its custom resources.
+These fields are also used by the Rancher UI to display information about the state of the resources.
 
 See [status fields reference](./ref-status-fields.md) for more information on status fields and conditions.
 
@@ -21,7 +22,9 @@ Fleet will generate k8s events a user can subscribe to. This is the list of even
 
 ## Metrics
 
-Fleet supports prometheus metrics. They can be retrieved from these services:
+Fleet publishes prometheus metrics. They can be retrieved from these services:
 
 * `monitoring-fleet-controller.cattle-fleet-system.svc.cluster.local:8080/metrics`
 * `monitoring-gitjob.cattle-fleet-system.svc.cluster.local:8081/metrics`
+
+The [collection of exported metrics](https://book.kubebuilder.io/reference/metrics-reference) includes all the information from controller-runtime, like the number of reconciled resources, the number of errors, and the time it took to reconcile.
