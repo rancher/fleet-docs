@@ -23,6 +23,7 @@ fleet apply [flags] BUNDLE_NAME PATH...
       --correct-drift-keep-fail-history        Keep helm history for failed rollbacks
       --debug                                  Turn on debug logging
       --debug-level int                        If debugging is enabled, set klog -v=X
+      --delete-namespace                       Delete GitRepo target namespace after the GitRepo or Bundle is deleted
   -f, --file string                            Location of the fleet.yaml
       --helm-credentials-by-path-file string   Path of file containing helm credentials for paths
       --helm-repo-url-regex string             Helm credentials will be used if the helm repo matches this regex. Credentials will always be used if this is empty or not provided
@@ -31,6 +32,11 @@ fleet apply [flags] BUNDLE_NAME PATH...
   -k, --kubeconfig string                      kubeconfig for authentication
   -l, --label strings                          Labels to apply to created bundles
   -n, --namespace string                       namespace (default "fleet-local")
+      --oci-basic-http                         Use HTTP to access the OCI regustry
+      --oci-insecure                           Allow connections to OCI registry without certs
+      --oci-password-file string               Path of file containing basic auth password for OCI registry
+      --oci-reference string                   OCI registry reference
+      --ociusername string                     Basic auth username for OCI registry
   -o, --output string                          Output contents to file or - for stdout
       --password-file string                   Path of file containing basic auth password for helm repo
       --paused                                 Create bundles in a paused state

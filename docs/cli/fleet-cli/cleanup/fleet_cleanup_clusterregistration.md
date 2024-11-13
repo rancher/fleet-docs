@@ -1,13 +1,13 @@
 ---
 title: ""
-sidebar_label: "fleet cleanup"
+sidebar_label: "fleet cleanup clusterregistration"
 ---
-## fleet cleanup
+## fleet cleanup clusterregistration
 
 Clean up outdated cluster registrations
 
 ```
-fleet cleanup [flags]
+fleet cleanup clusterregistration [flags]
 ```
 
 ### Options
@@ -17,7 +17,7 @@ fleet cleanup [flags]
       --debug               Turn on debug logging
       --debug-level int     If debugging is enabled, set klog -v=X
       --factor string       Factor to increase delay between deletes (default: 1.1)
-  -h, --help                help for cleanup
+  -h, --help                help for clusterregistration
   -k, --kubeconfig string   kubeconfig for authentication
       --max string          Maximum delay between deletes (default: 5s)
       --min string          Minimum delay between deletes (default: 10ms)
@@ -26,5 +26,5 @@ fleet cleanup [flags]
 
 ### SEE ALSO
 
-* [fleet](./fleet)	 - 
+* [fleet cleanup](./fleet_cleanup)	 - Clean up outdated resources
 

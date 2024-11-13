@@ -17,6 +17,7 @@ fleet deploy [flags]
   -d, --dry-run                           Print the resources that would be deployed, but do not actually deploy them
   -h, --help                              help for deploy
   -i, --input-file string                 Location of the YAML file containing the content and the bundledeployment resource
+      --kube-version string               For dry runs, sets the Kubernetes version to assume when validating Chart Kubernetes version constraints.
       --kubeconfig string                 Paths to a kubeconfig. Only required if out-of-cluster.
   -n, --namespace string                  Set the default namespace. Deploy helm chart into this namespace.
       --zap-devel                         Development Mode defaults(encoder=consoleEncoder,logLevel=Debug,stackTraceLevel=Warn). Production Mode defaults(encoder=jsonEncoder,logLevel=Info,stackTraceLevel=Error) (default true)
