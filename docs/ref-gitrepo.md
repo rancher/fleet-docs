@@ -14,6 +14,9 @@ metadata:
   # For single cluster use fleet-local, otherwise use the namespace of
   # your choosing
   namespace: fleet-local
+  # Labels are copied to bundles, but not to workloads.
+  labels:
+    created-by: fleet
 spec:
   # This can be a HTTPS or git URL.  If you are using a git URL then
   # clientSecretName will probably need to be set to supply a credential.
