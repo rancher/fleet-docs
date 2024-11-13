@@ -46,6 +46,7 @@ module.exports = {
         {type:'doc', id:'webhook'},
         {type:'doc', id:'imagescan'},
         {type:'doc', id:'bundle-add'},
+        {type:'doc', id:'observability'},
       ],
     },
     {
