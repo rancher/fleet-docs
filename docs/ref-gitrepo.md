@@ -43,6 +43,7 @@ spec:
   # type. Secrets must be of the type "kubernetes.io/ssh-auth" or
   # "kubernetes.io/basic-auth". The secret is assumed to be in the
   # same namespace as the GitRepo
+  # Fleet always checks for a secret named "gitcredential".
   #
   # clientSecretName: my-ssh-key
 
@@ -113,6 +114,7 @@ spec:
   # this service account already exists so it should be create before
   # hand, most likely coming from another git repo registered with
   # the Fleet manager.
+  # Fleet always checks for a service account named "fleet-default".
   #
   # serviceAccount: moreSecureAccountThanClusterAdmin
 
