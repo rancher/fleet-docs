@@ -3,7 +3,9 @@ title: "0.8 Changelogs"
 ---
 
 
-* [v0.8.5](changelogs/v0.8.5.md) (latest)
+* [v0.8.6](changelogs/v0.8.6.md) (latest)
+
+* [v0.8.5](changelogs/v0.8.5.md) 
 
 * [](changelogs/v0.8.4.md) 
 

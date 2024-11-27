@@ -1,5 +1,7 @@
 ---
-title: "Next 🚧"
+title: "0.11 Changelogs"
 ---
 
-We are still working on the next release.
+
+* [v0.11.1](changelogs/v0.11.1.md) (latest)
+
