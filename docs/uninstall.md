@@ -9,7 +9,8 @@ Removing the CRDs will remove all deployed workloads.
 Fleet is packaged as two Helm charts so uninstall is accomplished by
 uninstalling the appropriate Helm charts.
 
-However Fleet uses finalizers, so uninstall workloads first to give the Fleet controllers time to clean up.
+However Fleet uses [finalizers](https://kubernetes.io/docs/concepts/overview/working-with-objects/finalizers/),
+ so uninstall workloads first to give the Fleet controllers time to clean up.
 
 ```
 kubectl delete clusters.fleet.cattle.io -A
