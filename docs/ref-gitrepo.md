@@ -43,7 +43,8 @@ spec:
   # type. Secrets must be of the type "kubernetes.io/ssh-auth" or
   # "kubernetes.io/basic-auth". The secret is assumed to be in the
   # same namespace as the GitRepo
-  # Fleet always checks for a secret named "gitcredential".
+  # If no clientSecretName is supplied, Fleet checks for a secret named
+  # "gitcredential".
   #
   # clientSecretName: my-ssh-key
 
@@ -111,10 +112,11 @@ spec:
   # The service account that will be used to perform this deployment.
   # This is the name of the service account that exists in the
   # downstream cluster in the cattle-fleet-system namespace. It is assumed
-  # this service account already exists so it should be create before
-  # hand, most likely coming from another git repo registered with
+  # this service account already exists so it should be created beforehand,
+  # for instance coming from another git repo registered with
   # the Fleet manager.
-  # Fleet always checks for a service account named "fleet-default".
+  # If no service account is configured, Fleet checks for a service account
+  # named "fleet-default".
   #
   # serviceAccount: moreSecureAccountThanClusterAdmin
 
