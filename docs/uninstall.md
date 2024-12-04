@@ -9,7 +9,7 @@ Removing the CRDs will remove all deployed workloads.
 Fleet is packaged as two Helm charts so uninstall is accomplished by
 uninstalling the appropriate Helm charts.
 
-However Fleet uses finalizers, so uninstall workloads first to give the fleet controllers time to clean up.
+However Fleet uses finalizers, so uninstall workloads first to give the Fleet controllers time to clean up.
 
 ```
 kubectl delete clusters.fleet.cattle.io -A
@@ -34,7 +34,7 @@ kubectl delete crd gitrepos.fleet.cattle.io bundles.fleet.cattle.io contents.fle
   clusterregistrations.fleet.cattle.io clusterregistrationtokens.fleet.cattle.io
 ```
 
-Then uninstall Fleet run the following commands:
+Then, to uninstall Fleet, run the following commands:
 
 ```shell
 helm -n cattle-fleet-system uninstall fleet
@@ -45,7 +45,7 @@ helm -n cattle-fleet-system uninstall fleet-crd
 If uninstall gets stuck it is likely due to finalizers. Resource status fields, e.g. on a namespace, will list the resources waiting for their finalizers to be removed. The finalizers can be removed manually with kubectl, if their controllers are no longer running.
 :::
 
-Afterwards one can also remove Fleet related namespaces and their content:
+Afterwards one can also remove Fleet-related namespaces and their content:
 
 ```
 kubectl delete ns cattle-fleet-system
