@@ -2,6 +2,39 @@
 
 A reference list of, mostly internal, configuration options.
 
+## Configure Fleet Install Options In Rancher
+
+Rancher looks for Helm values in a ConfigMap called `rancher-config` in the `cattle-system` namespace.
+Any Helm chart value for Fleet can be specified under the name of the chart. Note the the value of the fleet key is a string.
+
+A `rancher-config` could look like this, after adding some options:
+
+```
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: rancher-config
+  namespace: cattle-system
+data:
+  fleet: |
+    controller:
+      reconciler:
+        workers:
+          gitrepo: "50"
+          bundle: "50"
+          bundledeployment: "50"
+  priorityClassName: rancher-critical
+
+```
+
+The `rancher-config` resource is created by the Rancher chart and can be patched:
+
+
+```
+kubectl patch cm -n cattle-system rancher-config --type merge \
+  --patch '{"data":{"fleet": "controller:\n  reconciler:\n    workers:\n      gitrepo: \"200\"\n      bundle: \"200\"\n      bundledeployment: \"200\"\n"}}'
+```
+
 ## Helm Charts
 
 The Helm charts accept, at least, the options as shown with their default in `values.yaml`:
