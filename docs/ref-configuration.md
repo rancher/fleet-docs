@@ -5,7 +5,7 @@ A reference list of, mostly internal, configuration options.
 ## Configure Fleet Install Options In Rancher
 
 Rancher looks for Helm values in a ConfigMap called `rancher-config` in the `cattle-system` namespace.
-Any Helm chart value for Fleet can be specified under the name of the chart. Note the the value of the fleet key is a string.
+Any Helm chart value for Fleet can be specified under the name of the chart. Note the value of the fleet key is a string.
 
 A `rancher-config` could look like this, after adding some options:
 
