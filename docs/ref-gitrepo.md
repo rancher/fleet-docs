@@ -109,6 +109,18 @@ spec:
   #
   # forceSyncGeneration: 0
 
+  # Drift correction removes any external change made to resources managed by Fleet. It performs a helm rollback, which uses
+  # a three-way merge strategy by default.
+  # It will try to update all resources by doing a PUT request if force is enabled. Three-way strategic merge might fail when updating
+  # an item inside of an array as it will try to add a new item instead of replacing the existing one. This can be fixed by using force.
+  # Keep in mind that resources might be recreated if force is enabled.
+  # Failed rollback will be removed from the helm history unless keepFailHistory is set to true.
+  #
+  # correctDrift:
+  #   enabled: false
+  #   force: false #Warning: it might recreate resources if set to true
+  #   keepFailHistory: false
+
   # The service account that will be used to perform this deployment.
   # This is the name of the service account that exists in the
   # downstream cluster in the cattle-fleet-system namespace. It is assumed
@@ -126,16 +138,4 @@ spec:
   # If empty, the "default" cluster group is used.
   #
   # targets: ...
-
-  # Drift correction removes any external change made to resources managed by Fleet. It performs a helm rollback, which uses
-  # a three-way merge strategy by default.
-  # It will try to update all resources by doing a PUT request if force is enabled. Three-way strategic merge might fail when updating
-  # an item inside of an array as it will try to add a new item instead of replacing the existing one. This can be fixed by using force.
-  # Keep in mind that resources might be recreated if force is enabled.
-  # Failed rollback will be removed from the helm history unless keepFailHistory is set to true.
-  #
-  #  correctDrift:
-  #    enabled: false
-  #    force: false #Warning: it might recreate resources if set to true
-  #    keepFailHistory: false
 ```
