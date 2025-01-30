@@ -120,7 +120,10 @@ module.exports = {
             current: {
               label: 'Next 🚧',
             },
-            '0.7': {
+            '0.10': {
+              banner: 'none',
+            },
+            '0.11': {
               banner: 'none',
             },
           },
