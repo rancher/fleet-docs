@@ -31,11 +31,12 @@ It takes precendence over all other namespace definitions:
 
 Workload namespace definitions can be restricted with `allowedTargetNamespaces` in the `GitRepoRestriction` resource.
 
-## Adding Private Git Repository
+## Adding A Private Git Repository
 
-Fleet supports both http and ssh auth key for private repository. To use this you have to create a secret in the same namespace.
+Fleet supports both HTTP and SSH auth keys for private repositories. To use this, you have to create a secret in the
+`GitRepo`'s namespace.
 
-For example, to generate a private ssh key
+For example, to generate a private SSH key:
 
 ```text
 ssh-keygen -t rsa -b 4096 -m pem -C "user@email.com"
@@ -123,6 +124,20 @@ Just like with SSH, reference the secret in your GitRepo resource via `clientSec
       branch: main
       clientSecretName: basic-auth-secret
 
+
+### Using Custom CA Bundles
+
+Validating a repository using a certificate signed by a custom Certificate Authority can be done by specifying a
+`cabundle` field in a `GitRepo`.
+
+:::info
+Note that if secrets specifying CA bundles exist, for instance if Fleet is installed with Rancher (see
+[this](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/resources/add-tls-secrets#using-a-private-ca-signed-certificate)
+and
+[that](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-references/helm-chart-options#additional-trusted-cas)),
+Fleet will use those CA bundles if no CA bundle is specified on in the `GitRepo`.
+:::
+
 ## Using Private Helm Repositories
 
 :::warning
@@ -136,6 +151,13 @@ For a private Helm repo, users can reference a secret with the following keys:
 1. `username` and `password` for basic http auth if the Helm HTTP repo is behind basic auth.
 
 2. `cacerts` for custom CA bundle if the Helm repo is using a custom CA.
+    :::info
+    Note that if secrets specifying CA bundles exist, for instance if Fleet is installed with Rancher (see
+    [this](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/resources/add-tls-secrets#using-a-private-ca-signed-certificate)
+    and
+    [that](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-references/helm-chart-options#additional-trusted-cas)),
+    Fleet will use those CA bundles if no CA bundle is specified in the Helm secret.
+    :::
 
 3. `ssh-privatekey` for ssh private key if repo is using ssh protocol. Private key with passphase is not supported currently.
 
