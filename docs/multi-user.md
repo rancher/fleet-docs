@@ -45,7 +45,7 @@ If we want to give access to multiple namespaces, we can use a single cluster ro
 
 This makes sure, tenants can't interfere with GitRepo resources from other tenants, since they don't have access to their namespaces.
 
-## Isolated Workspaces
+## Isolated Workspaces in Rancher
  
 Users belonging to a specific group/organization within the company, may want to disable visibility of their clusters to users from other groups/organizations of the same company.
 
