@@ -30,5 +30,5 @@ fleet-controller agentmanagement [flags]
 
 ### SEE ALSO
 
-* [fleet-controller](./fleet-controller)	 - 
+* [fleet-controller](./)	 -
 

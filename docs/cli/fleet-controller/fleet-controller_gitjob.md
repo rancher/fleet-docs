@@ -29,5 +29,4 @@ fleet-controller gitjob [flags]
 
 ### SEE ALSO
 
-* [fleet-controller](./fleet-controller)	 -
-
+* [fleet-controller](./)

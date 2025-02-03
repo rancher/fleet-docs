@@ -27,5 +27,4 @@ fleet-controller cleanup [flags]
 
 ### SEE ALSO
 
-* [fleet-controller](./fleet-controller)	 -
-
+* [fleet-controller](./)
