@@ -45,8 +45,12 @@ If we want to give access to multiple namespaces, we can use a single cluster ro
 
 This makes sure, tenants can't interfere with GitRepo resources from other tenants, since they don't have access to their namespaces.
 
-## Example Fleet in Rancher
+## Isolated Workspaces in Rancher
  
+Users belonging to a specific group/organization within the company, may want to disable visibility of their clusters to users from other groups/organizations of the same company.
+
+In order to achieve this isolation, Rancher provides `GlobalRoles` to allow permissions to the users on certain Kubernetes resources. `GlobalRoles` have the ability to limit access to specific namespaces present on the cluster, thanks to `NamespacedRules`.
+
 When a new fleet workspace is created, a corresponding namespace with an identical name is automatically generated within the Rancher local cluster.
 For a user to see and deploy fleet resources in a specific workspace, they need at least the following permissions:
 - list/get the `fleetworkspace` cluster-wide resource in the local cluster
@@ -117,6 +121,8 @@ rules:
 Assign the `GlobalRole` to users or groups, more info can be found in the [Rancher docs](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/manage-role-based-access-control-rbac/global-permissions#configuring-global-permissions-for-individual-users)
 
 The user now has access to the `Continuous Delivery` tab in Rancher and can deploy resources to both the `project1` and `project2` workspaces.
+
+In order to have a well organized environment, each workspace should have its own related `GlobalRole` to help with the separation of duties and isolation required by the customer. This way, each user can be assigned to one or more `GlobalRoles`, depending on the needs.
 
 ## Allow Access to Clusters
 
