@@ -183,7 +183,7 @@ In the previous example credentials for username `user` will be used for the pat
 If you are using ["rancher-backups"](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/backup-restore-and-disaster-recovery/back-up-rancher) and want this secret to be included the backup, please add the label `resources.cattle.io/backup: true` to the secret. In that case, make sure to encrypt the backup to protect sensitive credentials.
 :::
 
-### Storing Credentials in Git
+## Storing Credentials in Git
 
 It's recommended not to store credentials in Git. Even if the repository is properly protected, the secrets are at risk when cloning, etc.
 As a workaround tools like SOPS can be used to encrypt the credentials.
