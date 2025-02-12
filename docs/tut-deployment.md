@@ -22,7 +22,7 @@ All examples will deploy content to clusters with no per-cluster customizations.
 
 An example using Helm. We are deploying the <a href="https://github.com/rancher/fleet-examples/tree/master/single-cluster/helm">helm example</a> to the local cluster.
 
-The repository contains a helm chart and an optional `fleet.yaml` to configure the deployment:
+The repository contains a helm chart and a `fleet.yaml` to configure the deployment:
 
 ```yaml title="fleet.yaml"
 namespace: fleet-helm-example
@@ -164,7 +164,7 @@ The examples below will deploy a multi git repo to multiple clusters at once and
 
 An example using Helm. We are deploying the <a href="https://github.com/rancher/fleet-examples/tree/master/multi-cluster/helm">helm example</a> and customizing it per target cluster
 
-The repository contains a helm chart and an optional `fleet.yaml` to configure the deployment. The `fleet.yaml` is used to configure different deployment options, depending on the cluster's labels:
+The repository contains a helm chart and a `fleet.yaml` to configure the deployment. The `fleet.yaml` is used to configure different deployment options, depending on the cluster's labels:
 
 ```yaml title="fleet.yaml"
 namespace: fleet-mc-helm-example
