@@ -114,6 +114,42 @@ Available in Rancher v2.6.3 (Fleet v0.3.8), the ability to enable debug logging 
 - Select **Apps & Marketplace**, then **Installed Apps** from the dropdown
 - From there, you will upgrade the Fleet chart with the value `debug=true`. You can also set `debugLevel=5` if desired.
 
+#### Via Fleet Install Options
+
+You can create a config map `rancher-config` in the `cattle-system` namespace with [Fleet Installation Options](./ref-configuration#configure-fleet-install-options-in-rancher).
+
+For example, to enable debug logging for `fleet-controller` and `fleet-agent`, you can create a config map with the following content:
+
+```yaml
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: rancher-config
+  namespace: cattle-system
+data:
+  fleet: |
+    debug: true
+    debugLevel: 1
+    propagateDebugSettingsToAgents: true
+```
+
+Modifying the config will re-install Fleet and re-deploy the agents.
+
+### Record Resource Changes Over Time
+
+Sometimes it is useful to record the changes of a resource over time. You can do this by watching the resource and saving the output to files.
+
+```bash
+for kind in gitrepos.fleet.cattle.io bundles.fleet.cattle.io bundledeployments.fleet.cattle.io; do
+  {
+    kubectl get -A --show-managed-fields -w --output-watch-events -o yaml $kind > $kind-watch.yaml &
+    pid=$!
+    sleep 60
+    kill $pid
+  } &
+done ; wait
+```
+
 ## **Additional Solutions for Other Fleet Issues**
 
 ### Naming conventions for CRDs
