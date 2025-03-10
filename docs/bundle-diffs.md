@@ -1,11 +1,13 @@
 # Generating Diffs to Ignore Modified GitRepos
 
 
-Continuous Delivery in Rancher is powered by fleet. When a user adds a GitRepo CR, then Continuous Delivery creates the associated fleet bundles.
+Continuous Delivery in Rancher is powered by Fleet. When a user adds a GitRepo CR, then Continuous Delivery creates the associated fleet bundles.
 
 You can access these bundles by navigating to the Cluster Explorer (Dashboard UI), and selecting the `Bundles` section.
 
-The bundled charts may have some objects that are amended at runtime, for example in ValidatingWebhookConfiguration the `caBundle` is empty and the CA cert is injected by the cluster.
+The bundled charts may have some objects that are amended at runtime, for example:
+* in a ValidatingWebhookConfiguration, the `caBundle` is empty and the CA cert is injected by the cluster.
+* an installed chart may create a job, which is then deleted once completed
 
 This leads the status of the bundle and associated GitRepo to be reported as "Modified"
 
@@ -16,16 +18,20 @@ Associated Bundle
 
 Fleet bundles support the ability to specify a custom [jsonPointer patch](http://jsonpatch.com/).
 
-With the patch, users can instruct fleet to ignore object modifications.
+With the patch, users can instruct fleet to ignore:
+* object modifications
+* entire objects
 
-## Simple Example
+## Ignoring object modifications
+
+### Simple Example
 
 In this simple example, we create a Service and ConfigMap that we apply a bundle diff onto.
 
 https://github.com/rancher/fleet-test-data/tree/master/bundle-diffs
 
 
-## Gatekeeper Example
+### Gatekeeper Example
 
 In this example, we are trying to deploy opa-gatekeeper using Continuous Delivery to our clusters.
 
@@ -62,7 +68,7 @@ Based on this summary, there are three objects which need to be patched.
 
 We will look at these one at a time.
 
-### 1. ValidatingWebhookConfiguration:
+#### 1. ValidatingWebhookConfiguration:
 The gatekeeper-validating-webhook-configuration validating webhook has two ValidatingWebhooks in its spec.
 
 In cases where more than one element in the field requires a patch, that patch will refer these to as `$setElementOrder/ELEMENTNAME`
@@ -155,7 +161,7 @@ Based on this information, our diff patch would look as follows:
     - {"op": "remove", "path":"/webhooks/1/rules"}
 ```
 
-### 2. Deployment gatekeeper-controller-manager:
+#### 2. Deployment gatekeeper-controller-manager:
 The gatekeeper-controller-manager deployment is modified since there are cpu limits and tolerations applied (which are not in the actual bundle).
 
 ```
@@ -198,7 +204,7 @@ Based on this information, our diff patch would look as follows:
     - {"op": "remove", "path": "/spec/template/spec/tolerations"}
 ```
 
-### 3. Deployment gatekeeper-audit:
+#### 3. Deployment gatekeeper-audit:
 The gatekeeper-audit deployment is modified in a similarly, to the gatekeeper-controller-manager, with additional cpu limits and tolerations applied.
 
 ```
@@ -241,7 +247,7 @@ Based on this information, our diff patch would look as follows:
     - {"op": "remove", "path": "/spec/template/spec/tolerations"}
 ```
 
-### Combining It All Together
+#### Combining It All Together
 We can now combine all these patches as follows:
 
 ```yaml
@@ -274,3 +280,39 @@ diff:
 We can add these now to the bundle directly to test and also commit the same to the `fleet.yaml` in your GitRepo.
 
 Once these are added, the GitRepo should deploy and be in "Active" status.
+
+
+## Ignoring entire objects
+
+When installing a chart such as [Consul](https://developer.hashicorp.com/consul/docs/k8s/helm), a job named
+`consul-server-acl-init` is created, then deleted once it has successfully completed.
+
+That chart can be installed by creating a `GitRepo` pointing to a git repository using a `fleet.yaml` such as:
+```yaml
+defaultNamespace: consul
+helm:
+  releaseName: test-consul
+  chart: "consul"
+  repo: "https://helm.releases.hashicorp.com"
+
+  values:
+    global:
+      name: consul
+      acls:
+        manageSystemACLs: true
+```
+
+Installing this chart will result in the `GitRepo` reporting a `Modified` status, with job `consul-server-acl-init`
+missing, once that job has completed.
+
+This can be remedied with the following bundle diff in our `fleet.yaml`:
+```yaml
+diff:
+  comparePatches:
+  - apiVersion: batch/v1
+    kind: Job
+    namespace: consul
+    name: consul-server-acl-init
+    operations:
+    - {"op":"ignore"}
+```
