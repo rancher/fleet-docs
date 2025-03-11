@@ -84,4 +84,8 @@ NAME       READY   UP-TO-DATE   AVAILABLE   AGE
 frontend   3/3     3            3           116m
 ```
 
-Enjoy and read the [docs](https://fleet.rancher.io/).
+## Next steps
+
+Do you need to...
+* Monitor private git or Helm repositories? Check [this](./gitrepo-add.md).
+* Customise your deployments per target cluster? [This page](./gitrepo-targets.md) will help.
