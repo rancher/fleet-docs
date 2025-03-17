@@ -132,6 +132,10 @@ spec:
   #
   # serviceAccount: moreSecureAccountThanClusterAdmin
 
+  # DeleteNamespace specifies if the namespace created 
+  # must be deleted after deleting the GitRepo.
+  # deleteNamespace: false
+
   # Target clusters to deploy to if running Fleet in a multi-cluster
   # style. Refer to the "Mapping to Downstream Clusters" docs for
   # more information.
