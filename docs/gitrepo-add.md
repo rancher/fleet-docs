@@ -135,7 +135,7 @@ Note that if secrets specifying CA bundles exist, for instance if Fleet is insta
 [this](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/resources/add-tls-secrets#using-a-private-ca-signed-certificate)
 and
 [that](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-references/helm-chart-options#additional-trusted-cas)),
-Fleet will use those CA bundles if no CA bundle is specified on in the `GitRepo`.
+Fleet will use those CA bundles if no CA bundle is specified in the `GitRepo`.
 :::
 
 ## Using Private Helm Repositories
