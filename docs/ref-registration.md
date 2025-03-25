@@ -98,7 +98,7 @@ override the configured values.
 
 ## Fleet Cluster Registration in Rancher
 
-Rancher installs the fleet helm chart. The API server URL and CA are [derived from Rancher's settings](https://github.com/rancher/rancher/blob/release/v2.9/pkg/controllers/dashboard/fleetcharts/controller.go#L111-L112).
+Rancher installs the fleet helm chart. The API server URL and CA are [derived from Rancher's settings](https://github.com/rancher/rancher/blob/main/pkg/controllers/dashboard/fleetcharts/controller.go#L113-L114).
 
 Fleet will pass these values to a Fleet agent, so it can connect back to the Fleet controller.
 

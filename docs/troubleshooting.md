@@ -129,7 +129,7 @@ Available in Rancher v2.6.3 (Fleet v0.3.8), the ability to enable debug logging 
 When testing Fleet with private git repositories, you will notice that HTTP secrets are no longer supported in Github. To work around this issue, follow these steps:
 
 1. Create a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) in Github.
-1. In Rancher, create an HTTP [secret](https://rancher.com/docs/rancher/v2.6/en/k8s-in-rancher/secrets/) with your Github username.
+1. In Rancher, create an HTTP [secret](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/kubernetes-resources-setup/secrets) with your Github username.
 1. Use your token as the secret.
 
 ### Fleet fails with bad response code: 403
@@ -239,7 +239,7 @@ You will need to re-import and restart the registration process: Select **Cluste
 :::caution
 
 __WaitCheckIn status for Rancher v2.5__:
-The cluster will show in `WaitCheckIn` status because the `fleet-controller` is attempting to communicate with Fleet using the Rancher service IP. However, Fleet must communicate directly with Rancher via the Kubernetes service DNS using service discovery, not through the proxy. For more, see the [Rancher docs](https://rancher.com/docs/rancher/v2.5/en/installation/other-installation-methods/behind-proxy/install-rancher/#install-rancher).
+The cluster will show in `WaitCheckIn` status because the `fleet-controller` is attempting to communicate with Fleet using the Rancher service IP. However, Fleet must communicate directly with Rancher via the Kubernetes service DNS using service discovery, not through the proxy. For more, see the [Rancher docs](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/other-installation-methods/rancher-behind-an-http-proxy).
 
 :::
 
