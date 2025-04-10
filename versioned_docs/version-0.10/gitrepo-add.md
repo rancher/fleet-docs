@@ -84,19 +84,21 @@ The key has to be in PEM format.
 
 :::warning
 
-If you don't add one or more public keys into the secret, any server's public key will be trusted and added. (`ssh -o stricthostkeychecking=accept-new` will be used)
+If you don't add one or more public keys into the secret, any server's public key will be trusted and added. (`ssh -o
+stricthostkeychecking=yes` will be used), unless you install Fleet with chart value `insecureSkipHostKeyChecks` set to
+`false`.
 
 :::
 
-Fleet supports putting `known_hosts` into ssh secret. Here is an example of how to add it:
+Fleet supports injecting `known_hosts` into an SSH secret. Here is an example of how to add it:
 
-Fetch the public key hash(take github as an example)
+Fetch the public key hash (taking Github as an example)
 
 ```text
 ssh-keyscan -H github.com
 ```
 
-And add it into secret:
+And add it into the secret:
 
 ```text
 apiVersion: v1
@@ -109,6 +111,40 @@ stringData:
   known_hosts: |-
     |1|YJr1VZoi6dM0oE+zkM0do3Z04TQ=|7MclCn1fLROZG+BgR4m1r8TLwWc= ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
 ```
+
+#### Strict host key checks
+
+Chart value `insecureSkipHostKeyChecks` defines how Fleet behaves with regards to `known_hosts` when establishing SSH
+connections.
+
+When that value is set to `false`, Fleet will enforce strict host key checks, meaning that it will fail to establish any
+SSH connections to hosts for which no matching `known_hosts` entry can be found.
+
+`known_hosts` entries are sourced in priority from secrets referenced in `GitRepo`s, e.g. `helmSecretName` for accessing
+Helm charts or `clientSecretName` for cloning git repositories.
+
+Note that this is compatible with Fleet looking for a `gitcredential` secret if no secret is referenced in the
+`GitRepo`.
+
+If no such secret exists, or no `known_hosts` entries are available in that secret, then Fleet uses its own
+`known-hosts` config map, newly created at installation time with static entries for the most widely used git providers.
+
+Host key fingerprints added to the config map are sourced, respectively:
+* from [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints) for
+Github
+* from [here](https://docs.gitlab.com/ee/user/gitlab_com/index.html#ssh-known_hosts-entries) for Gitlab
+* from [here](https://support.atlassian.com/bitbucket-cloud/docs/configure-ssh-and-two-step-verification/) for
+Bitbucket, which also provides a `curl` command to fetch them in `known_hosts`-friendly format: `curl
+https://bitbucket.org/site/ssh`
+* from [here](https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops)
+for Azure DevOps
+
+The absence of the config map, should no secret be available, is considered a symptom of an incomplete Fleet deployment,
+and reported as such.
+
+Fleet only uses a _single_ source of `known_hosts` entries at a time. This means that, even if a secret contains invalid
+(or insufficient) entries, then Fleet will not look for valid entries in the config map. This applies to a secret
+referenced in a `GitRepo` as well as to a possible `gitcredential` secret, if no secret is referenced in the `GitRepo`.
 
 ### Using HTTP Auth
 
