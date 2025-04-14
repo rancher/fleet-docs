@@ -82,6 +82,20 @@ fleet-controller-64f49d756b-n57wq   1/1     Running   0          3m21s
 
 You can now [register some git repos](./gitrepo-add.md) in the `fleet-local` namespace to start deploying Kubernetes resources.
 
+## Tweaking your Fleet install
+
+### Controller and agent replicas
+
+Starting with v0.13, Fleet charts expose new Helm values setting replica counts for each type of controller and the
+agent:
+* `controller.replicas` for the `fleet-controller` deployment reconciling bundles, bundle deployments, clusters and
+cluster groups
+* `gitjob.replicas` for the gitOps controller reconciling `GitRepo` resources
+* `helmops.replicas` for the experimental HelmOps controller
+* `agent.replicas` for the agent.
+
+Each of them defaults to 1.
+
 ## Multi-controller install: sharding
 
 ### Deployment
