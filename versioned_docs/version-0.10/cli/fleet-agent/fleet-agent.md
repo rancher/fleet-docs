@@ -28,6 +28,6 @@ fleet-agent [flags]
 
 ### SEE ALSO
 
-* [fleet-agent clusterstatus](./fleet-agent_clusterstatus)	 - Continuously report resource status to the upstream cluster
-* [fleet-agent register](./fleet-agent_register)	 - Register agent with an upstream cluster
+* [fleet-agent clusterstatus](./fleet-agent/fleet-agent_clusterstatus)	 - Continuously report resource status to the upstream cluster
+* [fleet-agent register](./fleet-agent/fleet-agent_register)	 - Register agent with an upstream cluster
 
