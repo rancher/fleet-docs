@@ -79,7 +79,9 @@ If you configured the webhook the polling interval will be automatically adjuste
 
 :::
 
-### 3. (Optional) Configure webhook secret. The secret is for validating webhook payload. Make sure to put it in a k8s secret called `gitjob-webhook` in `cattle-fleet-system`.
+### 3. (Optional) Configure a webhook secret. 
+The secret is for validating the webhook payload.
+The secret must contain the designated key for the desired provider. The list of providers with their corresponding keys is as follows.
 
 | Provider        | K8s Secret Key     |
 |-----------------|--------------------|
@@ -90,6 +92,11 @@ If you configured the webhook the polling interval will be automatically adjuste
 | Gogs            | `gogs`             |
 | Azure DevOps    | `azure-username`   |
 | Azure DevOps    | `azure-password`   |
+
+#### Option 1: Configure a cluster secret.  
+In this case, the secret is unique per cluster, and all GitRepos will use the same one. The user does not need to reference it at all; when a payload is received for a specific provider, the system checks if the global secret exists, and if so, whether the key for that provider also exists. If the key is present, the secret will be used to validate the payload.
+
+Make sure to put it in a k8s secret called `gitjob-webhook` in `cattle-fleet-system`.
 
 For example, to create a secret containing a GitHub secret to validate the webhook payload, run:
 
@@ -103,5 +110,24 @@ For Azure DevOps:
 ```shell
 kubectl create secret generic gitjob-webhook -n cattle-fleet-system --from-literal=azure-username=user --from-literal=azure-password=pass123
 ```
+
+#### Option 2. Define a secret for each GitRepo.
+Alternatively, you can define a Webhook secret for each GitRepo. The secret must be created in the same namespace as the GitRepo, with the desired name, and then you can reference it in the `webhookSecret` field in the GitRepo specification.
+
+Example:
+```yaml
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: simple
+  namespace: fleet-local
+spec:
+  repo: "https://github.com/rancher/fleet-examples"
+  paths:
+  - simple
+  disablePolling: true
+  webhookSecret: webhook-secret-name
+```
+If both exist — the global secret for the cluster and a secret defined for the GitRepo — the latter will take precedence.
 
 ### 4. Go to your git provider and test the connection. You should get a HTTP response code.
