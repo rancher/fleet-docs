@@ -136,6 +136,18 @@ spec:
   # must be deleted after deleting the GitRepo.
   # deleteNamespace: false
 
+  # bundles specifies the used-driven bundle definitions
+  # With this way of defining Bundles, Fleet will simply load the specified resources 
+  # along with the options file (if defined), or it will attempt to find a 
+  # fleet.yaml file in the defined base.
+  # See [How Repos are scanned](https://fleet.rancher.io/gitrepo-content#how-repos-are-scanned)
+  # It is recommended to avoid using the following characters in the base and options paths: :,|?<>
+  # You can use any of those (or even more than one), but not all of them at once.
+  # bundles:
+  #   base: basedirectory/to/bundle/resources
+  #   options: path/to/fleet.yaml (optional)
+  #   base: basedirectory/to/bundle2
+
   # Target clusters to deploy to if running Fleet in a multi-cluster
   # style. Refer to the "Mapping to Downstream Clusters" docs for
   # more information.
