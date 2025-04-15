@@ -100,6 +100,11 @@ spec:
   # See [Using Webhooks Instead of Polling](https://fleet.rancher.io/webhook)
   # disablePolling: false
 
+  # When using a webhook, a secret can be defined per GitRepo to validate the received payload.
+  # webhookSecret is the name of the previously created secret for this purpose.
+  # See [Using Webhooks Instead of Polling](https://fleet.rancher.io/webhook)
+  # webhookSecret: webhook-secret-name
+
   # Paused  causes changes in Git to not be propagated down to the clusters but
   # instead mark resources as OutOfSync
   #
