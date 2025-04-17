@@ -51,6 +51,6 @@ git clone https://github.com/rancher/fleet-test-data
 cd fleet-test-data
 # for information about apply see https://fleet.rancher.io/bundle-add
 fleet apply -n fleet-local -o bundle.yaml testbundle simple-chart/
-fleet target --bundle-file bundle.yaml --list-inputs  > bd.yaml
+fleet target --bundle-file bundle.yaml --dump-input-list  > bd.yaml
 fleet deploy --input-file bd.yaml --dry-run
 ```
