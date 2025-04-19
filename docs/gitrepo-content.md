@@ -28,6 +28,82 @@ The following files are looked for to determine the how the resources will be de
 | ** *.yaml ** | Any subpath | If a `Chart.yaml` or `kustomization.yaml` is not found then any `.yaml` or `.yml` file will be assumed to be a Kubernetes resource and will be deployed. |
 | **overlays/{name}** | / relative to `path` | When deploying using raw YAML (not Kustomize or Helm) `overlays` is a special directory for customizations. |
 
+### Alternative scan, explicitly defined by the user
+In addition to the previously described method, Fleet also supports a more direct, user-driven approach for defining Bundles.
+
+In this mode, Fleet will load all resources found within the specified base directory. It will only attempt to locate a `fleet.yaml` file at the root of that directory if an options file is not explicitly provided.
+
+#### Example File Structure
+```
+driven
+     |___helm
+     |      |__ fleet.yaml
+     |
+     |___simple
+     |      |__ configmap.yaml
+     |      |__ service.yaml
+     |
+     |___kustomize
+            |__ base
+            |      |__ kustomization.yaml
+            |      |__ secret.yaml
+            |
+            |__ overlays
+            |         |__ dev
+            |         |     |__ kustomization.yaml
+            |         |     |__ secret.yaml
+            |         |__ prod
+            |         |     |__ kustomization.yaml
+            |         |     |__ secret.yaml
+            |         |__ test
+            |               |__ kustomization.yaml
+            |               |__ secret.yaml
+            |__ dev.yaml
+            |__ prod.yaml
+            |__ test.yaml
+```
+#### Corresponding GitRepo Definition
+```
+kind: GitRepo
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: driven
+  namespace: fleet-local
+spec:
+  repo: https://github.com/0xavi0/fleet-test-data
+  branch: driven-scan-example
+  bundles:
+  - path: driven/helm
+  - path: driven/simple
+  - path: driven/kustomize
+    options: dev.yaml
+  - path: driven/kustomize
+    options: test.yaml
+```
+
+In the example above, the user explicitly defines four Bundles to be generated.
+
+* In the first case, the base directory is specified as `driven/helm`. As shown in the directory structure, this path contains a `fleet.yaml` file, which will be used to configure the Bundle.
+
+* In the second case, the base directory is `driven/simple`, which contains only Kubernetes resource manifests (`configmap.yaml` and `service.yaml`). Since no `fleet.yaml` or options file is specified, Fleet will generate a Bundle using the default behavior—simply packaging all resources found within the directory.
+
+* The third and fourth cases both reference the same base directory: `driven/kustomize`. However, each specifies a different options file (`dev.yaml` and `test.yaml`, respectively). These options files define overlay-specific configuration for each environment (e.g., dev, test) by selecting the appropriate kustomize overlay subdirectories and applying them on top of the shared base.
+Fleet will process these as distinct Bundles, even though they originate from the same base path, because the provided options files point to different configurations.
+
+
+An example of the files used in the third and fourth Bundles would be the following: (These files follow the exact same format as `fleet.yaml`, but since we can now reference them by name, we can use one that best suits our needs)
+```yaml
+namespace: kustomize-dev
+kustomize:
+  dir: "overlays/dev"
+```
+It is important to note that any path defined in these files must be relative to the base directory used when the Bundle was described.
+
+With this new way of defining Bundles, Fleet becomes much more direct and also simplifies the adoption of deployments using kustomize.
+In the example, we can see a complete kustomize use case where for each Bundle, we can specify which version we want.
+
+With the previous scanning option, Fleet cannot determine which YAML we want to use to configure the Bundle, so it attempts to find it on its own (Which, at times, does not provide enough flexibility.)
+
 ### Excluding files and directories from bundles
 
 Fleet supports file and directory exclusion by means of `.fleetignore` files, in a similar fashion to how `.gitignore`
