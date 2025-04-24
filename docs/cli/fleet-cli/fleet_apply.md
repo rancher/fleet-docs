@@ -48,9 +48,9 @@ fleet apply [flags] BUNDLE_NAME PATH...
       --username string                        Basic auth username for helm repo
       --driven-scan                            Use driven scan. Bundles are defined by the user.
                                                Paths will be defined by the tuple <base, options> separated by a separator.
-                                               The default separator is the character :. If you need to use a different one, 
+                                               The default separator is the character ':'. If you need to use a different one, 
                                                use the --driven-scan-sep flag.
-      --driven-scan-sep                        Separator used for user-driven bundle generation paths. (default: :)
+      --driven-scan-sep                        Separator used for user-driven bundle generation paths. (default: ':')
 ```
 
 ### SEE ALSO

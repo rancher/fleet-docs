@@ -136,7 +136,7 @@ spec:
   # must be deleted after deleting the GitRepo.
   # deleteNamespace: false
 
-  # bundles specifies the used-driven bundle definitions
+  # bundles specifies the user-driven bundle definitions
   # With this way of defining Bundles, Fleet will simply load the specified resources 
   # along with the options file (if defined), or it will attempt to find a 
   # fleet.yaml file in the defined base.

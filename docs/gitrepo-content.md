@@ -32,6 +32,7 @@ The following files are looked for to determine the how the resources will be de
 In addition to the previously described method, Fleet also supports a more direct, user-driven approach for defining Bundles.
 
 In this mode, Fleet will load all resources found within the specified base directory. It will only attempt to locate a `fleet.yaml` file at the root of that directory if an options file is not explicitly provided.
+Unlike the traditional scanning method, this one is not recursive and does not attempt to find Bundle definitions other than those explicitly specified by the user.
 
 #### Example File Structure
 ```
@@ -73,11 +74,11 @@ spec:
   repo: https://github.com/0xavi0/fleet-test-data
   branch: driven-scan-example
   bundles:
-  - path: driven/helm
-  - path: driven/simple
-  - path: driven/kustomize
+  - base: driven/helm
+  - base: driven/simple
+  - base: driven/kustomize
     options: dev.yaml
-  - path: driven/kustomize
+  - base: driven/kustomize
     options: test.yaml
 ```
 
@@ -98,6 +99,30 @@ kustomize:
   dir: "overlays/dev"
 ```
 It is important to note that any path defined in these files must be relative to the base directory used when the Bundle was described.
+
+For example, with the previously mentioned structure, we are defining the base directory as `driven/kustomize`. That is the directory we need to use as the root for the paths used in Kustomize files.
+
+We could decide to place the `dev.yaml` file at the path `driven/kustomize/overlays/dev` (this is supported), and then define the Bundle as:
+```yaml
+bundles:
+    - base: driven/kustomize
+      options: overlays/dev/dev.yaml
+```
+However, the path defined within `dev.yaml` should still be relative to `driven/kustomize`.
+This is because when Fleet reads the options files, it always uses the base directory as the root.
+
+In other words, with the previous example... this would be incorrect:
+```yaml
+namespace: kustomize-dev
+kustomize:
+  dir: "."
+```
+And the correct definition should still be:
+```yaml
+namespace: kustomize-dev
+kustomize:
+  dir: "overlays/dev"
+```
 
 With this new way of defining Bundles, Fleet becomes much more direct and also simplifies the adoption of deployments using kustomize.
 In the example, we can see a complete kustomize use case where for each Bundle, we can specify which version we want.
