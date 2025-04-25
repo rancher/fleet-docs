@@ -42,7 +42,15 @@ fleet apply [flags] BUNDLE_NAME PATH...
       --username string                        Basic auth username for helm repo
 ```
 
+### Good to know
+
+`fleet apply` now reads known_hosts data from an environment variable (`FLEET_KNOWN_HOSTS`), similarly to what the git
+cloner does.
+
+This means that, should you want to run `fleet apply` directly on your host machine, providing it a custom
+value of `KNOWN_HOSTS`, you will need to export `FLEET_KNOWN_HOSTS` beforehand or run it as
+`FLEET_KNOWN_HOSTS=<your_entries> fleet apply <args>`.
+
 ### SEE ALSO
 
-* [fleet](./fleet)	 - 
-
+* [fleet](./fleet)
