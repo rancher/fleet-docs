@@ -1,6 +1,7 @@
 # Mapping to Downstream Clusters
 
-[Fleet in Rancher](https://rancher.com/docs/rancher/v2.6/en/deploy-across-clusters/fleet/) allows users to manage clusters easily as if they were one cluster. Users can deploy bundles, which can be comprised of deployment manifests or any other Kubernetes resource, across clusters using grouping configuration.
+[Fleet in Rancher](https://ranchermanager.docs.rancher.com/integrations-in-rancher/fleet) allows users to manage clusters easily as if they were one cluster.
+Users can deploy bundles, which can be comprised of deployment manifests or any other Kubernetes resource, across clusters using grouping configuration.
 
 :::info
 
