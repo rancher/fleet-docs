@@ -371,6 +371,8 @@ The reference to the chart can be either:
 - a [go-getter URL](https://github.com/hashicorp/go-getter?tab=readme-ov-file#url-format),
   specified by `chart`. This can be used to download a tarball
   of the chart. go-getter also allows to download a chart from a Git repo.
+- OCI chart URL, specified by `chart`. This can be used to download a chart
+  directly from a OCI server. It uses the Helm SDK to download the chart.
 - a Helm repository, specified by `repo` and optionally `version`.
 - an OCI Helm repository, specified by `repo` and optionally `version`.
 
