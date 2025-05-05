@@ -1,5 +1,7 @@
 # Settings used by the docusaurus/versioning and docusaurus/releasepost Updatecli policy
 # to identify which Docusaurus Git repository to update.
+automerge: true
+
 scm:
   enabled: true
   default:
