@@ -12,7 +12,7 @@ policies:
       - updatecli/values.d/scm.yaml
       - updatecli/values.d/fleet.yaml
   - name: Handle releasepost
-    policy: ghcr.io/olblak/rancherlabs-policies/docusaurus/releasepost:0.5.0@sha256:eb7dfb40dcb3a779cac44c1d2279f7fdf32310fa9edfb5f85b4ad03c855be184
+    policy: ghcr.io/olblak/rancherlabs-policies/docusaurus/releasepost:0.5.1@sha256:5190f9af490d5e7f6c16bb50048c43fc8c3c8e144814a5ef684b8b05c2c4b780
     values:
       - updatecli/values.d/scm.yaml
       - updatecli/values.d/fleet.yaml
