@@ -101,6 +101,10 @@
                 },
                 {
                   "type": "doc",
+                  "id": "cli/fleet-cli/fleet_cleanup"
+                },
+                {
+                  "type": "doc",
                   "id": "cli/fleet-cli/fleet_test"
                 }
               ]
