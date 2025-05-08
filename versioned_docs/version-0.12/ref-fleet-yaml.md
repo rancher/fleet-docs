@@ -12,6 +12,8 @@ which contains the [BundleSpec](./ref-crds#bundlespec).
 
 ### Reference
 
+<details><summary>Full YAML reference</summary>
+
 ```yaml title="fleet.yaml"
 # The default namespace to be applied to resources. This field is not used to
 # enforce or lock down the deployment to a specific namespace, but instead
@@ -50,23 +52,8 @@ kustomize:
 helm:
 
   # These options control how "fleet apply" downloads the chart
+  # (See `Helm Options` below for more details)
   #
-  # Use a custom location for the Helm chart. This can refer to any go-getter
-  # URL or OCI registry based helm chart URL e.g.
-  # "oci://ghcr.io/fleetrepoci/guestbook".  This allows one to download charts
-  # from most any location.  Also know that go-getter URL supports adding a
-  # digest to validate the download. If repo is set below this field is the name
-  # of the chart to lookup.
-  #
-  # It is possible to download the chart from a Git repository, e.g.  by using
-  # `git@github.com:rancher/fleet-examples//single-cluster/helm`. If a secret
-  # for the SSH key was defined in the GitRepo via `helmSecretName`, it will be
-  # injected into the chart URL.
-  #
-  # Git repositories can be downloaded via unauthenticated http, by using for
-  # example:
-  #
-  # `git::http://github.com/rancher/fleet-examples/single-cluster/helm`.
   chart: ./chart
 
   # A https URL to a Helm repo to download the chart from. It's typically easier
@@ -76,16 +63,8 @@ helm:
   repo: https://charts.rancher.io
 
   # The version of the chart or semver constraint of the chart to find. If a
-  # constraint is specified it is evaluated each time git changes.
-  #
-  # The version also determines which chart to download from OCI registries.
-  # Note: OCI registries don't support the '+' character, which is supported by
-  # semver.  When pushing a helm chart with a tag containing the '+' character
-  # helm automatically replaces '+' to '_' before uploading it.
-  #
-  # You should use the version with the '+' in this file, as the '_' character
-  # is not supported by semver and Fleet also replaces '+' to '_' when accessing
-  # the OCI registry.
+  # constraint is specified, it is evaluated each time git changes.
+  # (See `Helm Options` below for more details)
   version: 0.1.0
 
   # By default fleet downloads any dependency found in a helm chart.  Use
@@ -338,7 +317,47 @@ overrideTargets:
         env: dev
 ```
 
+</details>
+
 ### Helm Options
+
+#### Main options
+
+##### chart
+
+This specifies a custom location for the Helm chart. This can refer to any go-getter URL or OCI registry based Helm
+chart URL, e.g. `oci://ghcr.io/fleetrepoci/guestbook`.
+This allows one to download charts from many different locations. go-getter URLs support adding a digest to validate the
+download. If the `repo` field is set, this field is the name of the chart to lookup.
+
+It is possible to download the chart from a Git repository, e.g. by using
+`git@github.com:rancher/fleet-examples//single-cluster/helm`. If a secret for the SSH key was defined in the GitRepo via
+`helmSecretName`, it will be injected into the chart URL.
+
+:::warning Limitation: downloading Helm charts from git with custom CA bundles
+
+Git repositories can be downloaded via unauthenticated http, by using for example:
+`git::http://github.com/rancher/fleet-examples/single-cluster/helm`.
+
+However, this does not work with custom CA bundles at this point: if a CA bundle is configured in a secret referenced in
+`helmSecretName`, will not be used, which will result in the git job displaying errors such as `SSL certificate problem:
+unable to get local issuer certificate` when running `fleet apply` to generate a bundle.
+
+See [fleet#3646](https://github.com/rancher/fleet/issues/3646) for more details.
+
+:::warning
+
+##### version
+
+The version also determines which chart to download from OCI registries.
+
+:::note `+` character support
+OCI registries don't support the `+` character, which is supported by semver.  When pushing a Helm chart with a tag
+containing the `+` character, Helm automatically replaces `+` with '_' before uploading it.
+
+You should use the version with the `+` in `fleet.yaml`, as the `_` character is not supported by semver and Fleet also
+replaces `+` with `_` when accessing the OCI registry.
+:::note
 
 #### How fleet-agent deploys the bundle
 
