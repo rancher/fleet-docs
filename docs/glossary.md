@@ -19,15 +19,31 @@ See [this definition](https://helm.sh/docs/topics/charts/) of a Helm chart.
 A cluster refers to:
 * a [Kubernetes cluster](https://kubernetes.io/docs/concepts/architecture/) managed by Fleet
 * a `Cluster` [resource](https://github.com/rancher/fleet/blob/main/pkg/apis/fleet.cattle.io/v1alpha1/cluster_types.go#L59) in Fleet's API, which Fleet uses to manage that Kubernetes cluster
+
 ## Continuous Delivery
+
+Continuous delivery refers to the idea of enabling software to be produced in shorter cycles, with smaller increments
+going through testing and being released. It does not necessarily take deployment into account.
+
+Fleet rather falls under the Continuous _Deployment_ definition, as it focuses on actually deploying software
+frequently.
+
 ## Custom Resource
 
 See [this official definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/).
 In short, a custom resource is a resource defined for the purposes of an application (in our case Fleet), to extend the set of resources supported by the Kubernetes API (pods, deployments, services, etc).
+
 ## Custom Resource Definition
 
 See [this explanation](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions) from the Kubernetes docs.
+
 ## Deployment
+
+A deployment may refer to:
+* a [Kubernetes deployment](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/deployment-v1/),
+whether part of a user workload or part of Fleet itself, such as an agent deployment, controller deployments.
+* the action of deploying a user workload, which means Fleet reading configuration (`GitRepo`, `fleet.yaml`, etc) and,
+as a result, creating resources on target clusters.
 
 ## Downstream Cluster
 
@@ -36,17 +52,29 @@ A downstream cluster is a Kubernetes cluster where user workloads will run, with
 ## fleet.yaml
 
 A `fleet.yaml` file lives in a git repository and stores options for a bundle and bundle deployments to be generated from that bundle. More information is available [here](https://fleet.rancher.io/ref-fleet-yaml).
+
 ## GitOps
+
+GitOps refers to git-triggered operations, where git is the source of truth and changes to a git repository lead to
+changes being applied to the state of one or more clusters.
+
 ## GitRepo
 
 A `GitRepo` is a Fleet-specific resource, to be used as an entry point to using Fleet.
 Creating a `GitRepo` pointing to a set of paths in a git repository enables Fleet to monitor those paths and deploy resources stored or referenced there.
+
 ## Label
+
+Refers to a [Kubernetes label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/).
 
 ## Multi-Cluster
 
 A multi-cluster setup involves more than one cluster: the upstream cluster, needed to manage deployment of workloads, and at least one downstream cluster.
+
 ## Namespace
+
+Refers to a [Kubernetes namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/).
+
 ## Reconcile
 
 Reconciling is used in the context of states in Kubernetes clusters. Reconciling a resource means updating it so that its _actual_ state matches its _expected_ state, be it from configuration, eg. from a git repository, chart, etc.
@@ -58,12 +86,27 @@ A resource's state may also depend on another resource, leading to additional re
 
 Cluster registration is the process of getting a Fleet agent, living in a downstream cluster, recognised by Fleet controllers in the upstream cluster.
 Once registration is complete for a downstream cluster, Fleet is able to deploy workloads to that cluster.
+
 ## Repository
+
+A repository may be:
+* a git repository, storing code, configuration or any kind of files and keeping track of changes made to those files
+through commits. Fleet can monitor a git repository for new commits pushed to a specific branch or revision, at one or
+more paths, through [GitRepo](./gitrepo-add.md) resources.
+* a Helm repository, hosting Helm charts and an index file referencing them. Fleet is able to install Helm charts and
+apply user-defined configuration to them.
+
 ## Resources
+
+This usually refers to Kubernetes resources, which may be:
+* core resources defined by Kubernetes itself, such as config maps, deployments, pods, services, etc
+* custom resources defined by individual applications, such as Fleet itself, which defines GitRepo, Bundle,
+Bundledeployment and a few others.
 
 ## Target
 
 Fleet uses this word in the context of determining where a workload will run. This represents a _destination_ cluster for a workload.
+
 ## Upstream Cluster
 
 A Kubernetes cluster where Fleet controllers run. This is the cluster where `GitRepo`s, bundles and bundle deployments are created.
@@ -74,4 +117,3 @@ Also called _management_ cluster.
 A workload represents what users want to deploy through Fleet. It may be a set of Helm charts, Kubernetes manifests, kustomize, etc, stored or referenced in a git repository.
 
 When a user creates a `GitRepo` resource pointing to that git repository, and subsequently when relevant changes are found in that repository, Fleet deploys workloads.
-## Workspace
