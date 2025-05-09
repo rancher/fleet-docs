@@ -6,9 +6,15 @@ Enabling/disabling experimental features is done using extra environment variabl
 
 See also "[Configure Fleet Install Options in Rancher](./ref-configuration#configure-fleet-install-options-in-rancher)".
 
-## Enabling an experimental feature
+## Available experimental features
 
-At the moment we're writing this document, Fleet has OCI storage as an experimental feature.
+Right now Fleet supports the following experimental features:
+
+Fleet currently supports the following experimental features:
+* OCI storage: [`EXPERIMENTAL_OCI_STORAGE`](./oci-storage.md)
+* HelmOps: [`EXPERIMENTAL_HELM_OPS`](./helm-ops.md)
+
+## Enabling an experimental feature
 
 ### Enabling when installing Fleet stand-alone
 
@@ -31,9 +37,3 @@ The parameters are the same, but you have to add the `fleet.` prefix.
 --set-string fleet.extraEnv[0].name=EXPERIMENTAL_OCI_STORAGE \
 --set-string fleet.extraEnv[0].value=true \
 ```
-
-## Available experimental features
-
-Right now Fleet supports the following experimental features:
-
-* [`EXPERIMENTAL_OCI_STORAGE`](./oci-storage.md)
