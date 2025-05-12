@@ -20,13 +20,14 @@ A cluster refers to:
 * a [Kubernetes cluster](https://kubernetes.io/docs/concepts/architecture/) managed by Fleet
 * a `Cluster` [resource](https://github.com/rancher/fleet/blob/main/pkg/apis/fleet.cattle.io/v1alpha1/cluster_types.go#L59) in Fleet's API, which Fleet uses to manage that Kubernetes cluster
 
-## Continuous Delivery
+## Continuous Delivery/Deployment
 
-Continuous delivery refers to the idea of enabling software to be produced in shorter cycles, with smaller increments
-going through testing and being released. It does not necessarily take deployment into account.
+Definitions and distinctions between Continuous _Delivery_ and Continuous _Deployment_ greatly vary, for instance
+depending on:
+* whether the deployment step is included in the process, and to which environment: production or other?
+* what triggers a deployment: is it a manual or automated step?
 
-Fleet rather falls under the Continuous _Deployment_ definition, as it focuses on actually deploying software
-frequently.
+This much is clear, though: Fleet's goal is to make it easier to automate deployments.
 
 ## Custom Resource
 
