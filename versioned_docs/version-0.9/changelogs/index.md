@@ -3,7 +3,9 @@ title: "0.9 Changelogs"
 ---
 
 
-* [v0.9.17](changelogs/v0.9.17.md) (latest)
+* [v0.9.18](changelogs/v0.9.18.md) (latest)
+
+* [v0.9.17](changelogs/v0.9.17.md) 
 
 * [v0.9.16](changelogs/v0.9.16.md) 
 
