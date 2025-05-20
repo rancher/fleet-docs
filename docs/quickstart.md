@@ -5,17 +5,16 @@ import TabItem from '@theme/TabItem';
 
 # Quick Start
 
-![](/img/single-cluster.png)
-
-Who needs documentation, lets just run this thing!
+![Image displaying the flow of single cluster with Fleet](/img/single-cluster.png)
 
 ## Install
 
- Fleet is distributed as a Helm chart. Helm 3 is a CLI, has no server side component, and its use is
-  fairly straightforward. To install the Helm 3 CLI follow the <a href="https://helm.sh/docs/intro/install">official install instructions</a>.
+Fleet is distributed as a Helm chart. Helm 3 is a CLI, has no server side component, and its use is
+fairly straightforward. To install the Helm 3 CLI follow the <a href="https://helm.sh/docs/intro/install">official install instructions</a>.
 
+Fleet enables continuous delivery of Kubernetes workloads across multiple clusters using a GitOps model. In this guide, you would be deploying a basic NGINX Pod using fleet.yaml .
 
-:::caution Fleet in Rancher
+:::caution 
 Rancher has separate helm charts for Fleet and uses a different repository.
 :::
 
@@ -43,46 +42,142 @@ Install the Fleet Helm charts (there's two because we separate out CRDs for ulti
     fleet/fleet`}
 </CodeBlock>
 
+To verify installation, run:
+
+`kubectl get pods -n cattle-fleet-system`
+
 ## Add a Git Repo to Watch
 
-Change `spec.repo` to your git repo of choice.  Kubernetes manifest files that should
-be deployed should be in `/manifests` in your repo.
+Specify the Git repositories containing your deployment manifests or Helm charts. For hello world, example you need:
+* deployment.yaml for defining workload
+* fleet.yaml for how should fleet control  the deployment
+* Gitrepo.yaml for where to find your git repo, which branch and sub-path to monitor.
+  * (optionally) You can also add credentials
 
-```bash
-cat > example.yaml << "EOF"
+Structure your repository like this:
+
+![Screenshot displaying the file directory](/img/file-structure-sample-ss.png)
+
+**deployment.yaml**
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+```
+
+**fleet.yaml**
+```yaml
+defaultNamespace: hello-world
+targets:
+  - name: all-dev-clusters
+    clusterSelector:
+      matchLabels:
+        env: dev
+```
+Your fleet.yaml can use:
+* clusterSelector: target clusters by labels (e.g., env=dev)
+* targetCustomizations: override values or files per cluster.
+
+This gives fine-grained control over how workloads are rolled out. For more information, refer to [fleet-yaml](ref-fleet-yaml.md).
+
+**gitrepo.yaml**
+
+```yaml
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: sample
-  # This namespace is special and auto-wired to deploy to the local cluster
-  namespace: fleet-local
+  name: hello-world-repo
+  namespace: cattle-fleet-system
 spec:
-  # Everything from this repo will be run in this cluster. You trust me right?
-  repo: "https://github.com/rancher/fleet-examples"
+  repo: https://github.com/<your-org>/my-fleet-repo
+  branch: main
   paths:
-  - simple
-EOF
-
-kubectl apply -f example.yaml
+    - ./hello-world
+  # clientSecretName: my-ssh-key-secret ( optional: for private repos)
 ```
 
-## Get Status
+You can define a GitRepo in YAML, then apply it using kubectl.
 
-Get status of what fleet is doing
+`kubectl apply -f gitrepo.yaml`
 
-```shell
-kubectl -n fleet-local get fleet
+Fleet now watches that path for changes and automatically applies the manifests.
+
+To verify, you can either go to Rancher Desktop. Select **Continuous Delivery > Port Forwarding** to view deployment bundles.
+
+![Screenshot displaying the Rancher Desktop ](/img/rancher-gitrepos-ss.png)
+
+Or you can run the following command:
+
+```bash
+kubectl get gitrepos -n fleet-default
+kubectl get bundles -A
+```
+## Automating Deployments and Scaling
+
+As your Kubernetes environments grow, you can scale deployments across multiple clusters without increasing pipeline complexity. Use Fleet to automate deployments, apply region-specific configurations, and monitor deployments across environments.
+
+### Scale with Labels and Targeting
+
+To target specific clusters, apply labels such as `env=qa` or `region=eu` to your clusters. Use the `clusterSelector` and `targetCustomizations` fields in your `fleet.yaml` file to define which clusters receive which configurations.
+
+![Diagram displaying flow of target specific clusters](/img/Flow-clusterSelector-targetCustomizations.png)
+
+Fleet follows a GitOps mode, allowing you to track who made changes and when using your Git history. When you push changes to your Git repository:
+
+1. Fleet detects the change and evaluates `fleet.yaml` to determine which clusters to target.  
+1. It deploys the updated resources automatically.
+
+For example, consider you are deploying hello world to QA environments in Europe and the US. Your clusters are labeled as follows:
+
+| Cluster Name | Labels |
+| ----- | ----- |
+| `qa-eu-cluster` | `env=qa`, `region=eu` |
+| `qa-us-cluster` | `env=qa`, `region=us` |
+
+You define deployment logic in `fleet.yaml`:
+```yaml
+targets:
+  - name: qa-eu
+    clusterSelector:
+      matchLabels:
+        env: qa
+        region: eu
+    helm:
+      values:
+        image:
+          tag: 1.0.0-eu
+
+  - name: qa-us
+    clusterSelector:
+      matchLabels:
+        env: qa
+        region: us
+    helm:
+      values:
+        image:
+          tag: 1.0.0-us
+
 ```
 
-You should see something like this get created in your cluster.
+When you push to Git, Fleet:
 
-```
-kubectl get deploy frontend
-```
-```
-NAME       READY   UP-TO-DATE   AVAILABLE   AGE
-frontend   3/3     3            3           116m
-```
+* Deploys version `1.0.0-eu` to `qa-eu-cluster`  
+* Deploys version `1.0.0-us` to `qa-us-cluster`
 
 ## Next steps
 
