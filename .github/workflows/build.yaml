@@ -1,0 +1,25 @@
+---
+name: Build
+
+on:
+  pull_request:
+  push:
+  merge_group:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+
+      - name: Build website
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+
