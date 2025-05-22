@@ -59,5 +59,5 @@ kubectl delete ns -l "fleet.cattle.io/managed=true"
 Fleet in Rancher cannot be uninstalled, without uninstalling Rancher. However, the GitOps feature can be disabled.
 When disabled, the gitjob deployment is no longer deployed into the Rancher server’s local cluster, and continuous-delivery is not shown in the Rancher UI.
 
-More information can be found in the Rancher docs, e.g. https://documentation.suse.com/cloudnative/rancher-manager/latest/en/rancher-admin/experimental-features/continuous-delivery.html
+For more information, refer to [Continuous Delivery in Rancher](https://documentation.suse.com/cloudnative/rancher-manager/latest/en/rancher-admin/experimental-features/continuous-delivery.html)
 

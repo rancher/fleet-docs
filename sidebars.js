@@ -102,6 +102,7 @@ module.exports = {
       items:[
         'enableexperimental',
         'oci-storage',
+        'helm-ops',
       ],
     },
   ],

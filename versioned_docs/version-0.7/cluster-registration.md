@@ -170,7 +170,7 @@ spec:
   clientID: "really-random"
 ```
 
-Second, follow the [cluster registration token instructions]((#create-cluster-registration-tokens) to obtain the `values.yaml` file to be used.
+Second, follow the [cluster registration token instructions](#create-cluster-registration-tokens) to obtain the `values.yaml` file to be used.
 
 Third, setup your environment to use the client ID.
 
