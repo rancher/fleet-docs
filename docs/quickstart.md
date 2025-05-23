@@ -137,7 +137,7 @@ To target specific clusters, apply labels such as `env=qa` or `region=eu` to you
 
 ![Diagram displaying flow of target specific clusters](../static/img/Flow-clusterSelector-targetCustomizations.png)
 
-Fleet follows a GitOps mode, allowing you to track who made changes and when using your Git history. When you push changes to your Git repository:
+Fleet follows a GitOps model, allowing you to track who made changes and when using your Git history. When you push changes to your Git repository:
 
 1. Fleet detects the change and evaluates `fleet.yaml` to determine which clusters to target.  
 1. It deploys the updated resources automatically.
