@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 Fleet is distributed as a Helm chart. Helm 3 is a CLI, has no server side component, and its use is
 fairly straightforward. To install the Helm 3 CLI follow the <a href="https://helm.sh/docs/intro/install">official install instructions</a>.
 
-Fleet enables continuous delivery of Kubernetes workloads across multiple clusters using a GitOps model. In this guide, you would be deploying a basic NGINX Pod using fleet.yaml .
+Fleet enables continuous delivery of Kubernetes workloads across multiple clusters using a GitOps model. In this guide, you would be deploying a basic NGINX Pod using fleet.yaml.
 
 :::caution 
 Rancher has separate helm charts for Fleet and uses a different repository.
