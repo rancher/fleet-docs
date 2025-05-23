@@ -5,7 +5,7 @@ import TabItem from '@theme/TabItem';
 
 # Quick Start
 
-![Image displaying the flow of single cluster with Fleet](/img/single-cluster.png)
+![Image displaying the flow of single cluster with Fleet](../static/img/single-cluster.png)
 
 ## Install
 
@@ -56,7 +56,7 @@ Specify the Git repositories containing your deployment manifests or Helm charts
 
 Structure your repository like this:
 
-![Screenshot displaying the file directory](/img/file-structure-sample-ss.png)
+![Screenshot displaying the file directory](../static/img/file-structure-sample-ss.png)
 
 **deployment.yaml**
 
@@ -119,7 +119,7 @@ Fleet now watches that path for changes and automatically applies the manifests.
 
 To verify, you can either go to Rancher Desktop. Select **Continuous Delivery > Port Forwarding** to view deployment bundles.
 
-![Screenshot displaying the Rancher Desktop ](/img/rancher-gitrepos-ss.png)
+![Screenshot displaying the Rancher Desktop ](../static/img/rancher-gitrepos-ss.png)
 
 Or you can run the following command:
 
@@ -135,7 +135,7 @@ As your Kubernetes environments grow, you can scale deployments across multiple 
 
 To target specific clusters, apply labels such as `env=qa` or `region=eu` to your clusters. Use the `clusterSelector` and `targetCustomizations` fields in your `fleet.yaml` file to define which clusters receive which configurations.
 
-![Diagram displaying flow of target specific clusters](/img/Flow-clusterSelector-targetCustomizations.png)
+![Diagram displaying flow of target specific clusters](../static/img/Flow-clusterSelector-targetCustomizations.png)
 
 Fleet follows a GitOps mode, allowing you to track who made changes and when using your Git history. When you push changes to your Git repository:
 
