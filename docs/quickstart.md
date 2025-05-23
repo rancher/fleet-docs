@@ -108,7 +108,7 @@ spec:
   branch: main
   paths:
     - ./hello-world
-  # clientSecretName: my-ssh-key-secret ( optional: for private repos)
+  # clientSecretName: my-ssh-key-secret (optional: for private repos)
 ```
 
 You can define a GitRepo in YAML, then apply it using kubectl.
