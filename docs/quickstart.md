@@ -50,7 +50,7 @@ To verify installation, run:
 
 Specify the Git repositories containing your deployment manifests or Helm charts. For hello world, example you need:
 * deployment.yaml for defining workload
-* fleet.yaml for how should fleet control  the deployment
+* fleet.yaml for how should Fleet control the deployment
 * Gitrepo.yaml for where to find your git repo, which branch and sub-path to monitor.
   * (optionally) You can also add credentials
 
