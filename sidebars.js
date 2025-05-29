@@ -1,6 +1,7 @@
 module.exports = {
   docs: [
     'index',
+    'persona',
     {
       type: 'category',
       label: 'Tutorials',
