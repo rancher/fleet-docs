@@ -21,6 +21,10 @@ this process the Manager will never make an outbound API request to the downstre
 never need to have direct network access. The downstream cluster only needs to make outbound HTTPS
 calls to the manager.
 
+It is not commonly used in Rancher. Rancher does not need to make an outbound
+API request to the downstream cluster, as it uses a tunnel to provide that
+connectivity.
+
 ### Manager-Initiated Registration
 
 Manager-initiated registration is a process in which you register an existing Kubernetes cluster
@@ -36,8 +40,14 @@ or [Rancher](https://github.com/rancher/rancher).
 
 A downstream cluster is registered by installing an agent via helm and using the **cluster registration token** and optionally a **client ID** or **cluster labels**.
 
+The cluster resource on upstream does not have a kubecConfigSecret field, as
+the Fleet manager does not need to communicate with the downstream cluster API
+server.
+However, a bundle for the agent is created and the agent will update itself from the bundle.
+The bundle uses a different naming scheme, so the downstream cluster will end up with two helm charts.
+
 :::info
-It's not necessary to configure the fleet manager for [multi cluster](./installation.md#configuration-for-multi-cluster), as the downstream agent we install via Helm will connect to the Kubernetes API of the upstream cluster directly.
+It's not necessary to configure the Fleet manager for [multi cluster](./installation.md#configuration-for-multi-cluster), as the downstream agent we install via Helm will connect to the Kubernetes API of the upstream cluster directly.
 
 Agent-initiated registration is normally not used with Rancher.
 :::
