@@ -340,6 +340,8 @@ using a `helm.chart` field. Otherwise, Fleet will not install the chart.
 
 This also means that if no `helm.chart` field is specified in such a case, then Helm-specific fields like `valuesFiles`
 or `valuesFrom` will not have any effect.
+
+See [Using Helm Values](./gitrepo-content#using-helm-values) for more details.
 :::note
 
 :::warning Limitation: downloading Helm charts from git with custom CA bundles
