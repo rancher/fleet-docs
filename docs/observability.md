@@ -28,3 +28,11 @@ Fleet publishes prometheus metrics. They can be retrieved from these services:
 * `monitoring-gitjob.cattle-fleet-system.svc.cluster.local:8081/metrics`
 
 The [collection of exported metrics](https://book.kubebuilder.io/reference/metrics-reference) includes all the information from controller-runtime, like the number of reconciled resources, the number of errors, and the time it took to reconcile.
+
+When the Fleet is used by Rancher and the `rancher-monitoring` chart is
+installed, Prometheus is automatically configured to scrape the Fleet metrics.
+
+**_NOTE_** Depending on how many resources are handled by Fleet, metrics may
+cause performance issues. If you have a lot of resources, you may want to
+disable metrics. You can do this by setting `metrics.enabled` in the
+`values.yaml` file to `false` when installing Fleet.
