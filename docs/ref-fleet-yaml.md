@@ -334,6 +334,14 @@ It is possible to download the chart from a Git repository, e.g. by using
 `git@github.com:rancher/fleet-examples//single-cluster/helm`. If a secret for the SSH key was defined in the GitRepo via
 `helmSecretName`, it will be injected into the chart URL.
 
+:::note chart reference depending on `fleet.yaml` location
+If a `fleet.yaml` file is located outside of an embedded chart's directory, then it must explicitly reference the chart
+using a `helm.chart` field. Otherwise, Fleet will not install the chart.
+
+This also means that if no `helm.chart` field is specified in such a case, then Helm-specific fields like `valuesFiles`
+or `valuesFrom` will not have any effect.
+:::note
+
 :::warning Limitation: downloading Helm charts from git with custom CA bundles
 
 Git repositories can be downloaded via unauthenticated http, by using for example:
