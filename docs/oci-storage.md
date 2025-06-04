@@ -15,6 +15,12 @@ When using this feature the bundle resources are stored once, in the configured 
 This may be interesting for users who need to store big `Bundles`, and could also be seen as the first step for an `OCIOps` feature in the future.
 
 Once the OCI registry is enabled, Fleet will use it as the source for storing `Bundle` resources.
+
+If your repository includes secrets stored in an OCI registry, Fleet attempts to reference those secrets during deployment.
+
+* If no secrets are defined, Fleet uses the default values specified in the fleet.yaml file.
+* If Fleet cannot access the default secrets, it logs an error and fails to deploy the content.
+
 When Fleet can't access the OCI registry, it won't fall back to default `etcd` storage. Instead, it will log errors so they can be fixed.
 
 ## Configuring the OCI registry
