@@ -16,8 +16,12 @@ HelmOps, on the other hand, enables a `HelmOp` resource to be created, with simi
 
 The Fleet HelmOps controller will create lightweight bundles, pointing to referenced Helm charts, without downloading
 them.
-However, it will resolve chart versions, for instance if a wildcard or empty version is specified, to ensure that the
-same, and latest, version of a chart is deployed to all targeted downstream clusters.
+However, it will resolve chart versions to ensure that the same, and latest, version of a chart is deployed to all
+targeted downstream clusters. This applies to the following cases:
+* a wildcard or empty version is specified
+* a [semantic versioning](https://semver.org/) constraint is specified, such as `0.1.x`, `< 2.0.0`. More information on
+  supported constraints [here](https://github.com/Masterminds/semver?tab=readme-ov-file#checking-version-constraints).
+When constraints are invalid or no matching version can be found, Fleet will display a descriptive error message.
 
 When using this feature, Helm charts are downloaded from downstream clusters, which must therefore have access to Helm
 registries.
