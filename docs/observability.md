@@ -36,3 +36,67 @@ installed, Prometheus is automatically configured to scrape the Fleet metrics.
 cause performance issues. If you have a lot of resources, you may want to
 disable metrics. You can do this by setting `metrics.enabled` in the
 `values.yaml` file to `false` when installing Fleet.
+
+### Grafana
+
+When using Grafana and Prometheus, e.g. from https://github.com/prometheus-community/helm-charts, some setup is needed to access Fleet metrics.
+
+1. Create a `ServiceMonitor` resource to scrape Fleet metrics. Here is an
+   example:
+
+```yaml
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  # Create this in the same namespace as your application
+  namespace: cattle-fleet-system
+  name: fleet-controller-monitor
+  labels:
+    # This label makes the ServiceMonitor discoverable by the Prometheus Operator
+    release: monitoring  # <-- ADD THIS LABEL!
+spec:
+  selector:
+    matchLabels:
+      # This label must exist on the service you want to scrape
+      app: fleet-controller # Assumed label, verify this
+  namespaceSelector:
+    matchNames:
+      # We are only looking for the service in its own namespace
+      - cattle-fleet-system
+  endpoints:
+  - port: metrics
+    path: /metrics
+    interval: 30s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  # Create this in the same namespace as your application
+  namespace: cattle-fleet-system
+  name: fleet-gitjob-monitor
+  labels:
+    # This label makes the ServiceMonitor discoverable by the Prometheus Operator
+    release: monitoring  # <-- ADD THIS LABEL!
+spec:
+  selector:
+    matchLabels:
+      # This label must exist on the service you want to scrape
+      app: gitjob
+  namespaceSelector:
+    matchNames:
+      # We are only looking for the service in its own namespace
+      - cattle-fleet-system
+  endpoints:
+  - port: metrics
+    path: /metrics
+    interval: 30s
+```
+
+And create it in Fleet's namespace, e.g. `cattle-fleet-system`: `kubectl create -f servicemonitor.yaml -n cattle-fleet-system`
+
+
+2. Build the Grafana dashboards and import them into Grafana. You can find the
+   dashboards in the [fleet-dashboard
+   repository](https://github.com/rancher/fleet-dashboards). Follow the README
+   to build them.
