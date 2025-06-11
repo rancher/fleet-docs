@@ -11,8 +11,11 @@ When a `GitRepo` resource is created, Fleet monitors a git repository, creating 
 in the `GitRepo`, following a GitOps, or git-driven, approach to continuous deployment. This requires a git repository
 to be available, possibly containing `fleet.yaml` or other configuration files.
 
-HelmOps, on the other hand, enables a `HelmOp` resource to be created, with similar options to those available in a
-`GitRepo` resource and/or in a `fleet.yaml` file for targeting bundles to clusters, configuring chart values, etc.
+HelmOps, on the other hand, relies on a Helm registry as its source of truth, just as GitOps uses a git repository.
+Leveraging HelmOps is done by creating a `HelmOp` resource, with similar options to those available in a `GitRepo`
+resource and/or in a `fleet.yaml` file for targeting bundles to clusters, configuring chart values, etc.
+
+HelmOps is the concept. A `HelmOp` is a custom Kubernetes resource managed by Fleet.
 
 The Fleet HelmOps controller will create lightweight bundles, pointing to referenced Helm charts, without downloading
 them.
