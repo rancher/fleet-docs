@@ -51,3 +51,32 @@ For private charts, this requires a Helm access secret (referenced by field `hel
 namespace as the `HelmOp` resource.
 The Fleet HelmOps controller will take care of copying that secret to targeted downstream clusters, enabling the Fleet
 agent to access the registry.
+
+## Polling
+
+Fleet can poll the referenced Helm registry, periodically checking if new versions are available.
+Of course, this only makes sense if the `version` field contains a version constraint, which may resolve to multiple
+versions.
+
+### How to enable it
+
+Polling involves a `pollingInterval` field, similar to what exists for GitOps. However, in the HelmOps case, the default
+polling interval is 0 seconds, meaning that polling will be disabled.
+
+The following conditions must be met on a HelmOp resource for Fleet to enable polling on it:
+* the `pollingInterval` field is set to a non-zero duration (e.g. `10s`, `1m`, etc)
+* the `version` field is set to a valid semantic versioning constraint (e.g. `2.x.x`, `< 1.0`), not a static version
+(e.g. 1.2.3)
+
+### What it does
+
+When polling is enabled, Fleet does the following at the configured interval:
+* checking the referenced Helm registry for the latest version matching the version constraint configured in the
+`version` field
+* if a new version is found, setting that version on the Bundle created from the HelmOp object, so that the new version
+  of the chart will be installed on all targeted clusters
+* updating the status of the HelmOp resource:
+    * setting its `Polled` condition:
+        * with `true` if polling was successful
+        * with `false` with an error if a failure happened
+    * updating the `Last Polling Time` field to the starting time of the last polling attempt, even if it failed.
