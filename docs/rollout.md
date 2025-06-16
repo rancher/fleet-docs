@@ -1,6 +1,6 @@
 # Rollout Strategy in Fleet
 
-Fleet uses a rollout strategy to control how apps are deployed across clusters. This feature allows you to define the order and grouping of cluster deployments, enabling controlled rollouts, and safer updates. Fleet evaluates the **Ready** status of each `BundleDeployment` to determine when to proceed to the next group. For more information, refer to [Status Fields](./ref-status-fields.md).
+Fleet uses a rollout strategy to control how apps are deployed across clusters. This feature allows you to define the order and grouping of cluster deployments, enabling controlled rollouts, and safer updates. Fleet evaluates the **Ready** status of each `BundleDeployment` to determine when to proceed to the next group. For more information, refer to [Status Fields](ref-status-fields.md).
 
 For initial deployments:
 
@@ -16,7 +16,7 @@ For rollouts:
 
 Fleet creates up to 50 BundleDeployments at a time,  regardless of the rollout configuration. After creating a batch, Fleet evaluates the deployment status. If the current batch meets readiness criteria, Fleet proceeds to the next batch. Otherwise, it pauses the rollout.
 
-The rollout behavior is configured in the [`rolloutStrategy` in the `fleet.yaml`](./ref-fleet-yaml.md)
+The rollout behavior is configured in the [`rolloutStrategy` in the `fleet.yaml`](ref-fleet-yaml.md)
 
 ## How Does Partitioning Work?
 
@@ -37,7 +37,7 @@ Various limits that can be configured in Fleet:
 | autoPartitionSize | Number or percentage of clusters per auto-created partition. | 25% |
 | partitions | Define manual partitions by cluster labels or group. If set, autoPartitionSize is ignored. | – |
 
-Fleet supports both automatic and manual rollout partitioning. For more information, refer to the [rolloutStrategy in  fleet.yaml.](./ref-fleet-yaml.md)
+Fleet supports both automatic and manual rollout partitioning. For more information, refer to the [rolloutStrategy in  fleet.yaml.](ref-fleet-yaml.md)
 
 **Automatic Partitioning:** Fleet automatically creates partitions using autoPartitionSize.
 
