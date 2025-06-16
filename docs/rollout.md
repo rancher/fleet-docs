@@ -141,7 +141,7 @@ rolloutStrategy:
   autoPartitionSize: 10%
 ```
 
-* Fleet creates 00 partitions, each with 10 clusters.  
+* Fleet creates 10 partitions, each with 20 clusters.  
 * Deployment proceeds sequentially by partition.  
 * If two or more partitions become non-ready, rollout pauses.  
 * If one partition is non-ready, rollout can proceed to the next.
