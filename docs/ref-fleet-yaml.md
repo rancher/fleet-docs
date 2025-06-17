@@ -164,7 +164,7 @@ rolloutStrategy:
 
   # A number of percentage of how to automatically partition clusters if not
   # specific partitioning strategy is configured.
-  #
+  # The default value is defined in rolloutStrategy.maxUnavailable
   autoPartitionSize: 10%
 
   # A list of definitions of partitions.  If any target clusters do not match
