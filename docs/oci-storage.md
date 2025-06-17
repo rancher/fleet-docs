@@ -38,7 +38,9 @@ If the referenced secret doesn't exist or contains invalid credentials, Fleet lo
 
 ### GitRepo Configuration Example
 
-The GitRepo spec is extended with information about the OCI Registry. You must update your GitRepo resource to include a reference to the secret:
+If a secret named `ocistorage` exists in a namespace. Fleet automatically uses it as the OCI registry for all GitRepo resources in that namespace, and you don’t need to add ociRegistrySecret: in every GitRepo.
+
+You can explicitly specify a different secret in the GitRepo. The GitRepo spec is extended with information about the OCI Registry. You have to update your GitRepo resource to include a reference to the secret:
 
 ```yaml
 metadata:
@@ -72,10 +74,10 @@ data:
   agentPassword: <base64-encoded-password>
 ```
 :::note
-If your user is not defined in the spec of the Repo.Then Fleet tries to use default credentials.
+Only the reference field is required. All other fields are optional. 
 :::
 
-You should follow these best practices:
+If no username or password is specified, Fleet accesses the registry without authentication. You should follow these best practices:
 
 * Use read-only `agentUsername` and `agentPassword` credentials for agents to enhance security.  
   * However, if you don’t set these credentials, the agent uses user credentials with read/write permissions.  
@@ -83,8 +85,6 @@ You should follow these best practices:
   * Fleet allows these flags for development and testing purposes, but they should never be used in production.  
   * If you use these tags, you expose your app to security vulnerabilities, and put cluster workloads, and credentials at a risk of tampering.  
 * Changing the secret does not update the deployment. The new storage registry is used only after the next Git update or when you trigger a force update.
-
-Fleet uses `gitcredential` secret when the `clientSecretName` field is empty in a GitRepo. It uses global `ocistorage` as a fallback if `ociRegistrySecret` is not defined.
 
 :::note
 Fleet checks for the integrity of OCI artifacts and Fleet tags OCI artifact as Latest
@@ -108,7 +108,7 @@ spec:
   ociRegistrySecret: ocistorage
 ```
 
-To define OCI Secret, you must create an oci-secret.yaml file
+To define OCI Secret, you can create an oci-secret.yaml file
 
 ```yaml
 apiVersion: v1
@@ -145,5 +145,9 @@ kubectl -n fleet-local create secret generic ocistorage \
 To validate your secret, you can run:
 
 `kubectl get secret ocistorage -n fleet-local -o yaml`
+
+To decrypt your secret, you can run:
+
+`kubectl get secret ocistorage -n fleet-local -o json | jq '.data | map_values(@base64d)`
 
 ![A screenshot of OCI secrets enabled for Fleet](../static/img/ociStorage-secret-ss.png)
