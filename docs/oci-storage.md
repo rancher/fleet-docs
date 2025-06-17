@@ -1,21 +1,21 @@
 # OCI Storage
 
-Fleet stores Kubernetes bundle resources in etcd using the K8s API. However, etcd has storage limits and is not optimized for large workloads. As your deployments scale, it is more efficient to store these resources externally in an OCI (Open Container Initiative) registry.
+Fleet stores Kubernetes bundle resources in etcd by default. However, etcd has strict size limits and is not optimized for large workloads. If your bundle resources exceed the etcd size limits in the target cluster, consider using an OCI registry as the storage backend.
 
 :::note
-Fleet recommends you to compress and encode the bundle into base64 to reduce the resource size.
+Fleet recommends compressing and base64-encoding bundle content to reduce size.
 :::
-
-If your bundle resources exceed the etcd size limits in the target cluster, consider using an OCI registry as the storage backend.
 
 Using an OCI registry helps you:
 
 * Reduce etcd load by offloading large bundle content.  
 * Use a standardized storage backend for large manifests or Helm charts.
 
-Once the OCI registry is enabled, Fleet will use it as the source for storing Bundle resources. When Fleet can't access the OCI registry, it won't fall back to default etcd storage. Instead, it logs errors.
-
 ![A visual asset displaying the flow of Fleet with OCI Storage.](../static/img/fleet-ociStorage-flow.png)
+
+:::note
+Fleet does not fall back to etcd if the secret is missing or invalid. Instead, it logs an error and skips the deployment.
+:::
 
 ## **Prerequisites**
 
@@ -25,20 +25,16 @@ Once the OCI registry is enabled, Fleet will use it as the source for storing Bu
 
 ## Creating an OCI Storage Secret
 
-To enable OCI Storage, you have to define a specific kind of secret. There are two ways of defining secrets
+OCI Storage is automatically enabled in Fleet when a valid secret is present in the same namespace as the GitRepo. To enable OCI Storage, you have to define a specific kind of secret. There are two ways of defining secrets
 
-* **Global secret:** Create a secret exactly named `ocistorage` in the same namespace as your GitRepos.
+* **Global secret:** A secret exactly named `ocistorage` in the same namespace as your GitRepos.
   * This is the fallback secret. If no GitRepo-level secret is specified, Fleet uses this secret for all GitRepos in the namespace.  
-* **GitRepo-level secret:** Create a custom secret for specific GitRepo resouces.
+* **GitRepo-level secret:** A custom secret for specific GitRepo resouces.
   * This is a user-defined secret can have any name and must be referenced in the `GitRepo` resource. 
-
-:::note
-If the referenced secret doesn't exist or contains invalid credentials, Fleet logs an error and skips deployment. It won't fall back to etcd.
-:::
 
 ### GitRepo Configuration Example
 
-If a secret named `ocistorage` exists in a namespace. Fleet automatically uses it as the OCI registry for all GitRepo resources in that namespace, and you don’t need to add ociRegistrySecret: in every GitRepo.
+If a secret named `ocistorage` exists in a namespace. Fleet automatically uses it as the OCI registry for all GitRepo resources in that namespace, and you don’t need to add `ociRegistrySecret` in every GitRepo.
 
 You can explicitly specify a different secret in the GitRepo. The GitRepo spec is extended with information about the OCI Registry. You have to update your GitRepo resource to include a reference to the secret:
 
