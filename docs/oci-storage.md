@@ -79,7 +79,7 @@ You should follow these best practices:
 
 * Use read-only `agentUsername` and `agentPassword` credentials for agents to enhance security.  
   * However, if you don’t set these credentials, the agent uses user credentials with read/write permissions.  
-* Insecure TLS defaults to `false`, and http is disabled by default.   
+* Insecure TLS defaults to `false`, and basic http is disabled by default.   
   * Fleet allows these flags for development and testing purposes, but they should never be used in production.  
   * If you use these tags, you expose your app to security vulnerabilities, and put cluster workloads, and credentials at a risk of tampering.  
 * Changing the secret does not update the deployments, only on the next GIT update it would use the new storage registry.
