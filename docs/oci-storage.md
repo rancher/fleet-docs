@@ -1,12 +1,12 @@
 # OCI Storage
 
-Fleet stores Kubernetes bundle resources in etcd twice by default. This is done using the K8s API. However, etcd has storage limits and is not optimized for large workloads. As your deployments scale, it is more efficient to store these resources externally in an OCI (Open Container Initiative) registry.
+Fleet stores Kubernetes bundle resources in etcd using the K8s API. However, etcd has storage limits and is not optimized for large workloads. As your deployments scale, it is more efficient to store these resources externally in an OCI (Open Container Initiative) registry.
 
 :::note
 Fleet recommends you to compress and encode the bundle into base64 to reduce the resource size.
 :::
 
-If your bundle resource is greater than X MB(size), then it would be a better alternative to switch to OCI Registry as Storage. 
+If your bundle resources exceed the etcd size limits in the target cluster, consider using an OCI registry as the storage backend.
 
 Using an OCI registry helps you:
 
@@ -27,13 +27,13 @@ Once the OCI registry is enabled, Fleet will use it as the source for storing Bu
 
 To enable OCI Storage, you have to define a specific kind of secret. There are two ways of defining secrets
 
-* **Global secret (ocistorage)** : Applies to all GitRepos in the namespace.  
+* **Global secret:** Create a secret exactly named `ocistorage` in the same namespace as your GitRepos.
   * This is the fallback secret. If no GitRepo-level secret is specified, Fleet uses this secret for all GitRepos in the namespace.  
-* **GitRepo-level secret (ociRegistrySecret):** – Overrides the global secret for a specific GitRepo.  
-  * This is a user-defined secret that you reference in the `GitRepo` resource. 
+* **GitRepo-level secret:** Create a custom secret for specific GitRepo resouces.
+  * This is a user-defined secret can have any name and must be referenced in the `GitRepo` resource. 
 
 :::note
-If the referenced secret doesn't exist or contains invalid credentials, Fleet logs an error and skips deployment. It doesn't fall back to etcd.
+If the referenced secret doesn't exist or contains invalid credentials, Fleet logs an error and skips deployment. It won't fall back to etcd.
 :::
 
 ### GitRepo Configuration Example
@@ -82,8 +82,7 @@ You should follow these best practices:
 * Insecure TLS defaults to `false`, and basic http is disabled by default.   
   * Fleet allows these flags for development and testing purposes, but they should never be used in production.  
   * If you use these tags, you expose your app to security vulnerabilities, and put cluster workloads, and credentials at a risk of tampering.  
-* Changing the secret does not update the deployments, only on the next GIT update it would use the new storage registry.
-
+* Changing the secret does not update the deployment. The new storage registry is used only after the next Git update or when you trigger a force update.
 
 Fleet uses `gitcredential` secret when the `clientSecretName` field is empty in a GitRepo. It uses global `ocistorage` as a fallback if `ociRegistrySecret` is not defined.
 
@@ -99,14 +98,13 @@ Consider the GitRepo file for fleet-examples repository.
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
- name: frontend-oci
- namespace: fleet-local
+  name: frontend-oci
+  namespace: fleet-local
 spec:
- repo: https://github.com/your-org/fleet-oci-example.git
- branch: main
- paths:
- - ./frontend/frontend-deployment.yaml
-    - ./frontend/frontend-service.yaml
+  repo: https://github.com/your-org/fleet-oci-example.git
+  branch: main
+  paths:
+    - ./frontend
   ociRegistrySecret: ocistorage
 ```
 
@@ -126,7 +124,6 @@ data:
   basicHTTP: <base64-encoded-true/false>
   agentUsername: <base64-encoded-readonly-user>
   agentPassword: <base64-encoded-password>
-  
 ```
 
 Run `kubectl apply -f secrets/oci-secret.yaml` before applying the GitRepo.
