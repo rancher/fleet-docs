@@ -13,30 +13,31 @@ Using an OCI registry helps you:
 
 ![A visual asset displaying the flow of Fleet with OCI Storage.](../static/img/fleet-ociStorage-flow.png)
 
-:::note
-Fleet does not fall back to etcd if the secret is missing or invalid. Instead, it logs an error and skips the deployment.
-:::
-
 ## **Prerequisites**
 
 * A running OCI registry.  
 * A Kubernetes secret with valid credentials.  
 * A Fleet installation (v2.12.0 or later) .
 
-## Creating an OCI Storage Secret
+## How to enable OCI storage
 
-OCI Storage is automatically enabled in Fleet when a valid secret is present in the same namespace as the GitRepo. To enable OCI Storage, you have to define a specific kind of secret. There are two ways of defining secrets
+OCI Storage is automatically enabled in Fleet when a valid secret is present in the same namespace as the `GitRepo`. To enable OCI Storage, you have to define a specific kind of secret. There are two ways of defining secrets
 
-* **Global secret:** A secret exactly named `ocistorage` in the same namespace as your GitRepos.
-  * This is the fallback secret. If no GitRepo-level secret is specified, Fleet uses this secret for all GitRepos in the namespace.  
-* **GitRepo-level secret:** A custom secret for specific GitRepo resouces.
+* **Global secret:** A secret exactly named `ocistorage` in the same namespace as your `GitRepo`s.
+  * This is the fallback secret. If no `GitRepo`-level secret is specified, Fleet uses this secret for all `GitRepo`s in the namespace.  
+* **GitRepo-level secret:** A custom secret for specific `GitRepo` resouces.
   * This is a user-defined secret can have any name and must be referenced in the `GitRepo` resource. 
+
+:::note
+Fleet does not fall back to etcd if the secret is missing or invalid. Instead, it logs an error and skips the deployment.
+:::
+
 
 ### GitRepo Configuration Example
 
-If a secret named `ocistorage` exists in a namespace. Fleet automatically uses it as the OCI registry for all GitRepo resources in that namespace, and you don’t need to add `ociRegistrySecret` in every GitRepo.
+If a secret named `ocistorage` exists in a namespace. Fleet automatically uses it as the OCI registry for all `GitRepo` resources in that namespace, and you don’t need to add `ociRegistrySecret` in every `GitRepo`.
 
-You can explicitly specify a different secret in the GitRepo. The GitRepo spec is extended with information about the OCI Registry. You have to update your GitRepo resource to include a reference to the secret:
+You can explicitly specify a different secret in the `GitRepo`. The `GitRepo` spec is extended with information about the OCI Registry. You have to update your `GitRepo` resource to include a reference to the secret:
 
 ```yaml
 metadata:
@@ -60,35 +61,35 @@ metadata:
   namespace: fleet-local
 type: fleet.cattle.io/bundle-oci-storage/v1alpha1
 data:
-  reference: <base64-encoded-registry-url>
+  reference: <base64-encoded-registry-url> # Only the reference field is required. All other fields are optional. 
   username: <base64-encoded-user>
   password: <base64-encoded-password>
   insecureSkipTLS: <base64-encoded-true/false>
   basicHTTP: <base64-encoded-true/false>
-# Optional
   agentUsername: <base64-encoded-readonly-user>
   agentPassword: <base64-encoded-password>
 ```
 :::note
-Only the reference field is required. All other fields are optional. 
+The secret must have type: `fleet.cattle.io/bundle-oci-storage/v1alpha1`. Fleet requires this value and rejects any secret that with a different type.
 :::
+
+Changing the secret does not update the deployment. The new storage registry is used only after the next Git update or when you trigger a force update.
 
 If no username or password is specified, Fleet accesses the registry without authentication. You should follow these best practices:
 
 * Use read-only `agentUsername` and `agentPassword` credentials for agents to enhance security.  
   * However, if you don’t set these credentials, the agent uses user credentials with read/write permissions.  
-* Insecure TLS defaults to `false`, and basic http is disabled by default.   
+* `InsecureSkipTLS` defaults to `false`, and `basicHTTP` is disabled by default.   
   * Fleet allows these flags for development and testing purposes, but they should never be used in production.  
-  * If you use these tags, you expose your app to security vulnerabilities, and put cluster workloads, and credentials at a risk of tampering.  
-* Changing the secret does not update the deployment. The new storage registry is used only after the next Git update or when you trigger a force update.
-
+  * If you use these tags, you expose your app to security vulnerabilities, and put cluster workloads, and credentials at a risk of tampering. 
+  
 :::note
 Fleet checks for the integrity of OCI artifacts and Fleet tags OCI artifact as Latest
 :::
 
 ### Fleet Example
 
-Consider the GitRepo file for fleet-examples repository. 
+Consider the following `GitRepo` file:
 
 ```yaml
 apiVersion: fleet.cattle.io/v1alpha1
@@ -122,7 +123,7 @@ data:
   agentPassword: <base64-encoded-password>
 ```
 
-Run `kubectl apply -f secrets/oci-secret.yaml` before applying the GitRepo.
+Run `kubectl apply -f secrets/oci-secret.yaml` before applying the `GitRepo`.
 
 Or you can use `kubectl` command to create the `ocistorage` secret using unencoded text. Kubernetes converts them to base64 encoded for storing the secret.
 
@@ -147,3 +148,7 @@ To decrypt your secret, you can run:
 `kubectl get secret ocistorage -n fleet-local -o json | jq '.data | map_values(@base64d)`
 
 ![A screenshot of OCI secrets enabled for Fleet](../static/img/ociStorage-secret-ss.png)
+
+:::note
+The `reference` field must be a URL without any prefixes. Do not include `oci://` or similar prefixes.
+:::
