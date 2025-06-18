@@ -105,7 +105,7 @@ spec:
   ociRegistrySecret: ocistorage
 ```
 
-To define OCI Secret, you can create an oci-secret.yaml file
+To define the OCI Secret, you can create and apply a yaml file like the following one:
 
 ```yaml
 apiVersion: v1
