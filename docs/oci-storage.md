@@ -13,6 +13,10 @@ Using an OCI registry helps you:
 
 ![A visual asset displaying the flow of Fleet with OCI Storage.](../static/img/fleet-ociStorage-flow.png)
 
+:::note
+Fleet checks for the integrity of OCI artifacts and Fleet tags OCI artifact as `latest`.
+:::
+
 ## Prerequisites
 
 * A running OCI registry.  
@@ -31,10 +35,6 @@ To enable OCI storage, create a secret that includes the necessary information a
 
 :::note
 Fleet does not fall back to etcd if the secret is missing or invalid. Instead, it logs an error and skips the deployment.
-:::
-
-:::note
-Fleet checks for the integrity of OCI artifacts and Fleet tags OCI artifact as `latest`.
 :::
 
 Create a Kubernetes Secret that contains the registry address and optional credentials:
