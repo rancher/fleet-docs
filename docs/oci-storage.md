@@ -70,10 +70,10 @@ The fields you can configure are:
 | `reference`       | URL of the OCI registry.                    | Base64-encoded string       | Do not use `oci://` or similar prefixes.                  |
 | `username`        | Username with write access to the registry. | Base64-encoded string       | If not specified, Fleet accesses the registry without authentication.|
 | `password`        | Password for the write-access user.         | Base64-encoded string       | If not specified, Fleet accesses the registry without authentication.|
-| `agentUsername`   | Read-only username for agents.              | Base64-encoded string       | Use read-only credentials for agents to enhance security. If you don’t set these credentials, the agent uses user credentials.     |
-| `agentPassword`   | Read-only password for agents.              | Base64-encoded string       | Use read-only credentials for agents to enhance security. If you don’t set these credentials, the agent uses user credentials.     |
-| `insecureSkipTLS` | Skips TLS certificate validation.           | Base64-encoded `true/false` | Use only for development or testing. By default, `InsecureSkipTLS` is set to `false`.  |
-| `basicHTTP`       | Enables HTTP instead of HTTPS.              | Base64-encoded `true/false` | Not recommended. Allows insecure traffic. By default, `basicHTTP` is disabled. |
+| `agentUsername`   | Read-only username for agents.              | Base64-encoded string       | Use read-only credentials for agents to enhance security. If you don’t set these credentials, the agent uses username.     |
+| `agentPassword`   | Read-only password for agents.              | Base64-encoded string       | Use read-only credentials for agents to enhance security. If you don’t set these credentials, the agent uses user password.     |
+| `insecureSkipTLS` | Skips TLS certificate validation.           | Base64-encoded `true/false` | Use only for development or testing. By default, `InsecureSkipTLS` is set to `false`. |
+| `basicHTTP`       | Enables HTTP instead of HTTPS.              | Base64-encoded `true/false` | Not recommended. Allows insecure traffic. By default, `basicHTTP` is set to `false`. |
 
 ## Fleet Example
 
@@ -93,9 +93,7 @@ spec:
   ociRegistrySecret: ocistorage
 ```
 
-You can either create and apply a YAML file that contains the registry address and optional credentials similar to the example above.
-
-Then run `kubectl apply -f secrets/oci-secret.yaml` before applying the `GitRepo`.
+You can either create and apply a YAML file that contains the registry address and optional credentials similar to the example above. Then run `kubectl apply -f secrets/oci-secret.yaml` before applying the `GitRepo`.
 
 Or you can use `kubectl` command to create the `ocistorage` secret using unencoded text. Kubernetes converts them to base64 encoded for storing the secret.
 
