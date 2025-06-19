@@ -95,7 +95,7 @@ spec:
 
 You can either create and apply a YAML file that contains the registry address and optional credentials similar to the example above. Then run `kubectl apply -f secrets/oci-secret.yaml` before applying the `GitRepo`.
 
-Or you can use `kubectl` command to create the `ocistorage` secret using unencoded text. Kubernetes converts them to base64 encoded for storing the secret.
+Or you can use `kubectl` command to create the secret using unencoded text. Kubernetes converts them to base64 encoded for storing the secret.
 
 ```bash
 kubectl -n fleet-local create secret generic ocistorage \
