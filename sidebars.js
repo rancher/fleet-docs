@@ -51,6 +51,7 @@ module.exports = {
         {type:'doc', id:'observability'},
         {type:'doc', id:'oci-storage'},
         {type:'doc', id:'helm-ops'}
+        {type:'doc', id:'rollout'},
       ],
     },
     {
