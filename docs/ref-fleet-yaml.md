@@ -162,7 +162,7 @@ rolloutStrategy:
   # default: 0
   maxUnavailablePartitions: 20%
 
-  # A number of percentage of how to automatically partition clusters if not
+  # A number or percentage of how to automatically partition clusters if not
   # specific partitioning strategy is configured.
   # The default value is defined in rolloutStrategy.maxUnavailable
   autoPartitionSize: 10%

@@ -48,6 +48,7 @@ module.exports = {
         {type:'doc', id:'imagescan'},
         {type:'doc', id:'bundle-add'},
         {type:'doc', id:'observability'},
+        {type:'doc', id:'rollout'},
       ],
     },
     {
