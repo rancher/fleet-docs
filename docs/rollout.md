@@ -21,7 +21,13 @@ If `rolloutStrategy` is not specified in `fleet.yaml`, Fleet uses the default va
 
 ## How Does Partitioning Work?
 
-Partitions are considered `NotReady` if they have clusters that exceed the allowed number of `NotReady` clusters. This threshold is determined by:
+Partitions are solely used for grouping and controlling the rollout of `BundleDeployments` across clusters. They do not affect deployment options in any way.
+
+If targeted clusters are not part of the manual partitioning, they will not be included in the rollout. If a cluster is part of a partition, it will receive a `BundleDeployment` when the partition is processed.
+
+Partitions are considered `NotReady` if they have clusters that exceed the allowed number of `NotReady` clusters. If a cluster is offline, the targeted cluster will not be considered `Ready` and will stay in the `NotReady` state until it comes back online and successfully deploys the `BundleDeployment`.
+
+The threshold is determined by:
 
 * **Manual partitions**: Use `maxUnavailable` value inside each partition to control readiness for that partition, otherwise, if unspecified, it uses `rolloutStrategy.maxUnavailable`.
 * **Automatic partitions**: Use `rolloutStrategy.maxUnavailable` value to control when a partition is ready.
