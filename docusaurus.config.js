@@ -11,6 +11,10 @@ module.exports = {
   organizationName: 'rancher', // Usually your GitHub org/user name.
   projectName: 'fleet-docs', // Usually your repo name.
   trailingSlash: false,
+   markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
   themeConfig: {
     colorMode: {
       // "light" | "dark"

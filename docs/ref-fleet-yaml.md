@@ -12,7 +12,8 @@ which contains the [BundleSpec](./ref-crds#bundlespec).
 
 ### Reference
 
-<details><summary>Full YAML reference</summary>
+<details>
+<summary>Full YAML reference</summary>
 
 ```yaml title="fleet.yaml"
 # The default namespace to be applied to resources. This field is not used to

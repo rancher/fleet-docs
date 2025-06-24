@@ -348,7 +348,7 @@ BundleDeploymentList contains a list of BundleDeployment
 | helm | Helm options for the deployment, like the chart name, repo and values. | *[HelmOptions](#helmoptions) | false |
 | serviceAccount | ServiceAccount which will be used to perform this deployment. | string | false |
 | forceSyncGeneration | ForceSyncGeneration is used to force a redeployment | int64 | false |
-| yaml | YAML options, if using raw YAML these are names that map to overlays/{name} files that will be used to replace or patch a resource. | *[YAMLOptions](#yamloptions) | false |
+| yaml | YAML options, if using raw YAML these are names that map to overlays/`{name}` files that will be used to replace or patch a resource. | *[YAMLOptions](#yamloptions) | false |
 | diff | Diff can be used to ignore the modified state of objects which are amended at runtime. | *[DiffOptions](#diffoptions) | false |
 | keepResources | KeepResources can be used to keep the deployed resources when removing the bundle | bool | false |
 | deleteNamespace | DeleteNamespace can be used to delete the deployed namespace when removing the bundle | bool | false |
@@ -569,7 +569,7 @@ Define helm values that can come from configmap, secret or external. Credit: htt
 
 #### YAMLOptions
 
-YAMLOptions, if using raw YAML these are names that map to overlays/{name} files that will be used to replace or patch a resource.
+YAMLOptions, if using raw YAML these are names that map to overlays/`{name}` files that will be used to replace or patch a resource.
 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
