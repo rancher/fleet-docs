@@ -36,6 +36,67 @@ cluster API.  This style is more compatible if you wish to manage the creation o
 clusters through GitOps using something like [cluster-api](https://github.com/kubernetes-sigs/cluster-api)
 or [Rancher](https://github.com/rancher/rancher).
 
+```mermaid
+graph TD
+    subgraph "Upstream (Management Cluster)"
+        direction LR
+        subgraph "Flow 1: Agent-Initiated"
+            direction TB
+            A1(Admin Creates<br>ClusterRegistrationToken) --> A2{Fleet Controller<br>Creates Secret}
+        end
+        subgraph "Flow 2: Manager-Initiated"
+            direction TB
+            B1(Admin Creates<br>Kubeconfig Secret) --> B2(Admin Creates Cluster<br>Resource referencing Secret)
+            B2 --> B3{Fleet Controller Uses<br>Kubeconfig to Deploy Agent}
+        end
+    end
+
+    subgraph "Downstream (Managed Cluster)"
+        direction LR
+        subgraph "Agent Install (Flow 1)"
+            direction TB
+            A3(Admin Installs<br>Fleet Agent via Helm<br>using Token)
+        end
+        subgraph "Agent Deployed (Flow 2)"
+             direction TB
+             B4(Agent & Bootstrap<br>Secret are Deployed)
+        end
+    end
+
+    subgraph Common Registration Stages
+        direction TB
+        C1(Agent Starts & Finds<br>Bootstrap Credentials)
+        C1 --> C2(Agent Creates<br>ClusterRegistration<br>resource on Upstream Cluster)
+        C2 --> C3{Upstream Controller Grants<br>Registration & Creates<br>Final Credentials/Secret}
+        C3 --> C4(Agent Persists Final<br>Credentials & Deletes<br>Bootstrap Secret)
+        C4 --> C5{Upstream Controller<br>Creates dedicated<br>Cluster Namespace}
+        C5 --> C6(✅ Agent Fully Registered<br>& Watching for Workloads)
+    end
+
+    %% Styling
+    style A1 fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px
+    style B1 fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px
+    style A3 fill:#d1fae5,stroke:#10b981,stroke-width:2px
+    style B2 fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px
+
+    style A2 fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style B3 fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style B4 fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+
+    style C1 fill:#f3e8ff,stroke:#8b5cf6,stroke-width:2px
+    style C2 fill:#f3e8ff,stroke:#8b5cf6,stroke-width:2px
+    style C3 fill:#f3e8ff,stroke:#8b5cf6,stroke-width:2px
+    style C4 fill:#f3e8ff,stroke:#8b5cf6,stroke-width:2px
+    style C5 fill:#f3e8ff,stroke:#8b5cf6,stroke-width:2px
+    style C6 fill:#dcfce7,stroke:#22c55e,stroke-width:2px,font-weight:bold
+
+    %% Connections
+    A2 --> A3
+    B3 --> B4
+    A3 --> C1
+    B4 --> C1
+```
+
 ## Agent Initiated
 
 A downstream cluster is registered by installing an agent via helm and using the **cluster registration token** and optionally a **client ID** or **cluster labels**.
