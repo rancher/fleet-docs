@@ -42,12 +42,14 @@ graph TD
         direction LR
         subgraph "Flow 1: Agent-Initiated"
             direction TB
-            A1(Admin Creates<br>ClusterRegistrationToken) --> A2{Fleet Controller<br>Creates Secret}
+            A0(Optional: Admin Creates Cluster with clientID) --> A1
+
+            A1(Admin Creates<br>ClusterRegistrationToken) --> A2{Fleet Controller Creates Secret<br>for a temporary 'import' ServiceAccount}
         end
-        subgraph "Flow 2: Manager-Initiated"
+        subgraph "Flow 2: Manager-Initiated (for existing cluster)"
             direction TB
-            B1(Admin Creates<br>Kubeconfig Secret) --> B2(Admin Creates Cluster<br>Resource referencing Secret)
-            B2 --> B3{Fleet Controller Uses<br>Kubeconfig to Deploy Agent}
+            B1(Admin Creates Kubeconfig Secret<br>for an existing cluster) --> B2(Admin Creates Cluster Resource<br>referencing the Kubeconfig Secret.<br>Can define a clientID here)
+            B2 --> B3{Fleet Controller uses admin-provided<br>kubeconfig to deploy agent}
         end
     end
 
@@ -55,25 +57,26 @@ graph TD
         direction LR
         subgraph "Agent Install (Flow 1)"
             direction TB
-            A3(Admin Installs<br>Fleet Agent via Helm<br>using Token)
+            A3(Admin installs Fleet Agent via Helm<br>using the 'import' token secret.<br>Can provide clientID)
         end
         subgraph "Agent Deployed (Flow 2)"
              direction TB
-             B4(Agent & Bootstrap<br>Secret are Deployed)
+             B4(Agent & bootstrap secret are deployed.<br>Bootstrap contains an 'import' kubeconfig.)
         end
     end
 
-    subgraph Common Registration Stages
+    subgraph "Common Registration Stages (Identity Handshake)"
         direction TB
-        C1(Agent Starts & Finds<br>Bootstrap Credentials)
-        C1 --> C2(Agent Creates<br>ClusterRegistration<br>resource on Upstream Cluster)
-        C2 --> C3{Upstream Controller Grants<br>Registration & Creates<br>Final Credentials/Secret}
-        C3 --> C4(Agent Persists Final<br>Credentials & Deletes<br>Bootstrap Secret)
-        C4 --> C5{Upstream Controller<br>Creates dedicated<br>Cluster Namespace}
-        C5 --> C6(✅ Agent Fully Registered<br>& Watching for Workloads)
+        C1(Agent pod starts, using its local 'agent' SA.<br>Finds & uses the 'import' kubeconfig<br>from the bootstrap secret to talk to Upstream.)
+        C1 --> C2(Using its 'import' identity, Agent creates<br>a ClusterRegistration resource on Upstream)
+        C2 --> C3{Upstream Controller creates a permanent<br>'request' ServiceAccount & a new,<br>long-term kubeconfig/secret for it.}
+        C3 --> C4(Agent receives and persists the<br>'request' SA credentials.<br>The temporary bootstrap secret is deleted.)
+        C4 --> C5{Upstream Controller creates a dedicated<br>Cluster Namespace for this agent.}
+        C5 --> C6(✅ Agent Fully Registered.<br>Uses its 'request' identity to watch<br>for workloads in its namespace.)
     end
 
     %% Styling
+    style A0 fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px
     style A1 fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px
     style B1 fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px
     style A3 fill:#d1fae5,stroke:#10b981,stroke-width:2px
