@@ -146,6 +146,7 @@ helm:
 # Default: false
 paused: false
 
+# If rolloutStrategy is not defined in the fleet.yaml file, Fleet uses default rollout values.
 rolloutStrategy:
 
   # A number or percentage of clusters that can be unavailable during an update

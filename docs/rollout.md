@@ -15,6 +15,10 @@ During a rollout, the GitRepo status indicates deployment progress. This helps y
 
 The rollout behavior is configured in the [`rolloutStrategy` in the `fleet.yaml`](ref-fleet-yaml.md)
 
+:::note
+If `rolloutStrategy` is not defined in the `fleet.yaml` file, Fleet uses default rollout values.
+:::
+
 ## How Does Partitioning Work?
 
 Partitions are considered non-ready if they have clusters that exceed the allowed number of non-ready clusters. This threshold is determined by:
@@ -70,6 +74,11 @@ rolloutStrategy:
         matchLabels:
           env: prod
       clusterGroup: frontend
+    - name: stable
+      maxUnavailable: 5%
+      clusterSelector:
+        matchLabels:
+          env: prod
 ```
 
 Fleet then:
@@ -78,6 +87,10 @@ Fleet then:
 2. Starts rollout to the first partition.  
 3. Waits until the partition is **Ready** (considering the `maxUnavailable` threshold).  
 4. Proceeds to the next partition.
+
+:::note
+Fleet processes partitions in the order they appear in the `fleet.yaml file`.
+:::
 
 ### Single Partition Rollout
 
@@ -110,7 +123,7 @@ To avoid this, Fleet controls how many clusters are updated at a time. You can u
 * `partitions`
 * `maxUnavailable`
 
-Fleet does not add artificial delays—progression depends on when workloads become Ready. This is typically influenced by factors like image pull time and readiness probes. While readiness probes are recommended, they are not strictly required to control rollout speed.
+Fleet does not add artificial delays during rollout. Instead, it proceeds based on the readiness status of workloads in each cluster. Factors that affect readiness include image pull time, startup time, and readiness probes. Although readiness probes are recommended, they are not strictly required to control rollout speed.
 
 ![A visual asset displaying the flow of preventing image pull storms](../static/img/preventing-image-storm.png)
 
@@ -129,10 +142,12 @@ How rollout proceeds:
 1. When the entire partition is mostly ready, Fleet moves to the next partition, because `maxUnavailablePartitions`: 1.
 
 :::note
-Fleet recommends labeling clusters and triggering rollouts based on label selectors.
+Fleet recommends labeling clusters so you can use those labels to assign clusters to specific partitions.
 ::: 
 
 ## Use Cases and Behavior
+
+If the number of clusters cannot be evenly divided into partitions, Fleet rounds down the partition size. For example, with 230 clusters and automatic partitioning (default 25%), Fleet creates five partitions: four with 57 clusters and one with 2 clusters.
 
 ### Scenario: 50 Clusters (Single Partition) 
 
@@ -200,8 +215,36 @@ rolloutStrategy:
 * You define manual partitions using `clusterSelector` and labels like `stage: demoRollout` and `stage: stable`.  
 * Fleet creates `BundleDeployments` for clusters in the first partition (for example, `demoRollout`).  
 * The rollout proceeds strictly in order, Fleet only moves to the next partition when the current one is ready.  
-* With `maxUnavailablePartitions: 0`, any non-ready cluster stops the rollout.
+* With maxUnavailablePartitions: 0, Fleet pauses rollout if any partition is not considered ready. 
 
 ![A visual asset displaying the partitions about rollout in Fleet](../static/img/partition-fleet-rollout.png)
 
 This ensures full readiness and staged rollout across all 200 clusters. Use this approach when you need precise rollout sequencing and full cluster readiness before advancing. 
+
+## Rollout Strategy Defaults
+
+If partition-level rollout values are not defined, Fleet applies the global rollout values defined under `rolloutStrategy` in `fleet.yaml`. Partition-specific settings take prioirty only when explicitly set.
+
+
+By default, Fleet sets:
+
+* `maxUnavailable`=`100%`: All clusters in a partition can be `NotReady` and still be considered Ready. 
+* `maxUnavailablePartitions`= `0`: Prevents rollout only when one or more partitions are considered `NotReady`. However, this check is ineffective if all partitions appear Ready due to `maxUnavailable: 100%`. |
+
+Unless `maxUnavailable` is explicitly lowered, Fleet considers all partitions `ready`, regardless of actual readiness. As a result, even with `maxUnavailablePartitions: 0`, Fleet proceeds through all partitions.
+
+For example, consider 200 clusters with default settings:
+
+* Fleet creates 4 partitions of 50 clusters each (`autoPartitionSize: 25%`).
+* Because `maxUnavailable = 100%`, each partition is treated as Ready immediately.
+* Fleet proceeds through all 4 partitions in sequence, regardless of whether any clusters have completed deployment.
+
+Fleet recomends you to control rollouts by setting:
+
+* `maxUnavailable` to a stricter value like `10%` or `0`.
+* `maxUnavailablePartitions` to `0` or `1`.
+
+This ensures:
+
+* Each partition must reach a certain level of readiness before proceeding.
+* Fleet pauses rollout if too many partitions are unavailable.
