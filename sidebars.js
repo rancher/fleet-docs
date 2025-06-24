@@ -49,6 +49,9 @@ module.exports = {
         {type:'doc', id:'imagescan'},
         {type:'doc', id:'bundle-add'},
         {type:'doc', id:'observability'},
+        {type:'doc', id:'oci-storage'},
+        {type:'doc', id:'helm-ops'}
+        {type:'doc', id:'rollout'},
         {type:'doc', id:'rollout'},
       ],
     },
@@ -102,9 +105,7 @@ module.exports = {
       label: 'Experimental Features',
       collapsed: false,
       items:[
-        'enableexperimental',
-        'oci-storage',
-        'helm-ops',
+        'enableexperimental'
       ],
     },
   ],
