@@ -212,7 +212,7 @@ rolloutStrategy:
 * You define manual partitions using `clusterSelector` and labels like `stage: demoRollout` and `stage: stable`.
 * Fleet creates `BundleDeployments` for clusters in the first partition (for example, `demoRollout`).
 * The rollout proceeds strictly in order, Fleet only moves to the next partition when the current one is considered ready.
-* With `maxUnavailablePartitions: 0`, Fleet pauses rollout if any partition is not considered ready.
+* With `maxUnavailable: 0` and `maxUnavailablePartitions: 0`, Fleet pauses the rollout if any partition is not considered ready.
 
 ![A visual asset displaying the partitions about rollout in Fleet](../static/img/partition-fleet-rollout.png)
 
