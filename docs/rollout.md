@@ -41,6 +41,8 @@ Fleet rolls out deployments in batches of up to 50 clusters per partition, regar
 * If a partition has 100 clusters, Fleet deploys to the first 50, checks `maxUnavailable`, and proceeds with the remaining 50 only if the threshold is not exceeded.
 :::
 
+The following diagram displays how Fleet handles rollout:
+
 ![A visual asset displaying flow of rollout in Fleet.](../static/img/flow-rollout-fleet.png)
 
 Various limits that can be configured in Fleet:
@@ -92,6 +94,14 @@ Fleet then:
 3. Waits until the partition is considered `Ready` (depending on the `maxUnavailable` threshold).  
 4. Proceeds to the next partition.
 
+The following diagram illustrates how Fleet handles rollout across multiple partitions, including readiness checks and deployment flow:
+
+![A visual asset displaying the flow of partition rollout](../static/img/deploy-targets-partition.png)
+
+Within each partition, Fleet rolls out up to 50 BundleDeployments at a time. The diagram below shows how Fleet determines whether to proceed or wait during this process:
+
+![A visual asset displaying the flow of deploying targets in a partition](../static/img/partition-rollout-flow.png)
+
 :::note
 Fleet recommends labeling clusters so you can use those labels to assign clusters to specific partitions.
 ::: 
@@ -129,8 +139,6 @@ To avoid this, Fleet can control how many clusters are updated at a time. You ca
 
 Fleet does not add artificial delays during rollout. Instead, it proceeds based on the `readiness` status of workloads in each cluster. Factors that affect readiness include image pull time, startup time, and readiness probes. Although using readiness probes is recommended, they are not strictly required to control rollout speed.
 
-![A visual asset displaying the flow of preventing image pull storms](../static/img/new-preventing-image-storm.png)
-
 For example, you have 200 clusters, which are manually partitioned, each with 40 clusters and want to prevent image pull storm:
 
 * `maxUnavailablePartitions`: Set to 0.
@@ -165,6 +173,8 @@ rolloutStrategy:
   * No requirement to specify `maxUnavailablePartitions`, as only one partition is created.
 * Although there is no specified manual partition and `maxUnavailable` is set to 10%, Fleet deploys to all 50 clusters at once (batch behavior overrides `maxUnavailable` initially).  
 * Evaluation occurs after all deployments are created.
+
+The following diagram illustrates how Fleet handles 50 clusters in a single partition:
 
 ![A visual asset displaying 50 clusters](../static/img/deploy-50Clusters.png)
 
@@ -219,6 +229,8 @@ rolloutStrategy:
 * Fleet creates `BundleDeployments` for clusters in the first partition (for example, `demoRollout`).
 * The rollout proceeds strictly in order, Fleet only moves to the next partition when the current one is considered ready.
 * With `maxUnavailable: 0` and `maxUnavailablePartitions: 0`, Fleet pauses the rollout if any partition is not considered ready.
+
+The following diagram describes how Fleet handles whether to continue or pause rollout.
 
 ![A visual asset displaying the partitions about rollout in Fleet](../static/img/partition-fleet-rollout.png)
 
