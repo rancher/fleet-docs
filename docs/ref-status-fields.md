@@ -62,15 +62,16 @@ If polling is enabled, a `False` condition will contain an error message explain
 
 ## Resources List
 
-The resources lists contain the deployed resources, categorized under `Bundles` and `GitRepos`.
-
-### Bundles
-
-The deployed resources within bundles can be found in `status.ResourceKey`. This key represents the actual resources deployed via `bundleDeployments`.
+The resources lists contain the resources deployed to target clusters, categorized under `GitRepos` and `HelmOps`.
 
 ### GitRepos
 
-Similar to bundles, the deployed resources in `GitRepos` are listed in `status.Resources`. This list is also derived from `bundleDeployments`.
+The deployed resources are listed in `GitRepos` in `status.Resources`. This list is derived from `bundleDeployments`.
+
+### HelmOps
+
+Similarly to what happens for `GitRepos`, the deployed resources are listed in `HelmOps` in `status.Resources`.
+This list is derived from `bundleDeployments`.
 
 ## Resource Counts
 
