@@ -243,7 +243,7 @@ If partition-level rollout values are not defined, Fleet applies the global valu
 By default, Fleet sets:
 
 * `maxUnavailable` to `100%`: All clusters in a partition can be `NotReady` and still be considered Ready. 
-* `maxUnavailablePartitions` to `0`: Prevents rollout only when one or more partitions are considered `NotReady`. However, this check is ineffective if all partitions appear Ready due to `maxUnavailable: 100%`. |
+* `maxUnavailablePartitions` to `0`: Prevents rollout only when one or more partitions are considered `NotReady`. However, this check is ineffective if all partitions appear Ready due to `maxUnavailable: 100%`.
 
 For example, consider 200 clusters with default settings:
 
