@@ -58,9 +58,6 @@ Fleet supports automatic and manual partitioning. For more information about con
 
 **Automatic Partitioning**: Fleet automatically creates partitions using `autoPartitionSize`.
 
-* If fewer than 200 clusters are targeted, Fleet uses a single partition.  
-* If 200+ clusters are targeted, partitions are created based on `autoPartitionSize`.
-
 For example, you have 200 clusters and set `autoPartitionSize` to 25%, Fleet creates four partitions of 50 clusters each. Rollout proceeds in 50-cluster batches, checking `maxUnavailable` before continuing.
 
 **Manual Partitioning**: You define specific partitions using the `partitions` option. This provides control over cluster selection and rollout order.
@@ -98,7 +95,11 @@ The following diagram illustrates how Fleet handles rollout across multiple part
 
 ![A visual asset displaying the flow of partition rollout](../static/img/deploy-targets-partition.png)
 
-Within each partition, Fleet rolls out up to 50 BundleDeployments at a time. The diagram below shows how Fleet determines whether to proceed or wait during this process:
+:::note
+MaxNew is always 50. A bundle change can only stage 50 `BundleDeployments` at a time.	
+:::
+
+Within each partition, Fleet rolls out up to 50 `BundleDeployments` at a time. The diagram below shows how Fleet determines whether to proceed or wait during this process:
 
 ![A visual asset displaying the flow of deploying targets in a partition](../static/img/partition-rollout-flow.png)
 
@@ -147,7 +148,7 @@ For example, you have 200 clusters, which are manually partitioned, each with 40
 How rollout proceeds:
 
 1. Fleet begins with the first partition (40 clusters).
-1. It deploys up to 50 BundleDeployments at once. So it deploys to all 40 clusters in the partition in one batch.
+1. It deploys up to 50 `BundleDeployments` at once. So it deploys to all 40 clusters in the partition in one batch.
 1. Fleet checks the readiness of clusters in the partition.
   1. If more than 4 clusters are not ready, then the partition is considered `NotReady` and the rollout is paused.
   1. Once ≤4 clusters are `NotReady`, Fleet proceeds with the deployment.
