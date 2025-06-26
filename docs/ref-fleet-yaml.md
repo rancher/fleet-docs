@@ -341,6 +341,8 @@ using a `helm.chart` field. Otherwise, Fleet will not install the chart.
 This also means that if no `helm.chart` field is specified in such a case, then Helm-specific fields like `valuesFiles`
 or `valuesFrom` will not have any effect.
 
+It is not necessary to specify a chart's own `values.yaml` via `valuesFiles:`. It will always be used as a default when the agent installs the chart. See [Using Helm Values](./gitrepo-content#using-helm-values).
+
 See [Using Helm Values](./gitrepo-content#using-helm-values) for more details.
 :::note
 
