@@ -17,8 +17,9 @@ module.exports = {
       label: 'Explanations',
       collapsed: false,
       items:[
-        'architecture',
         'concepts',
+        'glossary',
+        'architecture',
         'ref-bundle-stages',
         'gitrepo-content',
         'namespaces',
