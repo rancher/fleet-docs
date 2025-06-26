@@ -153,7 +153,7 @@ How rollout proceeds:
   1. Once ≤4 clusters are `NotReady`, Fleet proceeds with the deployment.
 1. When the entire partition is mostly ready (90%), Fleet moves to the next partition.
 
-If you want or need to process less than 40 deployments at once, you can put less clusters into each partition.
+If you want or need to process fewer than 40 deployments at once, you can put fewer clusters into each partition.
 
 ## Use Cases and Behavior
 
