@@ -146,6 +146,7 @@ helm:
 # Default: false
 paused: false
 
+# If rolloutStrategy is not defined in the fleet.yaml file, Fleet uses default rollout values.
 rolloutStrategy:
 
   # A number or percentage of clusters that can be unavailable during an update
@@ -162,10 +163,9 @@ rolloutStrategy:
   # default: 0
   maxUnavailablePartitions: 20%
 
-  # A number of percentage of how to automatically partition clusters if not
+  # A number or percentage of how to automatically partition clusters if not
   # specific partitioning strategy is configured.
-  #
-  # default: 25%
+  # The default value is defined in rolloutStrategy.maxUnavailable
   autoPartitionSize: 10%
 
   # A list of definitions of partitions.  If any target clusters do not match
