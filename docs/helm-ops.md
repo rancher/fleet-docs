@@ -3,8 +3,6 @@
 HelmOps is a simplified way of creating bundles by directly pointing to a Helm repository or to an OCI registry, without
 needing to set up a git repository.
 
-It is currently an experimental feature.
-
 ## Summary
 
 When a `GitRepo` resource is created, Fleet monitors a git repository, creating one or more bundles from paths specified
@@ -54,6 +52,64 @@ For private charts, this requires a Helm access secret (referenced by field `hel
 namespace as the `HelmOp` resource.
 The Fleet HelmOps controller will take care of copying that secret to targeted downstream clusters, enabling the Fleet
 agent to access the registry.
+
+## Supported use cases
+
+With 3 fields available to reference a Helm chart, let's clarify a few rules.
+As per the Helm install [documentation](https://helm.sh/docs/helm/helm_install/), there are 6 ways of expressing a chart
+to install. 3 of them use either repository aliases or the local filesystem, which are not available in Fleet's HelmOps
+context. This leaves us with 3 options:
+
+### Absolute URL
+
+Referencing a Helm chart by absolute URL is as simple as providing a URL to a `.tgz` file in the `chart` field. Helm
+options would look like:
+```yaml
+  helm:
+    chart: https://example.com/charts/my-chart-1.2.3.tgz
+
+    # can be omitted
+    repo: ''
+    version: ''
+```
+
+If a non-empty repo, or a non-empty version is specified in this case, an error will appear in the HelmOp status and no
+bundle will be created, aborting deployment.
+
+### Chart reference and repo URL
+
+A Helm chart can also be referenced through its repository and chart name, with an optional version, which may be a
+static version or a version constraint.
+
+This is where polling can make sense, because referencing the chart using a repository allows Fleet to check the
+repository's `index.yaml` for available versions matching the `version` field.
+
+Example:
+```yaml
+  helm:
+    repo: https://foo.bar/baz
+    chart: fantastic-chart
+    version: '1.2.3'
+```
+
+In this case, only the `version` field may be empty. If any of the `chart` or `repo` field is empty, Fleet will set an
+error in the HelmOp status and no bundle will be created.
+
+### OCI registry
+
+Helm supports OCI registries, which can be referenced in Fleet using the `repo` field.
+
+In this case, Helm options would be similar to this:
+
+```yaml
+  helm:
+    repo: oci://foo.bar/baz
+    chart: ''        # can be omitted
+    version: '1.2.3' # optional
+```
+
+When an OCI URL is provided in the `repo` field, a non-empty `chart` field will lead to an error in the HelmOps status,
+and no bundle being created.
 
 ## Polling
 
