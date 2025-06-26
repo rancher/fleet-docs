@@ -139,7 +139,7 @@ To avoid this, Fleet can control how many clusters are updated at a time. You ca
 
 Fleet does not add artificial delays during rollout. Instead, it proceeds based on the `readiness` status of workloads in each cluster. Factors that affect readiness include image pull time, startup time, and readiness probes. Although using readiness probes is recommended, they are not strictly required to control rollout speed.
 
-For example, you have 200 clusters, which are manually partitioned, each with 40 clusters and want to prevent image pull storm:
+For example, you have 200 clusters, which are manually partitioned, each with 40 clusters and want to prevent an image pull storm:
 
 * `maxUnavailablePartitions`: Set to 0.
 * `maxUnavailable`: Set to 10%.
