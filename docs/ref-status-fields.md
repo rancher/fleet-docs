@@ -48,6 +48,18 @@ Clusters and Bundles have different states in each phase of applying Bundles.
 
 **Stalled**: for errors
 
+## HelmOp Conditions
+
+**Ready**: All bundle deployments are ready
+
+**Accepted**: The HelmOp is able to properly manage deployments to target clusters. May be false if:
+* Helm options are invalid
+* a chart version cannot be resolved from those options
+* an issue occurred when scheduling a polling job
+
+**Polled**: `True` if polling is enabled and the last polling attempt was successful, `False` otherwise.
+If polling is enabled, a `False` condition will contain an error message explaining the reason for the polling failure.
+
 ## Resources List
 
 The resources lists contain the deployed resources, categorized under `Bundles` and `GitRepos`.
@@ -68,6 +80,10 @@ This shows how resource counts are propagated from one resource to another:
 ### GitRepos
 
 The `status.ResourceCounts` list for GitRepos is derived from `bundleDeployments`.
+
+### HelmOps
+
+The `status.ResourceCounts` list for HelmOps is derived from `bundleDeployments`.
 
 ### Clusters
 
