@@ -123,7 +123,7 @@ For example, consider 200 clusters, Fleet uses the default `autoPartitionSize` o
 1. Evaluate readiness based on `maxUnavailable`.
 1. If the condition is met, proceed to the next 50, and so on.
 
-### Multiple Partition
+### Multiple Partitions
 
 If you define multiple partitions, Fleet uses `maxUnavailablePartitions` to limit how many partitions can be `NotReady` at once. If the number of `NotReady` partitions exceeds `maxUnavailablePartitions`, Fleet pauses the rollout.
 
