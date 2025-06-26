@@ -83,3 +83,19 @@ When polling is enabled, Fleet does the following at the configured interval:
         * with `true` if polling was successful
         * with `false` with an error if a failure happened
     * updating the `Last Polling Time` field to the starting time of the last polling attempt, even if it failed.
+
+## Status updates
+
+Creating a HelmOp resource leads to a bundle being created, if Helm options are valid and a chart version can be found.
+
+The status of that bundle will evolve over time, as bundle deployments are created from it, for each target cluster, and
+these bundle deployment's statuses themselves evolve and are propagated back to the bundle.
+
+Fleet propagates updates from the bundle status to the status of the HelmOp resource itself.
+This includes:
+* a display status with a summary, expected and ready cluster counts
+* conditions providing more information about the state of the resource, whether it is valid and its deployments are
+ready
+* resource counts by status
+
+See [status fields](./ref-status-fields.md) for more details on resource counts and conditions.

@@ -48,17 +48,30 @@ Clusters and Bundles have different states in each phase of applying Bundles.
 
 **Stalled**: for errors
 
+## HelmOp Conditions
+
+**Ready**: All bundle deployments are ready
+
+**Accepted**: The HelmOp is able to properly manage deployments to target clusters. May be false if:
+* Helm options are invalid
+* a chart version cannot be resolved from those options
+* an issue occurred when scheduling a polling job
+
+**Polled**: `True` if polling is enabled and the last polling attempt was successful, `False` otherwise.
+If polling is enabled, a `False` condition will contain an error message explaining the reason for the polling failure.
+
 ## Resources List
 
-The resources lists contain the deployed resources, categorized under `Bundles` and `GitRepos`.
-
-### Bundles
-
-The deployed resources within bundles can be found in `status.ResourceKey`. This key represents the actual resources deployed via `bundleDeployments`.
+The resources lists contain the resources deployed to target clusters, categorized under `GitRepos` and `HelmOps`.
 
 ### GitRepos
 
-Similar to bundles, the deployed resources in `GitRepos` are listed in `status.Resources`. This list is also derived from `bundleDeployments`.
+The deployed resources are listed in `GitRepos` in `status.Resources`. This list is derived from `bundleDeployments`.
+
+### HelmOps
+
+Similarly to what happens for `GitRepos`, the deployed resources are listed in `HelmOps` in `status.Resources`.
+This list is derived from `bundleDeployments`.
 
 ## Resource Counts
 
@@ -68,6 +81,10 @@ This shows how resource counts are propagated from one resource to another:
 ### GitRepos
 
 The `status.ResourceCounts` list for GitRepos is derived from `bundleDeployments`.
+
+### HelmOps
+
+The `status.ResourceCounts` list for HelmOps is derived from `bundleDeployments`.
 
 ### Clusters
 
