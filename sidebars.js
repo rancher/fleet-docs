@@ -44,10 +44,13 @@ module.exports = {
         {type:'doc', id:'gitrepo-add'},
         {type:'doc', id:'gitrepo-targets'},
         {type:'doc', id:'bundle-diffs'},
+        {type:'doc', id:'oci-storage'},
         {type:'doc', id:'webhook'},
         {type:'doc', id:'imagescan'},
         {type:'doc', id:'bundle-add'},
         {type:'doc', id:'observability'},
+        {type:'doc', id:'oci-storage'},
+        {type:'doc', id:'helm-ops'}
       ],
     },
     {
@@ -100,9 +103,7 @@ module.exports = {
       label: 'Experimental Features',
       collapsed: false,
       items:[
-        'enableexperimental',
-        'oci-storage',
-        'helm-ops',
+        'enableexperimental'
       ],
     },
   ],
