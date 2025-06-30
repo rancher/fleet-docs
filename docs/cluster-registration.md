@@ -36,6 +36,70 @@ cluster API.  This style is more compatible if you wish to manage the creation o
 clusters through GitOps using something like [cluster-api](https://github.com/kubernetes-sigs/cluster-api)
 or [Rancher](https://github.com/rancher/rancher).
 
+```mermaid
+graph TD
+    subgraph "Upstream (Management Cluster)"
+        direction LR
+        subgraph "Flow 1: Agent-Initiated"
+            direction TB
+            A0(Optional: Admin Creates Cluster with clientID) --> A1
+
+            A1(Admin Creates<br>ClusterRegistrationToken) --> A2{Fleet Controller Creates Secret<br>for a temporary 'import' ServiceAccount}
+        end
+        subgraph "Flow 2: Manager-Initiated (for existing cluster)"
+            direction TB
+            B1(Admin Creates Kubeconfig Secret<br>for an existing cluster) --> B2(Admin Creates Cluster Resource<br>referencing the Kubeconfig Secret.<br>Can define a clientID here)
+            B2 --> B3{Fleet Controller uses admin-provided<br>kubeconfig to deploy agent}
+        end
+    end
+
+    subgraph "Downstream (Managed Cluster)"
+        direction LR
+        subgraph "Agent Install (Flow 1)"
+            direction TB
+            A3(Admin installs Fleet Agent via Helm<br>using the 'import' token secret.<br>Can provide clientID)
+        end
+        subgraph "Agent Deployed (Flow 2)"
+             direction TB
+             B4(Agent & bootstrap secret are deployed.<br>Bootstrap contains an 'import' kubeconfig.)
+        end
+    end
+
+    subgraph "Common Registration Stages (Identity Handshake)"
+        direction TB
+        C1(Agent pod starts, using its local 'agent' SA.<br>Finds & uses the 'import' kubeconfig<br>from the bootstrap secret to talk to Upstream.)
+        C1 --> C2(Using its 'import' identity, Agent creates<br>a ClusterRegistration resource on Upstream)
+        C2 --> C3{Upstream Controller creates a permanent<br>'request' ServiceAccount & a new,<br>long-term kubeconfig/secret for it.}
+        C3 --> C4(Agent receives and persists the<br>'request' SA credentials.<br>The temporary bootstrap secret is deleted.)
+        C4 --> C5{Upstream Controller creates a dedicated<br>Cluster Namespace for this agent.}
+        C5 --> C6(✅ Agent Fully Registered.<br>Uses its 'request' identity to watch<br>for workloads in its namespace.)
+    end
+
+    %% Styling
+    style A0 fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px
+    style A1 fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px
+    style B1 fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px
+    style A3 fill:#d1fae5,stroke:#10b981,stroke-width:2px
+    style B2 fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px
+
+    style A2 fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style B3 fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style B4 fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+
+    style C1 fill:#f3e8ff,stroke:#8b5cf6,stroke-width:2px
+    style C2 fill:#f3e8ff,stroke:#8b5cf6,stroke-width:2px
+    style C3 fill:#f3e8ff,stroke:#8b5cf6,stroke-width:2px
+    style C4 fill:#f3e8ff,stroke:#8b5cf6,stroke-width:2px
+    style C5 fill:#f3e8ff,stroke:#8b5cf6,stroke-width:2px
+    style C6 fill:#dcfce7,stroke:#22c55e,stroke-width:2px,font-weight:bold
+
+    %% Connections
+    A2 --> A3
+    B3 --> B4
+    A3 --> C1
+    B4 --> C1
+```
+
 ## Agent Initiated
 
 A downstream cluster is registered by installing an agent via helm and using the **cluster registration token** and optionally a **client ID** or **cluster labels**.
