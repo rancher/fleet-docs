@@ -89,7 +89,7 @@ When polling is enabled, Fleet does the following at the configured interval:
 Creating a HelmOp resource leads to a bundle being created, if Helm options are valid and a chart version can be found.
 
 The status of that bundle will evolve over time, as bundle deployments are created from it, for each target cluster, and
-these bundle deployment's statuses themselves evolve and are propagated back to the bundle.
+as these bundle deployments' statuses themselves evolve and are propagated back to the bundle.
 
 Fleet propagates updates from the bundle status to the status of the HelmOp resource itself.
 This includes:
