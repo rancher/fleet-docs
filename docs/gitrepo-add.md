@@ -206,15 +206,44 @@ After secret is created, specify the secret to `gitRepo.spec.helmSecretName`. Ma
 
 ### Use different helm credentials for each path
 
+Fleet allows you to define unique credentials for each Helm chart path in a Git repository using the `helmSecretNameForPaths` field.
+
 :::info
-`gitRepo.spec.helmSecretName` will be ignored if `gitRepo.spec.helmSecretNameForPaths` is provided
+If `gitRepo.spec.helmSecretNameForPaths` is defined, `gitRepo.spec.helmSecretName` is ignored.
 :::
 
-Create a file `secrets-path.yaml` that contains credentials for each path defined in a `GitRepo`. Credentials will not be used
-for paths that are not present in this file.
-The path is the actual path to the bundle (ie to a folder containing a `fleet.yaml` file) within the git repository, which might have more segments than the entry under `paths:`.
+Create a file named `secrets-path.yaml` that specifies credentials for each path in your `GitRepo`. The keys must match the full path to a bundle directory (a folder containing a `fleet.yaml file`), which may have more segments than the entry under `paths:`. If a path listed in the GitRepo is not included in this file, Fleet does not use credentials for it.
 
-Example:
+:::note
+The file should be named `secrets-path.yaml`, otherwise Fleet will not be able to use it.
+:::
+
+Example `GitRepo` resource:
+
+```yaml
+kind: GitRepo
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: gitrepo
+  namespace: fleet-local
+spec:
+  helmSecretNameForPaths: test-multipasswd
+  repo: https://github.com/0xavi0/fleet-examples
+  branch: helm-multi-passwd
+  paths:
+  - single-cluster/test-multipasswd
+```
+
+Example `secrets-path.yaml`:
+
+```yaml
+single-cluster/test-multipasswd/passwd:
+  username: fleet-ci
+  password: foo
+  insecureSkipVerify: true
+```
+
+Another example with two distinct paths:
 
 ```yaml
 path-one: # path path-one must exist in the repository
@@ -227,19 +256,35 @@ path-two: # path path-one must exist in the repository
   sshPrivateKey: ICAgIC0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQogICAgTUlJRFF6Q0NBaXNDRkgxTm5YUWI5SlV6anNBR3FSc3RCYncwRlFpak1BMEdDU3FHU0liM0RRRUJDd1VBTUY0eAogICAgQ3pBSkJnTlZCQVlUQWtGVk1STXdFUVlEVlFRSURBcFRiMjFsTFZOMFlYUmxNU0V3SHdZRFZRUUtEQmhKYm5SbAogICAgY201bGRDQlhhV1JuYVhSeklGQjBlU0JNZEdReEZ6QVZCZ05WQkFNTURuSmhibU5vWlhJdWJYa3ViM0puTUI0WAogICAgRFRJek1EUXlOekUxTVRBMU5Gb1hEVEkwTURReU5qRTFNVEExTkZvd1hqRUxNQWtHQTFVRUJoTUNRVlV4RXpBUgogICAgQmdOVkJBZ01DbE52YldVdFUzUmhkR1V4SVRBZkJnTlZCQW9NR0VsdWRHVnlibVYwSUZkcFpHZHBkSE1nVUhSNQogICAgSUV4MFpERVhNQlVHQTFVRUF3d09jbUZ1WTJobGNpNXRlUzV2Y21jd2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQQogICAgQTRJQkR3QXdnZ0VLQW9JQkFRRGd6UUJJTW8xQVFHNnFtYmozbFlYUTFnZjhYcURTbjdyM2lGcVZZZldDVWZOSwogICAgaGZwampTRGpOMmRWWEV2UXA3R0t3akFHUElFbXR5RmxyUW5rUGtnTGFSaU9jSDdNN0p2c3ZIa0Ewd0g0dzJ2QgogICAgUEp6aVlINWh2MUE2WS9NcFM5bVkvQUVxVm80TUJkdnNZQzc3MFpCbzVBMitIUEtMd1YzMVZyYlhhTytWeUJtNAogICAgSmJhZHlNUk40N3BKRWdPMjJaYVRXL3Y3S1dKdjNydGJTMlZVSkNlU0piWlpsN09ocHhLRTVocStmK0RWaU1mcQogICAgTWx4ODNEV2pVSlVkV3lqVUZYVlk0bEdVaUtrRWVtSlVuSlVyY1ErOXE1SzVaWmhyRjhoRXhKRjhiZTZjemVzeAogICAga1VWN3dKb1RjWkd2bUhYSk1FNmtrQXh4Mmh3bU8wSFcyQWdDdTJZekFnTUJBQUV3RFFZSktvWklodmNOQVFFTAogICAgQlFBRGdnRUJBS1BpTWdXc1dCTnJvRkY2aWpYL2xMM3FxaWc4TjlkR1VPWDIyRVJDU1RTekNONjM0ZTFkZUhsdQogICAgbTc5OU11Q3hvWSsyZWluNlV1cFMvTEV6cnpvU2dDVWllQzQrT3ZralF5eGJpTFR6bW1OWEFnd09TM3RvTHRGWAogICAgbytmWWpSMU9xcHVPS29kMkhiYjliczRWcXdaNHEvMlVKbXE2Q01pYjZKZUE2VFJvK2Rkc0pUM2dDOFhWL1Z1MAogICAgNnkwdjJxdTM0bm1MYjFxOHFTS1RwZXYyQmwzQUJGY3NyS0JvNHFieUM2bnBTbnpZenNYcS90SlFLclplNE4vMgogICAgUXIzd1dxQ0pDVWUrMWVsT3A2b0JVcXNWSnc3aHk3YzRLc1Fna09ERDJkc2NuNEF1NGJhWlY2QmpySm1USVY0aQogICAgeXJ1dk9oZ2lINklGUVdDWmVQM2s0MU5obWRzRTNHQT0KICAgIC0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
 ```
 
-Create the secret
+Supported fields per path:
 
+| Field                | Description                            | 
+| --                   | ---                                    | 
+| `username`           | Registry or repository username        | 
+| `password`           | Registry or repository password        | 
+| `caBundle`           | Base64-encoded CA certificate bundle   | 
+| `sshPrivateKey`      | Base64-encoded SSH private key         | 
+| `insecureSkipVerify` | Boolean value to skip TLS verification | 
+
+
+To create the secret, run the following command.
+
+```bash
+kubectl create secret generic test-multipasswd -n fleet-local --from-file=secrets-path.yaml
 ```
-kubectl create secret generic path-auth-secret -n fleet-default --from-file=secrets-path.yaml
-```
-
-In the previous example credentials for username `user` will be used for the path `path-one` and credentials for username
-`user2` will be used for the path `path-two`.
-
-`caBundle` and `sshPrivateKey` must be base64 encoded.
 
 :::note
-If you are using ["rancher-backups"](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/backup-restore-and-disaster-recovery/back-up-rancher) and want this secret to be included the backup, please add the label `resources.cattle.io/backup: true` to the secret. In that case, make sure to encrypt the backup to protect sensitive credentials.
+The secret must be created in the same namespace as the `GitRepo` resource.
+:::
+
+If you use [rancher-backups](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/backup-restore-and-disaster-recovery/back-up-rancher) and want to include this secret in your backups, label it with `resources.cattle.io/backup: true`:
+
+```bash
+kubectl label secret path-auth-secret -n fleet-local resources.cattle.io/backup=true
+```
+
+:::note
+Ensure the backup is encrypted to protect sensitive credentials.
 :::
 
 ## Storing Credentials in Git
