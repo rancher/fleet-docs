@@ -346,7 +346,7 @@ unable to get local issuer certificate` when running `fleet apply` to generate a
 
 See [fleet#3646](https://github.com/rancher/fleet/issues/3646) for more details.
 
-:::warning
+:::
 
 ##### version
 
@@ -358,7 +358,7 @@ containing the `+` character, Helm automatically replaces `+` with '_' before up
 
 You should use the version with the `+` in `fleet.yaml`, as the `_` character is not supported by semver and Fleet also
 replaces `+` with `_` when accessing the OCI registry.
-:::note
+:::
 
 #### How fleet-agent deploys the bundle
 
