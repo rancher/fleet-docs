@@ -231,8 +231,7 @@ spec:
   repo: https://github.com/0xavi0/fleet-examples
   branch: helm-multi-passwd
   paths:
-  - single-cluster/test-multipasswd/no-passwd
-  - single-cluster/test-multipasswd/passwd
+  - single-cluster/test-multipasswd
 ```
 
 Example `secrets-path.yaml`:
