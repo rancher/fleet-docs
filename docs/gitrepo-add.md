@@ -215,7 +215,7 @@ If `gitRepo.spec.helmSecretNameForPaths` is defined, `gitRepo.spec.helmSecretNam
 Create a file named `secrets-path.yaml` that specifies credentials for each path in your `GitRepo`. The keys must match the full path to a bundle directory (a folder containing a `fleet.yaml file`), which may have more segments than the entry under `paths:`. If a path listed in the GitRepo is not included in this file, Fleet does not use credentials for it.
 
 :::note
-The file should be named `secrets-path.yaml`, otherwise it won't work.
+The file should be named `secrets-path.yaml`, otherwise Fleet will not be able to use it.
 :::
 
 Example `GitRepo` resource:
