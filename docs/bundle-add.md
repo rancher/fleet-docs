@@ -4,7 +4,12 @@ Bundles are automatically created by Fleet when a `GitRepo` is created. In most 
 manually by the user. If you want to deploy resources from a git repository use a
 [GitRepo](https://fleet.rancher.io/gitrepo-add) instead.
 
+
 If you want to deploy resources without a git repository follow this guide to create a `Bundle`.
+
+:::note
+If you want to deploy resources without running a Fleet controller, also take a look at the [Fleet CLI](ref-bundle-stages#examining-the-bundle-lifecycle-with-the-cli).
+:::
 
 When creating a `GitRepo` Fleet will fetch the resources from a git repository, and add them to a Bundle.
 When creating a `Bundle` resources need to be explicitly specified in the `Bundle` Spec.
