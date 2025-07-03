@@ -111,6 +111,14 @@ In this case, Helm options would be similar to this:
 When an OCI URL is provided in the `repo` field, a non-empty `chart` field will lead to an error in the HelmOps status,
 and no bundle being created.
 
+:::note
+In this case, Fleet will be downloading OCI artifacts. This means that:
+* the `version` field represents an OCI artifact's tag, which may be different to the actual version of the
+chart stored in the OCI artifact.
+* an OCI artifact may contain multiple Helm charts. This use case has only been validated with OCI artifacts containing
+  a single Helm chart.
+:::
+
 ## Polling
 
 Fleet can poll the referenced Helm registry, periodically checking if new versions are available.
