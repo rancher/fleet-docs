@@ -104,7 +104,6 @@ In this case, Helm options would be similar to this:
 ```yaml
   helm:
     repo: oci://foo.bar/baz
-    chart: ''        # can be omitted
     version: '1.2.3' # optional
 ```
 
