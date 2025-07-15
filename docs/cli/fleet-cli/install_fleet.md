@@ -57,7 +57,7 @@ fleet \--version
 
 # Install Fleet in Your Cluster
 
-Fleet needs to be installed in the Kubernetes cluster using Helm. By default, the controller runs in the cattle-fleet-system namespace.
+Fleet needs to be installed in the Kubernetes cluster using Helm. By default, the controller runs in the `cattle-fleet-system` namespace.
 
 ### Step 1: Install Fleet in the Cluster
 
@@ -118,7 +118,7 @@ This creates a Bundle resource named `nginx-bundle`, `deployments` and `services
 
 ### How fleet apply Works
 
-If you run fleet apply, the Fleet CLI packages the local content , including `manifests`, `charts`, and `fleet.yaml`. Then creates a Kubernetes Bundle custom resource (CR) in your cluster.
+If you run `fleet apply`, the Fleet CLI packages the local content , including `manifests`, `charts`, and `fleet.yaml`. Then creates a Kubernetes Bundle custom resource (CR) in your cluster.
 
 The Fleet controller then performs the following steps:
 
