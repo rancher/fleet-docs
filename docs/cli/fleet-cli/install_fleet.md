@@ -1,5 +1,11 @@
-# **Install Fleet CLI**
+# Fleet CLI
 
+Fleet CLI is a command-line interface(CLI) that allows you to interact directly with Fleet from your local machine. It provides a practical way to:
+
+* Apply Kubernetes manifests locally without needing a Git repository
+* Experiment or test workloads in a development environment
+
+## Install Fleet CLI
 Fleet can be installed and used entirely through the command line. This document walks you through:
 
 * Installing the Fleet CLI.  
@@ -34,7 +40,7 @@ fleet \--version
 
 ## **Prerequisites**
 
-Before you begin:
+Make sure you have the following tools installed and configured:
 
 * A working Kubernetes cluster (e.g., via k3s, kind, or a cloud provider).  
 * `kubectl` is configured for your cluster.  
@@ -58,12 +64,12 @@ Fleet needs to be installed in the Kubernetes cluster using Helm. By default, th
 Create the `cattle-fleet-system` namespace and install the Fleet CRDs and controller using Helm:
 
 ```bash
-\# Add Fleet Helm repo  
+# Add Fleet Helm repo  
 helm repo add rancher-latest https://releases.rancher.com/server-charts/latest  
 helm repo update
 
-Note: You can use any namespace you want.  
-\# Create namespace  
+# Note: You can use any namespace you want.  
+# Create namespace  
 kubectl create namespace cattle-fleet-system
 ```
 
