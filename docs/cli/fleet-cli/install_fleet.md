@@ -51,7 +51,7 @@ fleet \--version
 
 # Install Fleet in Your Cluster
 
-Fleet needs to be installed in the Kubernetes cluster using Helm. By default, the controller runs in the cattle-fleet-system namespace.
+Fleet needs to be installed in the Kubernetes cluster using Helm. By default, the controller runs in the `cattle-fleet-system` namespace.
 
 ### Step 1: Install Fleet in the Cluster
 
