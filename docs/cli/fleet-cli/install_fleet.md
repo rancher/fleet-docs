@@ -112,7 +112,7 @@ This creates a Bundle resource named `nginx-bundle`, `deployments` and `services
 
 ### How fleet apply Works
 
-If you run fleet apply, the Fleet CLI packages the local content , including `manifests`, `charts`, and `fleet.yaml`. Then creates a Kubernetes Bundle custom resource (CR) in your cluster.
+If you run `fleet apply`, the Fleet CLI packages the local content , including `manifests`, `charts`, and `fleet.yaml`. Then creates a Kubernetes Bundle custom resource (CR) in your cluster.
 
 The Fleet controller then performs the following steps:
 
