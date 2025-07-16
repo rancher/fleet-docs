@@ -1,16 +1,17 @@
 # Fleet CLI
 
-Fleet CLI is a command-line interface(CLI) that allows you to interact directly with Fleet from your local machine. It provides a practical way to:
+Fleet CLI is a command-line interface(CLI) that allows you to interact directly with Fleet from your local machine. It enables you to create, apply and inspect `bundles` without requiring a `GitRepo`. Typical use cases include:
 
-* Apply Kubernetes manifests locally without needing a Git repository
-* Experiment or test workloads in a development environment
+* Testing and previewing `bundle` contents.
+* Creating bundles directly from Helm charts, Kubernetes manifests and `fleet.yaml` files.
+* Checking which clusters a `bundle` would target
+* Validating deployments without installing Fleet in the cluster
+
+:::note
+You can use `fleet apply` without installing Fleet in your clusters. However, for cluster interaction (for example, `fleet target`, `fleet deploy`), Fleet must be installed. For more information, refer to [Install Fleet.](../../installation.md)
+:::
 
 ## Install Fleet CLI
-Fleet can be installed and used entirely through the command line. This document walks you through:
-
-* Installing the Fleet CLI.  
-* Installing Fleet into a Kubernetes cluster.
-* Deploy and validate workloads using `fleet apply`.
 
 Fleet CLI is a stand-alone binary you can download from the [Fleet GitHub releases page](https://github.com/rancher/fleet/releases).
 
@@ -55,43 +56,18 @@ helm version
 fleet --version
 ```
 
-# Install Fleet in Your Cluster
+## Key commands
 
-Fleet needs to be installed in the Kubernetes cluster using Helm. By default, the controller runs in the `cattle-fleet-system` namespace.
+* `fleet target`: Displays which clusters would receive a bundle based on selectors and targeting rules.
+  *  This helps you understand how `targets`, `targetOverrides`, `clusterGroups`, and `label` selectors work. For example, `fleet target my-bundle ./manifests.`
+* `fleet deploy`: Deploy a `bundle` with or without pushing it to the cluster. 
+  * Supports dry-run mode to preivew changes applied. For example, `fleet deploy --dry-run my-bundle ./manifests`.
+* `fleet apply`: Create or preview a `Bundle` from local files. Works without Fleet installed.
+  * This applies for `fleet.yaml`, Helm charts and manifests. For example, `fleet apply my-bundle ./manifests`.  
 
-### Step 1: Install Fleet in the Cluster
+![A diagram explaining how fleet CLI key commands work.](/img/fleetCLI-key-components.svg)
 
-Create the `cattle-fleet-system` namespace and install the Fleet CRDs and controller using Helm:
-
-```bash
-# Add Fleet Helm repo  
-helm repo add rancher-latest https://releases.rancher.com/server-charts/latest  
-helm repo update
-
-# Note: You can use any namespace you want.  
-# Create namespace  
-kubectl create namespace cattle-fleet-system
-```
-
-### Step 2: Install Fleet CRDs and controller
-
-```bash
-# Install Fleet
-helm install fleet-crd fleet/fleet-crd -n cattle-fleet-system --create-namespace --wait
-helm install fleet fleet/fleet -n cattle-fleet-system --create-namespace --wait
-```
-
-### Step 3: Verify Fleet Is Running
-
-Check the pods in the cattle-fleet-system namespace:
-
-```bash
-kubectl get pods -n cattle-fleet-system
-```
-
-You should see pods like:
-
-![A screenshot of pods running.](/img/get-pods-ss.png)
+For more information, refer to [Fleet blog on external secrets + multi-cluster](https://www.suse.com/c/rancher_blog/fleet-multi-cluster-deployment-with-the-help-of-external-secrets/).
 
 ## Deploy a Sample Bundle Using Fleet CLI
 
@@ -114,31 +90,6 @@ This creates a Bundle resource named `nginx-bundle`, `deployments` and `services
 
 ![A screenshot of deploying a sample bundle.](/img/apply-fleet-ss.png)
 
-### How fleet apply Works
-
-If you run `fleet apply`, the Fleet CLI packages the local content , including `manifests`, `charts`, and `fleet.yaml`. Then creates a Kubernetes Bundle custom resource (CR) in your cluster.
-
-The Fleet controller then performs the following steps:
-
-* Resolves targets from `fleet.yaml` or defaults to the local cluster (fleet-local)  
-* Creates one `BundleDeployment` per target, representing where the bundle should be applied  
-* Applies the Kubernetes resources defined in the bundle to the target cluster and namespace
-
-:::note
-This process is fully local and does not depend on Git.
-:::
-
-If you use a GitRepo CR automates this same process. The controller watches the specified Git repository and:
-
-* Regenerates the `Bundle` automatically on changes (commits, branch updates)  
-* Applies the same deployment logic as Fleet CLI
-
-:::note
-Use `fleet apply` for local testing and CI pipelines. Use GitRepo for GitOps automation in staging and production environments.
-:::
-
-![A diagram explaining how fleet apply works.](/img/fleet-working-diag.png)
-
 ### Validate the Deployment
 
 After applying a bundle using Fleet CLI, you can validate the deployment by inspecting the `Bundle` and its associated `BundleDeployments`.
@@ -149,7 +100,7 @@ Each Fleet-managed cluster lists:
 * Their readiness status.  
 * Errors or sync issues (if any).
 
-To validate whether your fleet apply created a bundle and if it’s deployed to the right number of target(s), run: 
+To validate whether your `fleet apply` created a `bundle` and if it’s deployed to the right number of target(s), run: 
 
 ```bash
 kubectl get bundles.fleet.cattle.io -A
