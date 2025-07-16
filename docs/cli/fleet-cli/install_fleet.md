@@ -67,7 +67,7 @@ fleet --version
 
 ![A diagram explaining how fleet CLI key commands work.](/img/fleetCLI-key-components.svg)
 
-For more information, refer to [Fleet blog on external secrets + multi-cluster](https://www.suse.com/c/rancher_blog/fleet-multi-cluster-deployment-with-the-help-of-external-secrets/).
+For more information, refer to [Bundle Lifecycle With the CLI](../../ref-bundle-stages.md#examining-the-bundle-lifecycle-with-the-cli).
 
 ## Deploy a Sample Bundle Using Fleet CLI
 
