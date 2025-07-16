@@ -17,11 +17,11 @@ Fleet CLI is a stand-alone binary you can download from the [Fleet GitHub releas
 **Linux/macOS**
 
 ```bash
-curl \-L \-o fleet https://github.com/rancher/fleet/releases/download/v0.12.4/fleet-linux-amd64
+curl -L -o fleet https://github.com/rancher/fleet/releases/download/v0.12.4/fleet-linux-amd64
 
-\# Make it executable and move to PATH
+# Make it executable and move to PATH
 
-chmod \+x fleet
+chmod +x fleet
 
 sudo mv fleet /usr/local/bin/
 ```
@@ -29,13 +29,13 @@ sudo mv fleet /usr/local/bin/
 **Windows (PowerShell)**
 
 ```bash
-Invoke-WebRequest \-Uri "https://github.com/rancher/fleet/releases/download/v0.12.4/fleet-windows-amd64.exe" \-OutFile "fleet.exe"
+Invoke-WebRequest -Uri "https://github.com/rancher/fleet/releases/download/v0.12.4/fleet-windows-amd64.exe" -OutFile "fleet.exe"
 ```
 
 **Verify installation**
 
 ```bash
-fleet \--version
+fleet --version
 ```
 
 ## **Prerequisites**
@@ -52,7 +52,7 @@ Make sure you have the following tools installed and configured:
 ```bash
 kubectl get nodes  
 helm version  
-fleet \--version
+fleet --version
 ```
 
 # Install Fleet in Your Cluster
@@ -76,11 +76,9 @@ kubectl create namespace cattle-fleet-system
 ### Step 2: Install Fleet CRDs and controller
 
 ```bash
-\# Install Fleet
-
-helm upgrade \--install fleet-crd rancher-charts/fleet-crd \--namespace cattle-fleet-system
-
-helm upgrade \--install fleet rancher-charts/fleet \--namespace cattle-fleet-system	
+# Install Fleet
+helm install fleet-crd fleet/fleet-crd -n cattle-fleet-system --create-namespace --wait
+helm install fleet fleet/fleet -n cattle-fleet-system --create-namespace --wait
 ```
 
 ### Step 3: Verify Fleet Is Running
@@ -88,7 +86,7 @@ helm upgrade \--install fleet rancher-charts/fleet \--namespace cattle-fleet-sys
 Check the pods in the cattle-fleet-system namespace:
 
 ```bash
-kubectl get pods \-n cattle-fleet-system
+kubectl get pods -n cattle-fleet-system
 ```
 
 You should see pods like:
@@ -154,7 +152,7 @@ Each Fleet-managed cluster lists:
 To validate whether your fleet apply created a bundle and if it’s deployed to the right number of target(s), run: 
 
 ```bash
-kubectl get bundles.fleet.cattle.io \-A
+kubectl get bundles.fleet.cattle.io -A
 ```
 
 ![A screenshot validating the fleet deployment.](/img/validate-deployment-ss.png)
@@ -170,7 +168,7 @@ If this field shows 1/1, the bundle is successfully deployed to one cluster.
 
 To get a detailed view of how the bundle was rendered and applied:
 
-`kubectl get bundles.fleet.cattle.io \-n fleet-local my-nginx-bundle \-o yaml`
+`kubectl get bundles.fleet.cattle.io -n fleet-local my-nginx-bundle -o yaml`
 
 Look for the following fields in the `status` section:
 
@@ -182,7 +180,7 @@ status:
     desiredReady: 1  
     ready: 1  
   conditions:  
-  \- type: Ready  
+    type: Ready  
     status: "True"
 ```
 
@@ -194,7 +192,7 @@ This indicates that:
 
 You can also verify the corresponding `BundleDeployment` object, since each `BundleDeployment` corresponds to a target cluster.
 
-`kubectl get bundledeployments.fleet.cattle.io \-A`
+`kubectl get bundledeployments.fleet.cattle.io -A`
 
 ## **Troubleshooting**
 
