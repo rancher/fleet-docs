@@ -258,6 +258,33 @@ When using Kubernetes [encryption at rest](https://kubernetes.io/docs/tasks/admi
 - contents.fleet.cattle.io
 ```
 
+## Backing up and restoring
+
+When backing up and restoring Fleet with existing workloads, a few points must be taken into account.
+
+### Kubernetes API server availability
+
+A Fleet agent, living in a downstream cluster, monitors a cluster-specific namespace on the upstream cluster.
+This means that, when a restore operation is in progress, changes made in the upstream cluster may affect deployments
+running in downstream clusters, which would then be updated or deleted based on incomplete state coming from the
+upstream cluster.
+
+To prevent this, we recommend making the Kubernetes API server inaccessible to downstream clusters while a restore
+operation is running on the upstream cluster. Agents should not have access to the upstream cluster until all resources
+have been re-created.
+
+### Pausing
+
+A [paused](./ref-gitrepo) GitRepo will lead to paused bundles and bundle deployments. This means that:
+* when deleting a bundle deployment coming from a paused GitRepo, Fleet will not re-create that bundle deployment until
+the GitRepo is unpaused
+* when deleting a bundle coming from a paused GitRepo, Fleet will delete the bundle deployments coming from that bundle,
+  and will not re-create the bundle (nor the bundle-deployments) until the GitRepo is unpaused.
+
+Besides, pausing a GitRepo only prevents bundles and bundle deployments from being created or updated for that GitRepo.
+In other words, it only affects _controller_ operations, not Fleet _agent_ operations. To prevent user resources,
+contained in a bundle, from being deleted when deleting a bundle deployment,
+[keepResources](./ref-bundle#bundle-resource) should be used instead.
 
 # Troubleshooting
 
