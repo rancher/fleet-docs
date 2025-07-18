@@ -430,8 +430,6 @@ targetCustomizations:
 
 To create the deployment, we apply the custom resource to the upstream cluster. The `fleet-default` namespace, by default, contains the downstream cluster resources. The chart will be deployed to all clusters in the fleet-default namespace, which have a labeled cluster resources that matches any entry under `targets:`.
 
-To create the deployment, we apply the custom resource to the upstream cluster. The `fleet-default` namespace, by default, contains the downstream cluster resources. The chart will be deployed to all clusters in the fleet-default namespace, which have a labeled cluster resources that matches any entry under `targets:`.
-
 ```yaml title="gitrepo.yaml"
 kind: GitRepo
 apiVersion: fleet.cattle.io/v1alpha1
