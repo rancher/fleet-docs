@@ -213,6 +213,44 @@ Based on the above log, you can add the following entry to remove the operation:
 
 1. You can also force update the `gitrepo` to perform a manual resync. Select **GitRepo** on the left navigation bar, then select **Force Update**.
 
+### `GitRepo` stuck in `Git Updating` state
+
+In some cases, updating Fleet may result in pre-existing GitRepos being stuck in `Git Updating` state, with a force
+update not resolving the issue.
+
+An error message similar to this one would appear in a git job's logs:
+```
+level=fatal msg="secrets \"<secret-name>\" is forbidden: User \"system:serviceaccount:fleet-default:git-<name>\" cannot delete resource \"secrets\" in API group \"\" in the namespace \"fleet-default\""
+```
+This is fixed in Fleet v0.12. In earlier versions, it can be worked around as follows:
+1. Edit the Kubernetes Role named after your GitRepo (`git-<gitrepo-name>`) in the same namespace as the GitRepo:
+    * Under `secrets`, at the end of the Role definition: the Role should already contain permission `create`, add verbs: `get`, `update` and `delete`.
+        * Before:
+        ```
+        - apiGroups:
+          - ""
+          resources:
+          - secrets
+          verbs:
+          - create
+        ```
+
+        * After:
+        ```
+        - apiGroups:
+          - ""
+          resources:
+          - secrets
+          verbs:
+          - get
+          - create
+          - update
+          - delete
+        ```
+
+2. Save your changes
+3. Run a "force update" on the GitRepo.
+
 ### Bundle has a Horizontal Pod Autoscaler (HPA) in modified state
 
 For bundles with an HPA, the expected state is `Modified`, as the bundle contains fields that differ from the state of the Bundle at deployment - usually `ReplicaSet`.
