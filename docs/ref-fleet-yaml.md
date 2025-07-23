@@ -10,10 +10,10 @@ The content of the fleet.yaml corresponds to the `FleetYAML` struct at
 [pkg/apis/fleet.cattle.io/v1alpha1/fleetyaml.go](https://github.com/rancher/fleet/blob/main/pkg/apis/fleet.cattle.io/v1alpha1/fleetyaml.go),
 which contains the [BundleSpec](./ref-crds#bundlespec).
 
-### Reference
+## Full Example
 
 <details>
-<summary>Full YAML reference</summary>
+<summary>commented fleet.yaml</summary>
 
 ```yaml title="fleet.yaml"
 # The default namespace to be applied to resources. This field is not used to
@@ -320,11 +320,56 @@ overrideTargets:
 
 </details>
 
-### Helm Options
+## General Bundle Configuration
 
-#### Main options
+These options define the fundamental properties and behavior of the bundle itself and apply to all bundle types.
 
-##### chart
+| Option | Description | Applies to |
+| :---- | :---- | :---- |
+| paused | If true, the bundle will not be updated on downstream clusters. Instead, it will be marked as "OutOfSync." You can then manually approve the deployment. | All |
+| labels | A map of key-value pairs that are set at the bundle level. These can be used in a dependsOn.selector to define dependencies. | All |
+| dependsOn | A list of other bundles that this bundle depends on. The current bundle will only be deployed after all its dependencies are in a "Ready" state. | All |
+| ignore | Specifies fields to ignore when monitoring a bundle's status. This is useful for preventing false error states caused by certain conditions in Custom Resources. | All |
+| overrideTargets | A list of target customizations that will override any targets defined in the GitRepo. If this is provided, the bundle will not inherit any targets from the GitRepo. | All |
+
+### Namespace Configuration
+
+These options control the Kubernetes namespace where resources will be deployed and apply to all bundle types.
+
+| Option | Description | Applies to |
+| :---- | :---- | :---- |
+| defaultNamespace | The default namespace to apply to resources that don't have a namespace specified in their manifests. This does not enforce deployment to a specific namespace. | All |
+| namespace | All resources in the bundle will be assigned to this namespace. The deployment will fail if any cluster-scoped resources are present. | All |
+| namespaceLabels | A map of labels that will be added to the namespace created by Fleet. | All |
+| namespaceAnnotations | A map of annotations that will be added to the namespace created by Fleet. | All |
+
+## Helm Bundle Configuration
+
+Note that while all bundles are ultimately deployed by Fleet's agent using Helm, these options are **specific to Helm-style bundles** (those with a Chart.yaml).
+
+### Chart Source
+
+They specify how to download the chart. The reference to the chart can be a local path, a go-getter URL, a Helm repository, or an OCI Helm repository.
+
+| Option | Description | Applies to |
+| :---- | :---- | :---- |
+| helm.chart | The location of the Helm chart. This can be a local path, a go-getter URL, or an OCI registry URL. If repo is set, this is the name of the chart to look up. | Helm |
+| helm.repo | The URL of a Helm repository to download the chart from. | Helm |
+| helm.version | The version or semver constraint of the chart to use. If a constraint is specified, it's re-evaluated on every git change. | Helm |
+| helm.disableDependencyUpdate | If true, Fleet will not automatically download dependencies found in the Helm chart. Defaults to false. | Helm |
+
+The reference to the chart can be either:
+
+- a local path in the cloned Git repository, specified by `chart`.
+- a [go-getter URL](https://github.com/hashicorp/go-getter?tab=readme-ov-file#url-format),
+  specified by `chart`. This can be used to download a tarball
+  of the chart. go-getter also allows to download a chart from a Git repo.
+- OCI chart URL, specified by `chart`. This can be used to download a chart
+  directly from a OCI server. It uses the Helm SDK to download the chart.
+- a Helm repository, specified by `repo` and optionally `version`.
+- an OCI Helm repository, specified by `repo` and optionally `version`.
+
+#### `helm.chart`
 
 This specifies a custom location for the Helm chart. This can refer to any go-getter URL or OCI registry based Helm
 chart URL, e.g. `oci://ghcr.io/fleetrepoci/guestbook`.
@@ -342,10 +387,8 @@ using a `helm.chart` field. Otherwise, Fleet will not install the chart.
 This also means that if no `helm.chart` field is specified in such a case, then Helm-specific fields like `valuesFiles`
 or `valuesFrom` will not have any effect.
 
-It is not necessary to specify a chart's own `values.yaml` via `valuesFiles:`. It will always be used as a default when the agent installs the chart. See [Using Helm Values](./gitrepo-content#using-helm-values).
+:::
 
-See [Using Helm Values](./gitrepo-content#using-helm-values) for more details.
-:::note
 
 :::warning Limitation: downloading Helm charts from git with custom CA bundles
 
@@ -360,7 +403,7 @@ See [fleet#3646](https://github.com/rancher/fleet/issues/3646) for more details.
 
 :::
 
-##### version
+#### `helm.version`
 
 The version also determines which chart to download from OCI registries.
 
@@ -372,51 +415,17 @@ You should use the version with the `+` in `fleet.yaml`, as the `_` character is
 replaces `+` with `_` when accessing the OCI registry.
 :::
 
-#### How fleet-agent deploys the bundle
-
-These options also apply to kustomize- and manifest-style bundles.  They control
-how the fleet-agent deploys the bundle. All bundles are converted into Helm
-charts and deployed with the Helm SDK.  These options are often similar to the
-Helm CLI options for install and update.
-
-- releaseName
-- takeOwnership
-- force
-- atomic
-- disablePreProcess
-- disableDNS
-- skipSchemaValidation
-- waitForJobs
-
-#### Helm Chart Download Options
-
-These options are for Helm-style bundles, they specify how to download the
-chart.
-
-- chart
-- repo
-- version
-
-The reference to the chart can be either:
-
-- a local path in the cloned Git repository, specified by `chart`.
-- a [go-getter URL](https://github.com/hashicorp/go-getter?tab=readme-ov-file#url-format),
-  specified by `chart`. This can be used to download a tarball
-  of the chart. go-getter also allows to download a chart from a Git repo.
-- OCI chart URL, specified by `chart`. This can be used to download a chart
-  directly from a OCI server. It uses the Helm SDK to download the chart.
-- a Helm repository, specified by `repo` and optionally `version`.
-- an OCI Helm repository, specified by `repo` and optionally `version`.
-
-#### Helm Chart Value Options
+### Values
 
 Options for the downloaded Helm chart.
 
-- values
-- valuesFiles
-- valueFrom
+| Option | Description | Applies to |
+| :---- | :---- | :---- |
+| helm.values | A map of custom values to be passed to Helm during installation, similar to a values.yaml file. Supports templating. | Helm |
+| helm.valuesFiles | A list of paths to values files that will be passed to Helm during installation. | Helm |
+| helm.valuesFrom | Allows you to use values files from ConfigMaps or Secrets defined in the downstream clusters. | Helm |
 
-### Values
+It is not necessary to specify a chart's own `values.yaml` via `valuesFiles:`. It will always be used as a default when the agent installs the chart. See [Using Helm Values](./gitrepo-content#using-helm-values) for more details.
 
 Values are processed in different stages of the lifecycle: https://fleet.rancher.io/ref-bundle-stages
 
@@ -424,7 +433,7 @@ Values are processed in different stages of the lifecycle: https://fleet.rancher
 * helm values templating, e.g. with `${ }` happens when the bundle is targeted at a cluster, cluster labels filled in, etc.
 * When the agent installs the chart, values from `valuesFrom` are read. Then Helm templating `{{ }}` is processed.
 
-### Templating
+### Values Templating
 
 It is possible to specify the keys and values as go template strings for
 advanced templating needs.  Most of the functions from the [sprig templating
@@ -474,3 +483,91 @@ ${ if hasKey .ClusterLabels "LABELNAME" }${ .ClusterLabels.LABELNAME }${ else }m
 ```
 :::
 
+
+## Helm Deployment
+
+These options are used when deploying resources.
+They **also apply to kustomize- and manifest-style bundles**. They control how the fleet-agent deploys the bundle. All bundles are converted into Helm charts and deployed with the Helm SDK. These options are often similar to the Helm CLI options for install and update.
+
+| Option | Description | Applies to |
+| :---- | :---- | :---- |
+| helm.releaseName | A custom release name for the Helm chart. If not set, a name is generated from the GitRepo name and path. | All |
+| helm.takeOwnership | If true, Helm will skip the check for its own annotations on resources. | All |
+| helm.force | If true, Helm will override immutable resources during an update. This can be dangerous. | All |
+| helm.atomic | If true, the Helm \--atomic flag is used during upgrades, ensuring that the upgrade is rolled back if it fails. | All |
+| helm.waitForJobs | If true, Fleet will wait for all Jobs to complete before marking the GitRepo as ready. It will wait for the duration of timeoutSeconds. | All |
+| helm.disablePreProcess | If true, Go template pre-processing on Fleet values is disabled. | All |
+| helm.disableDNS | If true, DNS resolution in Helm's template functions is disabled. | All |
+| helm.skipSchemaValidation | If true, the values.schema.json file is not evaluated. | All |
+
+## Kustomize Configuration
+
+This option is used when deploying resources from a directory containing a kustomization.yaml file.
+
+| Option | Description | Applies to |
+| :---- | :---- | :---- |
+| kustomize.dir | Specifies a custom folder for Kustomize resources. This folder must contain a kustomization.yaml file. | Kustomize |
+
+## Deployment Strategy (Rollout)
+
+These options control how changes are rolled out across a fleet of clusters and apply to all bundle types.
+
+| Option | Description | Applies to |
+| :---- | :---- | :---- |
+| rolloutStrategy.maxUnavailable | The maximum number or percentage of clusters that can be unavailable during an update. The update will be paused if this threshold is met. | All |
+| rolloutStrategy.maxUnavailablePartitions | The maximum number or percentage of cluster partitions that can be unavailable during an update. | All |
+| rolloutStrategy.autoPartitionSize | The number or percentage used to automatically partition clusters if no specific partitioning strategy is configured. | All |
+| rolloutStrategy.partitions | A list of partition definitions that group clusters for a phased rollout. | All |
+
+## Targeting and Customization
+
+These options allow you to customize deployments for specific clusters or groups of clusters.
+
+| Option | Description | Applies to |
+| :---- | :---- | :---- |
+| targetCustomizations | A list of rules that modify resources for specific targets. The first rule that matches a cluster is used. | All |
+| targetCustomizations.name | A display name for the target customization. | All |
+| targetCustomizations.clusterSelector | A standard Kubernetes label selector to match clusters. | All |
+| targetCustomizations.clusterGroup | The name of a specific cluster group to target. | All |
+| targetCustomizations.clusterGroupSelector | A label selector to match cluster groups. | All |
+| targetCustomizations.clusterName | The name of a specific cluster to target. | All |
+| targetCustomizations.doNotDeploy | If true, resources will not be deployed to the matched clusters. | All |
+| targetCustomizations.namespace | Overrides the root-level namespace for the matched targets. | All |
+| targetCustomizations.defaultNamespace | Overrides the root-level defaultNamespace for the matched targets. | All |
+| targetCustomizations.helm | Overrides the root-level helm configuration for the matched targets. | All |
+| targetCustomizations.kustomize | Overrides the root-level kustomize configuration for the matched targets. | Kustomize |
+| targetCustomizations.yaml.overlays | A list of overlay names (which match folders in `overlays/`) to replace or patch raw YAML resources. | Raw YAML |
+| targetCustomizations.correctDrift | Enables and configures drift correction, which reverts external changes made to managed resources. | All |
+
+### Supported Customizations
+
+* [DefaultNamespace](/ref-crds#bundledeploymentoptions)
+* [ForceSyncGeneration](/ref-crds#bundledeploymentoptions)
+* [KeepResources](/ref-crds#bundledeploymentoptions)
+* [ServiceAccount](/ref-crds#bundledeploymentoptions)
+* [TargetNamespace](/ref-crds#bundledeploymentoptions)
+* [Helm.Atomic](/ref-crds#helmoptions)
+* [Helm.Chart](/ref-crds#helmoptions)
+* [Helm.DisablePreProcess](/ref-crds#helmoptions)
+* [Helm.Force](/ref-crds#helmoptions)
+* [Helm.ReleaseName](/ref-crds#helmoptions)
+* [Helm.Repo](/ref-crds#helmoptions)
+* [Helm.TakeOwnership](/ref-crds#helmoptions)
+* [Helm.TimeoutSeconds](/ref-crds#helmoptions)
+* [Helm.ValuesFrom](/ref-crds#helmoptions)
+* [Helm.Values](/ref-crds#helmoptions)
+* [Helm.Version](/ref-crds#helmoptions)
+
+  :::warning important information
+  Overriding the version of a Helm chart via target customizations will lead to bundles containing _all_ versions, ie the
+  default one and the custom one(s), of the chart, to accommodate all clusters. This in turn means that Fleet will
+  deploy larger bundles.
+
+  As Fleet stores bundles via etcd, this may cause issues on some clusters where resultant bundle sizes may exceed
+  etcd's configured maximum blob size. See [this issue](https://github.com/rancher/fleet/issues/1650) for more details.
+  :::
+
+* [Helm.WaitForJobs](/ref-crds#helmoptions)
+* [Kustomize.Dir](/ref-crds#kustomizeoptions)
+* [YAML.Overlays](/ref-crds#yamloptions)
+* [Diff.ComparePatches](/ref-crds#diffoptions)
