@@ -32,21 +32,24 @@ deploy resources without conflicts.
 
 This would create a user 'fleetuser', who can only manage GitRepo resources in the 'project1' namespace.
 
+```bash
     kubectl create serviceaccount fleetuser
     kubectl create namespace project1
     kubectl create -n project1 role fleetuser --verb=get --verb=list --verb=create --verb=delete --resource=gitrepos.fleet.cattle.io
     kubectl create -n project1 rolebinding fleetuser --serviceaccount=default:fleetuser --role=fleetuser
+```
 
 If we want to give access to multiple namespaces, we can use a single cluster role with two role bindings:
-
+```bash
     kubectl create clusterrole fleetuser --verb=get --verb=list --verb=create --verb=delete --resource=gitrepos.fleet.cattle.io
     kubectl create -n project1 rolebinding fleetuser --serviceaccount=default:fleetuser --clusterrole=fleetuser
     kubectl create -n project2 rolebinding fleetuser --serviceaccount=default:fleetuser --clusterrole=fleetuser
+```
 
 This makes sure, tenants can't interfere with GitRepo resources from other tenants, since they don't have access to their namespaces.
 
 ## Example Fleet in Rancher
- 
+
 When a new fleet workspace is created, a corresponding namespace with an identical name is automatically generated within the Rancher local cluster.
 For a user to see and deploy fleet resources in a specific workspace, they need at least the following permissions:
 - list/get the `fleetworkspace` cluster-wide resource in the local cluster
@@ -56,14 +59,14 @@ Let's grant permissions to deploy fleet resources in the `project1` and `project
 
 - To create the `project1` and `project2` fleet workspaces, you can either do it in the [Rancher UI](https://ranchermanager.docs.rancher.com/integrations-in-rancher/fleet/overview#accessing-fleet-in-the-rancher-ui) or use the following YAML resources:
 
-```
+```yaml
 apiVersion: management.cattle.io/v3
 kind: FleetWorkspace
 metadata:
   name: project1
 ```
 
-```
+```yaml
 apiVersion: management.cattle.io/v3
 kind: FleetWorkspace
 metadata:
@@ -72,7 +75,7 @@ metadata:
 
 - Create a `GlobalRole` that grants permission to deploy fleet resources in the `project1` and `project2` fleet workspaces:
 
-```
+```yaml
 apiVersion: management.cattle.io/v3
 kind: GlobalRole
 metadata:
@@ -124,6 +127,7 @@ This assumes all GitRepos created by 'fleetuser' have the `team: one` label. Dif
 
 In each of the user's namespaces, as an admin create a [`BundleNamespaceMapping`](./namespaces.md#cross-namespace-deployments).
 
+```yaml
     kind: BundleNamespaceMapping
     apiVersion: fleet.cattle.io/v1alpha1
     metadata:
@@ -145,6 +149,7 @@ In each of the user's namespaces, as an admin create a [`BundleNamespaceMapping`
         kubernetes.io/metadata.name: fleet-default
         # the label is on the namespace
         #workspace: prod
+```
 
 The [`target` section](./gitrepo-targets.md) in the GitRepo resource can be used to deploy only to a subset of the matched clusters.
 
@@ -152,6 +157,7 @@ The [`target` section](./gitrepo-targets.md) in the GitRepo resource can be used
 
 Admins can further restrict tenants by creating a `GitRepoRestriction` in each of their namespaces.
 
+```yaml
     kind: GitRepoRestriction
     apiVersion: fleet.cattle.io/v1alpha1
     metadata:
@@ -160,13 +166,14 @@ Admins can further restrict tenants by creating a `GitRepoRestriction` in each o
 
     allowedTargetNamespaces:
       - project1simpleapp
+```
 
-This will deny the creation of cluster wide resources, which may interfere with other tenants and limit the deployment to the 'project1simpleapp' namespace.
+This denies the creation of cluster wide resources, which may interfere with other tenants and limit the deployment to the 'project1simpleapp' namespace.
 
 ## An Example GitRepo Resource
 
 A GitRepo resource created by a tenant, without admin access could look like this:
-
+```yaml
     kind: GitRepo
     apiVersion: fleet.cattle.io/v1alpha1
     metadata:
@@ -188,8 +195,9 @@ A GitRepo resource created by a tenant, without admin access could look like thi
         clusterSelector:
           matchLabels:
             env: dev
+```
 
-This includes the `team: one` label and and the required `targetNamespace`.
+This includes the `team: one` label and the required `targetNamespace`.
 
 Together with the previous `BundleNamespaceMapping` it would target all clusters with a `env: dev` label in the 'fleet-default' namespace.
 
