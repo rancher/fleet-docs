@@ -130,6 +130,12 @@ module.exports = {
             '0.11': {
               banner: 'none',
             },
+            '0.12': {
+              banner: 'none',
+            },
+            '0.13': {
+              banner: 'none',
+            },
           },
         },
         blog: false, // Optional: disable the blog plugin
