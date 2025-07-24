@@ -79,7 +79,7 @@
 | spec |  | [GitRepoSpec](#gitrepospec) | false |
 | status |  | [GitRepoStatus](#gitrepostatus) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### GitRepoDisplay
 
@@ -92,7 +92,7 @@
 | message |  | string | false |
 | error |  | bool | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### GitRepoResource
 
@@ -113,7 +113,7 @@
 | message |  | string | false |
 | perClusterState |  | \[\][ResourcePerClusterState](#resourceperclusterstate) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### GitRepoResourceCounts
 
@@ -130,7 +130,7 @@
 | unknown |  | int | true |
 | notReady |  | int | true |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### GitRepoRestriction
 
@@ -146,7 +146,7 @@
 | allowedClientSecretNames |  | []string | false |
 | allowedTargetNamespaces |  | []string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### GitRepoSpec
 
@@ -173,7 +173,7 @@
 | imageScanCommit | Commit specifies how to commit to the git repo when new image is scanned and write back to git repo | [CommitSpec](#commitspec) | false |
 | keepResources | KeepResources specifies if the resources created must be kept after deleting the GitRepo | bool | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### GitRepoStatus
 
@@ -194,7 +194,7 @@
 | resourceErrors |  | []string | false |
 | lastSyncedImageScanTime |  | metav1.Time | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### GitTarget
 
@@ -208,7 +208,7 @@
 | clusterGroup |  | string | false |
 | clusterGroupSelector |  | *metav1.LabelSelector | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ResourcePerClusterState
 
@@ -223,7 +223,7 @@
 | patch |  | *GenericMap | false |
 | clusterId |  | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### Bundle
 
@@ -235,7 +235,7 @@
 | spec |  | [BundleSpec](#bundlespec) | true |
 | status |  | [BundleStatus](#bundlestatus) | true |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleDeployment
 
@@ -247,7 +247,7 @@
 | spec |  | [BundleDeploymentSpec](#bundledeploymentspec) | false |
 | status |  | [BundleDeploymentStatus](#bundledeploymentstatus) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleDeploymentDisplay
 
@@ -259,7 +259,7 @@
 | monitored |  | string | false |
 | state |  | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleDeploymentOptions
 
@@ -277,7 +277,7 @@
 | diff | Diff can be used to ignore the modified state of objects which are amended at runtime. | *[DiffOptions](#diffoptions) | false |
 | keepResources | KeepResources can be used to keep the deployed resources when removing the bundle | bool | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleDeploymentSpec
 
@@ -291,7 +291,7 @@
 | deploymentID |  | string | false |
 | dependsOn |  | \[\][BundleRef](#bundleref) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleDeploymentStatus
 
@@ -309,7 +309,7 @@
 | display |  | [BundleDeploymentDisplay](#bundledeploymentdisplay) | false |
 | syncGeneration |  | *int64 | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleDisplay
 
@@ -320,7 +320,7 @@
 | readyClusters |  | string | false |
 | state |  | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleNamespaceMapping
 
@@ -332,7 +332,7 @@
 | bundleSelector |  | *metav1.LabelSelector | false |
 | namespaceSelector |  | *metav1.LabelSelector | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleRef
 
@@ -343,7 +343,7 @@
 | name |  | string | false |
 | selector |  | *metav1.LabelSelector | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleResource
 
@@ -355,7 +355,7 @@
 | content |  | string | false |
 | encoding |  | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleSpec
 
@@ -372,7 +372,7 @@
 | dependsOn               | DependsOn refers to the bundles which must be ready before this bundle can be deployed.                                     | \[\][BundleRef](#bundleref)                           | false |
 | ignore                  | Ignore refers to the fields that will not be considered when monitoring the status.                                         | [IgnoreOptions](#ignoreoptions)                     | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleStatus
 
@@ -393,7 +393,7 @@
 | resourceKey |  | \[\][ResourceKey](#resourcekey) | false |
 | observedGeneration |  | int64 | true |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleSummary
 
@@ -411,7 +411,7 @@
 | desiredReady |  | int | true |
 | nonReadyResources |  | \[\][NonReadyResource](#nonreadyresource) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleTarget
 
@@ -426,7 +426,7 @@
 | clusterGroup |  | string | false |
 | clusterGroupSelector |  | *metav1.LabelSelector | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### BundleTargetRestriction
 
@@ -440,7 +440,7 @@
 | clusterGroup |  | string | false |
 | clusterGroupSelector |  | *metav1.LabelSelector | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ComparePatch
 
@@ -455,7 +455,7 @@
 | operations |  | \[\][Operation](#operation) | false |
 | jsonPointers |  | []string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ConfigMapKeySelector
 
@@ -466,7 +466,7 @@
 | namespace |  | string | false |
 | key |  | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### Content
 
@@ -477,7 +477,7 @@
 | metadata |  | metav1.ObjectMeta | false |
 | content |  | []byte | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### DiffOptions
 
@@ -487,7 +487,7 @@
 | ----- | ----------- | ------ | -------- |
 | comparePatches |  | \[\][ComparePatch](#comparepatch) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### HelmOptions
 
@@ -510,7 +510,7 @@
 | atomic | Atomic sets the --atomic flag when Helm is performing an upgrade | bool | false |
 | disablePreProcess | DisablePreProcess disables template processing in values | bool | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### KustomizeOptions
 
@@ -520,7 +520,7 @@
 | ----- | ----------- | ------ | -------- |
 | dir |  | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### LocalObjectReference
 
@@ -530,7 +530,7 @@
 | ----- | ----------- | ------ | -------- |
 | name |  | string | true |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ModifiedStatus
 
@@ -546,7 +546,7 @@
 | delete |  | bool | false |
 | patch |  | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### NonReadyResource
 
@@ -560,7 +560,7 @@
 | modifiedStatus |  | \[\][ModifiedStatus](#modifiedstatus) | false |
 | nonReadyStatus |  | \[\][NonReadyStatus](#nonreadystatus) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### NonReadyStatus
 
@@ -575,7 +575,7 @@
 | name |  | string | false |
 | summary |  | summary.Summary | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### Operation
 
@@ -587,7 +587,7 @@
 | path |  | string | false |
 | value |  | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### Partition
 
@@ -602,7 +602,7 @@
 | clusterGroup |  | string | false |
 | clusterGroupSelector |  | *metav1.LabelSelector | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### PartitionStatus
 
@@ -616,7 +616,7 @@
 | unavailable |  | int | false |
 | summary |  | [BundleSummary](#bundlesummary) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ResourceKey
 
@@ -629,7 +629,7 @@
 | namespace |  | string | false |
 | name |  | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### RolloutStrategy
 
@@ -642,7 +642,7 @@
 | autoPartitionSize |  | *intstr.IntOrString | false |
 | partitions |  | \[\][Partition](#partition) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### SecretKeySelector
 
@@ -653,7 +653,7 @@
 | namespace |  | string | false |
 | key |  | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ValuesFrom
 
@@ -664,7 +664,7 @@ Define helm values that can come from configmap, secret or external. Credit: htt
 | configMapKeyRef | The reference to a config map with release values. | *[ConfigMapKeySelector](#configmapkeyselector) | false |
 | secretKeyRef | The reference to a secret with release values. | *[SecretKeySelector](#secretkeyselector) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### YAMLOptions
 
@@ -674,7 +674,7 @@ Define helm values that can come from configmap, secret or external. Credit: htt
 | ----- | ----------- | ------ | -------- |
 | overlays |  | []string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### AlphabeticalPolicy
 
@@ -684,7 +684,7 @@ AlphabeticalPolicy specifies a alphabetical ordering policy.
 | ----- | ----------- | ------ | -------- |
 | order | Order specifies the sorting order of the tags. Given the letters of the alphabet as tags, ascending order would select Z, and descending order would select A. | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### CommitSpec
 
@@ -696,7 +696,7 @@ CommitSpec specifies how to commit changes to the git repository
 | authorEmail | AuthorEmail gives the email to provide when making a commit | string | true |
 | messageTemplate | MessageTemplate provides a template for the commit message, into which will be interpolated the details of the change made. | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ImagePolicyChoice
 
@@ -707,7 +707,7 @@ ImagePolicyChoice is a union of all the types of policy that can be supplied.
 | semver | SemVer gives a semantic version range to check against the tags available. | *[SemVerPolicy](#semverpolicy) | false |
 | alphabetical | Alphabetical set of rules to use for alphabetical ordering of the tags. | *[AlphabeticalPolicy](#alphabeticalpolicy) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ImageScan
 
@@ -719,7 +719,7 @@ ImagePolicyChoice is a union of all the types of policy that can be supplied.
 | spec |  | [ImageScanSpec](#imagescanspec) | false |
 | status |  | [ImageScanStatus](#imagescanstatus) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ImageScanSpec
 
@@ -735,7 +735,7 @@ API is taken from https://github.com/fluxcd/image-reflector-controller
 | suspend | This flag tells the controller to suspend subsequent image scans. It does not apply to already started scans. Defaults to false. | bool | false |
 | policy | Policy gives the particulars of the policy to be followed in selecting the most recent image | [ImagePolicyChoice](#imagepolicychoice) | true |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ImageScanStatus
 
@@ -751,7 +751,7 @@ API is taken from https://github.com/fluxcd/image-reflector-controller
 | observedGeneration |  | int64 | false |
 | canonicalImageName | CanonicalName is the name of the image repository with all the implied bits made explicit; e.g., `docker.io/library/alpine` rather than `alpine`. | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### SemVerPolicy
 
@@ -761,7 +761,7 @@ SemVerPolicy specifies a semantic version policy.
 | ----- | ----------- | ------ | -------- |
 | range | Range gives a semver range for the image tag; the highest version within the range that's a tag yields the latest image. | string | true |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### AgentStatus
 
@@ -776,7 +776,7 @@ SemVerPolicy specifies a semantic version policy.
 | nonReadyNodeNames | At most 3 nodes | []string | true |
 | readyNodeNames | At most 3 nodes | []string | true |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### IgnoreOptions
 
@@ -794,7 +794,7 @@ SemVerPolicy specifies a semantic version policy.
 | spec |  | [ClusterSpec](#clusterspec) | false |
 | status |  | [ClusterStatus](#clusterstatus) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ClusterDisplay
 
@@ -807,7 +807,7 @@ SemVerPolicy specifies a semantic version policy.
 | sampleNode |  | string | false |
 | state |  | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ClusterGroup
 
@@ -819,7 +819,7 @@ SemVerPolicy specifies a semantic version policy.
 | spec |  | [ClusterGroupSpec](#clustergroupspec) | true |
 | status |  | [ClusterGroupStatus](#clustergroupstatus) | true |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ClusterGroupDisplay
 
@@ -831,7 +831,7 @@ SemVerPolicy specifies a semantic version policy.
 | readyBundles |  | string | false |
 | state |  | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ClusterGroupSpec
 
@@ -841,7 +841,7 @@ SemVerPolicy specifies a semantic version policy.
 | ----- | ----------- | ------ | -------- |
 | selector |  | *metav1.LabelSelector | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ClusterGroupStatus
 
@@ -857,7 +857,7 @@ SemVerPolicy specifies a semantic version policy.
 | display |  | [ClusterGroupDisplay](#clustergroupdisplay) | false |
 | resourceCounts |  | [GitRepoResourceCounts](#gitreporesourcecounts) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ClusterRegistration
 
@@ -869,7 +869,7 @@ SemVerPolicy specifies a semantic version policy.
 | spec |  | [ClusterRegistrationSpec](#clusterregistrationspec) | false |
 | status |  | [ClusterRegistrationStatus](#clusterregistrationstatus) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ClusterRegistrationSpec
 
@@ -881,7 +881,7 @@ SemVerPolicy specifies a semantic version policy.
 | clientRandom |  | string | false |
 | clusterLabels |  | map[string]string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ClusterRegistrationStatus
 
@@ -892,7 +892,7 @@ SemVerPolicy specifies a semantic version policy.
 | clusterName |  | string | false |
 | granted |  | bool | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ClusterRegistrationToken
 
@@ -904,7 +904,7 @@ SemVerPolicy specifies a semantic version policy.
 | spec |  | [ClusterRegistrationTokenSpec](#clusterregistrationtokenspec) | false |
 | status |  | [ClusterRegistrationTokenStatus](#clusterregistrationtokenstatus) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ClusterRegistrationTokenSpec
 
@@ -914,7 +914,7 @@ SemVerPolicy specifies a semantic version policy.
 | ----- | ----------- | ------ | -------- |
 | ttl |  | *metav1.Duration | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ClusterRegistrationTokenStatus
 
@@ -925,7 +925,7 @@ SemVerPolicy specifies a semantic version policy.
 | expires |  | *metav1.Time | false |
 | secretName |  | string | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ClusterSpec
 
@@ -945,7 +945,7 @@ SemVerPolicy specifies a semantic version policy.
 | agentAffinity | AgentAffinity overrides the default affinity for the cluster's agent deployment. If this value is nil the default affinity is used. | *v1.Affinity | false |
 | agentResources | AgentResources sets the resources for the cluster's agent deployment. | *v1.ResourceRequirements | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)
 
 #### ClusterStatus
 
@@ -971,4 +971,4 @@ SemVerPolicy specifies a semantic version policy.
 | display |  | [ClusterDisplay](#clusterdisplay) | false |
 | agent |  | [AgentStatus](#agentstatus) | false |
 
-[Back to Custom Resources](#custom-resources)
+[Back to Custom Resources](#)

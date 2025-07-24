@@ -11,7 +11,7 @@ Using an OCI registry helps you:
 * Reduce etcd load by offloading large bundle content.  
 * Use a standardized storage backend for large manifests or Helm charts.
 
-![A visual asset displaying the flow of Fleet with OCI Storage.](../static/img/fleet-ociStorage-flow.png)
+![A visual asset displaying the flow of Fleet with OCI Storage.](../../static/img/fleet-ociStorage-flow.png)
 
 :::note
 Fleet checks for the integrity of OCI artifacts and Fleet tags OCI artifact as `latest`.
@@ -117,4 +117,4 @@ To decrypt your secret, you can run:
 
 `kubectl get secret ocistorage -n fleet-local -o json | jq '.data | map_values(@base64d)`
 
-![A screenshot of OCI secrets enabled for Fleet](../static/img/ociStorage-secret-ss.png)
+![A screenshot of OCI secrets enabled for Fleet](../../static/img/ociStorage-secret-ss.png)

@@ -29,6 +29,6 @@ fleet-controller [flags]
 
 ### SEE ALSO
 
-* [fleet-controller agentmanagement](fleet-controller_agentmanagement)	 -
-* [fleet-controller cleanup](fleet-controller_cleanup)	 -
-* [fleet-controller gitjob](fleet-controller_gitjob)	 -
+* [fleet-controller agentmanagement](fleet-controller_agentmanagement.md)	 -
+* [fleet-controller cleanup](fleet-controller_cleanup.md)	 -
+* [fleet-controller gitjob](fleet-controller_gitjob.md)	 -

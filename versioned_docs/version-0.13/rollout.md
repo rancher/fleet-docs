@@ -43,7 +43,7 @@ Fleet rolls out deployments in batches of up to 50 clusters per partition, regar
 
 The following diagram displays how Fleet handles rollout:
 
-![A visual asset displaying flow of rollout in Fleet.](../static/img/flow-rollout-fleet.png)
+![A visual asset displaying flow of rollout in Fleet.](../../static/img/flow-rollout-fleet.png)
 
 Various limits that can be configured in Fleet:
 
@@ -93,7 +93,7 @@ Fleet then:
 
 The following diagram illustrates how Fleet handles rollout across multiple partitions, including readiness checks and deployment flow:
 
-![A visual asset displaying the flow of partition rollout](../static/img/deploy-targets-partition.png)
+![A visual asset displaying the flow of partition rollout](../../static/img/deploy-targets-partition.png)
 
 :::note
 MaxNew is always 50. A bundle change can only stage 50 `BundleDeployments` at a time.	
@@ -101,7 +101,7 @@ MaxNew is always 50. A bundle change can only stage 50 `BundleDeployments` at a 
 
 Within each partition, Fleet rolls out up to 50 `BundleDeployments` at a time. The diagram below shows how Fleet determines whether to proceed or wait during this process:
 
-![A visual asset displaying the flow of deploying targets in a partition](../static/img/partition-rollout-flow.png)
+![A visual asset displaying the flow of deploying targets in a partition](../../static/img/partition-rollout-flow.png)
 
 :::note
 Fleet recommends labeling clusters so you can use those labels to assign clusters to specific partitions.
@@ -177,7 +177,7 @@ rolloutStrategy:
 
 The following diagram illustrates how Fleet handles 50 clusters in a single partition:
 
-![A visual asset displaying 50 clusters](../static/img/deploy-50Clusters.png)
+![A visual asset displaying 50 clusters](../../static/img/deploy-50Clusters.png)
 
 ### Scenario: 100 Clusters (Single Partition) 
 
@@ -233,7 +233,7 @@ rolloutStrategy:
 
 The following diagram describes how Fleet handles whether to continue or pause rollout.
 
-![A visual asset displaying the partitions about rollout in Fleet](../static/img/partition-fleet-rollout.png)
+![A visual asset displaying the partitions about rollout in Fleet](../../static/img/partition-fleet-rollout.png)
 
 This ensures full readiness and staged rollout across all 200 clusters. Use this approach when you need precise rollout sequencing and full cluster readiness before advancing. 
 
