@@ -5,8 +5,9 @@ module.exports = {
   tagline: '',
   url: 'https://fleet.rancher.io',
   baseUrl: '/',
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenAnchors: 'throw',
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'rancher', // Usually your GitHub org/user name.
   projectName: 'fleet-docs', // Usually your repo name.
