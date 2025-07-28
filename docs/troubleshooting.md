@@ -252,6 +252,7 @@ Based on the above log, you can add the following entry to remove the operation:
 :::note
 When a property that may affect the IDs of the created Bundles is changed (such as changing the paths of the Bundles), inconsistencies may occur in the state of the newly created Bundle, sometimes getting stuck in the Modified state for some resources.
 In such cases, it is also recommended to perform a force update of the affected GitRepo.
+:::
 
 ### Bundle has a Horizontal Pod Autoscaler (HPA) in modified state
 
