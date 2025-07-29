@@ -75,7 +75,7 @@ You can deploy workloads without using GitRepos by applying them locally with th
 
 ```bash
 git clone https://github.com/rancher/fleet-examples  
-cd fleet-examples/manifests
+cd fleet-examples/single-cluster/manifests
 ```
 
 Apply it to the current cluster:
