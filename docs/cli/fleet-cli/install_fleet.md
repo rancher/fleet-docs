@@ -61,7 +61,7 @@ fleet --version
 * `fleet target`: Displays which clusters would receive a bundle based on selectors and targeting rules.
   *  This helps you understand how `targets`, `targetOverrides`, `clusterGroups`, and `label` selectors work. For example, `fleet target my-bundle ./manifests.`
 * `fleet deploy`: Deploy a `bundle` with or without pushing it to the cluster. 
-  * Supports dry-run mode to preivew changes applied. For example, `fleet deploy --dry-run my-bundle ./manifests`.
+  * Supports dry-run mode to preview changes applied. For example, `fleet deploy --dry-run my-bundle ./manifests`.
 * `fleet apply`: Create or preview a `Bundle` from local files. Works without Fleet installed.
   * This applies for `fleet.yaml`, Helm charts and manifests. For example, `fleet apply my-bundle ./manifests`.  
 
