@@ -22,5 +22,5 @@ fleet-agent register [flags]
 
 ### SEE ALSO
 
-* [fleet-agent](./fleet-agent)	 -
+* [fleet-agent](./)	 -
 
