@@ -6,6 +6,9 @@ Each bundle is created from paths in a GitRepo and modified further by reading t
 Bundle lifecycles are tracked between releases by the helm releaseName field added to each bundle. If the releaseName is not
 specified within fleet.yaml it is generated from `GitRepo.name + path`. Long names are truncated and a `-<hash>` prefix is added.
 
+By default, bundle names will also be generated from the GitRepo's name and the path from which the bundle is created.
+However, a bundle's name can be overridden by using the `name` field in a `fleet.yaml` file.
+
 **The git repository has no explicitly required structure.** It is important
 to realize the scanned resources will be saved as a resource in Kubernetes so
 you want to make sure the directories you are scanning in git do not contain
