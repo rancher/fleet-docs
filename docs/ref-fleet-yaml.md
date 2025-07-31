@@ -40,6 +40,11 @@ namespaceLabels:
 namespaceAnnotations:
   key: value
 
+# Name of the bundle. If not specified, the bundle name will be computed based
+# on the GitRepo's name, and the path from which the bundle is created.
+# Default: ""
+name: my-great-bundle
+
 # Optional map of labels, that are set at the bundle and can be used in a
 # dependsOn.selector
 labels:
