@@ -331,7 +331,7 @@ the GitRepo is unpaused
 Besides, pausing a GitRepo only prevents bundles and bundle deployments from being created or updated for that GitRepo.
 In other words, it only affects _controller_ operations, not Fleet _agent_ operations. To prevent user resources,
 contained in a bundle, from being deleted when deleting a bundle deployment,
-[keepResources](./ref-bundle#bundle-resource) should be used instead.
+[keepResources](./ref-bundle) should be used instead.
 
 # Troubleshooting
 
