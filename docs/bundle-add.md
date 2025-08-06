@@ -64,7 +64,7 @@ spec:
 ## Targets
 
 The bundle can target multiple clusters. It uses the same [targeting as the GitRepo](gitrepo-targets#target-matching).
-Additional [customization options](gitrepo-targets#supported-customizations) can be specified per target:
+Additional [customization options](ref-fleet-yaml#supported-customizations) can be specified per target:
 
 ```yaml
 targets:
