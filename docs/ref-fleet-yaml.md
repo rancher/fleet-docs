@@ -349,7 +349,7 @@ Note that while all bundles are ultimately deployed by Fleet's agent using Helm,
 
 ### Chart Source
 
-They specify how to download the chart. The reference to the chart can be a local path, a go-getter URL, a Helm repository, or an OCI Helm repository.
+These options specify how to download the chart. The reference to the chart can be a local path, a go-getter URL, a Helm repository, or an OCI Helm repository.
 
 | Option | Description | Applies to |
 | :---- | :---- | :---- |
@@ -364,8 +364,8 @@ The reference to the chart can be either:
 - a [go-getter URL](https://github.com/hashicorp/go-getter?tab=readme-ov-file#url-format),
   specified by `chart`. This can be used to download a tarball
   of the chart. go-getter also allows to download a chart from a Git repo.
-- OCI chart URL, specified by `chart`. This can be used to download a chart
-  directly from a OCI server. It uses the Helm SDK to download the chart.
+- an OCI chart URL, specified by `chart`. This can be used to download a chart
+  directly from an OCI server. It uses the Helm SDK to download the chart.
 - a Helm repository, specified by `repo` and optionally `version`.
 - an OCI Helm repository, specified by `repo` and optionally `version`.
 
@@ -495,7 +495,7 @@ They **also apply to kustomize- and manifest-style bundles**. They control how t
 | helm.takeOwnership | If true, Helm will skip the check for its own annotations on resources. | All |
 | helm.force | If true, Helm will override immutable resources during an update. This can be dangerous. | All |
 | helm.atomic | If true, the Helm \--atomic flag is used during upgrades, ensuring that the upgrade is rolled back if it fails. | All |
-| helm.waitForJobs | If true, Fleet will wait for all Jobs to complete before marking the GitRepo as ready. It will wait for the duration of timeoutSeconds. | All |
+| helm.waitForJobs | If true, Fleet will wait for all Jobs to complete before marking the GitRepo as ready. It will wait for the duration of helm.timeoutSeconds. | All |
 | helm.disablePreProcess | If true, Go template pre-processing on Fleet values is disabled. | All |
 | helm.disableDNS | If true, DNS resolution in Helm's template functions is disabled. | All |
 | helm.skipSchemaValidation | If true, the values.schema.json file is not evaluated. | All |
@@ -518,6 +518,8 @@ These options control how changes are rolled out across a fleet of clusters and 
 | rolloutStrategy.maxUnavailablePartitions | The maximum number or percentage of cluster partitions that can be unavailable during an update. | All |
 | rolloutStrategy.autoPartitionSize | The number or percentage used to automatically partition clusters if no specific partitioning strategy is configured. | All |
 | rolloutStrategy.partitions | A list of partition definitions that group clusters for a phased rollout. | All |
+
+More details on rollout strategies and how they work [here](./rollout).
 
 ## Targeting and Customization
 
