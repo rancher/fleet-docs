@@ -1,5 +1,48 @@
 changelogs:
   - kind: github
+    dir: versioned_docs/version-0.13/changelogs
+    formats:
+      - extension: markdown
+        frontmatters: |
+          ---
+          title: "{{ .Changelog.Name }}"
+          date: "{{ .Changelog.PublishedAt }}"
+          ---
+        indexfilename: index
+        filetemplate: |
+          {{ .FrontMatters }}
+          {{ if .Changelog.Author }}
+          * {{ .Changelog.Author }} released this {{ .Changelog.PublishedAt }}*
+          {{ end }}
+          {{ if .Changelog.Description }}
+          {{ .Changelog.Description }}
+          {{ end }}
+          {{ if .Changelog.Assets }}
+          ## Download
+          {{ range $asset := .Changelog.Assets }}
+          * [{{ $asset.Name }}]({{ $asset.DownloadURL }})
+          {{ end }}
+          {{ end }}
+          {{ if .Changelog.URL }}
+          *Information retrieved from [here]({{ .Changelog.URL }})*
+          {{ end }}
+        indexfrontmatters: |
+          ---
+          title: "0.13 Changelogs"
+          ---
+        indexfiletemplate: |
+          {{ .FrontMatters }}
+          {{ range $pos, $release := .Changelogs }}
+          * [{{ $release.Name}}](changelogs/{{ $release.Tag }}.md) {{ if (eq $pos 0) }}(latest){{ end}}
+          {{ end }}
+    spec:
+      owner: rancher
+      repository: fleet
+      versionfilter:
+        kind: semver
+        pattern: "~0.13"
+
+  - kind: github
     dir: versioned_docs/version-0.12/changelogs
     formats:
       - extension: markdown
@@ -9,6 +52,23 @@ changelogs:
           date: "{{ .Changelog.PublishedAt }}"
           ---
         indexfilename: index
+        filetemplate: |
+          {{ .FrontMatters }}
+          {{ if .Changelog.Author }}
+          * {{ .Changelog.Author }} released this {{ .Changelog.PublishedAt }}*
+          {{ end }}
+          {{ if .Changelog.Description }}
+          {{ .Changelog.Description }}
+          {{ end }}
+          {{ if .Changelog.Assets }}
+          ## Download
+          {{ range $asset := .Changelog.Assets }}
+          * [{{ $asset.Name }}]({{ $asset.DownloadURL }})
+          {{ end }}
+          {{ end }}
+          {{ if .Changelog.URL }}
+          *Information retrieved from [here]({{ .Changelog.URL }})*
+          {{ end }}
         indexfrontmatters: |
           ---
           title: "0.12 Changelogs"
@@ -35,6 +95,23 @@ changelogs:
           date: "{{ .Changelog.PublishedAt }}"
           ---
         indexfilename: index
+        filetemplate: |
+          {{ .FrontMatters }}
+          {{ if .Changelog.Author }}
+          * {{ .Changelog.Author }} released this {{ .Changelog.PublishedAt }}*
+          {{ end }}
+          {{ if .Changelog.Description }}
+          {{ .Changelog.Description }}
+          {{ end }}
+          {{ if .Changelog.Assets }}
+          ## Download
+          {{ range $asset := .Changelog.Assets }}
+          * [{{ $asset.Name }}]({{ $asset.DownloadURL }})
+          {{ end }}
+          {{ end }}
+          {{ if .Changelog.URL }}
+          *Information retrieved from [here]({{ .Changelog.URL }})*
+          {{ end }}
         indexfrontmatters: |
           ---
           title: "0.11 Changelogs"
@@ -61,6 +138,23 @@ changelogs:
           date: "{{ .Changelog.PublishedAt }}"
           ---
         indexfilename: index
+        filetemplate: |
+          {{ .FrontMatters }}
+          {{ if .Changelog.Author }}
+          * {{ .Changelog.Author }} released this {{ .Changelog.PublishedAt }}*
+          {{ end }}
+          {{ if .Changelog.Description }}
+          {{ .Changelog.Description }}
+          {{ end }}
+          {{ if .Changelog.Assets }}
+          ## Download
+          {{ range $asset := .Changelog.Assets }}
+          * [{{ $asset.Name }}]({{ $asset.DownloadURL }})
+          {{ end }}
+          {{ end }}
+          {{ if .Changelog.URL }}
+          *Information retrieved from [here]({{ .Changelog.URL }})*
+          {{ end }}
         indexfrontmatters: |
           ---
           title: "0.10 Changelogs"
@@ -87,6 +181,23 @@ changelogs:
           date: "{{ .Changelog.PublishedAt }}"
           ---
         indexfilename: index
+        filetemplate: |
+          {{ .FrontMatters }}
+          {{ if .Changelog.Author }}
+          * {{ .Changelog.Author }} released this {{ .Changelog.PublishedAt }}*
+          {{ end }}
+          {{ if .Changelog.Description }}
+          {{ .Changelog.Description }}
+          {{ end }}
+          {{ if .Changelog.Assets }}
+          ## Download
+          {{ range $asset := .Changelog.Assets }}
+          * [{{ $asset.Name }}]({{ $asset.DownloadURL }})
+          {{ end }}
+          {{ end }}
+          {{ if .Changelog.URL }}
+          *Information retrieved from [here]({{ .Changelog.URL }})*
+          {{ end }}
         indexfrontmatters: |
           ---
           title: "0.9 Changelogs"
@@ -113,6 +224,23 @@ changelogs:
           date: "{{ .Changelog.PublishedAt }}"
           ---
         indexfilename: index
+        filetemplate: |
+          {{ .FrontMatters }}
+          {{ if .Changelog.Author }}
+          * {{ .Changelog.Author }} released this {{ .Changelog.PublishedAt }}*
+          {{ end }}
+          {{ if .Changelog.Description }}
+          {{ .Changelog.Description }}
+          {{ end }}
+          {{ if .Changelog.Assets }}
+          ## Download
+          {{ range $asset := .Changelog.Assets }}
+          * [{{ $asset.Name }}]({{ $asset.DownloadURL }})
+          {{ end }}
+          {{ end }}
+          {{ if .Changelog.URL }}
+          *Information retrieved from [here]({{ .Changelog.URL }})*
+          {{ end }}
         indexfrontmatters: |
           ---
           title: "0.8 Changelogs"
@@ -139,6 +267,23 @@ changelogs:
           date: "{{ .Changelog.PublishedAt }}"
           ---
         indexfilename: index
+        filetemplate: |
+          {{ .FrontMatters }}
+          {{ if .Changelog.Author }}
+          * {{ .Changelog.Author }} released this {{ .Changelog.PublishedAt }}*
+          {{ end }}
+          {{ if .Changelog.Description }}
+          {{ .Changelog.Description }}
+          {{ end }}
+          {{ if .Changelog.Assets }}
+          ## Download
+          {{ range $asset := .Changelog.Assets }}
+          * [{{ $asset.Name }}]({{ $asset.DownloadURL }})
+          {{ end }}
+          {{ end }}
+          {{ if .Changelog.URL }}
+          *Information retrieved from [here]({{ .Changelog.URL }})*
+          {{ end }}
         indexfrontmatters: |
           ---
           title: "0.7 Changelogs"
@@ -165,6 +310,23 @@ changelogs:
           date: "{{ .Changelog.PublishedAt }}"
           ---
         indexfilename: index
+        filetemplate: |
+          {{ .FrontMatters }}
+          {{ if .Changelog.Author }}
+          * {{ .Changelog.Author }} released this {{ .Changelog.PublishedAt }}*
+          {{ end }}
+          {{ if .Changelog.Description }}
+          {{ .Changelog.Description }}
+          {{ end }}
+          {{ if .Changelog.Assets }}
+          ## Download
+          {{ range $asset := .Changelog.Assets }}
+          * [{{ $asset.Name }}]({{ $asset.DownloadURL }})
+          {{ end }}
+          {{ end }}
+          {{ if .Changelog.URL }}
+          *Information retrieved from [here]({{ .Changelog.URL }})*
+          {{ end }}
         indexfrontmatters: |
           ---
           title: "0.6 Changelogs"
@@ -191,6 +353,23 @@ changelogs:
           date: "{{ .Changelog.PublishedAt }}"
           ---
         indexfilename: index
+        filetemplate: |
+          {{ .FrontMatters }}
+          {{ if .Changelog.Author }}
+          * {{ .Changelog.Author }} released this {{ .Changelog.PublishedAt }}*
+          {{ end }}
+          {{ if .Changelog.Description }}
+          {{ .Changelog.Description }}
+          {{ end }}
+          {{ if .Changelog.Assets }}
+          ## Download
+          {{ range $asset := .Changelog.Assets }}
+          * [{{ $asset.Name }}]({{ $asset.DownloadURL }})
+          {{ end }}
+          {{ end }}
+          {{ if .Changelog.URL }}
+          *Information retrieved from [here]({{ .Changelog.URL }})*
+          {{ end }}
         indexfrontmatters: |
           ---
           title: "0.5 Changelogs"
@@ -217,6 +396,23 @@ changelogs:
           date: "{{ .Changelog.PublishedAt }}"
           ---
         indexfilename: index
+        filetemplate: |
+          {{ .FrontMatters }}
+          {{ if .Changelog.Author }}
+          * {{ .Changelog.Author }} released this {{ .Changelog.PublishedAt }}*
+          {{ end }}
+          {{ if .Changelog.Description }}
+          {{ .Changelog.Description }}
+          {{ end }}
+          {{ if .Changelog.Assets }}
+          ## Download
+          {{ range $asset := .Changelog.Assets }}
+          * [{{ $asset.Name }}]({{ $asset.DownloadURL }})
+          {{ end }}
+          {{ end }}
+          {{ if .Changelog.URL }}
+          *Information retrieved from [here]({{ .Changelog.URL }})*
+          {{ end }}
         indexfrontmatters: |
           ---
           title: "0.4 Changelogs"
