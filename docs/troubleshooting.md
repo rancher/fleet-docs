@@ -247,7 +247,12 @@ Based on the above log, you can add the following entry to remove the operation:
 
 1. Check the [bundle diffs documentation](./bundle-diffs.md) for more information.
 
-1. You can also force update the `gitrepo` to perform a manual resync. Select **GitRepo** on the left navigation bar, then select **Force Update**.
+2. You can also force update the `GitRepo` to perform a manual resync. Select **GitRepo** on the left navigation bar, then select **Force Update**.
+
+:::note
+When a property that may affect the IDs of the created Bundles is changed (such as changing the paths of the Bundles), inconsistencies may occur in the state of the newly created Bundle, sometimes getting stuck in the Modified state for some resources.
+In such cases, it is also recommended to perform a force update of the affected GitRepo.
+:::
 
 ### Bundle has a Horizontal Pod Autoscaler (HPA) in modified state
 

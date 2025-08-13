@@ -6,6 +6,9 @@ Each bundle is created from paths in a GitRepo and modified further by reading t
 Bundle lifecycles are tracked between releases by the helm releaseName field added to each bundle. If the releaseName is not
 specified within fleet.yaml it is generated from `GitRepo.name + path`. Long names are truncated and a `-<hash>` prefix is added.
 
+By default, bundle names will also be generated from the GitRepo's name and the path from which the bundle is created.
+However, a bundle's name can be overridden by using the `name` field in a `fleet.yaml` file.
+
 **The git repository has no explicitly required structure.** It is important
 to realize the scanned resources will be saved as a resource in Kubernetes so
 you want to make sure the directories you are scanning in git do not contain
@@ -199,7 +202,7 @@ __How changes are applied to `values.yaml`__:
 
 ![](/img/FleetValuesStages.svg)
 
-The targeting step can treat the values as a template and fill in information from the `clusters.fleet.cattle.io` resource. More information can be found in [Helm values templating](./ref-fleet-yaml#templating).
+The targeting step can treat the values as a template and fill in information from the `clusters.fleet.cattle.io` resource. More information can be found in [Helm values templating](./ref-fleet-yaml#values-templating).
 This can be turned off in `fleet.yaml`, by setting `disablePreProcess`, e.g. to avoid conflicts with other templating languages.
 
 It is not necessary to reference a chart's own `values.yaml` via `valuesFiles:`. The `values.yaml` file contained in the
