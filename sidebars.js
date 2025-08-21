@@ -66,7 +66,6 @@ module.exports = {
             'cli/fleet-agent/fleet-agent',
             'cli/fleet-agent/fleet-agent_clusterstatus',
             'cli/fleet-agent/fleet-agent_register',
-            {type: 'doc', id: 'cli/fleet-cli/install_fleet'},
             {type: 'doc', id: 'cli/fleet-cli/fleet'},
             {type: 'doc', id: 'cli/fleet-cli/fleet_apply'},
             {type: 'doc', id: 'cli/fleet-cli/cleanup/fleet_cleanup'},
