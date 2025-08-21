@@ -9,6 +9,8 @@ module.exports = {
       items:[
         'quickstart',
         'tut-deployment',
+        'install-usage-fleetCLI',
+        'validate-fleetCLI',
         {type:'doc', id:'uninstall'},
       ],
     },
