@@ -153,40 +153,6 @@ Fleet will deploy the Helm chart with your customized `values.yaml` to the diffe
 
 >**Note:** Configuration management is not limited to deployments but can be expanded to general configuration management. Fleet is able to apply configuration management through customization among any set of clusters automatically.
 
-### Supported Customizations
-
-* [DefaultNamespace](/ref-crds#bundledeploymentoptions)
-* [ForceSyncGeneration](/ref-crds#bundledeploymentoptions)
-* [KeepResources](/ref-crds#bundledeploymentoptions)
-* [ServiceAccount](/ref-crds#bundledeploymentoptions)
-* [TargetNamespace](/ref-crds#bundledeploymentoptions)
-* [Helm.Atomic](/ref-crds#helmoptions)
-* [Helm.Chart](/ref-crds#helmoptions)
-* [Helm.DisablePreProcess](/ref-crds#helmoptions)
-* [Helm.Force](/ref-crds#helmoptions)
-* [Helm.ReleaseName](/ref-crds#helmoptions)
-* [Helm.Repo](/ref-crds#helmoptions)
-* [Helm.TakeOwnership](/ref-crds#helmoptions)
-* [Helm.TimeoutSeconds](/ref-crds#helmoptions)
-* [Helm.ValuesFrom](/ref-crds#helmoptions)
-* [Helm.Values](/ref-crds#helmoptions)
-* [Helm.Version](/ref-crds#helmoptions)
-
-  :::warning important information
-  Overriding the version of a Helm chart via target customizations will lead to bundles containing _all_ versions, ie the
-  default one and the custom one(s), of the chart, to accommodate all clusters. This in turn means that Fleet will
-  deploy larger bundles.
-
-  As Fleet stores bundles via etcd, this may cause issues on some clusters where resultant bundle sizes may exceed
-  etcd's configured maximum blob size. See [this issue](https://github.com/rancher/fleet/issues/1650) for more details.
-  :::
-
-* [Helm.WaitForJobs](/ref-crds#helmoptions)
-* [Kustomize.Dir](/ref-crds#kustomizeoptions)
-* [YAML.Overlays](/ref-crds#yamloptions)
-* [Diff.ComparePatches](/ref-crds#diffoptions)
-
-
 ## Additional Examples
 
 Examples using raw Kubernetes YAML, Helm charts, Kustomize, and combinations

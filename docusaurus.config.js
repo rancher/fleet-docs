@@ -5,8 +5,9 @@ module.exports = {
   tagline: '',
   url: 'https://fleet.rancher.io',
   baseUrl: '/',
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenAnchors: 'throw',
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'rancher', // Usually your GitHub org/user name.
   projectName: 'fleet-docs', // Usually your repo name.
@@ -130,12 +131,22 @@ module.exports = {
             '0.11': {
               banner: 'none',
             },
+            '0.12': {
+              banner: 'none',
+            },
+            '0.13': {
+              banner: 'none',
+            },
           },
         },
         blog: false, // Optional: disable the blog plugin
         // ...
         theme: {
           customCss: [require.resolve("./src/css/custom.css")],
+        },
+        gtag: {
+          trackingID: "GTM-57KS2MW",
+          anonymizeIP: true,
         },
       },
     ],
