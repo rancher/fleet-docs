@@ -9,6 +9,10 @@ to the [creating a deployment tutorial](./tut-deployment.md) for examples.
 
 The available fields of the GitRepo custom resource are documented in the [GitRepo resource reference](./ref-gitrepo.md)
 
+:::note
+Fleet does not support SSH proxy server authentication when cloning [private Git](#adding-a-private-git-repository) or [Helm](#using-private-helm-repositories) repositories. Use HTTPS authentication with a username and password or a personal access token.
+:::
+
 ### Proper Namespace
 
 Git repos are added to the Fleet manager using the `GitRepo` custom resource type. The `GitRepo` type is namespaced. By default, Rancher will create two Fleet workspaces: **fleet-default** and **fleet-local**.
@@ -41,8 +45,9 @@ For example, to generate a private SSH key:
 ```text
 ssh-keygen -t rsa -b 4096 -m pem -C "user@email.com"
 ```
-
-Note: The private key format has to be in `EC PRIVATE KEY`, `RSA PRIVATE KEY` or `PRIVATE KEY` and should not contain a passphase.
+:::note
+The private key format has to be in `EC PRIVATE KEY`, `RSA PRIVATE KEY` or `PRIVATE KEY` and should not contain a passphase.
+:::
 
 Put your private key into secret, use the namespace the GitRepo is in:
 
