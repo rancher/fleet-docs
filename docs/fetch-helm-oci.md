@@ -2,7 +2,7 @@
 
 Fleet supports pulling Helm charts stored in OCI registries. OCI registries are commonly used to store and distribute container images. By using them for Helm charts, you can apply the same packaging, authentication, and distribution methods you already use for container images.
 
-Using OCI registry for Helm charts helps you:
+Using OCI registries for Helm charts helps you:
 
 * Store charts alongside container images in the same registry.  
 * Use the same authentication and access control you already apply to container images.  
