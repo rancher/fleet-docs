@@ -9,10 +9,13 @@ Using OCI registries for Helm charts helps you:
 * Push and pull charts using standard OCI commands, making them easy to distribute across environments.  
 * Manage charts in registries designed for high availability and global distribution.
 
+For more information about HelmOps with OCI registry, refer to [HelmOps](helm-ops.md#oci-registry)
+
 ![A visual asset displaying flow of fetching Helm charts from an OCI registry](../static/img/fetch-Helm-from-OCI.svg)
 
 For example, if you manage multiple clusters with Fleet, developers can push Helm charts to an internal OCI registry. Fleet then pulls the charts directly from the registry and deploys them to downstream clusters.  
 This approach avoids maintaining a separate chart repository and reuses your existing registry infrastructure.
+
 
 ## Helm chart in fleet.yaml
 
