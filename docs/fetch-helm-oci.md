@@ -23,7 +23,7 @@ helm:
   chart: "oci://ghcr.io/fleetrepoci/guestbook"
 ```
 
-You can use the version key to reference a specific chart version.
+You can use the version field to reference a specific chart version.
 
 ```bash
 helm:
