@@ -100,13 +100,13 @@ Fleet supports injecting `known_hosts` into an SSH secret. Here is an example of
 
 Fetch the public key hash (taking Github as an example)
 
-```text
+```bash
 ssh-keyscan -H github.com
 ```
 
 And add it into the secret:
 
-```text
+```yaml
 apiVersion: v1
 kind: Secret
 metadata:
