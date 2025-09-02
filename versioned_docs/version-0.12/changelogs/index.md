@@ -3,7 +3,9 @@ title: "0.12 Changelogs"
 ---
 
 
-* [v0.12.5](changelogs/v0.12.5.md) (latest)
+* [v0.12.6](changelogs/v0.12.6.md) (latest)
+
+* [v0.12.5](changelogs/v0.12.5.md) 
 
 * [v0.12.4](changelogs/v0.12.4.md) 
 
