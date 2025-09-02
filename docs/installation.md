@@ -13,7 +13,7 @@ you will setup a centralized manager cluster to which you can register clusters.
 If you are just learning Fleet the single cluster install is the recommended starting
 point. After which you can move from single cluster to multi-cluster setup down the line.
 
-![](/img/single-cluster.png)
+![](../static/img/single-cluster.png)
 
 Single-cluster is the default installation. The same cluster will run both the Fleet
 manager and the Fleet agent. The cluster will communicate with Git server to
