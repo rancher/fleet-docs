@@ -147,6 +147,14 @@ When polling is enabled, Fleet does the following at the configured interval:
         * with `false` with an error if a failure happened
     * updating the `Last Polling Time` field to the starting time of the last polling attempt, even if it failed.
 
+## Using private Helm repositories
+
+This works the same way as it does for gitOps, by referencing a Helm access secret through field `helmSecretName`.
+
+See [the gitOps docs](./gitrepo-add.md#using-private-helm-repositories) for more details.
+The part on using separate credentials for each path is not relevant though, since unlike a GitRepo, a HelmOp resource
+only references a single Helm chart.
+
 ## Status updates
 
 Creating a HelmOp resource leads to a bundle being created, if Helm options are valid and a chart version can be found.
