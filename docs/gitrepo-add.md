@@ -88,14 +88,6 @@ The key has to be in PEM format.
 
 ### Known hosts
 
-:::warning
-
-If you don't add one or more public keys into the secret, any server's public key will be trusted and added. (`ssh -o
-stricthostkeychecking=yes` will be used), unless you install Fleet with chart value `insecureSkipHostKeyChecks` set to
-`false`.
-
-:::
-
 Fleet supports injecting `known_hosts` into an SSH secret. Here is an example of how to add it:
 
 Fetch the public key hash (taking Github as an example)

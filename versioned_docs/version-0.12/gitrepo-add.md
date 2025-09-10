@@ -86,7 +86,7 @@ The key has to be in PEM format.
 :::warning
 
 If you don't add one or more public keys into the secret, any server's public key will be trusted and added. (`ssh -o
-stricthostkeychecking=yes` will be used), unless you install Fleet with chart value `insecureSkipHostKeyChecks` set to
+stricthostkeychecking=no` will be used), unless you install Fleet with chart value `insecureSkipHostKeyChecks` set to
 `false`.
 
 :::
