@@ -9,6 +9,10 @@ to the [creating a deployment tutorial](./tut-deployment.md) for examples.
 
 The available fields of the GitRepo custom resource are documented in the [GitRepo resource reference](./ref-gitrepo.md)
 
+:::note
+Fleet does not support SSH proxy server authentication when cloning [private Git](#adding-a-private-git-repository) or [Helm](#using-private-helm-repositories) repositories. Use HTTPS authentication with a username and password or a personal access token.
+:::
+
 ### Proper Namespace
 
 Git repos are added to the Fleet manager using the `GitRepo` custom resource type. The `GitRepo` type is namespaced. By default, Rancher will create two Fleet workspaces: **fleet-default** and **fleet-local**.
@@ -41,8 +45,9 @@ For example, to generate a private SSH key:
 ```text
 ssh-keygen -t rsa -b 4096 -m pem -C "user@email.com"
 ```
-
-Note: The private key format has to be in `EC PRIVATE KEY`, `RSA PRIVATE KEY` or `PRIVATE KEY` and should not contain a passphase.
+:::note
+The private key format has to be in `EC PRIVATE KEY`, `RSA PRIVATE KEY` or `PRIVATE KEY` and should not contain a passphase.
+:::
 
 Put your private key into secret, use the namespace the GitRepo is in:
 
@@ -83,25 +88,17 @@ The key has to be in PEM format.
 
 ### Known hosts
 
-:::warning
-
-If you don't add one or more public keys into the secret, any server's public key will be trusted and added. (`ssh -o
-stricthostkeychecking=yes` will be used), unless you install Fleet with chart value `insecureSkipHostKeyChecks` set to
-`false`.
-
-:::
-
 Fleet supports injecting `known_hosts` into an SSH secret. Here is an example of how to add it:
 
 Fetch the public key hash (taking Github as an example)
 
-```text
+```bash
 ssh-keyscan -H github.com
 ```
 
 And add it into the secret:
 
-```text
+```yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -212,7 +209,31 @@ Fleet allows you to define unique credentials for each Helm chart path in a Git 
 If `gitRepo.spec.helmSecretNameForPaths` is defined, `gitRepo.spec.helmSecretName` is ignored.
 :::
 
-Create a file named `secrets-path.yaml` that specifies credentials for each path in your `GitRepo`. The keys must match the full path to a bundle directory (a folder containing a `fleet.yaml file`), which may have more segments than the entry under `paths:`. If a path listed in the GitRepo is not included in this file, Fleet does not use credentials for it.
+Create a file named `secrets-path.yaml` that specifies credentials for each path in your `GitRepo`. Each key can be either:
+- an exact path, in which case it must match the full path to a bundle directory (a folder containing a `fleet.yaml
+file`), which may have more segments than the entry under `paths:`.
+- a _glob_ matching one or more paths, useful when credentials need to be reused across multiple paths/bundles.
+[Here](https://pkg.go.dev/path/filepath#Match) are examples of supported syntax.
+:::info
+If more than one glob match a given path in a git repository, then Fleet will order globs lexically and use credentials
+from the first match.
+
+_Example_: For repository path `world-domination/ui_charts` and a secret containing the following keys, credentials
+under the _second_ glob will be used:
+```yaml
+world-domination/*_charts: # will not be used
+  username: fleet-ci
+  password: foo
+  insecureSkipVerify: true
+world-domination/*: # will be used, as `/*` will be sorted before `/*_charts`
+  username: fleet-ci
+  password: foo
+  insecureSkipVerify: true
+```
+:::
+
+If a path listed in the GitRepo is not included in this file, whether through exact paths or glob matching, then Fleet
+does not use credentials for it.
 
 :::note
 The file should be named `secrets-path.yaml`, otherwise Fleet will not be able to use it.
