@@ -48,12 +48,14 @@ module.exports = {
         {type:'doc', id:'gitrepo-targets'},
         {type:'doc', id:'bundle-diffs'},
         {type:'doc', id:'oci-storage'},
+        {type:'doc', id:'fetch-helm-oci'},
         {type:'doc', id:'webhook'},
         {type:'doc', id:'imagescan'},
         {type:'doc', id:'bundle-add'},
         {type:'doc', id:'observability'},
         {type:'doc', id:'helm-ops'},
-        {type:'doc', id:'rollout'}
+        {type:'doc', id:'rollout'},
+        {type:'doc', id:'fine-tune-error'}
       ],
     },
     {

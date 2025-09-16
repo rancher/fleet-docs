@@ -81,7 +81,7 @@ bundle will be created, aborting deployment.
 A Helm chart can also be referenced through its repository and chart name, with an optional version, which may be a
 static version or a version constraint.
 
-This is where polling can make sense, because referencing the chart using a repository allows Fleet to check the
+In this case, polling can make sense, because referencing the chart using a repository allows Fleet to check the
 repository's `index.yaml` for available versions matching the `version` field.
 
 Example:
@@ -114,6 +114,8 @@ and no bundle being created.
 In this case, Fleet will be downloading OCI artifacts. This means that:
 * the `version` field represents an OCI artifact's tag, which may be different to the actual version of the
 chart stored in the OCI artifact.
+* polling is supported: Fleet can check available OCI tags matching both the provided repository and version constraint
+on a regular basis, configured through the polling interval.
 * an OCI artifact may contain multiple Helm charts. This use case has only been validated with OCI artifacts containing
   a single Helm chart.
 :::
@@ -146,6 +148,14 @@ When polling is enabled, Fleet does the following at the configured interval:
         * with `true` if polling was successful
         * with `false` with an error if a failure happened
     * updating the `Last Polling Time` field to the starting time of the last polling attempt, even if it failed.
+
+## Using private Helm repositories
+
+This works the same way as it does for gitOps, by referencing a Helm access secret through field `helmSecretName`.
+
+See [the gitOps docs](./gitrepo-add.md#using-private-helm-repositories) for more details.
+The part on using separate credentials for each path is not relevant though, since unlike a GitRepo, a HelmOp resource
+only references a single Helm chart.
 
 ## Status updates
 
