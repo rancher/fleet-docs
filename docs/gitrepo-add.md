@@ -37,8 +37,12 @@ Workload namespace definitions can be restricted with `allowedTargetNamespaces` 
 
 ## Adding A Private Git Repository
 
-Fleet supports both HTTP and SSH auth keys for private repositories. To use this, you have to create a secret in the
-`GitRepo`'s namespace.
+Fleet supports the following authentication mechanisms for private repositories:
+    * HTTP basic auth
+    * SSH auth keys
+    * Github Apps
+
+To use any of them, you have to create a secret in the `GitRepo`'s namespace.
 
 For example, to generate a private SSH key:
 
@@ -52,7 +56,7 @@ The private key format has to be in `EC PRIVATE KEY`, `RSA PRIVATE KEY` or `PRIV
 Put your private key into secret, use the namespace the GitRepo is in:
 
 ```text
-kubectl create secret generic ssh-key -n fleet-default --from-file=ssh-privatekey=/file/to/private/key  --type=kubernetes.io/ssh-auth
+kubectl create secret generic ssh-key -n namespace-of-your-gitrepo --from-file=ssh-privatekey=/file/to/private/key  --type=kubernetes.io/ssh-auth
 ```
 
 Now the `clientSecretName` must be specified in the repo definition:
@@ -149,18 +153,44 @@ referenced in a `GitRepo` as well as to a possible `gitcredential` secret, if no
 
 Create a secret containing username and password. You can replace the password with a personal access token if necessary. Also see [HTTP secrets in Github](./troubleshooting#http-secrets-in-github).
 
-    kubectl create secret generic basic-auth-secret -n fleet-default --type=kubernetes.io/basic-auth --from-literal=username=$user --from-literal=password=$pat
+```text
+kubectl create secret generic basic-auth-secret -n namespace-of-your-gitrepo --type=kubernetes.io/basic-auth --from-literal=username=$user --from-literal=password=$pat
+```
 
 Just like with SSH, reference the secret in your GitRepo resource via `clientSecretName`.
 
+```text
     spec:
       repo: https://github.com/fleetrepoci/gitjob-private.git
       branch: main
       clientSecretName: basic-auth-secret
+```
 
 :::info
 When using BitBucket and access tokens, the username must be `x-token-auth`.
 :::
+
+### Using a Github App
+
+The following fields are needed to enable Fleet to authenticate to Github using a Github App:
+| Name                  | Secret field name             | Where to find it                                           |
+| --                    | ---                           | ----                                                       |
+| app ID                | `github_app_id`               | on your app's setting page, under `App ID` (numeric value)
+| app installation ID   | `github_app_installation_id`  | in the URL of the installation page for the app. For instance, if you have installed the app on a `foo/bar` repo, navigate to that repo's settings → _Integrations_ → _Applications_, open the page for the app; its URL will look like `https://github.com/settings/installations/<digits>`: those digits are your app installation ID. |
+| private key           | `github_app_private_key`      | generated when creating the Github App, or from the app settings page, where a `Generate a private key` button is available. |
+
+See [this page](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/registering-a-github-app)
+for more details on creating a Github App.
+
+With the necessary data at hand, create a secret containing those fields:
+```
+kubectl -n namespace-of-your-gitrepo create secret generic github-app-secret \
+    --from-literal=github_app_id=<app-id> \
+    --from-literal=github_app_installation_id=<installation-id> \
+    --from-file=github_app_private_key=<path-to-private-key-file>
+```
+
+Make sure you reference that secret in your GitRepo resource via `clientSecretName`.
 
 ### Using Custom CA Bundles
 
