@@ -53,7 +53,8 @@ module.exports = {
         {type:'doc', id:'observability'},
         {type:'doc', id:'helm-ops'},
         {type:'doc', id:'rollout'},
-        {type:'doc', id:'fine-tune-error'}
+        {type:'doc', id:'fine-tune-error'},
+        {type:'doc', id:'valuesYaml-valuesFiles'}
       ],
     },
     {
