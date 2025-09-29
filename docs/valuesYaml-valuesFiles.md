@@ -1,6 +1,6 @@
 # Understanding Helm values.yaml vs. Fleet valuesFiles
 
-When using Fleet with Helm, you often confuse the chart’s built-in `values.yaml` with additional values files referenced in `fleet.yaml`. These files serve different purposes, and it’s important to understand how they interact.
+Installing Helm charts with Fleet offers multiple ways of configuring and referencing values, using the chart’s built-in `values.yaml` and additional values files referenced in `fleet.yaml`. These files serve different purposes, and it’s important to understand how they interact.
 
 ![Understanding Helm values.yaml vs Fleet valuesFiles with best practices](../static/img/helm-value-fleet-yaml.svg)
 
