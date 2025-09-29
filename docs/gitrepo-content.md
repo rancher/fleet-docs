@@ -261,7 +261,7 @@ A Helm chart's `values.yaml` does not support templating. Any substitutions happ
 
 Fleet lets you reference additional values files through `fleet.yaml`. These files override or extend the chart’s baseline defaults.
 
-* A values Files entry is equivalent to copy-pasting the contents of that file into the values: section of `fleet.yaml`.  
+* A `valuesFiles` entry is equivalent to copy-pasting the contents of that file into the values: section of `fleet.yaml`.  
 * It’s mainly a convenience feature for splitting values into multiple files.  
 * Unlike Helm chart `values.yaml`, Fleet’s values files support templating, which enables dynamic configuration per environment.
 
