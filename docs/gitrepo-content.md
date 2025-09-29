@@ -269,7 +269,7 @@ Fleet lets you reference additional values files through `fleet.yaml`. These fil
 ```yaml
 helm:  
   valuesFiles:  
-    \- values.prod.yaml   \# overrides baseline
+    - values.prod.yaml   # overrides baseline
 ```
 
 You can use fleet `valuesFiles` referenced from `fleet.yaml` to:
