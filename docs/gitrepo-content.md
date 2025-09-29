@@ -245,7 +245,7 @@ Installing Helm charts with Fleet offers multiple ways of configuring and refere
 └── values.yaml   # chart defaults
 ```
 
-You can use Helm chart’s `values.yaml` file to:
+You can use a Helm chart’s `values.yaml` file to:
 
 * Provide default settings and allow users to override defaults without modifying the chart itself.  
 * Define common Kubernetes resource defaults.
