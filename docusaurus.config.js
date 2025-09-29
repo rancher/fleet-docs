@@ -144,9 +144,8 @@ module.exports = {
         theme: {
           customCss: [require.resolve("./src/css/custom.css")],
         },
-        gtag: {
-          trackingID: "GTM-57KS2MW",
-          anonymizeIP: true,
+        googleTagManager: {
+          containerId: 'GTM-57KS2MW',
         },
       },
     ],
