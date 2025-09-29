@@ -251,7 +251,7 @@ You can use a Helm chart’s `values.yaml` file to:
 * Define common Kubernetes resource defaults.
 
 :::note
-Helm chart `values.yaml` does not support templating. Any substitutions happen during chart rendering before Fleet applies the chart.
+A Helm chart's `values.yaml` does not support templating. Any substitutions happen during chart rendering before Fleet applies the chart.
 
 * You cannot use shell-style variables (for example, `${var}`) inside this file.  
 * If `${var}` appears, Helm treats it as plain text—you don’t need to escape it.
