@@ -158,6 +158,9 @@ Just like with SSH, reference the secret in your GitRepo resource via `clientSec
       branch: main
       clientSecretName: basic-auth-secret
 
+:::info
+When using BitBucket and access tokens, the username must be `x-token-auth`.
+:::
 
 ### Using Custom CA Bundles
 
