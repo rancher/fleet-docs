@@ -196,17 +196,25 @@ See [Using Private Helm Repositories](./gitrepo-add.md#using-private-helm-reposi
 
 __How changes are applied to `values.yaml`__:
 
-- Note that the most recently applied changes to the `values.yaml` will override any previously existing values.
+- The most recently applied changes to the `values.yaml` override any previously existing values.
 
-- When changes are applied to the `values.yaml` from multiple sources at the same time, the values will update in the following order: `helm.values` -> `helm.valuesFiles` -> `helm.valuesFrom`. That means `valuesFrom` will take precedence over both, `valuesFiles` and `values`.
+- When changes are applied to the `values.yaml` from multiple sources at the same time, the values update in the following order: 
+  1. `helm.values`
+  2. `helm.valuesFiles`
+  3. `helm.valuesFrom`
+
+This means that `valuesFrom` always overrides both `valuesFiles` and `values`.  
 
 ![](../static/img/FleetValuesStages.svg)
 
-The targeting step can treat the values as a template and fill in information from the `clusters.fleet.cattle.io` resource. More information can be found in [Helm values templating](./ref-fleet-yaml#values-templating).
-This can be turned off in `fleet.yaml`, by setting `disablePreProcess`, e.g. to avoid conflicts with other templating languages.
+### Templating
+
+The targeting step can treat the values as a template and fill in information from the `clusters.fleet.cattle.io` resource. For more information, refer to [Helm values templating](./ref-fleet-yaml#values-templating).
+
+You can turn this off in `fleet.yaml`, by setting `disablePreProcess`. This is useful to avoid conflicts with other templating languages.
 
 It is not necessary to reference a chart's own `values.yaml` via `valuesFiles:`. The `values.yaml` file contained in the
-chart will always be used as a default when the agent installs the chart.
+chart is always used as a default when the agent installs the chart.
 
 :::note Credentials in Values
 
@@ -216,6 +224,64 @@ Credentials loaded from the downstream cluster with `valuesFrom` are by default 
 
 Hardened clusters should add the Fleet CRDs to the [list of resources encrypted at rest](gitrepo-add#storing-credentials-in-git), on the upstream cluster, when storing credentials in the bundles.
 
+:::
+
+### Understanding Helm `values.yaml` vs Fleet `valuesFiles`
+
+Installing Helm charts with Fleet offers multiple ways of configuring and referencing values, using the chart’s built-in `values.yaml` and additional values files referenced in `fleet.yaml`. These files serve different purposes, and it’s important to understand how they interact.
+
+![Understanding Helm values.yaml vs Fleet valuesFiles with best practices](../static/img/helm-value-fleet-yaml.svg)
+
+**Example directory structure:**
+
+```bash
+.
+├── Chart.yaml
+├── fleet.yaml
+├── README.md
+├── templates/
+│   ├── deployment.yaml
+│   └── service.yaml
+└── values.yaml   # chart defaults
+```
+
+You can use a Helm chart’s `values.yaml` file to:
+
+* Provide default settings and allow users to override defaults without modifying the chart itself.  
+* Define common Kubernetes resource defaults.
+
+:::note
+A Helm chart's `values.yaml` does not support templating. Any substitutions happen during chart rendering before Fleet applies the chart.
+
+* You cannot use shell-style variables (for example, `${var}`) inside this file.  
+* If `${var}` appears, Helm treats it as plain text—you don’t need to escape it.
+:::
+
+### **Fleet valuesFiles referenced from fleet.yaml**
+
+Fleet lets you reference additional values files through `fleet.yaml`. These files override or extend the chart’s baseline defaults.
+
+* A `valuesFiles` entry is equivalent to copy-pasting the contents of that file into the values section of `fleet.yaml`.  
+* It’s mainly a convenience feature for splitting values into multiple files.  
+* Unlike Helm chart `values.yaml`, Fleet’s values files support templating, which enables dynamic configuration per environment.
+
+**Example fleet.yaml:**
+```yaml
+helm:  
+  valuesFiles:  
+    - values.prod.yaml   # overrides baseline
+```
+
+You can use fleet `valuesFiles` referenced from `fleet.yaml` to:
+
+* Apply environment-specific overrides (dev, staging, prod).  
+* Enable advanced features not included in chart defaults.
+
+:::note **Best practice**
+
+Whether you use helm `values.yaml`, `fleet.yaml` values:, or `valuesFiles`, never store credentials in these files.
+
+The recommended and safer approach is to use `valuesFrom`, which references Kubernetes Secrets or ConfigMaps. Although this requires creating the Secrets on downstream clusters, it ensures sensitive data is stored securely.
 :::
 
 ### Using ValuesFrom
