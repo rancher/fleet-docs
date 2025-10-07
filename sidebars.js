@@ -101,5 +101,14 @@ module.exports = {
         }
       ]
     },
+    {
+      type: 'category',
+      label: 'Experimental Features',
+      collapsed: false,
+      items:[
+        'enableexperimental',
+        'scheduling'
+      ],
+    },
   ],
 };
