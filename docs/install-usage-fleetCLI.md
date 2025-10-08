@@ -8,7 +8,7 @@ Fleet CLI is a command-line interface (CLI) that allows you to interact directly
 * Validating deployments without installing Fleet in the cluster
 
 :::note
-You can use `fleet apply` without installing Fleet in your clusters. However, for cluster interaction (for example, `fleet target`, `fleet deploy`), Fleet must be installed. For more information, refer to [Install Fleet.](installation.md)
+You can use `fleet apply` without installing Fleet in your clusters. However, for cluster interaction (for example, `fleet target`, `fleet deploy`), Fleet must be installed. For more information, refer to [Install Fleet](installation.md).
 :::
 
 ## Install Fleet CLI
