@@ -18,7 +18,7 @@ Fleet CLI is a stand-alone binary you can download from the [Fleet GitHub releas
 **Linux/macOS**
 
 ```bash
-curl -L -o fleet https://github.com/rancher/fleet/releases/download/v0.13.0/fleet-linux-amd64
+curl -L -o fleet https://github.com/rancher/fleet/releases/latest/download/fleet-linux-amd64
 
 # Make it executable and move to PATH
 
