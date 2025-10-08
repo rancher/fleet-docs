@@ -127,5 +127,5 @@ If the bundle is not ready:
 * Check if `fleet-controller` and `fleet-agent` pods are running.  
 * Make sure the `fleet-local` cluster is registered.
 * Inspect the bundle for error messages with:  
-  * `kubectl describe bundle -n fleet-local nginx-bundle`  
+  * `kubectl describe bundle -n fleet-local <bundle-name>`  
 * Delete and re-apply the bundle if you encounter Helm ownership conflicts.
