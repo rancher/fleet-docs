@@ -137,8 +137,11 @@ Before troubleshooting bundle or deployment issues, verify that the Fleet agent 
 
 ### Verify agent and controller status 
 
-If a bundle is not ready:
-
-* Verify that fleet-controller-xxxxx and fleet-agent-xxxxx pods are running.
-* Verify that your target clusters are registered.
-* Ensure the cluster status shows Ready and that it has a valid agent registered.
+If a bundle is not ready on a given cluster, check the following:
+* on the management cluster:
+    * Verify that the fleet-controller and gitjob pods (or fleet-controller and helmops, depending on whether your bundle comes from gitOps or helmOps) are running.
+    * Ensure the cluster status shows Ready
+    * Check the status of the bundle: it should contain an error message explaining what went wrong when trying to deploy to that target cluster
+* on the target cluster where the bundle is not ready:
+    * Verify that this target cluster is registered and has a `fleet-agent` pod running.
+    * As last resort, check the logs of the `fleet-agent` pod.
