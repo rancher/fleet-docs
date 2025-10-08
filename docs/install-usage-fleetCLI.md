@@ -1,6 +1,6 @@
 # Install and Use Fleet CLI
 
-Fleet CLI is a command-line interface(CLI) that allows you to interact directly with Fleet from your local machine. It enables you to create, apply and inspect `bundles` without requiring a `GitRepo`. Typical use cases include:
+Fleet CLI is a command-line interface (CLI) that allows you to interact directly with Fleet from your local machine. It enables you to create, apply and inspect `bundles` without requiring a `GitRepo`. Typical use cases include:
 
 * Testing and previewing `bundle` contents.
 * Creating bundles directly from Helm charts, Kubernetes manifests and `fleet.yaml` files.
