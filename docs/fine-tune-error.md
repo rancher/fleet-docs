@@ -1,4 +1,4 @@
-# **Fine Tuning Error Detection**
+# Fine Tuning Error Detection
 
 Fleet monitors the `status` field of deployed resources to determine whether a `Bundle` is healthy or in error. In certain cases, Fleet may interpret a condition in the status field as an error, even if it is expected or harmless.
 
