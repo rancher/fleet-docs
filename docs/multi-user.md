@@ -12,7 +12,7 @@ A multi-user fleet setup looks like this:
   namespaces on downstream clusters
 * clusters are in a separate namespace
 
-![Shared Clusters](/img/FleetSharedClusters.svg)
+![Shared Clusters](../static/img/FleetSharedClusters.svg)
 
 :::warning important information
 

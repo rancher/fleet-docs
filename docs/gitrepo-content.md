@@ -205,7 +205,7 @@ __How changes are applied to `values.yaml`__:
 
 This means that `valuesFrom` always overrides both `valuesFiles` and `values`.  
 
-![](/img/FleetValuesStages.svg)
+![](../static/img/FleetValuesStages.svg)
 
 ### Templating
 

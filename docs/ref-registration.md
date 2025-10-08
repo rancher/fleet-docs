@@ -42,7 +42,7 @@ The Fleet controller triggers and tries to grant the `ClusterRegistration` reque
 
 The new kubeconfig uses the "request" account. The "request" account can access the cluster status, `BundleDeployments` and `Contents`.
 
-![ClusterRegistationToken to ClusterRegistration](/img/FleetRegistrationToken.svg)
+![ClusterRegistationToken to ClusterRegistration](../static/img/FleetRegistrationToken.svg)
 
 ### Fleet Agent is Registered, Watches for `BundleDeployments`
 
@@ -73,7 +73,7 @@ It is important to note that there are multiple ways to start this:
 * Creating a `Cluster` resource with a kubeconfig. Rancher does this for downstream clusters. See [manager-initiated registration](./cluster-registration.md#manager-initiated).
 * Create a `ClusterRegistrationToken` resource, optionally create a `Cluster` resource for a pre-defined (`clientID`) cluster. See [agent-initiated registration](./cluster-registration.md#agent-initiated).
 
-![Registration](/img/FleetRegistration.svg)
+![Registration](../static/img/FleetRegistration.svg)
 
 ### Secrets during Agent Deployment
 
@@ -94,7 +94,7 @@ contains the upstream server URL and CA, next to the downstream's
 kubeconfig. If the settings are present in the kubeconfig secret, they
 override the configured values.
 
-![Registration Secrets](/img/FleetRegistrationSecrets.svg)
+![Registration Secrets](../static/img/FleetRegistrationSecrets.svg)
 
 ## Fleet Cluster Registration in Rancher
 

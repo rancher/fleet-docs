@@ -16,11 +16,13 @@ To demonstrate the life cycle of a Fleet bundle, we will use [multi-cluster/helm
 
 This diagram shows the different rendering stages a bundle goes through until deployment.
 
-![Bundle Stages](/img/FleetBundleStages.svg)
+![Bundle Stages](../static/img/FleetBundleStages.svg)
 
 ## Examining the Bundle Lifecycle With the CLI
 
 Several fleet CLI commands help with debugging bundles.
+
+![A diagram explaining how fleet CLI key commands work.](../static/img/fleetCLI-key-components.svg)
 
 ### fleet apply
 
@@ -40,13 +42,15 @@ More information on how to create bundles with `fleet apply` can be found in the
 
 ### fleet deploy
 
-[Deploy](./cli/fleet-cli/fleet_deploy.md) takes the output of `fleet target`, or a dumped bundledeployment/content resource and deploys it to a cluster, just like fleet-agent would. It supports a dry run mode, to print out the resources which would be created, instead of installing them with helm. Since the command doesn't create the input resources, a running fleet-agent would likely garbage collect the deployment.
+[Deploy](./cli/fleet-cli/fleet_deploy.md) takes the output of `fleet target`, or a dumped bundledeployment/content resource and deploys it to a cluster, just like fleet-agent would. It supports a dry run mode, to print out the resources which would be created, instead of installing them with helm. Since the command does not create the input resources, a running fleet-agent would likely garbage collect the deployment.
 
 The deploy command can be used to bring bundles to air-gapped clusters.
 
-### Lifecycle CLI Example
+### Lifecycle CLI 
 
-```
+Fleet CLI commands help you debug and understand the bundle lifecycle. The following example uses the full bundle lifecycle using CLI:
+
+```bash
 git clone https://github.com/rancher/fleet-test-data
 cd fleet-test-data
 # for information about apply see https://fleet.rancher.io/bundle-add
@@ -54,3 +58,5 @@ fleet apply -n fleet-local -o bundle.yaml testbundle simple-chart/
 fleet target --bundle-file bundle.yaml --dump-input-list  > bd.yaml
 fleet deploy --input-file bd.yaml --dry-run
 ```
+
+For more information, refer to [Fleet CLI Key commands.](install-usage-fleetCLI.md#key-commands)

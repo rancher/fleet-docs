@@ -22,7 +22,7 @@ interact, refer to the diagram below. For more details on a specific option,
 please refer to the [GitRepo](./ref-gitrepo.md) or
 [fleet.yaml](./ref-fleet-yaml.md) reference.
 
-![Configuring Workload Namespaces](/img/FleetWorkloadNamespaces.png)
+![Configuring Workload Namespaces](../static/img/FleetWorkloadNamespaces.png)
 
 ### Cross Namespace Deployments
 
@@ -106,7 +106,7 @@ Understanding how namespaces are used in the Fleet manager
 is important to understand the security model and how one can use Fleet in a
 multi-tenant fashion.
 
-![Namespace](/img/FleetNamespaces.svg)
+![Namespace](../static/img/FleetNamespaces.svg)
 
 ### GitRepos, Bundles, Clusters, ClusterGroups
 

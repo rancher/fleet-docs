@@ -61,7 +61,7 @@ You can configure [TLS](https://kubernetes.io/docs/concepts/services-networking/
 
 ### 2. Go to your webhook provider and configure the webhook callback url. Here is a Github example.
 
-![](/img/webhook.png)
+![](../static/img/webhook.png)
 
 Configuring a secret is optional. This is used to validate the webhook payload as the payload should not be trusted by default.
 If your webhook server is publicly accessible to the Internet, then it is recommended to configure the secret. If you do configure the
