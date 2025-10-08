@@ -30,7 +30,7 @@ sudo mv fleet /usr/local/bin/
 **Windows (PowerShell)**
 
 ```bash
-Invoke-WebRequest -Uri "https://github.com/rancher/fleet/releases/download/v0.13.0/fleet-windows-amd64.exe" -OutFile "fleet.exe"
+Invoke-WebRequest -Uri "https://github.com/rancher/fleet/releases/latest/download/fleet-windows-amd64.exe" -OutFile "fleet.exe"
 ```
 
 **Verify installation**
