@@ -129,3 +129,16 @@ If the bundle is not ready:
 * Inspect the bundle for error messages with:  
   * `kubectl describe bundle -n fleet-local <bundle-name>`  
 * Delete and re-apply the bundle if you encounter Helm ownership conflicts.
+
+
+## Troubleshooting
+
+Before troubleshooting bundle or deployment issues, verify that the Fleet agent is registered and running on the downstream cluster. For details, refer to [Fleet Agent is Registered, Watches for BundleDeployments](ref-registration.md#fleet-agent-is-registered-watches-for-bundledeployments).
+
+### Verify agent and controller status 
+
+If a bundle is not ready:
+
+* Verify that fleet-controller-xxxxx and fleet-agent-xxxxx pods are running.
+* Verify that your target clusters are registered.
+* Ensure the cluster status shows Ready and that it has a valid agent registered.
