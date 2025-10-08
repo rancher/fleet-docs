@@ -36,6 +36,16 @@ fleet apply -n fleet-local -o bundle.yaml testbundle simple-chart/
 
 More information on how to create bundles with `fleet apply` can be found in the [section on bundles](https://fleet.rancher.io/bundle-add).
 
+### fleet target
+
+[Target](./cli/fleet-cli/fleet_target.md) reads a bundle from a file and works with a live cluster to print out the `bundledeployment` & `content` resource, which fleetcontroller would create. It takes a namespace as an argument, so it can look in that namespace for e.g. cluster resources. It can also dump the data structure which is used during "targeting", so decisions taken regarding labels and cluster names can be checked.
+
+### fleet deploy
+
+[Deploy](./cli/fleet-cli/fleet_deploy.md) takes the output of `fleet target`, or a dumped bundledeployment/content resource and deploys it to a cluster, just like fleet-agent would. It supports a dry run mode, to print out the resources which would be created, instead of installing them with helm. Since the command does not create the input resources, a running fleet-agent would likely garbage collect the deployment.
+
+The deploy command can be used to bring bundles to air-gapped clusters.
+
 ### Lifecycle CLI 
 
 Fleet CLI commands help you debug and understand the bundle lifecycle. The following example uses the full bundle lifecycle using CLI:

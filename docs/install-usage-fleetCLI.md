@@ -18,7 +18,7 @@ Fleet CLI is a stand-alone binary you can download from the [Fleet GitHub releas
 **Linux/macOS**
 
 ```bash
-curl -L -o fleet https://github.com/rancher/fleet/releases/download/v0.12.4/fleet-linux-amd64
+curl -L -o fleet https://github.com/rancher/fleet/releases/download/v0.13.0/fleet-linux-amd64
 
 # Make it executable and move to PATH
 
@@ -30,7 +30,7 @@ sudo mv fleet /usr/local/bin/
 **Windows (PowerShell)**
 
 ```bash
-Invoke-WebRequest -Uri "https://github.com/rancher/fleet/releases/download/v0.12.4/fleet-windows-amd64.exe" -OutFile "fleet.exe"
+Invoke-WebRequest -Uri "https://github.com/rancher/fleet/releases/download/v0.13.0/fleet-windows-amd64.exe" -OutFile "fleet.exe"
 ```
 
 **Verify installation**
@@ -60,14 +60,14 @@ fleet --version
 
 Fleet provides several CLI commands to create, preview, and deploy bundles. These commands are useful for debugging and understanding the bundle lifecycle.
 
+* `fleet apply`: creates or previews a `bundle` from local files, such as a Helm chart, Kubernetes manifests, or kustomize folders. This command does not require access to a cluster, and therefore works even without Fleet or `kubectl` installed.
+  * This applies for `fleet.yaml`, Helm charts and manifests. For example, `fleet apply my-bundle ./manifests`.  
 * `fleet target`: Reads a bundle file and evaluates which clusters would receive it, based on selectors and targeting rules such as `targets`, `targetOverrides`, `clusterGroups`, and `label` selectors.
   * For example, `fleet target my-bundle ./manifests.`
-* `fleet apply`: creates or previews a `bundle` from local files, such as a Helm chart, Kubernetes manifests, or kustomize folders. This command works even without Fleet installed.
-  * This applies for `fleet.yaml`, Helm charts and manifests. For example, `fleet apply my-bundle ./manifests`.  
-* `fleet deploy`: deploys a `bundle` with or without pushing it to the cluster. You can use it with the output of fleet target or a dumped bundledeployment/content resource. You can use it for:
-  * `fleet apply -o - name ./folder` to check the YAML of the bundle before creating it. For more information, refer to  as in [Convert a Helm chart into a bundle.](#convert-a-helm-chart-into-a-bundle)
-  * Target to debug selectors and verify which downstream clusters are targeted.
-  * `fleet deploy --dry-run` to validate workload resources.
+* `fleet deploy`: takes the output of `fleet target`, or a dumped `bundledeployment`/content resource and deploys it to a cluster, just like fleet-agent would. You can use it in these scenarios:
+  * `fleet apply -o - name ./folder` to check the YAML of the bundle before creating it. For more information, refer to [Convert a Helm chart into a bundle.](#convert-a-helm-chart-into-a-bundle)
+  * Use with a target to debug selectors and verify which downstream clusters are targeted.
+  * `fleet deploy --dry-run` to print the resources that would be deployed, but does not apply them.  
 
 ![A diagram explaining how fleet CLI key commands work.](../static/img/fleetCLI-key-components.svg)
 
@@ -125,7 +125,7 @@ The blog post on [Fleet: Multi-Cluster Deployment with the Help of External Secr
 If the bundle is not ready:
 
 * Check if `fleet-controller` and `fleet-agent` pods are running.  
-* Make sure the `fleet-local` cluster is registered:  
-* Inspect the bundle for error messages:  
+* Make sure the `fleet-local` cluster is registered.
+* Inspect the bundle for error messages with:  
   * `kubectl describe bundle -n fleet-local nginx-bundle`  
 * Delete and re-apply the bundle if you encounter Helm ownership conflicts.
