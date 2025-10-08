@@ -67,7 +67,7 @@ Fleet provides several CLI commands to create, preview, and deploy bundles. Thes
 * `fleet deploy`: takes the output of `fleet target`, or a dumped `bundledeployment`/content resource and deploys it to a cluster, just like fleet-agent would. You can use it in these scenarios:
   * `fleet apply -o - name ./folder` to check the YAML of the bundle before creating it. For more information, refer to [Convert a Helm chart into a bundle.](#convert-a-helm-chart-into-a-bundle)
   * Use with a target to debug selectors and verify which downstream clusters are targeted.
-  * `fleet deploy --dry-run` to print the resources that would be deployed, but does not apply them.  
+  * `fleet deploy --dry-run` to print the resources that would be deployed, but without applying them.  
 
 ![A diagram explaining how fleet CLI key commands work.](../static/img/fleetCLI-key-components.svg)
 
