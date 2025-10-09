@@ -13,7 +13,7 @@ metadata:
   name: my-schedule
 
   # Namespace of the schedule resource.
-  # Targets of this Schedule are also located in this same namespace.
+  # Only targets in the namespace of this Schedule can be selected.
   namespace: fleet-local
 spec:
 
