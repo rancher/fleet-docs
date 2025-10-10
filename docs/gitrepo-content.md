@@ -132,6 +132,16 @@ In the example, we can see a complete kustomize use case where for each Bundle, 
 
 With the previous scanning option, Fleet cannot determine which YAML we want to use to configure the Bundle, so it attempts to find it on its own (Which, at times, does not provide enough flexibility.)
 
+:::warning excluding irrelevant files from user-scanned bundles
+When using this bundle scanning mode, Fleet does not exclude bundle configuration files which are not explicitly
+referenced in the GitRepo. For instance, in the above example file structure:
+* by default, neither `prod.yaml` nor `test.yaml` would be excluded from the bundle using `dev.yaml` as its options file
+* similarly, by default, neither `dev.yaml` nor `prod.yaml` would be excluded from the bundle using `test.yaml` as its options file
+
+This can be mitigated by using a `.fleetignore` file next to `{dev,test,prod}.yaml` excluding all three of them.
+See the next section for more details on `.fleetignore` files.
+:::
+
 ### Excluding files and directories from bundles
 
 Fleet supports file and directory exclusion by means of `.fleetignore` files, in a similar fashion to how `.gitignore`
