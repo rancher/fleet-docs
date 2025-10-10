@@ -107,7 +107,8 @@ module.exports = {
       collapsed: false,
       items:[
         'enableexperimental',
-        'scheduling'
+        'scheduling',
+        'ref-schedule'
       ],
     },
   ],
