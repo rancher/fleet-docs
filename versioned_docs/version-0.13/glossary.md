@@ -52,7 +52,7 @@ A downstream cluster is a Kubernetes cluster where user workloads will run, with
 
 ## fleet.yaml
 
-A `fleet.yaml` file lives in a git repository and stores options for a bundle and bundle deployments to be generated from that bundle. More information is available [here](https://fleet.rancher.io/ref-fleet-yaml).
+A `fleet.yaml` file lives in a git repository and stores options for a bundle and bundle deployments to be generated from that bundle. More information is available [here](./ref-fleet-yaml.md).
 
 ## GitOps
 
