@@ -59,4 +59,4 @@ fleet target --bundle-file bundle.yaml --dump-input-list  > bd.yaml
 fleet deploy --input-file bd.yaml --dry-run
 ```
 
-For more information, refer to [Fleet CLI Key commands.](install-usage-fleetCLI.md#key-commands)
+For more information, refer to [Fleet CLI Key commands.](install-usage-fleet-cli.md#key-commands)
