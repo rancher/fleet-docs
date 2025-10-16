@@ -77,4 +77,4 @@ In this case, the `Schedule` allows updates to `Clusters` labeled with *env=dev*
 The way you define target `Clusters` is **identical** to how targets are defined for `GitRepo` resources.
 The existing documentation at [GitRepo Targets](./gitrepo-targets.md) also applies to `Schedule` targets.
 
-You can view the full CRD for `Schedule` [here](ref-schedule.md)
+You can view the full CRD for `Schedule`, refer to [Fleet schedule docs](ref-schedule.md)

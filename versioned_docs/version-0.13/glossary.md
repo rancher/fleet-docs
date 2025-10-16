@@ -12,7 +12,7 @@ A bundle is a Fleet-specific resource (also known as a [Custom Resource](https:/
 
 ## Chart
 
-See [this definition](https://helm.sh/docs/topics/charts/) of a Helm chart.
+Refer to [charts definition in helms documentation](https://helm.sh/docs/topics/charts/) of a Helm chart.
 
 ## Cluster
 
@@ -31,12 +31,12 @@ This much is clear, though: Fleet's goal is to make it easier to automate deploy
 
 ## Custom Resource
 
-See [this official definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/).
+Refer to [custom resources in Kubernetes documentation](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/).
 In short, a custom resource is a resource defined for the purposes of an application (in our case Fleet), to extend the set of resources supported by the Kubernetes API (pods, deployments, services, etc).
 
 ## Custom Resource Definition
 
-See [this explanation](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions) from the Kubernetes docs.
+See [custom resource definition in Kubernetes documentation](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions) from the Kubernetes docs.
 
 ## Deployment
 
@@ -52,7 +52,7 @@ A downstream cluster is a Kubernetes cluster where user workloads will run, with
 
 ## fleet.yaml
 
-A `fleet.yaml` file lives in a git repository and stores options for a bundle and bundle deployments to be generated from that bundle. More information is available [here](./ref-fleet-yaml.md).
+A `fleet.yaml` file lives in a git repository and stores options for a bundle and bundle deployments to be generated from that bundle. For more information, refer to [fleet.yaml reference](./ref-fleet-yaml.md).
 
 ## GitOps
 

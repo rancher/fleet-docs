@@ -524,7 +524,7 @@ These options control how changes are rolled out across a fleet of clusters and 
 | rolloutStrategy.autoPartitionSize | The number or percentage used to automatically partition clusters if no specific partitioning strategy is configured. | All |
 | rolloutStrategy.partitions | A list of partition definitions that group clusters for a phased rollout. | All |
 
-More details on rollout strategies and how they work [here](./rollout.md).
+More details on rollout strategies and how they work, refer to [rollout strategies](./rollout.md).
 
 ## Targeting and Customization
 
@@ -571,7 +571,7 @@ These options allow you to customize deployments for specific clusters or groups
   deploy larger bundles.
 
   As Fleet stores bundles via etcd, this may cause issues on some clusters where resultant bundle sizes may exceed
-  etcd's configured maximum blob size. See [this issue](https://github.com/rancher/fleet/issues/1650) for more details.
+  etcd's configured maximum blob size. Refer to [Request entity too large #1650 issue](https://github.com/rancher/fleet/issues/1650) for more details.
   :::
 
 * [Helm.WaitForJobs](/ref-crds#helmoptions)

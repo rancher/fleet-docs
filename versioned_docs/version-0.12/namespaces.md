@@ -137,9 +137,7 @@ This will uninstall all deployed bundles, except for the fleet agent, from the d
 :::
 
 If you are using Fleet in a [single cluster](./concepts.md) style, the namespace
-will always be **fleet-local**. Check
-[here](./namespaces.md#cluster-registration-namespace-fleet-local) for more on the
-`fleet-local` namespace.
+will always be **fleet-local**.Refer to [cluster registration](./namespaces.md#cluster-registration-namespace-fleet-local) for more on the `fleet-local` namespace.
 
 For a [multi-cluster](./concepts.md) style, please ensure you use the correct
 repo that will map to the right target clusters.
