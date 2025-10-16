@@ -421,4 +421,4 @@ Nested `GitRepo CRs` (defining a `GitRepo` that points to a repository containin
 You can use this feature to take advantage of `GitOps` in your `GitRepo` resources or, for example, to split complex scenarios into more than one `GitRepo` resource.
 When finding a `GitRepo` in a `Bundle` Fleet will simply deploy it as any other resource.
 
-See [this example](https://github.com/rancher/fleet-examples/tree/master/single-cluster/multi-gitrepo).
+Refer to [Fleet single-cluster example](https://github.com/rancher/fleet-examples/tree/master/single-cluster/multi-gitrepo).

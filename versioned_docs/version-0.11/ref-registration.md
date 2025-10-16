@@ -17,7 +17,7 @@ The process is identical for the local cluster or any downstream cluster. It sta
 
 In this step a `ClusterRegistationToken` and an "import" service account are created based on a `Cluster` resource.
 
-The Fleet controller creates a [`ClusterRegistrationToken`](https://fleet.rancher.io/architecture#security)
+The Fleet controller creates a [`ClusterRegistrationToken`](./architecture.md#security)
 and waits for it to be complete. The `ClusterRegistationToken` triggers the creation of the "import" service account, which can create
 `ClusterRegistrations` and read any secret in the system registration namespace (eg "cattle-fleet-clusters-system"). The `import.go` controller will
 enqueue itself until the "import" service account exists, because that account is needed to create the `fleet-agent-bootstrap` secret.
