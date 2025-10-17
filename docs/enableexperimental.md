@@ -8,8 +8,10 @@ See also "[Configure Fleet Install Options in Rancher](./ref-configuration#confi
 
 ## Available experimental features
 
-Fleet currently supports the following experimental features:
+Fleet currently supports the following experimental features, toggled through their respective environment variables:
 * Scheduling: [`EXPERIMENTAL_SCHEDULES`](./scheduling.md)
+* Automated propagation of resources to downstream clusters:
+[`EXPERIMENTAL_COPY_RESOURCES_DOWNSTREAM`](./experimental-downstream-resources.md)
 
 ## Enabling an experimental feature
 
