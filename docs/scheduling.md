@@ -1,6 +1,10 @@
 # Scheduling
 
-Fleet supports (starting from version 0.13 and in experimental mode) the definition of **scheduled intervals** during which new updates to existing deployments are allowed.
+:::warning
+This is an experimental feature.
+:::
+
+Fleet supports (starting from version 0.14) the definition of **scheduled intervals** during which new updates to existing deployments are allowed.
 
 This enables users to control **when changes are applied**, independently of when updates are pushed to the Git repository—if desired.
 
