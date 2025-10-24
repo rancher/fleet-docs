@@ -8,6 +8,8 @@
       "collapsed": false,
       "items": [
         "quickstart",
+        "install-usage-fleet-cli",
+        "validate-fleet-cli",
         "tut-deployment",
         {
           "type": "doc",
