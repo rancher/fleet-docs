@@ -87,7 +87,5 @@ frontend   3/3     3            3           116m
 ## Next steps
 
 Do you need to...
-* Monitor private git or Helm repositories? 
-  * Refer to [adding private git or Helm repositories](./gitrepo-add.md).
-* Customise your deployments per target cluster? 
-  * Refer to [mapping to downstream clusters](./gitrepo-targets.md).
+* Monitor private git or Helm repositories? Check [this](./gitrepo-add.md).
+* Customise your deployments per target cluster? [This page](./gitrepo-targets.md) will help.

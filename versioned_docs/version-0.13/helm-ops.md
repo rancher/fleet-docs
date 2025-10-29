@@ -21,7 +21,7 @@ However, it will resolve chart versions to ensure that the same, and latest, ver
 targeted downstream clusters. This applies to the following cases:
 * a wildcard or empty version is specified
 * a [semantic versioning](https://semver.org/) constraint is specified, such as `0.1.x`, `< 2.0.0`. More information on
-  supported constraints [checking version constraints](https://github.com/Masterminds/semver?tab=readme-ov-file#checking-version-constraints).
+  supported constraints [here](https://github.com/Masterminds/semver?tab=readme-ov-file#checking-version-constraints).
 When constraints are invalid or no matching version can be found, Fleet will display a descriptive error message.
 
 When using this feature, Helm charts are downloaded from downstream clusters, which must therefore have access to Helm

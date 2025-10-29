@@ -13,7 +13,8 @@ If you want to deploy resources without running a Fleet controller, also take a 
 
 When creating a `GitRepo` Fleet fetches the resources from a git repository, and add them to a Bundle.
 When creating a `Bundle` resources need to be explicitly specified in the `Bundle` Spec.
-Resources can be compressed with gz. Refer to [Rancher managedchart.go](https://github.com/rancher/rancher/blob/main/pkg/controllers/provisioningv2/managedchart/managedchart.go#L149-L153) an example of how Rancher uses compression in go code.
+Resources can be compressed with gz. See [here](https://github.com/rancher/rancher/blob/main/pkg/controllers/provisioningv2/managedchart/managedchart.go#L149-L153)
+an example of how Rancher uses compression in go code.
 
 If you would like to deploy in downstream clusters, you need to define targets. Targets work similarly to targets in `GitRepo`.
 See [Mapping to Downstream Clusters](./gitrepo-targets.md#defining-targets).

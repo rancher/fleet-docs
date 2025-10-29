@@ -177,7 +177,7 @@ Fleet will deploy the Helm chart with your customized `values.yaml` to the diffe
   deploy larger bundles.
 
   As Fleet stores bundles via etcd, this may cause issues on some clusters where resultant bundle sizes may exceed
-  etcd's configured maximum blob size. Refer to [request entity too large #1650 issue](https://github.com/rancher/fleet/issues/1650) for more details.
+  etcd's configured maximum blob size. See [this issue](https://github.com/rancher/fleet/issues/1650) for more details.
   :::
 
 * [Helm.WaitForJobs](/ref-crds#helmoptions)

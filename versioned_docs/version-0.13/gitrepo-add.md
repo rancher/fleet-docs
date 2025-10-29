@@ -16,7 +16,7 @@ Git repos are added to the Fleet manager using the `GitRepo` custom resource typ
 - `fleet-default` will contain all the downstream clusters that are already registered through Rancher.
 - `fleet-local` will contain the local cluster by default.
 
-If you are using Fleet in a [single cluster](./concepts.md) style, the namespace will always be **fleet-local**. Check [cluster registration namespace for fleet-local](./namespaces.md#cluster-registration-namespace-fleet-local) for more on the `fleet-local` namespace.
+If you are using Fleet in a [single cluster](./concepts.md) style, the namespace will always be **fleet-local**. Check [here](./namespaces.md#cluster-registration-namespace-fleet-local) for more on the `fleet-local` namespace.
 
 For a [multi-cluster](./concepts.md) style, please ensure you use the correct repo that will map to the right target clusters.
 
@@ -124,12 +124,14 @@ If no such secret exists, or no `known_hosts` entries are available in that secr
 `known-hosts` config map, newly created at installation time with static entries for the most widely used git providers.
 
 Host key fingerprints added to the config map are sourced, respectively:
-* from [GitHub SSH key fingerprints](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints) for
-Github.
-* from [SSH known host entries](https://docs.gitlab.com/ee/user/gitlab_com/index.html#ssh-known_hosts-entries) for Gitlab.
-* from [Configure SSH and two step verification](https://support.atlassian.com/bitbucket-cloud/docs/configure-ssh-and-two-step-verification/) for
-Bitbucket, which also provides a `curl` command to fetch them in `known_hosts`-friendly format: `curl https://bitbucket.org/site/ssh`.
-* from [SSH keys to authenticate with Azure devops](https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops)
+* from [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints) for
+Github
+* from [here](https://docs.gitlab.com/ee/user/gitlab_com/index.html#ssh-known_hosts-entries) for Gitlab
+* from [here](https://support.atlassian.com/bitbucket-cloud/docs/configure-ssh-and-two-step-verification/) for
+Bitbucket, which also provides a `curl` command to fetch them in `known_hosts`-friendly format: `curl
+https://bitbucket.org/site/ssh`
+* from [here](https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops)
+for Azure DevOps
 
 The absence of the config map, should no secret be available, is considered a symptom of an incomplete Fleet deployment,
 and reported as such.
@@ -158,10 +160,10 @@ Validating a repository using a certificate signed by a custom Certificate Autho
 `cabundle` field in a `GitRepo`.
 
 :::info
-Note that if secrets specifying CA bundles exist, for instance if Fleet is installed with Rancher (Refer to
-[add TLS secrets using private CA signed certificate](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/resources/add-tls-secrets#using-a-private-ca-signed-certificate)
+Note that if secrets specifying CA bundles exist, for instance if Fleet is installed with Rancher (see
+[this](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/resources/add-tls-secrets#using-a-private-ca-signed-certificate)
 and
-[additional trusted cas](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-references/helm-chart-options#additional-trusted-cas)),
+[that](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-references/helm-chart-options#additional-trusted-cas)),
 Fleet will use those CA bundles if no CA bundle is specified in the `GitRepo`.
 :::
 
@@ -179,10 +181,10 @@ For a private Helm repo, users can reference a secret with the following keys:
 
 2. `cacerts` for custom CA bundle if the Helm repo is using a custom CA.
     :::info
-    Note that if secrets specifying CA bundles exist, for instance if Fleet is installed with Rancher (Refer to
-    [add TLS secrets using private CA signed certificate](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/resources/add-tls-secrets#using-a-private-ca-signed-certificate)
+    Note that if secrets specifying CA bundles exist, for instance if Fleet is installed with Rancher (see
+    [this](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/resources/add-tls-secrets#using-a-private-ca-signed-certificate)
     and
-    [additional trusted cas](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-references/helm-chart-options#additional-trusted-cas)),
+    [that](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-references/helm-chart-options#additional-trusted-cas)),
     Fleet will use those CA bundles if no CA bundle is specified in the Helm secret.
     :::
 
@@ -325,4 +327,4 @@ contained in a bundle, from being deleted when deleting a bundle deployment,
 
 # Troubleshooting
 
-For more information, refer to [Fleet Troubleshooting documentation](./troubleshooting.md).
+See Fleet Troubleshooting section [here](./troubleshooting.md).
