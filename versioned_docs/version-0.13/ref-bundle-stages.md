@@ -32,7 +32,7 @@ cd fleet-test-data
 fleet apply -n fleet-local -o bundle.yaml testbundle simple-chart/
 ```
 
-More information on how to create bundles with `fleet apply` can be found in the [section on bundles](https://fleet.rancher.io/bundle-add).
+More information on how to create bundles with `fleet apply` can be found in the [section on bundles](./bundle-add.md).
 
 ### fleet target
 
@@ -46,7 +46,7 @@ The deploy command can be used to bring bundles to air-gapped clusters.
 
 ### Lifecycle CLI Example
 
-```
+```bash
 git clone https://github.com/rancher/fleet-test-data
 cd fleet-test-data
 # for information about apply see https://fleet.rancher.io/bundle-add

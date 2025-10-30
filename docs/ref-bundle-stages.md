@@ -34,7 +34,7 @@ cd fleet-test-data
 fleet apply -n fleet-local -o bundle.yaml testbundle simple-chart/
 ```
 
-More information on how to create bundles with `fleet apply` can be found in the [section on bundles](https://fleet.rancher.io/bundle-add).
+More information on how to create bundles with `fleet apply` can be found in the [section on bundles](./bundle-add.md).
 
 ### fleet target
 
