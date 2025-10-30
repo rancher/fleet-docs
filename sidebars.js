@@ -110,7 +110,8 @@ module.exports = {
       items:[
         'enableexperimental',
         'scheduling',
-        'ref-schedule'
+        'ref-schedule',
+        'experimental-downstream-resources',
       ],
     },
   ],
