@@ -296,7 +296,16 @@ The recommended and safer approach is to use `valuesFrom`, which references Kube
 
 ### Using ValuesFrom
 
-These examples showcase the style and format for using `valuesFrom`. ConfigMaps and Secrets should be created in *downstream clusters*.
+These examples showcase the style and format for using `valuesFrom`.
+
+:::note **Propagating ConfigMaps and Secrets to downstream clusters**
+ConfigMaps and Secrets should generally be created directly in *downstream clusters*.
+
+However, from Fleet v0.14.0 onwards, they can also be referenced through a HelmOp's `downstreamResources` field to be
+automatically propagated to targeted downstream clusters.
+
+See [this page](experimental-downstream-resources.md) for more details.
+:::
 
 Example [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/):
 

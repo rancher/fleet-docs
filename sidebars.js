@@ -9,8 +9,8 @@ module.exports = {
       items:[
         'quickstart',
         'tut-deployment',
-        'install-usage-fleetCLI',
-        'validate-fleetCLI',
+        'install-usage-fleet-cli',
+        'validate-fleet-cli',
         {type:'doc', id:'uninstall'},
       ],
     },
@@ -102,6 +102,17 @@ module.exports = {
           "dirName": "changelogs/changelogs"
         }
       ]
+    },
+    {
+      type: 'category',
+      label: 'Experimental Features',
+      collapsed: false,
+      items:[
+        'enableexperimental',
+        'scheduling',
+        'ref-schedule',
+        'experimental-downstream-resources',
+      ],
     },
   ],
 };

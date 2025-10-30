@@ -14,14 +14,14 @@ To validate whether your `fleet apply` created a `bundle` and if it’s deployed
 kubectl get bundles.fleet.cattle.io -A
 ```
 
-![A screenshot validating the fleet deployment.](../static/img/validate-deployment-ss.png)
+![A screenshot validating the fleet deployment.](../../static/img/validate-deployment-ss.png)
 
 You see the following fields:
 
 * `BUNDLEDEPLOYMENTS-READY` shows how many targets are ready out of the total.  
 * `STATUS` may show Ready, Modified, or other conditions based on the `rollout`.
 
-:::note:
+:::note
 If this field shows 1/1, the bundle is successfully deployed to one cluster.
 :::
 

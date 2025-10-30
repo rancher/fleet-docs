@@ -449,7 +449,7 @@ avoid conflicts with other templating languages.
 Note that if the functions output changes with every call, e.g. `uuidv4`, the
 bundle will get redeployed.
 
-You can [test values templating with the CLI](./install-usage-fleetCLI.md#key-commands) against existing clusters.
+You can [test values templating with the CLI](./install-usage-fleet-cli.md#key-commands) against existing clusters.
 
 The template context has the following keys:
 
