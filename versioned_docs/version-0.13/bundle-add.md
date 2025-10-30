@@ -1,23 +1,23 @@
 # Create a Bundle Resource
 
 Bundles are automatically created by Fleet when a `GitRepo` is created. In most cases `Bundles` should not be created
-manually by the user. If you want to deploy resources from a git repository use a
-[GitRepo](https://fleet.rancher.io/gitrepo-add) instead.
+manually by the user. To deploy resources from a git repository use a
+[GitRepo](./gitrepo-add.md) instead.
 
 
-If you want to deploy resources without a git repository follow this guide to create a `Bundle`.
+To deploy resources without a git repository follow this guide to create a `Bundle`.
 
 :::note
-If you want to deploy resources without running a Fleet controller, also take a look at the [Fleet CLI](ref-bundle-stages#examining-the-bundle-lifecycle-with-the-cli).
+To deploy resources without running a Fleet controller, also take a look at the [Fleet CLI](./ref-bundle-stages.md#examining-the-bundle-lifecycle-with-the-cli).
 :::
 
-When creating a `GitRepo` Fleet will fetch the resources from a git repository, and add them to a Bundle.
+When creating a `GitRepo` Fleet fetches the resources from a git repository, and add them to a Bundle.
 When creating a `Bundle` resources need to be explicitly specified in the `Bundle` Spec.
 Resources can be compressed with gz. See [here](https://github.com/rancher/rancher/blob/main/pkg/controllers/provisioningv2/managedchart/managedchart.go#L149-L153)
 an example of how Rancher uses compression in go code.
 
 If you would like to deploy in downstream clusters, you need to define targets. Targets work similarly to targets in `GitRepo`.
-See [Mapping to Downstream Clusters](https://fleet.rancher.io/gitrepo-targets#defining-targets).
+See [Mapping to Downstream Clusters](./gitrepo-targets.md#defining-targets).
 
 The following example creates a nginx `Deployment` in the local cluster:
 

@@ -97,7 +97,7 @@ Annotations used by fleet:
 ## Fleet agent configuration
 
 Tolerations, affinity and resources can be customized for the Fleet agent. These fields can be provided when creating a
-[Cluster](https://fleet.rancher.io/ref-crds#clusterspec), see [Registering Downstream Cluster](https://fleet.rancher.io/cluster-registration) for more info on how to create
+[Cluster](./ref-crds.md#clusterspec), see [Registering Downstream Cluster](./cluster-registration.md) for more info on how to create
 Clusters. Default configuration will be used if these fields are not provided.
 
 If you change the resources limits, make sure the limits allow the fleet-agent to work normally.
