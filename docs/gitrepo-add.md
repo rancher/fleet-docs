@@ -20,9 +20,9 @@ Git repos are added to the Fleet manager using the `GitRepo` custom resource typ
 - `fleet-default` will contain all the downstream clusters that are already registered through Rancher.
 - `fleet-local` will contain the local cluster by default.
 
-If you are using Fleet in a [single cluster](./concepts.md) style, the namespace will always be **fleet-local**. Check [here](https://fleet.rancher.io/namespaces#fleet-local) for more on the `fleet-local` namespace.
+If you are using Fleet in a [single cluster](./concepts.md) style, the namespace will always be **fleet-local**. Check [here](./namespaces.md#cluster-registration-namespace-fleet-local) for more on the `fleet-local` namespace.
 
-For a [multi-cluster](./concepts.md) style, please ensure you use the correct repo that will map to the right target clusters.
+For a [multi-cluster](./concepts.md) style, please ensure you use the correct repo that maps to the right target clusters.
 
 ## Override Workload's Namespace
 
@@ -151,7 +151,7 @@ referenced in a `GitRepo` as well as to a possible `gitcredential` secret, if no
 
 ### Using HTTP Auth
 
-Create a secret containing username and password. You can replace the password with a personal access token if necessary. Also see [HTTP secrets in Github](./troubleshooting#http-secrets-in-github).
+Create a secret containing username and password. You can replace the password with a personal access token if necessary. Also see [HTTP secrets in Github](./troubleshooting.md#http-secrets-in-github).
 
 ```text
 kubectl create secret generic basic-auth-secret -n namespace-of-your-gitrepo --type=kubernetes.io/basic-auth --from-literal=username=$user --from-literal=password=$pat
@@ -376,7 +376,7 @@ have been re-created.
 
 ### Pausing
 
-A [paused](./ref-gitrepo) GitRepo will lead to paused bundles and bundle deployments. This means that:
+A [paused](./ref-gitrepo.md) GitRepo will lead to paused bundles and bundle deployments. This means that:
 * when deleting a bundle deployment coming from a paused GitRepo, Fleet will not re-create that bundle deployment until
 the GitRepo is unpaused
 * when deleting a bundle coming from a paused GitRepo, Fleet will delete the bundle deployments coming from that bundle,
@@ -385,7 +385,7 @@ the GitRepo is unpaused
 Besides, pausing a GitRepo only prevents bundles and bundle deployments from being created or updated for that GitRepo.
 In other words, it only affects _controller_ operations, not Fleet _agent_ operations. To prevent user resources,
 contained in a bundle, from being deleted when deleting a bundle deployment,
-[keepResources](./ref-bundle) should be used instead.
+[keepResources](./ref-bundle.md) should be used instead.
 
 # Troubleshooting
 

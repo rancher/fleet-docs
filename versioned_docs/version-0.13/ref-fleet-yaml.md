@@ -418,7 +418,7 @@ Options for the downloaded Helm chart.
 
 ### Values
 
-Values are processed in different stages of the lifecycle: https://fleet.rancher.io/ref-bundle-stages
+Values are processed in different stages of the [Bundle lifecycle](./ref-bundle-stages.md)
 
 * fleet.yaml `values:` and `valuesFile:` are added to the bundle's values when it is created.
 * helm values templating, e.g. with `${ }` happens when the bundle is targeted at a cluster, cluster labels filled in, etc.

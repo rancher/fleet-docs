@@ -1,13 +1,19 @@
 # Git Repository Contents
 
 Fleet will create bundles from a git repository. This happens either explicitly by specifying paths, or when a `fleet.yaml` is found.
+The folder could contain a Helm chart, or reference one. It could be a plain Kubernetes manifest, or a Kustomize folder. Each bundle is converted to a single Helm chart for deployment.
 
-Each bundle is created from paths in a GitRepo and modified further by reading the discovered `fleet.yaml` file.
-Bundle lifecycles are tracked between releases by the helm releaseName field added to each bundle. If the releaseName is not
-specified within fleet.yaml it is generated from `GitRepo.name + path`. Long names are truncated and a `-<hash>` prefix is added.
+The `fleet.yaml` file contains all the options for the deployment.
+
+## Bundle Names
 
 By default, bundle names will also be generated from the GitRepo's name and the path from which the bundle is created.
 However, a bundle's name can be overridden by using the `name` field in a `fleet.yaml` file.
+
+Bundle lifecycles are tracked between releases by the Helm `releaseName` field added to each bundle. If the releaseName is not
+specified within fleet.yaml it is generated from `GitRepo.name + path`. Long names are truncated and a `-<hash>` prefix is added.
+
+## How repos are scanned
 
 **The git repository has no explicitly required structure.** It is important
 to realize the scanned resources will be saved as a resource in Kubernetes so
@@ -15,7 +21,6 @@ you want to make sure the directories you are scanning in git do not contain
 arbitrarily large resources. Right now there is a limitation that the resources
 deployed must **gzip to less than 1MB**.
 
-## How repos are scanned
 
 Multiple paths can be defined for a `GitRepo` and each path is scanned independently.
 Internally each scanned path will become a [bundle](./concepts.md) that Fleet will manage,
@@ -32,6 +37,7 @@ The following files are looked for to determine the how the resources will be de
 | **overlays/`{name}`** | / relative to `path` | When deploying using raw YAML (not Kustomize or Helm) `overlays` is a special directory for customizations. |
 
 ### Alternative scan, explicitly defined by the user
+
 In addition to the previously described method, Fleet also supports a more direct, user-driven approach for defining Bundles.
 
 In this mode, Fleet will load all resources found within the specified base directory. It will only attempt to locate a `fleet.yaml` file at the root of that directory if an options file is not explicitly provided.

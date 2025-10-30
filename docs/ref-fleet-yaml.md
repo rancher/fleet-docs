@@ -8,7 +8,7 @@ For more information on how to use the `fleet.yaml` to customize bundles see
 
 The content of the fleet.yaml corresponds to the `FleetYAML` struct at
 [pkg/apis/fleet.cattle.io/v1alpha1/fleetyaml.go](https://github.com/rancher/fleet/blob/main/pkg/apis/fleet.cattle.io/v1alpha1/fleetyaml.go),
-which contains the [BundleSpec](./ref-crds#bundlespec).
+which contains the [BundleSpec](./ref-crds.md#bundlespec).
 
 ## Full Example
 
@@ -430,9 +430,9 @@ Options for the downloaded Helm chart.
 | helm.valuesFiles | A list of paths to values files that will be passed to Helm during installation. | Helm |
 | helm.valuesFrom | Allows you to use values files from ConfigMaps or Secrets defined in the downstream clusters. | Helm |
 
-It is not necessary to specify a chart's own `values.yaml` via `valuesFiles:`. It will always be used as a default when the agent installs the chart. See [Using Helm Values](./gitrepo-content#using-helm-values) for more details.
+It is not necessary to specify a chart's own `values.yaml` via `valuesFiles:`. It will always be used as a default when the agent installs the chart. See [Using Helm Values](./gitrepo-content.md#using-helm-values) for more details.
 
-Values are processed in different stages of the lifecycle: https://fleet.rancher.io/ref-bundle-stages
+Values are processed in different stages of the [Bundle lifecycle](./ref-bundle-stages.md)
 
 * fleet.yaml `values:` and `valuesFile:` are added to the bundle's values when it is created.
 * helm values templating, e.g. with `${ }` happens when the bundle is targeted at a cluster, cluster labels filled in, etc.
@@ -524,7 +524,7 @@ These options control how changes are rolled out across a fleet of clusters and 
 | rolloutStrategy.autoPartitionSize | The number or percentage used to automatically partition clusters if no specific partitioning strategy is configured. | All |
 | rolloutStrategy.partitions | A list of partition definitions that group clusters for a phased rollout. | All |
 
-More details on rollout strategies and how they work [here](./rollout).
+More details on rollout strategies and how they work [here](./rollout.md).
 
 ## Targeting and Customization
 

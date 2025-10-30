@@ -79,6 +79,6 @@ spec:
 In this case, the `Schedule` allows updates to `Clusters` labeled with *env=dev* **every 3 hours**, for a **duration of 1 hour**.
 
 The way you define target `Clusters` is **identical** to how targets are defined for `GitRepo` resources.
-The existing documentation at [https://fleet.rancher.io/gitrepo-targets](https://fleet.rancher.io/gitrepo-targets) also applies to `Schedule` targets.
+The existing documentation at [GitRepo Targets](./gitrepo-targets.md) also applies to `Schedule` targets.
 
 You can view the full CRD for `Schedule` [here](ref-schedule.md)
