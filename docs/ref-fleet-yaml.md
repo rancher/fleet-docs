@@ -193,14 +193,14 @@ rolloutStrategy:
         matchLabels:
           env: prod
 
+      # OR, if selecting by ClusterGroup labels:
+      clusterGroupSelector:
+        matchLabels:
+          env: prod
+          
       # A cluster group name to include in this partition
       clusterGroup: agroup
 
-      # Selector matching cluster group labels to include in this partition
-      clusterGroupSelector:
-        clusterSelector:
-          matchLabels:
-            env: prod
 
 # Target customization are used to determine how resources should be modified
 # per target Targets are evaluated in order and the first one to match a cluster
