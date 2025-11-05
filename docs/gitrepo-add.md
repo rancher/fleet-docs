@@ -187,8 +187,14 @@ With the necessary data at hand, create a secret containing those fields:
 kubectl -n namespace-of-your-gitrepo create secret generic github-app-secret \
     --from-literal=github_app_id=<app-id> \
     --from-literal=github_app_installation_id=<installation-id> \
-    --from-file=github_app_private_key=<path-to-private-key-file>
+    --from-literal=github_app_private_key="<private-key>"
 ```
+
+Using a literal instead of a file for the private key can help prevent PEM decoding errors at execution time.
+Before creating the secret, the private key can be sourced from a file exporting environment variable, to prevent the
+key itself from appearing in shell history.
+Surrounding the value, or the environment variable name (e.g. `--from-literal=github_app_private_key="$MY_VAR"`) with
+double quotes ensures that its full contents are taken into account, including possible line breaks.
 
 Make sure you reference that secret in your GitRepo resource via `clientSecretName`.
 
