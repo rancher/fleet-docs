@@ -324,7 +324,7 @@ This helps to identify which clusters have incomplete or inconsistent deployment
 The `BundleDeployment` resource includes two additional fields for better visibility:
 
 * `incompleteState`: which is set to true if non-ready or modified resources status has more than 10 items.
-* `resourceCounts` -- which counts the number of resources by their state.
+* `resourceCounts`: which counts the number of resources by their state.
 
 ### HelmOps
 
