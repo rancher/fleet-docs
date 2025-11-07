@@ -273,8 +273,58 @@ categorized under `GitRepos` and `HelmOps`.
 
 ### GitRepos
 
-The deployed resources are listed in `GitRepos` in `status.Resources`. This list
-is derived from `bundleDeployments`.
+The deployed resources are listed in `GitRepos` in `status.Resources`. This list is derived from `bundleDeployments`.
+
+The `perClusterResourceCounts` field provides per-cluster statistics about the deployed resources.
+
+```yaml
+  perClusterResourceCounts:
+    fleet-default/imported-0:
+      desiredReady: 9
+      missing: 0
+      modified: 0
+      notReady: 0
+      orphaned: 0
+      ready: 9
+      unknown: 0
+      waitApplied: 0
+    fleet-default/imported-1:
+      desiredReady: 9
+      missing: 0
+      modified: 0
+      notReady: 0
+      orphaned: 0
+      ready: 9
+      unknown: 0
+      waitApplied: 0
+    fleet-default/imported-2:
+      desiredReady: 9
+      missing: 0
+      modified: 0
+      notReady: 0
+      orphaned: 0
+      ready: 9
+      unknown: 0
+      waitApplied: 0
+  readyClusters: 3
+  resourceCounts:
+    desiredReady: 27
+    missing: 0
+    modified: 0
+    notReady: 0
+    orphaned: 0
+    ready: 27
+    unknown: 0
+    waitApplied: 0
+```
+This helps to identify which clusters have incomplete or inconsistent deployments at a glance.
+
+### BundleDeployment
+
+The `BundleDeployment` resource includes two additional fields for better visibility:
+
+* `incompleteState`: which is set to true if non-ready or modified resources status has more than 10 items.
+* `resourceCounts`: which counts the number of resources by their state.
 
 ### HelmOps
 
@@ -284,7 +334,7 @@ Similarly to what happens for `GitRepos`, the deployed resources are listed in
 ## Resource Counts
 
 This shows how resource counts are propagated from one resource to another:
-![Status Propagation](/img/FleetStatusSource.png)
+![Status Propagation](../../static/img/FleetStatusSource.png)
 
 ### GitRepos
 
