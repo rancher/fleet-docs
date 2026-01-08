@@ -181,6 +181,17 @@
           "dirName": "changelogs/changelogs"
         }
       ]
-    }
+    },
+    {
+      "type": "category",
+      "label": "Experimental Features",
+      "collapsed": false,
+      "items": [
+        "enableexperimental",
+        "scheduling",
+        "ref-schedule",
+        "experimental-downstream-resources"
+      ]
+    }    
   ]
 }
