@@ -1,0 +1,44 @@
+# Architecture
+
+Fleet has two primary components.  The Fleet controller and the cluster agents.  These
+components work in a two-stage pull model.  The Fleet controller will pull from git and the
+cluster agents will pull from the Fleet controller.
+
+## Fleet Controller
+
+The Fleet controller is a set of Kubernetes controllers running in any standard Kubernetes
+cluster.  The only API exposed by the Fleet controller is the Kubernetes API, there is no
+custom API for the fleet controller.
+
+## Cluster Agents
+
+One cluster agent runs in each cluster and is responsible for talking to the Fleet controller.
+The only communication from cluster to Fleet controller is by this agent and all communication
+goes from the managed cluster to the Fleet controller. The fleet manager does not initiate
+connections to downstream clusters. This means managed clusters can run in private networks and behind
+NATs. The only requirement is the cluster agent needs to be able to communicate with the
+Kubernetes API of the cluster running the Fleet controller. The one exception to this is if you use
+the [manager initiated](./cluster-registration.md#manager-initiated) cluster registration flow.  This is not required, but
+an optional pattern.
+
+The cluster agents are not assumed to have an "always on" connection.  They will resume operation as
+soon as they can connect. Future enhancements will probably add the ability to schedule times of when
+the agent checks in, as it stands right now they will always attempt to connect.
+
+## Security
+
+The Fleet controller dynamically creates service accounts, manages their RBAC and then gives the
+tokens to the downstream clusters. Clusters are registered by optionally expiring cluster registration tokens.
+The cluster registration token is used only during the registration process to generate a credential specific
+to that cluster. After the cluster credential is established the cluster "forgets" the cluster registration
+ token.
+
+The service accounts given to the clusters only have privileges to list `BundleDeployment` in the namespace created
+specifically for that cluster. It can also update the `status` subresource of `BundleDeployment` and the `status`
+subresource of it's `Cluster` resource.
+
+## Component Overview
+
+An overview of the components and how they interact on a high level.
+
+![Components](../static/img/FleetComponents.svg)
