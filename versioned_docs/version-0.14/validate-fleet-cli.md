@@ -14,7 +14,7 @@ To validate whether your `fleet apply` created a `bundle` and if it’s deployed
 kubectl get bundles.fleet.cattle.io -A
 ```
 
-![A screenshot validating the fleet deployment.](../static/img/validate-deployment-ss.png)
+![A screenshot validating the fleet deployment.](../../static/img/validate-deployment-ss.png)
 
 You see the following fields:
 

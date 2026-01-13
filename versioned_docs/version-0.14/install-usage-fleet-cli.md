@@ -69,7 +69,7 @@ Fleet provides several CLI commands to create, preview, and deploy bundles. Thes
   * Use with a target to debug selectors and verify which downstream clusters are targeted.
   * `fleet deploy --dry-run` to print the resources that would be deployed, but without applying them.  
 
-![A diagram explaining how fleet CLI key commands work.](../static/img/fleetCLI-key-components.svg)
+![A diagram explaining how fleet CLI key commands work.](../../static/img/fleetCLI-key-components.svg)
 
 For more information, refer to [Bundle Lifecycle With the CLI](ref-bundle-stages.md#examining-the-bundle-lifecycle-with-the-cli).
 
