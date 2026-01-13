@@ -11,10 +11,10 @@ The bundled charts may have some objects that are amended at runtime, for exampl
 
 This leads the status of the bundle and associated GitRepo to be reported as "Modified"
 
-![](../static/img/ModifiedGitRepo.png)
+![](../../static/img/ModifiedGitRepo.png)
 
 Associated Bundle
-![](../static/img/ModifiedBundle.png)
+![](../../static/img/ModifiedBundle.png)
 
 Fleet bundles support the ability to specify a custom [jsonPointer patch](http://jsonpatch.com/).
 
@@ -146,7 +146,7 @@ In summary, we need to ignore the fields `rules` and `clientConfig.caBundle` in 
 
 The field webhook in the ValidatingWebhookConfiguration spec is an array, so we need to address the elements by their index values.
 
-![](../static/img/WebhookConfigurationSpec.png)
+![](../../static/img/WebhookConfigurationSpec.png)
 
 Based on this information, our diff patch would look as follows:
 

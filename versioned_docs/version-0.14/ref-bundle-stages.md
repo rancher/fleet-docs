@@ -16,13 +16,13 @@ To demonstrate the life cycle of a Fleet bundle, we will use [multi-cluster/helm
 
 This diagram shows the different rendering stages a bundle goes through until deployment.
 
-![Bundle Stages](../static/img/FleetBundleStages.svg)
+![Bundle Stages](../../static/img/FleetBundleStages.svg)
 
 ## Examining the Bundle Lifecycle With the CLI
 
 Several fleet CLI commands help with debugging bundles.
 
-![A diagram explaining how fleet CLI key commands work.](../static/img/fleetCLI-key-components.svg)
+![A diagram explaining how fleet CLI key commands work.](../../static/img/fleetCLI-key-components.svg)
 
 ### fleet apply
 

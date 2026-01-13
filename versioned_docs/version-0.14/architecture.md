@@ -41,4 +41,4 @@ subresource of it's `Cluster` resource.
 
 An overview of the components and how they interact on a high level.
 
-![Components](../static/img/FleetComponents.svg)
+![Components](../../static/img/FleetComponents.svg)

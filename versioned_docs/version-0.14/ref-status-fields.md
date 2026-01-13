@@ -334,7 +334,7 @@ Similarly to what happens for `GitRepos`, the deployed resources are listed in
 ## Resource Counts
 
 This shows how resource counts are propagated from one resource to another:
-![Status Propagation](../static/img/FleetStatusSource.png)
+![Status Propagation](../../static/img/FleetStatusSource.png)
 
 ### GitRepos
 

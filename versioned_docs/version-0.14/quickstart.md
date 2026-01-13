@@ -5,7 +5,7 @@ import TabItem from '@theme/TabItem';
 
 # Quick Start
 
-![](../static/img/single-cluster.png)
+![](../../static/img/single-cluster.png)
 
 Who needs documentation, lets just run this thing!
 
