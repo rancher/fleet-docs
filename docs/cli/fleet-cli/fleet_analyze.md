@@ -60,24 +60,6 @@ fleet analyze --no-color monitor.json
 - **Detailed**: Complete analysis including controller info, API consistency, and events
 - **JSON**: Machine-readable output for scripts and automation
 
-### Multi-Snapshot Analysis
-
-When your monitor.json file contains multiple snapshots (one JSON object per line):
-
-```bash
-# Show summary of latest snapshot only
-fleet analyze monitor.json
-
-# Show differences between consecutive snapshots
-fleet analyze --diff monitor.json
-
-# Show summary of all snapshots
-fleet analyze --all monitor.json
-
-# Compare two specific snapshot files
-fleet analyze --compare snapshot2.json snapshot1.json
-```
-
 ### SEE ALSO
 
 * [fleet](./fleet)
