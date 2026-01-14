@@ -22,6 +22,7 @@ If the issue is specific to a target cluster, one might want to check Fleet agen
 to deploy a bundle deployment on that cluster?
 
 The next section explains how to run all these checks.
+Some of them can be automated through [fleet monitor](./cli/fleet-cli/fleet_monitor) and [fleet analyze](./cli/fleet-cli/fleet_analyze).
 
 ## **How Do I...**
 
