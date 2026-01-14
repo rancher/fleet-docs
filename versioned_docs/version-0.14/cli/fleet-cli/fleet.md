@@ -30,3 +30,4 @@ fleet [flags]
 
 * [fleet monitor](./fleet_monitor)	 - Monitor Fleet setups for issues
 * [fleet analyze](./fleet_analyze)	 - Analyze snapshots created by `fleet monitor`
+* [fleet dump](./fleet_dump)	     - Dump cluster data into an archive

@@ -72,6 +72,7 @@ module.exports = {
             {type: 'doc', id: 'cli/fleet-cli/fleet_apply'},
             {type: 'doc', id: 'cli/fleet-cli/fleet_monitor'},
             {type: 'doc', id: 'cli/fleet-cli/fleet_analyze'},
+            {type: 'doc', id: 'cli/fleet-cli/fleet_dump'},
             {type: 'doc', id: 'cli/fleet-cli/cleanup/fleet_cleanup'},
             {type: 'doc', id: 'cli/fleet-cli/cleanup/fleet_cleanup_clusterregistration'},
             {type: 'doc', id: 'cli/fleet-cli/cleanup/fleet_cleanup_gitjob'},
