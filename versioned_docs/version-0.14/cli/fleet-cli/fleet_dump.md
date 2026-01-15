@@ -14,13 +14,13 @@ Dump data from a cluster into an archive, including:
 * Metrics exposed by Fleet controllers
 
 ```
-fleet dump [flags]
+fleet dump <flags>
 ```
 
-### Options
+### Flags
 
 ```
-  -p          Path to the archive to generate
+  -p <path>         Path to the archive file to generate
 ```
 
 ### Output
