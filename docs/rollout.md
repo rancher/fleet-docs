@@ -52,6 +52,7 @@ Various limits that can be configured in Fleet:
 | maxUnavailable | Maximum number or percentage of clusters that can be `NotReady` before halting rollout. | 100% |
 | maxUnavailablePartitions | Number or percentage of partitions that can be `NotReady` at once. | 0 |
 | autoPartitionSize | Number or percentage of clusters per auto-created partition. | 25% |
+| autoPartitionThreshold | Minimum number of clusters required before auto-partitioning is enabled. Below this threshold, all clusters are placed in a single partition. | 200 |
 | partitions | Define manual partitions by cluster labels or group. If set, autoPartitionSize is ignored. | – |
 
 Fleet supports automatic and manual partitioning. For more information about configuration options, refer to the [`rolloutStrategy` option in the fleet.yaml reference.](ref-fleet-yaml.md)
@@ -59,6 +60,22 @@ Fleet supports automatic and manual partitioning. For more information about con
 **Automatic Partitioning**: Fleet automatically creates partitions using `autoPartitionSize`.
 
 For example, you have 200 clusters and set `autoPartitionSize` to 25%, Fleet creates four partitions of 50 clusters each. Rollout proceeds in 50-cluster batches, checking `maxUnavailable` before continuing.
+
+The `autoPartitionThreshold` setting controls when auto-partitioning is enabled:
+
+* **Below the threshold**: All clusters are placed in a single partition, regardless of the `autoPartitionSize` setting. This prevents unnecessary partitioning for small deployments.
+* **At or above the threshold**: Fleet creates multiple partitions based on `autoPartitionSize`.
+* **Customizable threshold**: You can lower the limit to enable partitioning with fewer clusters (e.g., set to 50 for small-scale testing) or raise it to avoid partitioning until you have a large number of clusters (e.g., set to 500).
+* **Disable auto-partitioning**: Set to 0 to force all clusters into a single partition regardless of count.
+
+For example:
+```yaml
+rolloutStrategy:
+  autoPartitionThreshold: 50  # Enable partitioning with only 50 clusters
+  autoPartitionSize: 50%      # Create partitions of 50% each
+```
+
+With 50 clusters, this creates 2 partitions of 25 clusters each. Without setting `autoPartitionThreshold`, those 50 clusters would be in a single partition (since the default limit is 200).
 
 **Manual Partitioning**: You define specific partitions using the `partitions` option. This provides control over cluster selection and rollout order.
 
@@ -115,10 +132,10 @@ Fleet processes partitions in the order they appear in the `fleet.yaml` file.
 
 If you don’t define `rolloutStrategy.partitions`, Fleet creates partitions automatically based on the number of targeted clusters:
 
-* For fewer than 200 clusters, Fleet uses a single partition.
-* For 200 or more clusters, Fleet uses the default `autoPartitionSize` value (25%) of the total.
+* For fewer than `autoPartitionThreshold` clusters (default 200), Fleet uses a single partition.
+* For `autoPartitionThreshold` or more clusters, Fleet uses the `autoPartitionSize` value (default 25%) to create partitions.
 
-For example, consider 200 clusters, Fleet uses the default `autoPartitionSize` of 25%. This means, Fleet creates 4 partitions (25% of 200 = 50 clusters per partition). Fleet processes up to 50 clusters at a time, which means it:
+For example, with 200 clusters (meeting the default `autoPartitionThreshold`), Fleet uses the default `autoPartitionSize` of 25%. This means, Fleet creates 4 partitions (25% of 200 = 50 clusters per partition). Fleet processes up to 50 clusters at a time, which means it:
 
 1. Rolls out to the first 50 clusters.
 1. Evaluate readiness based on `maxUnavailable`.

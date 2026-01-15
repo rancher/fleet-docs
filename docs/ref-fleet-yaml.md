@@ -174,6 +174,13 @@ rolloutStrategy:
   # The default value is defined in rolloutStrategy.maxUnavailable
   autoPartitionSize: 10%
 
+  # The minimum number of clusters that need to be present before 
+  # auto-partitioning is enabled. If the number of target clusters is less 
+  # than this value, all clusters will be placed in a single partition.
+  #
+  # default: 200
+  autoPartitionThreshold: 100
+
   # A list of definitions of partitions.  If any target clusters do not match
   # the configuration they are added to partitions at the end following the
   # autoPartitionSize.
@@ -522,6 +529,7 @@ These options control how changes are rolled out across a fleet of clusters and 
 | rolloutStrategy.maxUnavailable | The maximum number or percentage of clusters that can be unavailable during an update. The update will be paused if this threshold is met. | All |
 | rolloutStrategy.maxUnavailablePartitions | The maximum number or percentage of cluster partitions that can be unavailable during an update. | All |
 | rolloutStrategy.autoPartitionSize | The number or percentage used to automatically partition clusters if no specific partitioning strategy is configured. | All |
+| rolloutStrategy.autoPartitionThreshold | The minimum number of clusters required before auto-partitioning is enabled. Below this threshold, all clusters are placed in a single partition. | All |
 | rolloutStrategy.partitions | A list of partition definitions that group clusters for a phased rollout. | All |
 
 More details on rollout strategies and how they work [here](./rollout.md).

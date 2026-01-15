@@ -297,6 +297,7 @@ RolloverStrategy controls the rollout of the bundle across clusters.
 | maxUnavailable | A number or percentage of clusters that can be unavailable during an update of a bundle. This follows the same basic approach as a deployment rollout strategy. Once the number of clusters meets unavailable state update will be paused. Default value is 100% which doesn't take effect on update. default: 100% | *intstr.IntOrString | false |
 | maxUnavailablePartitions | A number or percentage of cluster partitions that can be unavailable during an update of a bundle. default: 0 | *intstr.IntOrString | false |
 | autoPartitionSize | A number or percentage of how to automatically partition clusters if no specific partitioning strategy is configured. default: 25% | *intstr.IntOrString | false |
+| autoPartitionThreshold | The minimum number of clusters that need to be present before auto-partitioning is enabled. If the number of target clusters is less than this value, all clusters will be placed in a single partition. default: 200 | *int | false |
 | partitions | A list of definitions of partitions.  If any target clusters do not match the configuration they are added to partitions at the end following the autoPartitionSize. | \[\][Partition](#partition) | false |
 
 [Back to Custom Resources](#)
