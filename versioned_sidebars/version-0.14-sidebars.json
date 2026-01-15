@@ -134,6 +134,10 @@
             },
             {
               "type": "doc",
+              "id": "cli/fleet-cli/fleet_dump"
+            },
+            {
+              "type": "doc",
               "id": "cli/fleet-cli/cleanup/fleet_cleanup"
             },
             {
