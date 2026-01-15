@@ -49,7 +49,8 @@ This typically includes `monitoring-gitjob` and `monitoring-fleet-controller` se
 
 #### Format
 
-Raw Fleet resources are each stored in a different file, named as `<kind>_<namespace>_<name>`.
+Raw Fleet resources are each stored in a different file, named as `<kind>_<namespace>_<name>`, where `<kind>` is
+one of the raw resource names mentioned in the previous section, in lowercase.
 
 Kubernetes events are split into files by namespace, each file named as `events_<namespace>`.
 They contain one event per line, each event being encoded in JSON.
