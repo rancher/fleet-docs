@@ -88,7 +88,7 @@ clusterSelector: null
 
 ## Raw YAML Resource Customization
 
-When using Kustomize or Helm the `kustomization.yaml` or the `helm.values` will control how the resource are
+When using Kustomize or Helm the `kustomization.yaml` or the `helm.values` will control how resources are
 customized per target cluster. If you are using raw YAML then the following simple mechanism is built-in and can
 be used.  The `overlays/` folder in the git repo is treated specially as folder containing folders that
 can be selected to overlay on top per target cluster. The resource overlay content
