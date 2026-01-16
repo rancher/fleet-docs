@@ -43,7 +43,7 @@ In addition to the previously described method, Fleet also supports a more direc
 In this mode, Fleet will load all resources found within the specified base directory. It will only attempt to locate a `fleet.yaml` file at the root of that directory if an options file is not explicitly provided.
 Unlike the traditional scanning method, this one is not recursive and does not attempt to find Bundle definitions other than those explicitly specified by the user.
 
-#### Example File Structure
+#### Example Directory Structure
 ```
 driven
      |___helm
