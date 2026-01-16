@@ -18,7 +18,7 @@ Multiple paths can be defined for a `GitRepo` and each path is scanned independe
 Internally each scanned path will become a [bundle](./concepts.md) that Fleet will manage,
 deploy, and monitor independently.
 
-The following files are looked for to determine the how the resources will be deployed.
+The following files are looked for to determine how the resources will be deployed.
 
 | File | Location | Meaning |
 |------|----------|---------|
