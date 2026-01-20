@@ -14,6 +14,7 @@ fleet apply [flags] BUNDLE_NAME PATH...
 
 ```
   -b, --bundle-file string                     Location of the raw Bundle resource yaml
+      --bundle-creation-max-concurrency int    Number of concurrent routines to create bundles (default 4)
       --cacerts-file string                    Path of custom cacerts for helm repo
       --commit string                          Commit to assign to the bundle
   -c, --compress                               Force all resources to be compress
@@ -48,7 +49,7 @@ fleet apply [flags] BUNDLE_NAME PATH...
       --username string                        Basic auth username for helm repo
       --driven-scan                            Use driven scan. Bundles are defined by the user.
                                                Paths will be defined by the tuple <base, options> separated by a separator.
-                                               The default separator is the character ':'. If you need to use a different one, 
+                                               The default separator is the character ':'. If you need to use a different one,
                                                use the --driven-scan-sep flag.
       --driven-scan-sep                        Separator used for user-driven bundle generation paths. (default: ':')
 ```
@@ -61,6 +62,10 @@ cloner does.
 This means that, should you want to run `fleet apply` directly on your host machine, providing it a custom
 value of `KNOWN_HOSTS`, you will need to export `FLEET_KNOWN_HOSTS` beforehand or run it as
 `FLEET_KNOWN_HOSTS=<your_entries> fleet apply <args>`.
+
+The number of concurrent bundle creation routines can be configured via the `--bundle-creation-max-concurrency` flag or the `FLEET_BUNDLE_CREATION_MAX_CONCURRENCY` environment variable. The default value is 4. This can be useful when working with large repositories containing many bundles, as it allows you to control the parallelism of bundle creation. For example:
+
+`FLEET_BUNDLE_CREATION_MAX_CONCURRENCY=8 fleet apply <args>`
 
 ### SEE ALSO
 
