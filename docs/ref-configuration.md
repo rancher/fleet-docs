@@ -48,6 +48,7 @@ The Helm charts accept, at least, the options as shown with their default in `va
 The controllers can be started with these environment variables:
 
 * `CATTLE_DEV_MODE` - used to debug wrangler, not usable
+* `FLEET_BUNDLE_CREATION_MAX_CONCURRENCY` - configures the number of concurrent bundle creation routines for `fleet apply`. Default is 4. Can also be set via the `--bundle-creation-max-concurrency` CLI flag
 * `FLEET_CLUSTER_ENQUEUE_DELAY` - tune how often non-ready clusters are checked
 * `FLEET_CPU_PPROF_PERIOD` - used to turn on [performance profiling](https://github.com/rancher/fleet/blob/main/docs/performance.md)
 
