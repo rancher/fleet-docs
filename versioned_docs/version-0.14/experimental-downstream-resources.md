@@ -45,4 +45,4 @@ targeted, [keepResources](./ref-bundle) should be set to `true` on the HelmOp.
 
 ## Monitoring
 
-From version v0.14.0 onwards, Fleet monitors changes made to secrets and configmaps that are listed in `DownstreamResources`. It also checks whether a secret or configmap was created after the Bundle was created.
+From version v0.15.0 onwards, Fleet monitors changes made to secrets and configmaps that are listed in `DownstreamResources`. It also checks whether a secret or configmap was created after the Bundle was created.
