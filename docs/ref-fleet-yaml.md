@@ -283,7 +283,7 @@ targetCustomizations:
       keepFailHistory: false
 
 # dependsOn allows you to configure dependencies to other bundles. The current
-# bundle will only be deployed, after all dependencies are deployed and in a
+# bundle will only be deployed, after all dependencies are deployed and in an
 # accepted state. The default accepted state is the Ready state.
 dependsOn:
 
@@ -344,7 +344,7 @@ These options define the fundamental properties and behavior of the bundle itsel
 | :---- | :---- | :---- |
 | paused | If true, the bundle will not be updated on downstream clusters. Instead, it will be marked as "OutOfSync." You can then manually approve the deployment. | All |
 | labels | A map of key-value pairs that are set at the bundle level. These can be used in a dependsOn.selector to define dependencies. | All |
-| dependsOn | A list of other bundles that this bundle depends on. The current bundle will only be deployed after all its dependencies are in a accepted state. The possible accepted states are all of the possible [bundle states](ref-status-fields#bundle-statuses). | All |
+| dependsOn | A list of other bundles that this bundle depends on. The current bundle will only be deployed after all its dependencies are in an accepted state. Accepted states correspond to any valid  [bundle states](ref-status-fields/#bundle-statuses). | All |
 | ignore | Specifies fields to ignore when monitoring a bundle's status. This is useful for preventing false error states caused by certain conditions in Custom Resources. | All |
 | overrideTargets | A list of target customizations that will override any targets defined in the GitRepo. If this is provided, the bundle will not inherit any targets from the GitRepo. | All |
 
