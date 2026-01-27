@@ -284,7 +284,7 @@ targetCustomizations:
 
 # dependsOn allows you to configure dependencies to other bundles. The current
 # bundle will only be deployed, after all dependencies are deployed and in a
-# Ready state.
+# accepted state. The default accepted state is the Ready state.
 dependsOn:
 
   # Format:
