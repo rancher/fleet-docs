@@ -18,6 +18,6 @@ policies:
       - updatecli/values.d/scm.yaml
       - updatecli/values.d/fleet.yaml
   - name: Handle Updatecli policies
-    policy: ghcr.io/updatecli/policies/autodiscovery/updatecli:0.9.0@sha256:2ae4e1ba471b996e58356a7b12ad8cf283b079ace8eac833d437d1e1ccb85bbb
+    policy: ghcr.io/updatecli/policies/autodiscovery/updatecli:0.10.0@sha256:588fb5b274c1e484198885723b5a67688416feeec414d41a33908826e448fd41
     values:
       - updatecli/values.d/scm-2.yaml
