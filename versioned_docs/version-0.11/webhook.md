@@ -28,30 +28,48 @@ spec:
                 number: 80
 ```
 
-If you want to have the webhook available using the same host name as your Rancher or another service, you can use the following YAML with the URL http://your.domain.com/gitjob. The below YAML is specific for the Nginx Ingress Controller:
+
+If you use Traefik as your ingress controller and want the webhook available at `<http://your.domain.com/gitjob>`, define a Middleware to rewrite the path, and attach it to the Ingress.
 
 ```yaml
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: gitjob-rewrite
+  namespace: cattle-fleet-system
+spec:
+  stripPrefixRegex:
+    regex:
+      - ^/gitjob
+```
+
+Modify your ingress with middleware:
+
+```yaml
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
   name: webhook-ingress
   namespace: cattle-fleet-system
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: cattle-fleet-system-gitjob-rewrite@kubernetescrd
 spec:
   rules:
-  - host: your.domain.com
-    http:
-      paths:
-        - path: /gitjob(/|$)(.*)
-          pathType: ImplementationSpecific
-          backend:
-            service:
-              name: gitjob
-              port:
-                number: 80
+    - host: your.domain.com
+      http:
+        paths:
+          - path: /gitjob
+            pathType: Prefix
+            backend:
+              service:
+                name: gitjob
+                port:
+                  number: 80
+
 ```
+
+Requests to `<http://your.domain.com/gitjob>` are routed to the gitjob service with the path rewritten internally to `/`. This matches the endpoint expected by Fleet’s webhook handler.
 
 :::info
 
