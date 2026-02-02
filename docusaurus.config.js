@@ -155,7 +155,7 @@ module.exports = {
       src: 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
       type:'text/javascript',
       charset: 'UTF-8',
-      'data-domain-script': '0f98beb0-fc4c-417d-a42e-564e2cae42d2',
+      'data-domain-script': '019aa0c5-94a6-79e7-8ed7-b7dbdca0d311',
       async: true
     },
     {

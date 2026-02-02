@@ -86,45 +86,34 @@
       "items": [
         {
           "CLI": [
-            "cli/fleet-agent/fleet-agent",
-            "cli/fleet-agent/fleet-agent_clusterstatus",
-            "cli/fleet-agent/fleet-agent_register",
-            {
-              "type": "doc",
-              "id": "cli/fleet-cli/fleet"
-            },
-            {
-              "type": "doc",
-              "id": "cli/fleet-cli/fleet_apply"
-            },
-            {
-              "type": "doc",
-              "id": "cli/fleet-cli/fleet_cleanup"
-            },
-            {
-              "type": "doc",
-              "id": "cli/fleet-cli/fleet_deploy"
-            },
-            {
-              "type": "doc",
-              "id": "cli/fleet-cli/fleet_target"
-            },
-            {
-              "type": "doc",
-              "id": "cli/fleet-cli/fleet_test"
-            },
-            {
-              "type": "doc",
-              "id": "cli/fleet-controller/fleetcontroller"
-            },
-            {
-              "type": "doc",
-              "id": "cli/fleet-controller/fleetcontroller_agentmanagement"
-            },
-            {
-              "type": "doc",
-              "id": "cli/fleet-controller/fleetcontroller_cleanup"
-            }
+              {"fleet-agent": [
+                "cli/fleet-agent/fleet-agent",
+                "cli/fleet-agent/fleet-agent_clusterstatus",
+                "cli/fleet-agent/fleet-agent_register"
+              ]},
+              {"fleet": [
+                {"type": "doc", "id": "cli/fleet-cli/fleet"},
+                {"Regular operations": [
+                    {"type": "doc", "id": "cli/fleet-cli/fleet_apply"},
+                    {"type": "doc", "id": "cli/fleet-cli/fleet_deploy"},
+                    {"type": "doc", "id": "cli/fleet-cli/fleet_target"}
+                ]},
+                {"Cleanup": [
+                    {"type": "doc", "id": "cli/fleet-cli/fleet_cleanup"}
+                ]},
+                {"Deprecated": [
+                    {"type": "doc", "id": "cli/fleet-cli/fleet_test"}
+                ]},
+                {"Git cloner": [
+                    { "type": "doc", "id": "cli/fleet-cli/fleet_gitcloner"}
+                ]}
+              ]},
+              {"fleet-controller": [
+                {"type": "doc", "id": "cli/fleet-controller/fleetcontroller"},
+                {"type": "doc", "id": "cli/fleet-controller/fleetcontroller_agentmanagement"},
+                {"type": "doc", "id": "cli/fleet-controller/fleetcontroller_cleanup"},
+                {"type": "doc", "id": "cli/fleet-controller/fleetcontroller_gitjob"}
+              ]}
           ]
         },
         {

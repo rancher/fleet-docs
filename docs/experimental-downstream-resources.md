@@ -43,8 +43,6 @@ targeted, [keepResources](./ref-bundle) should be set to `true` on the HelmOp.
 :::
 
 
-## Limitations
+## Monitoring
 
-Fleet does not monitor resources referenced by `downstreamResources` for changes.
-This means that changes to secrets and config maps referenced for downstream copy will only be applied when a HelmOp is updated.
-
+From version v0.14.0 onwards, Fleet monitors changes made to secrets and configmaps that are listed in `DownstreamResources`. It also checks whether a secret or configmap was created after the Bundle was created.
