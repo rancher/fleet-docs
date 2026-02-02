@@ -283,8 +283,8 @@ targetCustomizations:
       keepFailHistory: false
 
 # dependsOn allows you to configure dependencies to other bundles. The current
-# bundle will only be deployed, after all dependencies are deployed and in a
-# Ready state.
+# bundle will only be deployed, after all dependencies are deployed and in an
+# accepted state. The default accepted state is the Ready state.
 dependsOn:
 
   # Format:
@@ -303,12 +303,16 @@ dependsOn:
   #     opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes
   #     opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: one-multi-cluster-hello-world
-
+    acceptedStates:
+      - Ready
+      - Modified
   # Select bundles to depend on based on their label.
   - selector:
       matchLabels:
         app: weak-monkey
-
+    acceptedStates:
+      - Ready
+      - Modified
 # Ignore fields when monitoring a Bundle. This can be used when Fleet thinks
 # some conditions in Custom Resources makes the Bundle to be in an error state
 # when it shouldn't.
@@ -340,7 +344,7 @@ These options define the fundamental properties and behavior of the bundle itsel
 | :---- | :---- | :---- |
 | paused | If true, the bundle will not be updated on downstream clusters. Instead, it will be marked as "OutOfSync." You can then manually approve the deployment. | All |
 | labels | A map of key-value pairs that are set at the bundle level. These can be used in a dependsOn.selector to define dependencies. | All |
-| dependsOn | A list of other bundles that this bundle depends on. The current bundle will only be deployed after all its dependencies are in a "Ready" state. | All |
+| dependsOn | A list of other bundles that this bundle depends on. The current bundle will only be deployed after all its dependencies are in an accepted state. Accepted states correspond to any valid  [bundle states](ref-status-fields/#bundle-statuses). | All |
 | ignore | Specifies fields to ignore when monitoring a bundle's status. This is useful for preventing false error states caused by certain conditions in Custom Resources. | All |
 | overrideTargets | A list of target customizations that will override any targets defined in the GitRepo. If this is provided, the bundle will not inherit any targets from the GitRepo. | All |
 

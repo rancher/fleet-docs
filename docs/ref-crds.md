@@ -155,7 +155,7 @@ BundleResource represents the content of a single resource from the bundle, like
 | resources | Resources contains the resources that were read from the bundle's path. This includes the content of downloaded helm charts. | \[\][BundleResource](#bundleresource) | false |
 | targets | Targets refer to the clusters which will be deployed to. Targets are evaluated in order and the first one to match is used. | \[\][BundleTarget](#bundletarget) | false |
 | targetRestrictions | TargetRestrictions is an allow list, which controls if a bundledeployment is created for a target. | \[\][BundleTargetRestriction](#bundletargetrestriction) | false |
-| dependsOn | DependsOn refers to the bundles which must be ready before this bundle can be deployed. | \[\][BundleRef](#bundleref) | false |
+| dependsOn | DependsOn refers to the bundles which must be in an accepted state before this bundle can be deployed. | \[\][BundleRef](#bundleref) | false |
 | contentsId | ContentsID stores the contents id when deploying contents using an OCI registry. | string | false |
 
 [Back to Custom Resources](#)
