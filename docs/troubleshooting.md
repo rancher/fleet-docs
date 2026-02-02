@@ -242,6 +242,7 @@ Based on the above log, you can add the following entry to remove the operation:
 {"op":"remove", "path":"/spec/template/spec/hostNetwork"}
 ```
 
+
 ### `GitRepo` or `Bundle` stuck in modified state
 
 **Modified** means that there is a mismatch between the actual state and the desired state, the source of truth, which lives in the git repository.
@@ -253,6 +254,21 @@ Based on the above log, you can add the following entry to remove the operation:
 :::note
 When a property that may affect the IDs of the created Bundles is changed (such as changing the paths of the Bundles), inconsistencies may occur in the state of the newly created Bundle, sometimes getting stuck in the Modified state for some resources.
 In such cases, it is also recommended to perform a force update of the affected GitRepo.
+:::
+
+#### `GitRepo` sync fails without retry
+
+A GitRepo may stop syncing and remain in a failed state. GitJob logs can show network timeouts or etcd request timeouts. This issue occurs more frequently when Fleet is under high load.
+
+**Resolution**
+
+Upgrade to a Fleet version that supports automatic retries for GitJobs. This update:
+
+* Adds retry logic to Fleet apply operations.
+* Reduces webhook update conflicts by replacing separate status updates and patch operations with a single patch operation.
+
+:::note 
+If you cannot upgrade, manually retry the failed job.
 :::
 
 ### Bundle has a Horizontal Pod Autoscaler (HPA) in modified state
