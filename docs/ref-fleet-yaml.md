@@ -174,6 +174,13 @@ rolloutStrategy:
   # The default value is defined in rolloutStrategy.maxUnavailable
   autoPartitionSize: 10%
 
+  # The minimum number of clusters that need to be present before 
+  # auto-partitioning is enabled. If the number of target clusters is less 
+  # than this value, all clusters will be placed in a single partition.
+  #
+  # default: 200
+  autoPartitionThreshold: 100
+
   # A list of definitions of partitions.  If any target clusters do not match
   # the configuration they are added to partitions at the end following the
   # autoPartitionSize.
@@ -276,8 +283,8 @@ targetCustomizations:
       keepFailHistory: false
 
 # dependsOn allows you to configure dependencies to other bundles. The current
-# bundle will only be deployed, after all dependencies are deployed and in a
-# Ready state.
+# bundle will only be deployed, after all dependencies are deployed and in an
+# accepted state. The default accepted state is the Ready state.
 dependsOn:
 
   # Format:
@@ -296,12 +303,16 @@ dependsOn:
   #     opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes
   #     opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: one-multi-cluster-hello-world
-
+    acceptedStates:
+      - Ready
+      - Modified
   # Select bundles to depend on based on their label.
   - selector:
       matchLabels:
         app: weak-monkey
-
+    acceptedStates:
+      - Ready
+      - Modified
 # Ignore fields when monitoring a Bundle. This can be used when Fleet thinks
 # some conditions in Custom Resources makes the Bundle to be in an error state
 # when it shouldn't.
@@ -333,7 +344,7 @@ These options define the fundamental properties and behavior of the bundle itsel
 | :---- | :---- | :---- |
 | paused | If true, the bundle will not be updated on downstream clusters. Instead, it will be marked as "OutOfSync." You can then manually approve the deployment. | All |
 | labels | A map of key-value pairs that are set at the bundle level. These can be used in a dependsOn.selector to define dependencies. | All |
-| dependsOn | A list of other bundles that this bundle depends on. The current bundle will only be deployed after all its dependencies are in a "Ready" state. | All |
+| dependsOn | A list of other bundles that this bundle depends on. The current bundle will only be deployed after all its dependencies are in an accepted state. Accepted states correspond to any valid  [bundle states](ref-status-fields/#bundle-statuses). | All |
 | ignore | Specifies fields to ignore when monitoring a bundle's status. This is useful for preventing false error states caused by certain conditions in Custom Resources. | All |
 | overrideTargets | A list of target customizations that will override any targets defined in the GitRepo. If this is provided, the bundle will not inherit any targets from the GitRepo. | All |
 
@@ -522,6 +533,7 @@ These options control how changes are rolled out across a fleet of clusters and 
 | rolloutStrategy.maxUnavailable | The maximum number or percentage of clusters that can be unavailable during an update. The update will be paused if this threshold is met. | All |
 | rolloutStrategy.maxUnavailablePartitions | The maximum number or percentage of cluster partitions that can be unavailable during an update. | All |
 | rolloutStrategy.autoPartitionSize | The number or percentage used to automatically partition clusters if no specific partitioning strategy is configured. | All |
+| rolloutStrategy.autoPartitionThreshold | The minimum number of clusters required before auto-partitioning is enabled. Below this threshold, all clusters are placed in a single partition. | All |
 | rolloutStrategy.partitions | A list of partition definitions that group clusters for a phased rollout. | All |
 
 More details on rollout strategies and how they work [here](./rollout.md).

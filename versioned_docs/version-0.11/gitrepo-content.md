@@ -18,7 +18,7 @@ Multiple paths can be defined for a `GitRepo` and each path is scanned independe
 Internally each scanned path will become a [bundle](./concepts.md) that Fleet will manage,
 deploy, and monitor independently.
 
-The following files are looked for to determine the how the resources will be deployed.
+Fleet looks for the following files to determine how the resources will be deployed.
 
 | File | Location | Meaning |
 |------|----------|---------|
@@ -196,7 +196,7 @@ See [Mapping to Downstream Clusters](gitrepo-targets#customization-per-cluster) 
 
 ## Raw YAML Resource Customization
 
-When using Kustomize or Helm the `kustomization.yaml` or the `helm.values` will control how the resource are
+When using Kustomize or Helm the `kustomization.yaml` or the `helm.values` will control how resources are
 customized per target cluster. If you are using raw YAML then the following simple mechanism is built-in and can
 be used.  The `overlays/` folder in the git repo is treated specially as folder containing folders that
 can be selected to overlay on top per target cluster. The resource overlay content

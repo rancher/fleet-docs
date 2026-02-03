@@ -65,21 +65,35 @@ module.exports = {
       items:[
         {
           'CLI': [
-            'cli/fleet-agent/fleet-agent',
-            'cli/fleet-agent/fleet-agent_clusterstatus',
-            'cli/fleet-agent/fleet-agent_register',
-            {type: 'doc', id: 'cli/fleet-cli/fleet'},
-            {type: 'doc', id: 'cli/fleet-cli/fleet_apply'},
-            {type: 'doc', id: 'cli/fleet-cli/cleanup/fleet_cleanup'},
-            {type: 'doc', id: 'cli/fleet-cli/cleanup/fleet_cleanup_clusterregistration'},
-            {type: 'doc', id: 'cli/fleet-cli/cleanup/fleet_cleanup_gitjob'},
-            {type: 'doc', id: 'cli/fleet-cli/fleet_deploy'},
-            {type: 'doc', id: 'cli/fleet-cli/fleet_target'},
-            {type: 'doc', id: 'cli/fleet-cli/fleet_test'},
-            {type: 'doc', id: 'cli/fleet-controller/fleet-controller'},
-            {type: 'doc', id: 'cli/fleet-controller/fleet-controller_agentmanagement'},
-            {type: 'doc', id: 'cli/fleet-controller/fleet-controller_cleanup'},
-            {type: 'doc', id: 'cli/fleet-controller/fleet-controller_gitjob'},
+              {'fleet-agent': [
+                'cli/fleet-agent/fleet-agent',
+                'cli/fleet-agent/fleet-agent_clusterstatus',
+                'cli/fleet-agent/fleet-agent_register',
+            ]},
+              {'fleet': [
+                {type: 'doc', id: 'cli/fleet-cli/fleet'},
+                {'Regular operations': [
+                    {type: 'doc', id: 'cli/fleet-cli/fleet_apply'},
+                    {type: 'doc', id: 'cli/fleet-cli/fleet_deploy'},
+                    {type: 'doc', id: 'cli/fleet-cli/fleet_target'},
+                ]},
+                {'Troubleshooting': [
+                    {type: 'doc', id: 'cli/fleet-cli/fleet_monitor'},
+                    {type: 'doc', id: 'cli/fleet-cli/fleet_analyze'},
+                    {type: 'doc', id: 'cli/fleet-cli/fleet_dump'},
+                ]},
+                {'Cleanup': [
+                    {type: 'doc', id: 'cli/fleet-cli/cleanup/fleet_cleanup'},
+                    {type: 'doc', id: 'cli/fleet-cli/cleanup/fleet_cleanup_clusterregistration'},
+                    {type: 'doc', id: 'cli/fleet-cli/cleanup/fleet_cleanup_gitjob'},
+                ]},
+            ]},
+              {'fleet-controller': [
+                {type: 'doc', id: 'cli/fleet-controller/fleet-controller'},
+                {type: 'doc', id: 'cli/fleet-controller/fleet-controller_agentmanagement'},
+                {type: 'doc', id: 'cli/fleet-controller/fleet-controller_cleanup'},
+                {type: 'doc', id: 'cli/fleet-controller/fleet-controller_gitjob'},
+            ]},
           ],
         },
         {type:'doc', id:'ref-status-fields'},
