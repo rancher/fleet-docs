@@ -55,6 +55,54 @@ spec:
                 number: 80
 ```
 
+
+Ingress Nginx will be [retired](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/), here is an example using Traefik:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: cattle-fleet-system-gitjob-stripprefix@kubernetescrd
+    traefik.ingress.kubernetes.io/router.priority: '100'
+  name: webhook-ingress
+  namespace: cattle-fleet-system
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: your.domain.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: gitjob
+                port:
+                  number: 80
+            path: /gitjob(/|$)(.*)
+            pathType: ImplementationSpecific
+```
+
+:::note
+Use the annotation `traefik.ingress.kubernetes.io/router.priority: '100'` only when two Ingress resources can conflict. This annotation assigns a higher priority to the GitJob route. This depends on the `pathType` property. When `pathType` is set to Prefix, the annotation is required. 
+:::
+
+
+This configuration requires a middleware to strip the additional path from the URL, since `gitjob` responds directly from the root path. This is equivalent to the `nginx.ingress.kubernetes.io/rewrite-target` annotation in Nginx:
+
+```yaml
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: gitjob-stripprefix
+  namespace: cattle-fleet-system
+spec:
+  stripPrefix:
+    prefixes:
+      - /gitjob
+```
+
+This approach allows a smooth migration from Ingress Nginx to Traefik while keeping the application configuration unchanged.
+
 :::info
 
 You can configure [TLS](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls) on ingress.
