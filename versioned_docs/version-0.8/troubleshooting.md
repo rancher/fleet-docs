@@ -191,7 +191,7 @@ A `GitRepo` may stop syncing and remain in a **Failed state**, in which case Git
 
 **Resolution**
 
-Upgrade to a Fleet version that supports automatic retries for GitJobs. 
+Upgrade to Fleet version 0.12 or later, which supports automatic retries for GitJobs. 
 This update:
 
 * Adds retry logic to Fleet apply operations.

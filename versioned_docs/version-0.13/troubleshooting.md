@@ -254,19 +254,7 @@ Based on the above log, you can add the following entry to remove the operation:
 
 A `GitRepo` may stop syncing and remain in a **Failed state**, in which case GitJob controller logs can show network timeouts or etcd request timeouts. This issue is more likely to occur when Fleet is under high load.
 
-**Resolution**
-
-Upgrade to a Fleet version that supports automatic retries for GitJobs. 
-This update:
-
-* Adds retry logic to Fleet apply operations.
-* Reduces webhook update conflicts by replacing separate status updates and patch operations with a single patch operation.
-
 The `FLEET_APPLY_CONFLICT_RETRIES` environment variable controls how many times Fleet retries an apply operation when it encounters a resource version conflict. 
-
-:::note 
-If you cannot upgrade, manually retry the Failed job.
-:::
 
 ### Bundle has a Horizontal Pod Autoscaler (HPA) in modified state
 
