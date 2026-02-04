@@ -54,7 +54,7 @@ spec:
 ```
 
 
-Ingress Nginx might be [retired](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/), here is an example using Traefik:
+Ingress Nginx will be [retired](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/), here is an example using Traefik:
 
 ```yaml
 apiVersion: networking.k8s.io/v1
