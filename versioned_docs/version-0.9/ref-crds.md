@@ -318,6 +318,10 @@ BundleDeployment is used internally by Fleet and should not be used directly. Wh
 | namespaceAnnotations | NamespaceAnnotations are annotations that will be appended to the namespace created by Fleet. | *map[string]string | false |
 | deleteCRDResources | DeleteCRDResources deletes CRDs. Warning! this will also delete all your Custom Resources. | bool | false |
 
+:::note
+If you do not want Fleet to apply the `helm.sh/resource-policy: keep`, configure the `deleteCRDResource` option to `true` in `fleet.yaml`.
+:::
+
 [Back to Custom Resources](#)
 
 #### BundleDeploymentResource
