@@ -174,6 +174,25 @@ Based on the above log, you can add the following entry to remove the operation:
 
 1. You can also force update the `gitrepo` to perform a manual resync. Select **GitRepo** on the left navigation bar, then select **Force Update**.
 
+
+#### `GitRepo` sync fails without retry
+
+A `GitRepo` may stop syncing and remain in a **Failed state**, in which case GitJob controller logs can show network timeouts or etcd request timeouts. This issue is more likely to occur when Fleet is under high load.
+
+**Resolution**
+
+Upgrade to Fleet version 0.12 or later, which supports automatic retries for GitJobs. 
+This update:
+
+* Adds retry logic to Fleet apply operations.
+* Reduces webhook update conflicts by replacing separate status updates and patch operations with a single patch operation.
+
+The `FLEET_APPLY_CONFLICT_RETRIES` environment variable controls how many times Fleet retries an apply operation when it encounters a resource version conflict. 
+
+:::note 
+If you cannot upgrade, manually retry the Failed job.
+:::
+
 ### Bundle has a Horizontal Pod Autoscaler (HPA) in modified state
 
 For bundles with an HPA, the expected state is `Modified`, as the bundle contains fields that differ from the state of the Bundle at deployment - usually `ReplicaSet`.

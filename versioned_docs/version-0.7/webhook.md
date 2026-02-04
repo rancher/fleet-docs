@@ -3,6 +3,8 @@
 By default, Fleet utilizes polling (default: 15 seconds) to pull from a Git repo.However, this can be configured to utilize a webhook instead.Fleet currently supports Github,
 GitLab, Bitbucket, Bitbucket Server and Gogs.
 
+At higher workloads, Fleet optimizes webhook processing by combining status updates and patch operations into a single request. This reduces update conflicts and race conditions when multiple commits trigger rapid updates, and it improves reliability in large-scale deployments.
+
 ### 1. Configure the webhook service. Fleet uses a gitjob service to handle webhook requests. Create an ingress that points to the gitjob service.
 
 ```yaml
