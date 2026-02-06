@@ -316,3 +316,24 @@ diff:
     operations:
     - {"op":"ignore"}
 ```
+
+In some cases, the full name of the job may not be known in advance, for instance when it is generated.
+Furthermore, a given workload may create multiple jobs in the same namespace, which would typically lead to one bundle
+diff per job. To make these situations easier to handle, jobs can also be ignored:
+
+- through a regular expression on their names, in which case the above diff could look like:
+```yaml
+diff:
+  comparePatches:
+  - apiVersion: batch/v1
+    kind: Job
+    namespace: consul
+    name: 'consul-server.*'
+    operations:
+    - {"op":"ignore"}
+```
+
+- or by specifying an empty `name` field, or omitting that field altogether, in which case all jobs living in that
+namespace (in this example in the `consul` namespace) will be ignored.
+
+More information on the supported regex syntax [here](https://pkg.go.dev/regexp/syntax).
