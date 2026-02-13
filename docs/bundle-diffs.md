@@ -316,3 +316,16 @@ diff:
     operations:
     - {"op":"ignore"}
 ```
+
+## Horizontal Pod Autoscaling
+
+When dealing with Deployments or StatefulSets referenced by a Horizontal Pod Autoscaler, bundle diffs are no longer
+necessary to address updates in replica counts within the HPA's configured interval.
+The Fleet agent will automatically filter these updates away; as a result, the source bundle deployment will not be
+considered _modified_.
+
+However, if a Deployment or StatefulSet's `replicas` field is set to a value above or below the interval tolerated by an
+HPA referencing it, that modification will still appear in the source bundle deployment's status.
+
+Both `autoscaling/v1` and `autoscaling/v2` are supported.
+An empty `minReplicas` field in an HPA will be interpreted as `1`.
