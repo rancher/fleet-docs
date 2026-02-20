@@ -3,9 +3,9 @@ name: "Updatecli"
 
 on:
   workflow_dispatch:
-  schedule:
+  #schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron: '0 * * * *'
+    #- cron: '0 * * * *'
 
 permissions:
   contents: write
