@@ -90,12 +90,49 @@ defaultClientSecretName: ""
 defaultServiceAccount: ""
 ```
 
-#### Allowed Target Namespaces
+#### Allowed target namespaces
 
 This can be used to limit a deployment to a set of namespaces on a downstream
 cluster. If an allowedTargetNamespaces restriction is present, all `GitRepos`
 must specify a `targetNamespace` and the specified namespace must be in the
 allow list. This also prevents the creation of cluster wide resources.
+
+#### Allowed target namespace selector
+
+`allowedTargetNamespaceSelector` restricts deployments to namespaces on
+downstream clusters whose labels match the given selector. When this field is
+set in a `GitRepoRestriction`, all `GitRepos` must specify a `targetNamespace`.
+The Fleet agent checks the labels of that namespace on the downstream cluster
+before deploying a bundle:
+
+- If the namespace exists and its labels match the selector, deployment proceeds.
+- If the namespace exists but its labels do not match, the `BundleDeployment` is
+  set to an error state and the bundle is not deployed.
+- If the namespace does not exist on the downstream cluster, the deployment fails
+  with an error. Pre-creating the namespace and labelling it correctly is
+  required; Helm's `createNamespace` option does not apply when this selector is
+  set.
+
+Multiple `GitRepoRestriction` resources in the same namespace each contribute
+their `allowedTargetNamespaceSelector`. The selectors are merged before being
+propagated to bundle deployments; a namespace must satisfy all of them.
+
+```yaml
+kind: GitRepoRestriction
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: restriction
+  namespace: project1
+allowedTargetNamespaceSelector:
+  matchLabels:
+    team: frontend
+```
+
+:::note
+`allowedTargetNamespaceSelector` and `allowedTargetNamespaces` are independent
+controls. Both can be set at the same time; a target namespace must satisfy
+every restriction that is present.
+:::
 
 ## Fleet Namespaces
 
