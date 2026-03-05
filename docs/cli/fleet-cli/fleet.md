@@ -21,6 +21,7 @@ fleet [flags]
 #### Main commands
 
 * [fleet apply](./fleet_apply)	 - Create bundles from directories, and output them or apply them on a cluster
+* [fleet bundlediff](./fleet_bundlediff)	 - Display bundle diffs from resource status
 * [fleet cleanup](./cleanup/fleet_cleanup)	 - Clean up outdated resources
 * [fleet deploy](./fleet_deploy)	 - Deploy a bundledeployment/content resource to a cluster, by creating a Helm release. This will not deploy the bundledeployment/content resources directly to the cluster.
 * [fleet gitcloner](./fleet_gitcloner)	 - Clones a git repository
