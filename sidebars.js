@@ -74,6 +74,7 @@ module.exports = {
                 {type: 'doc', id: 'cli/fleet-cli/fleet'},
                 {'Regular operations': [
                     {type: 'doc', id: 'cli/fleet-cli/fleet_apply'},
+                    {type: 'doc', id: 'cli/fleet-cli/fleet_bundlediff'},
                     {type: 'doc', id: 'cli/fleet-cli/fleet_deploy'},
                     {type: 'doc', id: 'cli/fleet-cli/fleet_target'},
                 ]},
