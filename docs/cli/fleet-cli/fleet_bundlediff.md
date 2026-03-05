@@ -6,18 +6,18 @@ sidebar_label: "fleet bundlediff"
 
 Display bundle diffs from resource status.
 
-This command extracts and displays the diff patches from Bundle or BundleDeployment
+This command extracts and displays the diff patches from `Bundle` or `BundleDeployment`
 resources that have been modified. The diffs show the differences between the desired
 state (from Git/Helm) and the actual state in the cluster.
 
-For BundleDeployments, the command shows the patch information from the `ModifiedStatus`
+For `BundleDeployment`s, the command shows the patch information from the `ModifiedStatus`
 field, which contains JSON patches indicating what has been changed on deployed resources.
 
-For Bundles, the command aggregates diff information from all associated BundleDeployments
+For `Bundle`s, the command aggregates diff information from all associated `BundleDeployment`s
 across target clusters.
 
-By default, the command searches for BundleDeployments across all namespaces. Restrict to a
-specific namespace using the `-n` flag, which is required when querying a BundleDeployment
+By default, the command searches for `BundleDeployment`s across all namespaces. Restrict to a
+specific namespace using the `-n` flag, which is required when querying a `BundleDeployment`
 by name.
 
 ```
@@ -65,4 +65,4 @@ fleet bundlediff -n cluster-fleet-local-local-abc123
 
 ### SEE ALSO
 
-* [fleet](./fleet)	 - 
+* [fleet](./fleet)	 -

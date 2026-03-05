@@ -24,8 +24,8 @@ With the patch, users can instruct fleet to ignore:
 
 ## Generating comparePatches with `fleet bundlediff`
 
-The `fleet bundlediff` CLI command reads the diff information already present in Bundle and
-BundleDeployment status fields and displays it in a human-readable form. It also outputs a
+The `fleet bundlediff` CLI command reads the diff information already present in `Bundle` and
+`BundleDeployment` status fields and displays it in a human-readable form. It also outputs a
 ready-to-use `diff:` snippet in `fleet.yaml` format so you can accept the observed drift
 without manually constructing the JSON Patch paths.
 
@@ -45,7 +45,7 @@ fleet bundlediff --bundle-deployment my-bundle-deployment -n cluster-fleet-local
 fleet bundlediff --json
 ```
 
-Default text output groups results by Bundle and lists each modified or non-ready resource
+Default text output groups results by `Bundle` and lists each modified or non-ready resource
 together with its JSON Merge Patch:
 
 ```
@@ -67,12 +67,12 @@ BundleDeployments with diffs: 1
     }
 ```
 
-### Generating a fleet.yaml comparePatches snippet
+### Generating a `fleet.yaml` `comparePatches` snippet
 
 Use `--fleet-yaml` together with `--bundle-deployment` to produce a `diff:` block that
 can be pasted directly into your `fleet.yaml`. The command converts the observed JSON
 Merge Patch into `remove` operations and merges them with any `comparePatches` already
-configured on the Bundle, so existing ignores are preserved.
+configured on the `Bundle`, so existing ignores are preserved.
 
 ```bash
 fleet bundlediff \
@@ -110,7 +110,7 @@ simply stops reporting it as drift.
 
 :::note
 `--fleet-yaml` requires `--bundle-deployment` to be specified, because the output is
-merged with the existing `comparePatches` from the associated Bundle.
+merged with the existing `comparePatches` from the associated `Bundle`.
 :::
 
 See [fleet bundlediff](./cli/fleet-cli/fleet_bundlediff) for the full flag reference.
