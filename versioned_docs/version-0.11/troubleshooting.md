@@ -251,6 +251,25 @@ This is fixed in Fleet v0.12. In earlier versions, it can be worked around as fo
 2. Save your changes
 3. Run a "force update" on the GitRepo.
 
+
+#### `GitRepo` sync fails without retry
+
+A `GitRepo` may stop syncing and remain in a **Failed state**, in which case GitJob controller logs can show network timeouts or etcd request timeouts. This issue is more likely to occur when Fleet is under high load.
+
+**Resolution**
+
+Upgrade to a Fleet version that supports automatic retries for GitJobs. 
+This update:
+
+* Adds retry logic to Fleet apply operations.
+* Reduces webhook update conflicts by replacing separate status updates and patch operations with a single patch operation.
+
+The `FLEET_APPLY_CONFLICT_RETRIES` environment variable controls how many times Fleet retries an apply operation when it encounters a resource version conflict. 
+
+:::note 
+If you cannot upgrade, manually retry the Failed job.
+:::
+
 ### Bundle has a Horizontal Pod Autoscaler (HPA) in modified state
 
 For bundles with an HPA, the expected state is `Modified`, as the bundle contains fields that differ from the state of the Bundle at deployment - usually `ReplicaSet`.

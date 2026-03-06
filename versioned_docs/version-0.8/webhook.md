@@ -2,6 +2,8 @@
 
 By default, Fleet utilizes polling (default: every 15 seconds) to pull from a Git repo. This is a convenient default that works reasonably well for a small number of repos (up to a few tens).
 
+At higher workloads, Fleet optimizes webhook processing by combining status updates and patch operations into a single request. This reduces update conflicts and race conditions when multiple commits trigger rapid updates, and it improves reliability in large-scale deployments.
+
 For installations with multiple tens up to hundreds of Git repos, and in general to reduce latency (the time between a push to Git and fleet reacting to it), configuring webhooks is recommended instead of polling.
 
 Fleet currently supports Github, GitLab, Bitbucket, Bitbucket Server and Gogs.
