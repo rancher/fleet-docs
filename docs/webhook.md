@@ -4,7 +4,7 @@ By default, Fleet utilizes polling (default: every 15 seconds) to pull from a Gi
 
 For installations with multiple tens up to hundreds of Git repos, and in general to reduce latency (the time between a push to Git and fleet reacting to it), configuring webhooks is recommended instead of polling.
 
-Fleet currently supports Azure DevOps, GitHub, GitLab, Bitbucket, Bitbucket Server, and Gogs.
+Fleet currently supports Azure DevOps, GitHub, GitLab, Bitbucket, Bitbucket Server, Gogs, and Gerrit.
 
 ### 1. Configure the webhook service. Fleet uses a gitjob service to handle webhook requests. Create an ingress that points to the gitjob service.
 
